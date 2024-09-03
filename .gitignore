@@ -11,3 +11,7 @@
 /.vs/eBay/FileContentIndex/fd1461b2-cbb1-4cb0-a6f4-d69bade0d469.vsidx
 *.vsidx
 /.vs/eBay/config/applicationhost.config
+/frontend/frontend.user
+/frontend/frontend.esproj.user
+/frontend/frontend.esproj
+/frontend/obj/Debug
