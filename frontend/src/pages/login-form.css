@@ -1,0 +1,80 @@
+.login-form{
+    text-align:center;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.login-form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-out;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    font-size:1em;
+}
+@media(prefers-reduced-motion: reduce) {
+    .login-form-content {
+        animation:none;
+    }
+}
+.input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+    align-items:start;
+}
+
+    .input-group label {
+        margin-bottom: 5px;
+    }
+
+.login-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+    .login-form input:user-invalid {
+        outline:auto;
+        outline-color: #aa0000;
+    }
+    .login-form input:invalid:focus {
+        outline: auto;
+        outline-color: #ffaa00;
+    }
+    .login-form input:valid {
+        outline: auto;
+        outline-color: #006600;
+    }
+.submit-button {
+    box-sizing:border-box;
+    width: 100%;
+    padding:2.5%;
+    max-width: 200px;
+}
+
+.login-form-content a {
+    text-decoration: none;
+    color: #0077ff;
+}
+@media(any-hover:hover) and (any-pointer:fine) {
+    .login-form-content a:hover {
+        color: #00aaff;
+    }
+}

@@ -1,20 +1,20 @@
 import { Link } from "react-router-dom";
-import "./login.css";
+import "../login-form.css"
 
 function Login() {
   return (
-    <form className="tajawal-extralight">
+      <form className="login-form tajawal-extralight">
       <h1>ادخل بيناتك</h1>
-      <div className="login-style">
+          <div className="login-form-content">
         <div className="input-group">
-          <label htmlFor="user">الايميل الالكتروني/رقم الجوال:</label>
-          <input id="user" type="text" placeholder="أدخل بريدك الإلكتروني أو رقم الجوال" required/>
+          <label htmlFor="user">البريد الالكتروني / رقم الجوال:</label>
+          <input id="user" type="text" placeholder="ادخل بريدك الإلكتروني أو رقم الجوال" required/>
         </div>
         <div className="input-group">
-          <label htmlFor="password"> كلمه السر:</label>
-                  <input type="password" id="password" placeholder="أدخل كلمه السر" required/>
+                  <label htmlFor="password"> كلمه المرور:</label>
+                  <input type="password" id="password" placeholder="ادخل كلمه المرور" minLength={8} required/>
         </div>
-              <button type="submit" className="submit-button">تسجيل الدخول</button>
+              <button type="submit" className="button submit-button">تسجيل الدخول</button>
               <p><Link to="/register">حساب جديد</Link></p>
           </div>
     </form>

@@ -4,8 +4,7 @@ import Login from "./pages/login/login";
 import Register from "./pages/register/register";
 import Navbar from "./components/nav/Navbar";
 function App() {
-  return (
-      <div className="tajawal-extralight">
+    return (
         <BrowserRouter>
           <Navbar />
               <Routes>
@@ -13,9 +12,14 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<div>Home</div>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+            </Routes>
         </BrowserRouter>
-      </div>
-  );
+    );
 }
 
 export default App;
