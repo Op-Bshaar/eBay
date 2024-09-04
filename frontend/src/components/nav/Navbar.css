@@ -42,9 +42,8 @@
 }
 
 .nav-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
+    text-align:center;
     padding: 10px 20px;
     cursor: pointer;
     background-color: blue;
