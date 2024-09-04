@@ -7,12 +7,6 @@ import Home from "./pages/Home/Home";
 function App() {
     return (
         <BrowserRouter>
-          <Navbar />
-              <Routes>
-                  <Route path="/" />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </Routes>
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home/>} />
