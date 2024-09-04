@@ -25,10 +25,9 @@ function Navbar() {
           icon={faMagnifyingGlass}
         />
       </div>
-      <p style={{ cursor: "pointer" }}>البيع في سوق</p>
-          <p style={{ cursor: "pointer" }}>المدونه</p>
+      <p >البيع في سوق</p>
           <Link className="nav-button" to="login">
-              <h3 style={{ color: "white" }}>تسجيل الدخول</h3>
+              <h3>تسجيل الدخول</h3>
           </Link>
     </nav>
   );
