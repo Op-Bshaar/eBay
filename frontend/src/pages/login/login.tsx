@@ -12,7 +12,7 @@ function Login() {
         </div>
         <div className="input-group">
                   <label htmlFor="password"> كلمه المرور:</label>
-                  <input type="password" id="password" placeholder="ادخل كلمه المرور" required/>
+                  <input type="password" id="password" placeholder="ادخل كلمه المرور" minLength={8} required/>
         </div>
               <button type="submit" className="button submit-button">تسجيل الدخول</button>
               <p><Link to="/register">حساب جديد</Link></p>

@@ -43,19 +43,25 @@
         margin-bottom: 5px;
     }
 
-    .input-group input {
-        box-sizing: border-box;
-        width: 100%;
-        padding: 10px;
-        border: 2px solid #ccc;
-        border-radius: 5px;
+.login-form input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+    .login-form input:user-invalid {
+        outline:auto;
+        outline-color: #aa0000;
     }
-    .input-group input:user-invalid {
-        border-color:#aa0000;
+    .login-form input:invalid:focus {
+        outline: auto;
+        outline-color: #ffaa00;
     }
-        .input-group input:valid {
-            border-color: #006600;
-        }
+    .login-form input:valid {
+        outline: auto;
+        outline-color: #006600;
+    }
 .submit-button {
     box-sizing:border-box;
     width: 100%;

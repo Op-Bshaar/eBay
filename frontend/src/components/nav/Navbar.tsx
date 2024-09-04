@@ -9,8 +9,8 @@ function Navbar() {
         <nav className="nav tajawal-extralight">
             <h1>سوق</h1>
             <div className="search-bar">
-                <input type="search" placeholder="ابحث باسم المنتج" />
-                <FontAwesomeIcon tabIndex={0} role="button" className="search-icon" icon={faMagnifyingGlass} />
+                <input id = "search-by-name" type="search" placeholder="ابحث باسم المنتج" />
+                <FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} />
             </div>
             <Link className="nav-link " to="/" >البيع في سوق</Link>
             <Link className="button nav-button" to="login">تسجيل الدخول</Link>

@@ -24,7 +24,11 @@
         line-height: 30px;
     }
 .search-icon {
-    margin:0 2%;
+    width: auto;
+    height: 30px;
+    margin: 0 2%;
+    color:#0077ff;
+    cursor:pointer;
 }
 .nav-button {
 }
@@ -39,4 +43,13 @@
 
 .icon-text-style{
   cursor: pointer;
+}
+
+@media(any-hover:hover) and (any-pointer:fine) {
+    .search-icon:hover {
+        color: #33aaff;
+    }
+}
+.search-icon:active {
+    color: #004488;
 }
