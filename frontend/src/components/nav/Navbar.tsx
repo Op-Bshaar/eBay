@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div className="nav">
+    <nav className="nav">
       <h1>سوق</h1>
       <div className="icon-container">
         <input
@@ -25,11 +26,11 @@ function Navbar() {
         />
       </div>
       <p style={{ cursor: "pointer" }}>البيع في سوق</p>
-      <p style={{ cursor: "pointer" }}>المدونه</p>
-      <button className="button">
-        <h3 style={{ color: "white" }}>تسجيل الدخول</h3>
-      </button>
-    </div>
+          <p style={{ cursor: "pointer" }}>المدونه</p>
+          <Link className="nav-button" to="login">
+              <h3 style={{ color: "white" }}>تسجيل الدخول</h3>
+          </Link>
+    </nav>
   );
 }
 
