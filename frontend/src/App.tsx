@@ -8,7 +8,8 @@ function App() {
       <div className="tajawal-extralight">
         <BrowserRouter>
           <Navbar />
-          <Routes>
+              <Routes>
+                  <Route path="/" element={<div>Home</div> } />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
