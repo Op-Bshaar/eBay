@@ -7,27 +7,27 @@ function Register() {
       <h1>ادخل بيناتك</h1>
       <div className="register-style">
         <div className="input-group">
-          <label>الاسم</label>
-          <input id="phone" placeholder=" أدخل الاسم" />
+          <label htmlFor="name">الاسم</label>
+          <input id="name" placeholder=" ادخل الاسم" />
         </div>
         <div className="input-group">
-          <label>الايميل الالكتروني:</label>
-          <input id="email" type="email" placeholder="أدخل بريدك الإلكتروني" />
+          <label htmlFor="email">البريد الالكتروني:</label>
+          <input id="email" type="email" placeholder="ادخل بريدك الإلكتروني" />
         </div>
         <div className="input-group">
-          <label>رقم الجوال:</label>
-          <input id="phone" placeholder="أدخل رقم جوالك" />
+          <label htmlFor="phone">رقم الجوال:</label>
+          <input id="phone" placeholder="ادخل رقم جوالك" />
         </div>
         <div className="input-group">
-          <label htmlFor="password">كلمه السر:</label>
-          <input id="password" type="password" placeholder="أدخل كلمة السر" />
+          <label htmlFor="password">كلمة المرور:</label>
+          <input id="password" type="password" placeholder="ادخل كلمة المرور" />
         </div>
         <div className="input-group">
-          <label htmlFor="confirm-password">تأكيد كلمه السر:</label>
+          <label htmlFor="confirm-password">تأكيد كلمه المرور:</label>
           <input
             id="confirm-password"
             type="password"
-            placeholder="تأكيد كلمة السر"
+                      placeholder="تأكيد كلمة المرور"
           />
         </div>
         <div className="footer-container">
@@ -35,7 +35,7 @@ function Register() {
             تسجيل
                   </button>
                   <p>
-                      هل لديك حساب بالفعل؟
+                     لديك حساب بالفعل؟
                       <Link to={"/login"}>تسجيل دخول</Link>
                   </p>
         </div>
