@@ -4,33 +4,17 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 
 function Navbar() {
-  return (
-    <nav className="nav">
-      <h1>سوق</h1>
-      <div className="icon-container">
-        <input
-          className="input-style"
-          type="text"
-          placeholder="ابحث باسم المنتج"
-        />
-        <FontAwesomeIcon
-          style={{
-            backgroundColor: "blue",
-            cursor: "pointer",
-            color: "white",
-            padding: "5px",
-            borderRadius: "50%",
-            fontSize: "25px",
-          }}
-          icon={faMagnifyingGlass}
-        />
-      </div>
-      <p >البيع في سوق</p>
-          <Link className="nav-button" to="login">
-              <h3>تسجيل الدخول</h3>
-          </Link>
-    </nav>
-  );
+    return (
+        <nav className="nav tajawal-extralight">
+            <h1>سوق</h1>
+            <div className="search-bar">
+                <input type="search" placeholder="ابحث باسم المنتج" />
+                <FontAwesomeIcon tabIndex={0} role="button" className="search-icon" icon={faMagnifyingGlass} />
+            </div>
+            <Link className="nav-link " to="/" >البيع في سوق</Link>
+            <Link className="button nav-button" to="login">تسجيل الدخول</Link>
+        </nav>
+    );
 }
 
 export default Navbar;

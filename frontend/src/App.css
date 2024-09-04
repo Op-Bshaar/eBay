@@ -1,10 +1,30 @@
 
 .tajawal-extralight {
   font-family: "Tajawal", sans-serif;
-  font-weight: 200;
+  font-weight: 700;
   font-style: normal;
 }
 
 body {
   direction: rtl;
+}
+.button {
+    display: inline-block;
+    text-align: center;
+    color: white;
+    background-color: #0000ff;
+    border-radius: 5px;
+    border:none;
+    user-select: none;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 1% 2.5%;
+}
+@media(any-hover:hover) and (any-pointer:fine) {
+    .button:hover {
+        background-color: #3377ff;
+    }
+}
+.button:active {
+    transform:scale(0.95);
 }
