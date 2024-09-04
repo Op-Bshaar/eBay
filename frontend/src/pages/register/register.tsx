@@ -8,8 +8,8 @@ function Register() {
             <h1>ادخل بيناتك</h1>
             <div className="login-form-content">
                 <div className="input-group">
-                    <label htmlFor="name">الاسم</label>
-                    <input type="text" id="name" placeholder=" ادخل الاسم" minLength={2} required />
+                    <label htmlFor="username">اسم المستخدم</label>
+                    <input type="text" id="username" placeholder=" ادخل اسم المستخدم" minLength={4} pattern="^[\p{L}\p{N}_]+$" required />
                 </div>
                 <div className="input-group">
                     <label htmlFor="email">البريد الالكتروني:</label>
