@@ -17,7 +17,7 @@ function Register() {
                 </div>
                 <div className="input-group">
                     <label htmlFor="phone">رقم الجوال:</label>
-                    <input pattern="^[\d+]\d*$" id="phone" type="tel" placeholder="ادخل رقم جوالك" minLength={10} required />
+                    <input pattern="^[\d+]\d*$" id="phone" placeholder="ادخل رقم جوالك" minLength={10} required />
                 </div>
                 <PasswordInput/>
                 <button type="submit" className="button submit-button">تسجيل</button>
