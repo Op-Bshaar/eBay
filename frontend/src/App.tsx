@@ -9,7 +9,7 @@ function App() {
         <BrowserRouter>
           <Navbar />
               <Routes>
-                  <Route path="/" element={<div>Home</div> } />
+                  <Route path="/" />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
