@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.hero-container {
+  width: 100%;
+  display: flex;
+  height: 500px;
+  position: relative;
+
+}
+.icon-text-style{
+    cursor: pointer;
+    width: 100%;
+}
+.menu{
+  top:30px;
+  left:0 px;
+  position: absolute;
+  text-align: center;
+  right: 0 px;
+  cursor: pointer;
+}
+
+.menu-item{
+    position: relative;
+}
+.sub-menu{
+    position: absolute;
+    top:0;
+    right:100%;
+    padding:10px;
+}
