@@ -4,7 +4,7 @@ import "./register.css";
 function Register() {
   return (
     <div className="tajawal-extralight">
-      <h1>أدخل بيناتك</h1>
+      <h1>ادخل بيناتك</h1>
       <div className="register-style">
         <div className="input-group">
           <label>الاسم</label>
@@ -31,12 +31,13 @@ function Register() {
           />
         </div>
         <div className="footer-container">
-          <h4>
-            <Link to={"../login"}>هل لديك حساب بالفعل؟</Link>
-          </h4>
           <button type="submit" className="submit-button">
             تسجيل
-          </button>
+                  </button>
+                  <p>
+                      هل لديك حساب بالفعل؟
+                      <Link to={"/login"}>تسجيل دخول</Link>
+                  </p>
         </div>
       </div>
     </div>
