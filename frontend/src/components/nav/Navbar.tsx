@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import Hero from "../../pages/Hero/Hero";
 
 function Navbar() {
     return (
@@ -16,7 +15,6 @@ function Navbar() {
             <Link className="nav-link " to="/" >البيع في سوق</Link>
             <Link className="button nav-button" to="login">تسجيل الدخول</Link>
             </nav>
-        <Hero/>
         </>
     );
 }
