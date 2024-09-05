@@ -17,11 +17,20 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
-        if (axios.isAxiosError(error) && error.response?.status === 401) {
-            // Unauthorized error, remove current token since it's not valid.
-            clearUser();
-        }
         return Promise.reject(error);
+    }
+);
+api.interceptors.response.use(
+    (response) => {
+        // Return the response data if everything is fine
+        return response;
+    },
+    (error) => {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+            // Unauthorized error, remove the current token since it's not valid.
+            clearUser();  // Clear user and token from localStorage
+        }
+        return Promise.reject(error); // Reject the error so it's still caught in the catch block
     }
 );
 export function clearUser() {
