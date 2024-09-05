@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import "../login-form.css";
+import "./login-form.css";
 import { useRef, useState } from "react";
 import api, { setToken} from "../api";
 import axios from "axios";
@@ -49,8 +49,8 @@ function Login() {
             ));
             redirectAfterLogin(navigate);
         } catch (error) {
-            // Handle 401 Unauthorized error
             if (axios.isAxiosError(error)) {
+                // Handle 401 Unauthorized error
                 if (error.response?.status === 401) {
                     switch (loginMethod) {
                         case "username":
