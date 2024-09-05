@@ -6,7 +6,7 @@ import { itemdata } from "../../utils/itemdata";
 import "./HeroItem.css";
 
 const HeroItem: React.FC = () => {
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,

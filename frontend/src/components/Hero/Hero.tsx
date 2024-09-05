@@ -47,11 +47,7 @@ const items: MenuItem[] = [
   },
   { key: "13", icon: <PieChartOutlined />, label: "جوالات" },
   { key: "14", icon: <DesktopOutlined />, label: "لابتوبات" },
-  { key: "15", icon: <ContainerOutlined />, label: "أجهزة منزليه" },
-  { key: "1", icon: <PieChartOutlined />, label: "جوالات" },
-  { key: "2", icon: <DesktopOutlined />, label: "لابتوبات" },
-  { key: "3", icon: <ContainerOutlined />, label: "أجهزة منزليه" },
-  { key: "3", icon: <ContainerOutlined />, label: "أجهزة منزليه" },
+  { key: "15", icon: <ContainerOutlined />, label: "أجهزة منزليه" }
 ];
 
 const Hero: React.FC = () => {
@@ -74,7 +70,7 @@ const Hero: React.FC = () => {
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
         mode="inline"
-        theme="dark"
+        theme="light"
         inlineCollapsed={collapsed}
         items={items}
       />
