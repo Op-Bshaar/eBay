@@ -10,15 +10,23 @@ const HeroItem: React.FC = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 3
+    slidesToShow: 3,
+    slidesToScroll: 3,
   };
+  const handleClick = (item:any)=>{
+  alert(`hello ${item.id}`);
+  }
   return (
     <div className="hero-item-container">
       <Slider {...settings}>
-        {itemdata.map((item, index) => (
-          <div key={index} className="hero-item">
-            <div className="icon-container">{item.icon}</div>
+        {itemdata.map((item) => (
+          <div key={item.id} 
+          className="hero-item"
+          onClick={()=>handleClick(item)}
+          >
+            <div className="icon-container">
+              {item.icon}
+            </div>
             <span className="item-text">{item.item}</span>
           </div>
         ))}
