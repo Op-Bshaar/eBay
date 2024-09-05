@@ -40,6 +40,8 @@ function Login() {
         }),
       });
 
+        const x = await response.text();
+        console.log(x);
       if (!response.ok) {
         throw new Error("Failed to login. Please check your credentials.");
       }
@@ -66,7 +68,7 @@ function Login() {
             ref={nameRef}
             pattern="^[\p{L}\p{N}_]+$"
             id="username"
-            minLength={4}
+            minLength={2}
             type="text"
             placeholder="ادخل اسم المستخدم"
             required
