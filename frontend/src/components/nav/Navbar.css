@@ -1,34 +1,33 @@
-
 .nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 10px 20px;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
 }
 
 .search-bar {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
 }
-    .search-bar input {
-        width: 200px;
-        height: 30px;
-        cursor: pointer;
-        padding: 0 10px;
-        text-align: center;
-        line-height: 30px;
-    }
+.search-bar input {
+  width: 200px;
+  height: 30px;
+  cursor: pointer;
+  padding: 0 10px;
+  text-align: center;
+  line-height: 30px;
+}
 .search-icon {
-    width: auto;
-    height: 30px;
-    margin: 0 2%;
-    color:#0077ff;
-    cursor:pointer;
+  width: auto;
+  height: 30px;
+  margin: 0 2%;
+  color: #0077ff;
+  cursor: pointer;
 }
 .nav-button {
 }
@@ -36,20 +35,20 @@
   margin: 0;
 }
 .nav-link {
-    margin: 0 10px;
-    color:black;
-    text-decoration:none;
+  margin: 0 10px;
+  color: black;
+  text-decoration: none;
 }
 
-.icon-text-style{
+.icon-text-style {
   cursor: pointer;
 }
 
-@media(any-hover:hover) and (any-pointer:fine) {
-    .search-icon:hover {
-        color: #33aaff;
-    }
+@media (any-hover: hover) and (any-pointer: fine) {
+  .search-icon:hover {
+    color: #33aaff;
+  }
 }
 .search-icon:active {
-    color: #004488;
+  color: #004488;
 }
