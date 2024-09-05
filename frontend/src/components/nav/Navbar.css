@@ -1,12 +1,12 @@
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  padding: 10px 20px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  width: 100%;
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
 }
 
 .search-bar {
@@ -29,10 +29,8 @@
   color: #0077ff;
   cursor: pointer;
 }
-.nav-button {
-}
-.nav h1 {
-  margin: 0;
+.navbar h1 {
+    margin: 0;
 }
 .nav-link {
   margin: 0 10px;

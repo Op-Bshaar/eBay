@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import api, { clearUserToken } from "../api";
 
 export class User {
     username: string;
@@ -22,4 +23,15 @@ export function useAuthenticationContext(): AuthenticationContextType {
         throw new Error("useAuthentication must be used within an AuthenticationProvider");
     }
     return context;
+}
+export function useLogout() {
+    const { setUser } = useAuthenticationContext();
+    const logout = async () => {
+        try {
+            await api.post('/logout');
+        } catch { /* empty */ }
+        clearUserToken();
+        setUser(null);
+    };
+    return logout;
 }

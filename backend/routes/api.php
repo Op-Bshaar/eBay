@@ -10,7 +10,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/loginphone', [AuthController::class, 'loginPhone']);
 Route::post('/loginemail', [AuthController::class, 'loginEmail']);
 Route::post('/register', [AuthController::class, 'register']);
-
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 //product route
 
 Route::get('/products',[ProductController::class,'index']);

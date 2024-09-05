@@ -2,9 +2,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./login-form.css";
 import { RefObject, useRef, useState } from "react";
 import { redirectAfterLogin } from "./LoginRedirect";
-import api, { setToken } from "../api";
 import { useAuthenticationContext, User } from "../../context/AuthenticationContext";
 import axios from "axios";
+import api, { setToken } from "../../api";
 
 function Register() {
     const navigate = useNavigate();
