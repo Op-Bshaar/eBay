@@ -53,14 +53,18 @@ function triggerAuthChange() {
 export function useIsAuthenticated() {
     const [isAuthenticated, setIsAuthenticated] = useState(checkAuthentication());
     useEffect(() => {
-        const handleStorageChange = () => {
+        const handleAuthChange = () => {
             setIsAuthenticated(checkAuthentication());
         };
+        // Listen to the custom auth change event for changes in the same tab
+        window.addEventListener('authChange', handleAuthChange);
 
-        window.addEventListener('authChange', handleStorageChange);
+        // Also listen to storage events for other tabs
+        window.addEventListener('storage', handleAuthChange);
 
         return () => {
-            window.removeEventListener('authChange', handleStorageChange);
+            window.removeEventListener('authChange', handleAuthChange);
+            window.removeEventListener('storage', handleAuthChange);
         };
     }, []);
     return isAuthenticated;
