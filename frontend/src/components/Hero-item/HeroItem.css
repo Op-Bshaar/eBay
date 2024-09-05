@@ -1,6 +1,10 @@
 .hero-item-container {
   width: calc(100% - 300px); 
-
+  background-color: rgb(249, 249, 249);
+  height: 50%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+  border-radius: 8px;
+  position: relative; 
 }
 
 .hero-item {
@@ -13,7 +17,7 @@
 }
 
 .icon-container {
-  font-size: 50px;
+  font-size: 30px;
 }
 
 .item-text {
@@ -25,11 +29,14 @@
 .slick-prev:before,
 .slick-next:before {
   color: black;
+  font-size: 24px;
 }
 
-.slick-prev,
+.slick-prev, 
 .slick-next {
   z-index: 1;
   width: 50px;
   height: 50px;
+  background: transparent;
+  border: none;
 }

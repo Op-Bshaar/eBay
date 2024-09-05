@@ -7,10 +7,9 @@ import "./HeroItem.css";
 
 const HeroItem: React.FC = () => {
   const settings = {
-    dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 7,
     slidesToScroll: 3,
   };
   const handleClick = (item:any)=>{
