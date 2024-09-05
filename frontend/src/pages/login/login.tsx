@@ -4,10 +4,8 @@ import { useRef, useState } from "react";
 import api, { setToken, setUser } from "../api";
 import axios from "axios";
 
-interface LoginProps {
-  redirectTo?: string;
-}
-function Login({ redirectTo = "/" }: LoginProps) {
+interface LoginProps {redirectTo?:string };
+function Login({redirectTo = "/" }:LoginProps) {
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
     const usernameRef = useRef<HTMLInputElement>(null);
@@ -79,80 +77,66 @@ function Login({ redirectTo = "/" }: LoginProps) {
             }
         }
     }
-    try {
-      const response = await api.post(path, {
-        [loginMethod]: id,
-        password: password,
-      });
-      localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem("username", response.data.user["username"]);
-      navigate(redirectTo);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  return (
-    <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
-      <h1>ادخل بيناتك</h1>
-      <div className="login-form-content">
-        <div className="input-group">
-          <label htmlFor="login-method">اختر طريقة الدخول:</label>
-          <select
-            id="login-method"
-            value={loginMethod}
-            onChange={(e) =>
-              setLoginMethod(e.target.value as "username" | "email" | "phone")
-            }
-            required
-          >
-            <option value="username">اسم المستخدم</option>
-            <option value="email">البريد الالكتروني</option>
-            <option value="phone">رقم الجوال</option>
-          </select>
-        </div>
+    return (
+        <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
+            <h1>ادخل بيناتك</h1>
+            <div className="login-form-content">
+                <div className="input-group">
+                    <label htmlFor="login-method">اختر طريقة الدخول:</label>
+                    <select
+                        id="login-method"
+                        value={loginMethod}
+                        onChange={(e) => setLoginMethod(e.target.value as ("username" | "email" | "phone"))}
+                        required
+                    >
+                        <option value="username">اسم المستخدم</option>
+                        <option value="email">البريد الالكتروني</option>
+                        <option value="phone">رقم الجوال</option>
+                    </select>
+                </div>
 
-        {loginMethod === "username" && (
-          <div className="input-group">
-            <label htmlFor="username">اسم المستخدم:</label>
-            <input
-              ref={usernameRef}
-              pattern="^[\p{L}\p{N}_]+$"
-              id="username"
-              minLength={2}
-              type="text"
-              placeholder="ادخل اسم المستخدم"
-              required
-            />
-          </div>
-        )}
+                {loginMethod === "username" && (
+                    <div className="input-group">
+                        <label htmlFor="username">اسم المستخدم:</label>
+                        <input
+                            ref={usernameRef}
+                            pattern="^[\p{L}\p{N}_]+$"
+                            id="username"
+                            minLength={2}
+                            type="text"
+                            placeholder="ادخل اسم المستخدم"
+                            required
+                        />
+                    </div>
+                )}
 
-        {loginMethod === "email" && (
-          <div className="input-group">
-            <label htmlFor="email">البريد الالكتروني:</label>
-            <input
-              ref={emailRef}
-              type="email"
-              id="email"
-              placeholder="ادخل بريدك الإلكتروني"
-              required
-            />
-          </div>
-        )}
+                {loginMethod === "email" && (
+                    <div className="input-group">
+                        <label htmlFor="email">البريد الالكتروني:</label>
+                        <input
+                            ref={emailRef}
+                            type="email"
+                            id="email"
+                            placeholder="ادخل بريدك الإلكتروني"
+                            required
+                        />
+                    </div>
+                )}
 
-        {loginMethod === "phone" && (
-          <div className="input-group">
-            <label htmlFor="phone">رقم الجوال:</label>
-            <input
-              ref={phoneRef}
-              pattern="^[\d+]\d*$"
-              id="phone"
-              placeholder="ادخل رقم جوالك"
-              minLength={10}
-              required
-            />
-          </div>
-        )}
+                {loginMethod === "phone" && (
+                    <div className="input-group">
+                        <label htmlFor="phone">رقم الجوال:</label>
+                        <input
+                            ref={phoneRef}
+                            pattern="^[\d+]\d*$"
+                            id="phone"
+                            placeholder="ادخل رقم جوالك"
+                            minLength={10}
+                            required
+                        />
+                    </div>
+                )}
 
                 <div className="input-group">
                     <label htmlFor="password">كلمة المرور:</label>
