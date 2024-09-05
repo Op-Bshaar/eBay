@@ -1,82 +1,87 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../login-form.css";
 import { useRef, useState } from "react";
-import api, { setToken, setUser } from "../api";
+import api, { setToken} from "../api";
 import axios from "axios";
+import {  redirectAfterLogin } from "./LoginRedirect";
+import { useAuthenticationContext, User } from "../../context/AuthenticationContext";
 
-interface LoginProps {
-  redirectTo?: string;
-}
-function Login({ redirectTo = "/" }: LoginProps) {
-  const navigate = useNavigate();
-  const emailRef = useRef<HTMLInputElement>(null);
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const [loginMethod, setLoginMethod] = useState<
-    "username" | "email" | "phone"
-  >("username");
-  const [errorMessage, setErrorMessage] = useState("");
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMessage("");
-    let id: string;
-    let path: string;
-    const password = passwordRef.current?.value ?? "";
-    switch (loginMethod) {
-      case "username":
-        id = usernameRef.current?.value ?? "";
-        path = "/login";
-        break;
-      case "email":
-        id = emailRef.current?.value ?? "";
-        path = "/loginemail";
-        break;
-      case "phone":
-        id = phoneRef.current?.value ?? "";
-        path = "/loginphone";
-        break;
-    }
-    try {
-      const response = await api.post(path, {
-        [loginMethod]: id,
-        password: password,
-      });
-      setToken(response.data.access_token);
-      setUser(
-        response.data.user["username"],
-        response.data.user["email"],
-        response.data.user["phone"]
-      );
-      navigate(redirectTo);
-    } catch (error) {
-      // Handle 401 Unauthorized error
-      if (axios.isAxiosError(error)) {
-        if (error.response && error.response.status === 401) {
-          switch (loginMethod) {
+function Login() {
+    const navigate = useNavigate();
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const [loginMethod, setLoginMethod] = useState<"username" | "email" | "phone">("username");
+    const [errorMessage, setErrorMessage] = useState("");
+    const { setUser } = useAuthenticationContext();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setErrorMessage("");
+        let id: string;
+        let path: string;
+        const password = passwordRef.current?.value ?? "";
+        switch (loginMethod) {
             case "username":
-              setErrorMessage("خطأ في اسم المستخدم أو كلمة المرور!");
-              break;
+                id = usernameRef.current?.value ?? "";
+                path = "/login";
+                break;
             case "email":
-              setErrorMessage("خطأ في البريد الالكتروني أو كلمة المرور!");
-              break;
+                id = emailRef.current?.value ?? "";
+                path = "/loginemail";
+                break;
             case "phone":
-              setErrorMessage("خطأ في رقم الجوال أو كلمة المرور!");
-              break;
-            default:
-              setErrorMessage("خطأ في الادخال!");
-              break;
-          }
-        } else if (error.request) {
-          setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
-        } else {
-          setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
+                id = phoneRef.current?.value ?? "";
+                path = "/loginphone";
+                break;
         }
-      } else {
-        setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
-      }
-    }
-  };
+        try {
+            const response = await api.post(path, {
+                [loginMethod]: id,
+                password: password,
+            });
+            setToken(response.data.access_token);
+            const _user = response.data.user;
+            setUser(new User(
+                _user["username"], _user["phone"], _user["email"],
+                _user["email_verified_at"] != null,
+                _user["phone_verified_at"] != null
+            ));
+            redirectAfterLogin(navigate);
+        } catch (error) {
+            // Handle 401 Unauthorized error
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 401) {
+                    switch (loginMethod) {
+                        case "username":
+                            setErrorMessage("خطأ في اسم المستخدم أو كلمة المرور!");
+                            break;
+                        case "email":
+                            setErrorMessage("خطأ في البريد الالكتروني أو كلمة المرور!");
+                            break;
+                        case "phone":
+                            setErrorMessage("خطأ في رقم الجوال أو كلمة المرور!");
+                            break;
+                        default:
+                            setErrorMessage("خطأ في الادخال!");
+                            break;
+                    }
+                }
+                    // request was sent but no response
+                else if (!error.response && error.request) {
+                    setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
+                }
+                // server responded with an error other than 401
+                else {
+                    setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
+                }
+            }
+                // handle non Axios Errors
+            else {
+                setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
+            }
+        }
+    };
 
     return (
         <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
@@ -155,7 +160,11 @@ function Login({ redirectTo = "/" }: LoginProps) {
                         required
                     />
                 </div>
-                {errorMessage && <p className="login-error">{errorMessage}</p>}
+                {errorMessage && (
+                    <p role="alert" aria-live="assertive" className="login-error">
+                        {errorMessage}
+                    </p>
+                )}
                 <button type="submit" className="button submit-button">
                     تسجيل الدخول
                 </button>

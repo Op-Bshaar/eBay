@@ -1,0 +1,12 @@
+import { ReactNode, useState } from "react";
+import { AuthenticationContext, User } from "./AuthenticationContext";
+
+const AuthenticationProvider = ({ children }: { children: ReactNode }) => {
+    const [user, setUser] = useState<User | null>(null);
+    return (
+        <AuthenticationContext.Provider value={{user, setUser} } >
+      {children}
+    </AuthenticationContext.Provider>
+  );
+};
+export default AuthenticationProvider;

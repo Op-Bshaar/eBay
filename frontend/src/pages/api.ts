@@ -44,7 +44,4 @@ export function isAuthorized() {
 export function setToken(token: string) {
     localStorage.setItem("token", token);
 }
-export function setUser(username: string, email: string, phone: string) {
-    localStorage.setItem("username", username);
-}
 export default api;
