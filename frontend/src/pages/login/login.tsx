@@ -38,7 +38,7 @@ function Login({ redirectTo = "/" }: LoginProps) {
         break;
 =======
     const passwordRef = useRef<HTMLInputElement>(null); 
-    const [loginMethod, setLoginMethod] = useState<'username' | 'email' | 'phone'>('username');
+    const [loginMethod, setLoginMethod] = useState<('username' | 'email' | 'phone')>('username');
     const [errorMessage, setErrorMessage] = useState("");
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
