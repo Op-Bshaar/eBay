@@ -17,12 +17,20 @@ api.interceptors.request.use(
         return config;
     },
     (error) => {
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+            // Unauthorized error, remove current token since it's not valid.
+            clearUser();
+        }
         return Promise.reject(error);
     }
 );
 export function clearUser() {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+}
+export function isAuthorized() {
+    const token = localStorage.getItem('token');
+    return token == null;
 }
 export function setToken(token: string) {
     localStorage.setItem("token", token);
