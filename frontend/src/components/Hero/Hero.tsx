@@ -54,7 +54,7 @@ const items: MenuItem[] = [
   { key: "3", icon: <ContainerOutlined />, label: "أجهزة منزليه" },
 ];
 
-const App: React.FC = () => {
+const Hero: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {
@@ -82,4 +82,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Hero;

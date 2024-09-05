@@ -1,8 +1,15 @@
-import React from 'react';
+import React from "react";
+import Hero from "../../components/Hero/Hero";
+import HeroItem from "../../components/Hero-item/HeroItem";
 
 function Home() {
   return (
-    <p>Hello world!</p>
+    <>
+      <div style={{display:"flex",fontFamily:""}}>
+        <Hero />
+        <HeroItem />
+      </div>
+    </>
   );
 }
 
