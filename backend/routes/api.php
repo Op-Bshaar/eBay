@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/loginphone', [AuthController::class, 'loginPhone']);
+Route::post('/loginemail', [AuthController::class, 'loginEmail']);
 Route::post('/register', [AuthController::class, 'register']);
 
 //product route
