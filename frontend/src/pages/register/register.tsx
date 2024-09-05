@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../login-form.css";
-import { useRef, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 function Register() {
@@ -33,6 +33,8 @@ function Register() {
           phone,
         }), 
       });
+        const x = await response.text();
+        console.log(x);
       if (!response.ok) {
         throw new Error("Failed to register. Please try again.");
       }
@@ -58,7 +60,7 @@ function Register() {
             type="text"
             id="username"
             placeholder="ادخل اسم المستخدم"
-            minLength={4}
+            minLength={2}
             pattern="^[\p{L}\p{N}_]+$"
             required
             ref={nameRef}
@@ -85,7 +87,7 @@ function Register() {
             ref={phoneRef}
           />
         </div>
-        <PasswordInput />
+              <PasswordInput passwordRef={passwordRef } />
         {error && <p className="error">{error}</p>}
         <button type="submit" className="button submit-button">
           تسجيل
@@ -98,60 +100,56 @@ function Register() {
     </form>
   );
 }
-
-function PasswordInput() {
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const confirmPasswordRef = useRef<HTMLInputElement>(null);
-
-  const validatePassword = () => {
+interface PasswordInputProps { passwordRef?: RefObject<HTMLInputElement> }
+function PasswordInput({ passwordRef }: PasswordInputProps) {
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const confirmPasswordRef = useRef<HTMLInputElement>(null);
     if (password === confirmPassword) {
-      confirmPasswordRef.current?.setCustomValidity("");
+        confirmPasswordRef.current?.setCustomValidity("");
     } else {
-      confirmPasswordRef.current?.setCustomValidity("Passwords do not match!");
+        confirmPasswordRef.current?.setCustomValidity("Passwords do not match!");
     }
-  };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-    validatePassword();
-  };
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+    };
 
-  const handleConfirmPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const newConfirmPassword = e.target.value;
-    setConfirmPassword(newConfirmPassword);
-    validatePassword();
-  };
+    const handleConfirmPasswordChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const newConfirmPassword = e.target.value;
+        setConfirmPassword(newConfirmPassword);
+    };
 
-  return (
-    <>
-      <div className="input-group">
-        <label htmlFor="password">كلمة المرور:</label>
-        <input
-          onChange={handlePasswordChange}
-          id="password"
-          type="password"
-          placeholder="ادخل كلمة المرور"
-          minLength={8}
-          required
-        />
-      </div>
-      <div className="input-group">
-        <label htmlFor="confirm-password">تأكيد كلمة المرور:</label>
-        <input
-          onChange={handleConfirmPasswordChange}
-          ref={confirmPasswordRef}
-          id="confirm-password"
-          type="password"
-          placeholder="تأكيد كلمة المرور"
-          required
-        />
-      </div>
-    </>
-  );
+    return (
+        <>
+            <div className="input-group">
+                <label htmlFor="password">كلمة المرور:</label>
+                <input
+                    onChange={handlePasswordChange}
+                    id="password"
+                    type="password"
+                    placeholder="ادخل كلمة المرور"
+                    minLength={8}
+                    required
+                    ref={passwordRef }
+                />
+            </div>
+            <div className="input-group">
+                <label htmlFor="confirm-password">تأكيد كلمة المرور:</label>
+                <input
+                    onChange={handleConfirmPasswordChange}
+                    ref={confirmPasswordRef}
+                    id="confirm-password"
+                    type="password"
+                    placeholder="تأكيد كلمة المرور"
+                    required
+                />
+            </div>
+        </>
+    );
 }
 
 export default Register;
