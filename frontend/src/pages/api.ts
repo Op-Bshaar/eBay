@@ -20,4 +20,14 @@ api.interceptors.request.use(
         return Promise.reject(error);
     }
 );
+export function clearUser() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+}
+export function setToken(token: string) {
+    localStorage.setItem("token", token);
+}
+export function setUser(username: string, email: string, phone: string) {
+    localStorage.setItem("username", username);
+}
 export default api;

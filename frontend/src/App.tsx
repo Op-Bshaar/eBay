@@ -6,6 +6,7 @@ import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
 
 function App() {
+    localStorage.removeItem('d');
   return (
       <BrowserRouter>
         <Navbar />

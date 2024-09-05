@@ -21,7 +21,7 @@ class AuthController extends Controller
         $user = User::where('username', $request->username)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         if (!Hash::check($request->password, $user->password)) {
@@ -44,7 +44,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         if (!Hash::check($request->password, $user->password)) {
@@ -67,7 +67,7 @@ class AuthController extends Controller
         $user = User::where('phone', $request->phone)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         if (!Hash::check($request->password, $user->password)) {
