@@ -2,18 +2,20 @@ import { Link, useNavigate } from "react-router-dom";
 import "../login-form.css";
 import { useRef, useState } from "react";
 import api, { setToken, setUser } from "../api";
+import axios from "axios";
 
 interface LoginProps {redirectTo?:string };
 function Login({redirectTo = "/" }:LoginProps) {
   const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
-  const usernameRef = useRef<HTMLInputElement>(null);
+    const usernameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null); 
     const [loginMethod, setLoginMethod] = useState<'username' | 'email' | 'phone'>('username');
-
+    const [errorMessage, setErrorMessage] = useState("");
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setErrorMessage("");
         let id: string;
         let path: string;
         const password = passwordRef.current?.value ?? "";
@@ -41,10 +43,38 @@ function Login({redirectTo = "/" }:LoginProps) {
             navigate(redirectTo);
         }
         catch (error) {
-            if (error.response) {
+            // Handle 401 Unauthorized error
+            if (axios.isAxiosError(error)) {
 
+
+                if (error.response && error.response.status === 401) {
+                    switch (loginMethod) {
+                        case "username":
+                            setErrorMessage("خطأ في اسم المستخدم أو كلمة المرور!");
+                            break;
+                        case "email":
+                            setErrorMessage("خطأ في البريد الالكتروني أو كلمة المرور!");
+                            break;
+                        case "phone":
+                            setErrorMessage("خطأ في رقم الجوال أو كلمة المرور!");
+                            break;
+                        default:
+                            setErrorMessage("خطأ في الادخال!");
+                            break;
+
+                    }
+                }
+                else if (error.request) {
+                    setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
+
+                }
+                else {
+                    setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.")
+                }
             }
-            console.log(error);
+            else {
+                setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.")
+            }
         }
     }
 
@@ -119,7 +149,7 @@ function Login({redirectTo = "/" }:LoginProps) {
                         required
                     />
                 </div>
-
+                {errorMessage && <p className="login-error">{errorMessage }</p>}
                 <button type="submit" className="button submit-button">
                     تسجيل الدخول
                 </button>
