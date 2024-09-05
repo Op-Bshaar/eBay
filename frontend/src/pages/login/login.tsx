@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../login-form.css";
 import { useRef, useState } from "react";
-import api from "../api";
+import api, { setToken, setUser } from "../api";
 
 interface LoginProps {redirectTo?:string };
 function Login({redirectTo = "/" }:LoginProps) {
@@ -36,11 +36,14 @@ function Login({redirectTo = "/" }:LoginProps) {
                 [loginMethod]: id,
                 "password": password,
             });
-            localStorage.setItem('token', response.data.access_token);
-            localStorage.setItem('username',  response.data.user["username"]);
+            setToken(response.data.access_token);
+            setUser(response.data.user["username"], response.data.user["email"], response.data.user["phone"]);
             navigate(redirectTo);
         }
         catch (error) {
+            if (error.response) {
+
+            }
             console.log(error);
         }
     }
