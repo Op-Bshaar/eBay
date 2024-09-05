@@ -12,31 +12,6 @@ function Login({ redirectTo = "/" }: LoginProps) {
   const emailRef = useRef<HTMLInputElement>(null);
     const usernameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
-<<<<<<< HEAD
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const [loginMethod, setLoginMethod] = useState<
-    "username" | "email" | "phone"
-  >("username");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    let id: string;
-    let path: string;
-    const password = passwordRef.current?.value ?? "";
-    switch (loginMethod) {
-      case "username":
-        id = usernameRef.current?.value ?? "";
-        path = "/login";
-        break;
-      case "email":
-        id = emailRef.current?.value ?? "";
-        path = "/loginemail";
-        break;
-      case "phone":
-        id = phoneRef.current?.value ?? "";
-        path = "/loginphone";
-        break;
-=======
     const passwordRef = useRef<HTMLInputElement>(null); 
     const [loginMethod, setLoginMethod] = useState<('username' | 'email' | 'phone')>('username');
     const [errorMessage, setErrorMessage] = useState("");
@@ -103,7 +78,6 @@ function Login({ redirectTo = "/" }: LoginProps) {
                 setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.")
             }
         }
->>>>>>> 4a3d029cf886e0f27b530ed0612855fe84488578
     }
     try {
       const response = await api.post(path, {
@@ -180,27 +154,6 @@ function Login({ redirectTo = "/" }: LoginProps) {
           </div>
         )}
 
-<<<<<<< HEAD
-        <div className="input-group">
-          <label htmlFor="password">كلمة المرور:</label>
-          <input
-            ref={passwordRef}
-            type="password"
-            id="password"
-            placeholder="ادخل كلمة المرور"
-            minLength={8}
-            required
-          />
-        </div>
-
-        <button type="submit" className="button submit-button">
-          تسجيل الدخول
-        </button>
-        <Link to="/register">حساب جديد</Link>
-      </div>
-    </form>
-  );
-=======
                 <div className="input-group">
                     <label htmlFor="password">كلمة المرور:</label>
                     <input
@@ -220,6 +173,5 @@ function Login({ redirectTo = "/" }: LoginProps) {
             </div>
         </form>
     );
->>>>>>> 4a3d029cf886e0f27b530ed0612855fe84488578
 }
 export default Login;
