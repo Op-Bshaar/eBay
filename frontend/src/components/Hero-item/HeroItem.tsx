@@ -10,7 +10,7 @@ const HeroItem: React.FC = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 3,
   };
   const handleClick = (item:any)=>{

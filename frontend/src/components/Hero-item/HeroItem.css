@@ -1,7 +1,6 @@
 .hero-item-container {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
+  width: calc(100% - 300px); 
+
 }
 
 .hero-item {
@@ -22,6 +21,7 @@
   margin-top: 10px;
   text-align: center;
 }
+
 .slick-prev:before,
 .slick-next:before {
   color: black;
