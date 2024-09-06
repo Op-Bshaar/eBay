@@ -3,6 +3,7 @@ import Hero from "../../components/Hero/Hero";
 import HeroItem from "../../components/Hero-item/HeroItem";
 import { Products } from "../../utils/itemdata";
 import { BASE_URL } from "../../constants/BaseUrl";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [products, setProducts] = useState<Products[]>([]);
@@ -48,12 +49,14 @@ function Home() {
         {products.length > 0 ? (
           products.map(({ id, title, image, price }) => (
             <div key={id} style={{ textAlign: "center" }}>
-              <h2>{title}</h2>
-              <img
-                style={{ width: "100px", height: "100px" }}
-                src={image}
-                alt={title}
-              />
+              <Link to={`/products/${id}`}>
+                <h2>{title}</h2>
+                <img
+                  style={{ width: "100px", height: "100px" }}
+                  src={image}
+                  alt={title}
+                />
+              </Link>
               <p>{price}</p>
             </div>
           ))

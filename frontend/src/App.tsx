@@ -5,6 +5,7 @@ import Register from "./pages/login/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
 import AuthenticationProvider from "./context/AuthenticationProvider";
+import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
 function App() {
   return (
     <AuthenticationProvider>
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/products/:id" element={<ProductsDeatils />} />
         </Routes>
       </BrowserRouter>
     </AuthenticationProvider>
