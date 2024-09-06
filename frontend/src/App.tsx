@@ -6,18 +6,18 @@ import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
 import AuthenticationProvider from "./context/AuthenticationProvider";
 function App() {
-    return (
-        <AuthenticationProvider>
-            <BrowserRouter>
-                <Navbar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
-            </BrowserRouter>
-        </AuthenticationProvider>
-    );
+  return (
+    <AuthenticationProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthenticationProvider>
+  );
 }
 
 export default App;
