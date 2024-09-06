@@ -37,6 +37,7 @@ function Home() {
         <Hero />
         <HeroItem />
       </div>
+
       <div
         style={{
           display: "grid",
@@ -44,10 +45,11 @@ function Home() {
           gap: "1px",
           justifyContent: "center",
           margin: "0 auto",
+          position: "relative",
         }}
       >
         {products.length > 0 ? (
-          products.map(({ id, title, image, price }) => (
+          products.map(({ id, title, image, price, description }) => (
             <div key={id} style={{ textAlign: "center" }}>
               <Link to={`/products/${id}`}>
                 <h2>{title}</h2>
@@ -58,6 +60,7 @@ function Home() {
                 />
               </Link>
               <p>{price}</p>
+              <p>{description}</p>
             </div>
           ))
         ) : (

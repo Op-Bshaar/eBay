@@ -24,7 +24,7 @@ export const itemdata = [
     },
     {
         id:5,
-        item:"ساعات",
+        item:"أجهزة",
         icon: <FontAwesomeIcon icon={faBox} style={{color:"gray"}} />
     },
     {
@@ -39,12 +39,12 @@ export const itemdata = [
     },
     {
         id:8,
-        item:"ساعات",
+        item:"شرائح",
         icon: <FontAwesomeIcon icon={faComputer} style={{color:"gray"}} />
     },
     {
         id:9,
-        item:"ساعات",
+        item:"أجخزة منزلية",
         icon: <FontAwesomeIcon icon={faComputer} style={{color:"gray"}} />
     }
 ]
@@ -54,5 +54,6 @@ export interface Products{
     id:string,
     image:string,
     title:string,
-    price:string
+    price:string,
+    description:string
 }
