@@ -10,53 +10,54 @@ import axios from "axios";
 import api, { setToken } from "../../api";
 
 function Register() {
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
-  const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
-  const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const phoneRef = useRef<HTMLInputElement>(null);
-  const { setUser } = useAuthenticationContext();
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const username = usernameRef.current?.value || "";
-    const email = emailRef.current?.value || "";
-    const password = passwordRef.current?.value || "";
-    const phone = phoneRef.current?.value || "";
-    try {
-      setErrorMessage("");
-      const response = await api.post("register", {
-        username,
-        email,
-        phone,
-        password,
-      });
-      setToken(response.data.access_token);
-      const _user = response.data.user;
-      setUser(
-        new User(
-          _user["username"],
-          _user["phone"],
-          _user["email"],
-          _user["email_verified_at"] != null,
-          _user["phone_verified_at"] != null
-        )
-      );
-      redirectAfterLogin(navigate);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // handle 422 Unprocessable Content
-        if (error.response?.status === 422 && error.response?.data?.errors) {
-          const _errors = error.response.data.errors;
-          // !!_errors["username"] returns true if username exists in _errors
-          const _usernameTaken = !!_errors["username"];
-          // setIsUsernameTaken only if it changed to avoid unnecessary  updates
-          if (isUsernameTaken != _usernameTaken) {
-            setIsUsernameTaken(_usernameTaken);
-          }
+    const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
+    const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
+    const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
+    const usernameRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const phoneRef = useRef<HTMLInputElement>(null);
+    // set if waiting for server respons.
+    // used to disable submit button.
+    const [isLoading, setIsLoading] = useState(false);
+    const { setUser } = useAuthenticationContext();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const username = usernameRef.current?.value || "";
+        const email = emailRef.current?.value || "";
+        const password = passwordRef.current?.value || "";
+        const phone = phoneRef.current?.value || "";
+        try {
+            setIsLoading(true);
+            setErrorMessage("");
+            const response = await api.post("register", {
+                username,
+                email,
+                phone,
+                password,
+            });
+            setToken(response.data.access_token);
+            const _user = response.data.user;
+            setUser(new User(
+                _user["username"], _user["phone"], _user["email"],
+                _user["email_verified_at"] != null,
+                _user["phone_verified_at"] != null
+            ));
+            redirectAfterLogin(navigate);
+        }
+        catch (error) {
+            if (axios.isAxiosError(error)) {
+                // handle 422 Unprocessable Content
+                if (error.response?.status === 422 && error.response?.data?.errors) {
+                    const _errors = error.response.data.errors;
+                    // !!_errors["username"] returns true if username exists in _errors
+                    const _usernameTaken = !!_errors["username"];
+                    // setIsUsernameTaken only if it changed to avoid unnecessary  updates
+                    if (isUsernameTaken != _usernameTaken) {
+                        setIsUsernameTaken(_usernameTaken);
+                    }
 
           // !!_errors["phone"] returns true if phone exists in _errors
           const _phoneTaken = !!_errors["phone"];
@@ -72,26 +73,26 @@ function Register() {
             setIsEmailTaken(_emailTaken);
           }
 
-          if (!_emailTaken && !_usernameTaken && !_phoneTaken) {
-            setErrorMessage("خطأ في الادخال!");
-          }
+                    if (!_emailTaken && !_usernameTaken && !_phoneTaken) {
+                        setErrorMessage("خطأ في الادخال!");
+                    }
+                }
+                // request was sent but no response
+                else if (!error.response && error.request) {
+                    setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
+                }
+                    // server responded with an error other than 422
+                else {
+                    setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
+                }
+            }
+                // handle non Axios Errors
+            else {
+                setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
+            }
+            console.log(error);
         }
-        // request was sent but no response
-        else if (!error.response && error.request) {
-          setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
-        }
-        // server responded with an error other than 422
-        else {
-          setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
-        }
-      }
-      // handle non Axios Errors
-      else {
-        setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
-      }
-      console.log(error);
-    }
-  };
+    };
 
   usernameRef.current?.setCustomValidity(
     isUsernameTaken ? "username taken!" : ""
@@ -161,28 +162,28 @@ function Register() {
             }}
           />
 
-          {isPhoneTaken && (
-            <p role="alert" aria-live="assertive" className="login-sub-error">
-              تم استخدام هذا الجوال من قبل!
-            </p>
-          )}
-        </div>
-        <PasswordInput passwordRef={passwordRef} />
-        {errorMessage && (
-          <p role="alert" aria-live="assertive" className="login-error">
-            {errorMessage}
-          </p>
-        )}
-        <button type="submit" className="button submit-button">
-          تسجيل
-        </button>
-        <p>
-          لديك حساب؟
-          <Link to={"/login"}>تسجيل دخول</Link>
-        </p>
-      </div>
-    </form>
-  );
+                    {isPhoneTaken && (
+                        <p role="alert" aria-live="assertive" className="login-sub-error">
+                            تم استخدام هذا الجوال من قبل!
+                        </p>
+                    )}
+                </div>
+                <PasswordInput passwordRef={passwordRef} />
+                {errorMessage && (
+                    <p role="alert" aria-live="assertive" className="login-error">
+                        {errorMessage}
+                    </p>
+                )}
+                <button type="submit" className="button submit-button" disabled={isLoading}>
+                    تسجيل
+                </button>
+                <p>
+                    لديك حساب؟
+                    <Link to={"/login"}>تسجيل دخول</Link>
+                </p>
+            </div>
+        </form>
+    );
 }
 interface PasswordInputProps {
   passwordRef?: RefObject<HTMLInputElement>;

@@ -14,6 +14,9 @@ function Login() {
     const passwordRef = useRef<HTMLInputElement>(null);
     const [loginMethod, setLoginMethod] = useState<"username" | "email" | "phone">("username");
     const [errorMessage, setErrorMessage] = useState("");
+    // set if waiting for server respons.
+    // used to disable submit button.
+    const [isLoading, setIsLoading] = useState(false);
     const { setUser } = useAuthenticationContext();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,6 +39,8 @@ function Login() {
                 break;
         }
         try {
+            setErrorMessage("");
+            setIsLoading(true);
             const response = await api.post(path, {
                 [loginMethod]: id,
                 password: password,
@@ -67,7 +72,7 @@ function Login() {
                             break;
                     }
                 }
-                    // request was sent but no response
+                // request was sent but no response
                 else if (!error.response && error.request) {
                     setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
                 }
@@ -76,10 +81,13 @@ function Login() {
                     setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
                 }
             }
-                // handle non Axios Errors
+            // handle non Axios Errors
             else {
                 setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
             }
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -165,7 +173,7 @@ function Login() {
                         {errorMessage}
                     </p>
                 )}
-                <button type="submit" className="button submit-button">
+                <button type="submit" className="button submit-button" disabled={isLoading }>
                     تسجيل الدخول
                 </button>
                 <Link to="/register">حساب جديد</Link>
