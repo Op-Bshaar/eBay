@@ -18,7 +18,7 @@ Route::get('/products/{id}',[ProductController::class,'show']);
 
 // Route for seller
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth:sanctum')->group(function(){
     Route::post('/products',[ProductController::class,'store']);
     Route::put('/products/{id}',[ProductController::class,'update']);
     Route::delete('/products/{id}',[ProductController::class,'destroy']);

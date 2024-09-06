@@ -5,21 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Middleware\Middleware;
 
-class ProductController extends Controller implements \Illuminate\Routing\Controllers\HasMiddleware
+
+class ProductController extends Controller
 {
-    public static function middleware(): array
-    {
-        return [
-            'auth:sanctum',
-        ];
-    }
     public function index()
     {
         $products = Products::get();
         return response()->json($products);
     }
-
 
     public function show($id)
     {
@@ -31,11 +26,8 @@ class ProductController extends Controller implements \Illuminate\Routing\Contro
         return response()->json($product);
     }
 
-
     public function store(Request $request)
     {
-
-
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required',
@@ -43,18 +35,16 @@ class ProductController extends Controller implements \Illuminate\Routing\Contro
             'image' => 'nullable|string',
         ]);
 
-
         $product = Products::create([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
             'image' => $request->image,
-            'seller_id' => Auth::id()
+            'seller_id' => Auth::id(),
         ]);
 
         return response()->json($product, 201);
     }
-
 
     public function update(Request $request, $id)
     {
@@ -68,7 +58,6 @@ class ProductController extends Controller implements \Illuminate\Routing\Contro
             return response()->json(['message' => 'Unauthorized action'], 403);
         }
 
-
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required',
@@ -76,12 +65,10 @@ class ProductController extends Controller implements \Illuminate\Routing\Contro
             'image' => 'nullable|string',
         ]);
 
-
         $product->update($request->only('title', 'description', 'price', 'image'));
 
         return response()->json($product, 200);
     }
-
 
     public function destroy($id)
     {
