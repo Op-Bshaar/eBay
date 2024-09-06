@@ -32,7 +32,7 @@ class ProductController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|string',
-            'image' => 'nullable|string',
+            'image' => 'string',
         ]);
 
         $product = Products::create([
@@ -62,7 +62,7 @@ class ProductController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|string',
-            'image' => 'nullable|string',
+            'image' => 'string',
         ]);
 
         $product->update($request->only('title', 'description', 'price', 'image'));

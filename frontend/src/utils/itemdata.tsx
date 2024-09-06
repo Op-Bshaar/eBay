@@ -48,3 +48,11 @@ export const itemdata = [
         icon: <FontAwesomeIcon icon={faComputer} style={{color:"gray"}} />
     }
 ]
+
+
+export interface Products{
+    id:string,
+    image:string,
+    title:string,
+    price:string
+}
