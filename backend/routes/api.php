@@ -14,8 +14,14 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 //product route
 
+
+Route::middleware('auth:sanctum')->get('/products/search',[ProductController::class,'search']);
+
+
 Route::get('/products',[ProductController::class,'index']);
 Route::get('/products/{id}',[ProductController::class,'show']);
+
+
 
 // Route for seller
 
@@ -26,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function(){
 });
 
 
+
+
 // cart Route
 
 Route::middleware('auth:sanctum')->group(function(){
@@ -34,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/cart/{id}',[CartController::class,'update']);
     Route::delete('/cart/{id}',[CartController::class,'destroy']);
 });
+
+
 
 
 Route::get('/user', function (Request $request) {
