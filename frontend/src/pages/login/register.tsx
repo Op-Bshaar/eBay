@@ -16,6 +16,9 @@ function Register() {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
+    // set if waiting for server respons.
+    // used to disable submit button.
+    const [isLoading, setIsLoading] = useState(false);
     const { setUser } = useAuthenticationContext();
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,6 +27,7 @@ function Register() {
         const password = passwordRef.current?.value || "";
         const phone = phoneRef.current?.value || "";
         try {
+            setIsLoading(true);
             setErrorMessage("");
             const response = await api.post("register", {
                 username,
@@ -74,16 +78,18 @@ function Register() {
                 else if (!error.response && error.request) {
                     setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
                 }
-                    // server responded with an error other than 422
+                // server responded with an error other than 422
                 else {
                     setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
                 }
             }
-                // handle non Axios Errors
+            // handle non Axios Errors
             else {
                 setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
             }
-            console.log(error);
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -165,7 +171,7 @@ function Register() {
                         {errorMessage}
                     </p>
                 )}
-                <button type="submit" className="button submit-button">
+                <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل
                 </button>
                 <p>
