@@ -104,15 +104,11 @@ class AuthController extends Controller
             'phone' => 'required|string|unique:users,phone',
         ]);
 
-        $verificationCode = rand(1000000, 999999);
-
         $user = User::create([
             'phone' => $request->phone,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'verification_code' => $verificationCode,
-            'is_verified' => false
         ]);
 
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
@@ -122,7 +118,6 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'access_token' => $token,
             'user' => $user,
-            'verification_code' => $verificationCode,
         ], 201);
     }
     public function verifyCode(Request $request): JsonResponse

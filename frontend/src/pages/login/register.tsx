@@ -90,7 +90,9 @@ function Register() {
             else {
                 setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
             }
-            console.log(error);
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
