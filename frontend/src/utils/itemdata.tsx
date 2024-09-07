@@ -57,3 +57,9 @@ export interface Products{
     price:string,
     description:string
 }
+
+export interface CartItem{
+    productId:number,
+    quantity:number,
+    product:Products;
+}
