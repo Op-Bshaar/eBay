@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +45,10 @@ Route::middleware('auth:sanctum')->group(function () {
 //admin route
 
 
+Route::middleware(['AdminMiddleware'])->group(function () {
+    Route::get('admin/dashboard',  [AdminController::class, 'dashborad']);
+    Route::get('admin/users',  [AdminController::class, 'index']);
+});
 
 
 
