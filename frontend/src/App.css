@@ -21,6 +21,15 @@ body {
     font-size: 1em;
     padding: 1% 2.5%;
 }
+.wrapper-button{
+    background:none;
+    border:none;
+    padding:0;
+    box-sizing:border-box;
+    display:inline-block;
+    color:inherit;
+    text-decoration:inherit;
+}
 @media(any-hover:hover) and (any-pointer:fine) {
     .button:hover {
         background-color: #3377ff;

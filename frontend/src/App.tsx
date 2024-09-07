@@ -8,6 +8,7 @@ import AuthenticationProvider from "./context/AuthenticationProvider";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
+import SearchPage from "./pages/Search/Search";
 function App() {
     return (
         <AuthenticationProvider>
@@ -15,6 +16,7 @@ function App() {
                     <Navbar />
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/products/search" element={<SearchPage />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/admin/dashboard" element={<Dashboard />} />
