@@ -35,10 +35,17 @@ api.interceptors.response.use(
         return Promise.reject(error); // Reject the error so it's still caught in the catch block
     }
 );
+/**
+ * 
+ * @param token : secutrity token from server
+ */
 export function setToken(token: string) {
     localStorage.setItem("token", token);
     triggerAuthChange(); // Notify listeners that auth state changed
 }
+/**
+ * clears User Token: use when logging out.
+ */
 export function clearUserToken() {
     localStorage.removeItem('token');
     triggerAuthChange(); // Notify listeners that auth state changed
@@ -48,8 +55,11 @@ function triggerAuthChange() {
     window.dispatchEvent(event);
 }
 
-// checks if user is authenticated (logged in) and ensures components using it will update
-// when authentication change. (when user login or logout)
+/**
+ * checks if user is authenticated (logged in) and ensures components using it will update
+ * when authentication change. (when user login or logout)
+ * @returns if user is authenticated
+ */
 export function useIsAuthenticated() {
     const [isAuthenticated, setIsAuthenticated] = useState(checkAuthentication());
     useEffect(() => {
@@ -70,6 +80,11 @@ export function useIsAuthenticated() {
     return isAuthenticated;
 }
 // checks if user is authenticated (logged in)
+
+/**
+ * checks if user is authenticated (logged in)
+ * @returns if user is authenticated
+ */
 export function checkAuthentication() {
     const token = localStorage.getItem('token');
     return !!token;

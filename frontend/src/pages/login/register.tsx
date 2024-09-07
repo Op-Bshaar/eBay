@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./login-form.css";
-import { RefObject, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { redirectAfterLogin } from "./LoginRedirect";
 import {
   useAuthenticationContext,
@@ -8,6 +8,7 @@ import {
 } from "../../context/AuthenticationContext";
 import axios from "axios";
 import api, { setToken } from "../../api";
+import PasswordInput from "./PasswordInput";
 
 function Register() {
     const navigate = useNavigate();
@@ -186,59 +187,6 @@ function Register() {
             </div>
         </form>
     );
-}
-interface PasswordInputProps {
-  passwordRef?: RefObject<HTMLInputElement>;
-}
-function PasswordInput({ passwordRef }: PasswordInputProps) {
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const confirmPasswordRef = useRef<HTMLInputElement>(null);
-  if (password === confirmPassword) {
-    confirmPasswordRef.current?.setCustomValidity("");
-  } else {
-    confirmPasswordRef.current?.setCustomValidity("Passwords do not match!");
-  }
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-  };
-
-  const handleConfirmPasswordChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const newConfirmPassword = e.target.value;
-    setConfirmPassword(newConfirmPassword);
-  };
-
-  return (
-    <>
-      <div className="input-group">
-        <label htmlFor="password">كلمة المرور:</label>
-        <input
-          onChange={handlePasswordChange}
-          id="password"
-          type="password"
-          placeholder="ادخل كلمة المرور"
-          minLength={8}
-          required
-          ref={passwordRef}
-        />
-      </div>
-      <div className="input-group">
-        <label htmlFor="confirm-password">تأكيد كلمة المرور:</label>
-        <input
-          onChange={handleConfirmPasswordChange}
-          ref={confirmPasswordRef}
-          id="confirm-password"
-          type="password"
-          placeholder="تأكيد كلمة المرور"
-          required
-        />
-      </div>
-    </>
-  );
 }
 
 export default Register;
