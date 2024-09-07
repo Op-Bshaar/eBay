@@ -41,6 +41,11 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
+//admin route
+
+
+
+
 
 
 Route::get('/user', function (Request $request) {

@@ -5,7 +5,9 @@ import Register from "./pages/login/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
 import AuthenticationProvider from "./context/AuthenticationProvider";
-import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
+import Dashboard from "./pages/admin/Dashboard";
+import Users from "./pages/admin/Users";
+import Settings from "./pages/admin/Settings";
 function App() {
   return (
     <AuthenticationProvider>
@@ -15,7 +17,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/products/:id" element={<ProductsDeatils />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
     </AuthenticationProvider>
