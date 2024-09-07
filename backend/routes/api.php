@@ -12,6 +12,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/loginphone', [AuthController::class, 'loginPhone']);
 Route::post('/loginemail', [AuthController::class, 'loginEmail']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/verifyCode',[AuthController::class, 'verifyCode']);
+
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 //product route
 

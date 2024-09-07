@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,13 +30,17 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
+        if (!$user->is_verified) {
+            return response()->json(['message' => 'Account not verified'], 403);
+        }
 
         return response()->json([
             'user' => $user,
             'access_token' => $token,
         ]);
     }
-    public function loginEmail(Request $request):JsonResponse{
+    public function loginEmail(Request $request): JsonResponse
+    {
         $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
@@ -52,13 +57,18 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
+        if (!$user->is_verified) {
+            return response()->json(['message' => 'Account not verified'], 403);
+        }
+
 
         return response()->json([
             'user' => $user,
             'access_token' => $token,
         ]);
     }
-    public function loginPhone(Request $request):JsonResponse{
+    public function loginPhone(Request $request): JsonResponse
+    {
         $request->validate([
             'phone' => 'required|string',
             'password' => 'required|string'
@@ -73,6 +83,10 @@ class AuthController extends Controller
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
+        if (!$user->is_verified) {
+            return response()->json(['message' => 'Account not verified'], 403);
+        }
+
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
 
@@ -89,23 +103,46 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|max:255',
             'phone' => 'required|string|unique:users,phone',
         ]);
-    
+
+        $verificationCode = rand(1000000, 999999);
+
         $user = User::create([
             'phone' => $request->phone,
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'verification_code' => $verificationCode,
+            'is_verified' => false
         ]);
-    
+
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
-    
+
         return response()->json([
             'message' => 'Registration successful',
             'token_type' => 'Bearer',
             'access_token' => $token,
             'user' => $user,
+            'verification_code' => $verificationCode,
         ], 201);
     }
+    public function verifyCode(Request $request): JsonResponse
+    {
+
+        $request->validate([
+            'phone' => 'required|string',
+            'verification_code' => 'required|digit:6',
+        ]);
+        $user = User::where('phone', $request->phone)->first();
+        if (!$user || $user->verification_code !== $request->verification_code) {
+            return response()->json(['message' => 'Invalid or expaird verfication code'], 400);
+        }
+        $user->is_verified = true;
+        $user->verification_code  = null;
+        $user->save();
+
+        return response()->json((['message' => "Account verified sucessfully"]));
+    }
+
     public function logout(Request $request): JsonResponse
     {
         // Revoke the token that was used to authenticate the current request
@@ -114,4 +151,3 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
 }
-
