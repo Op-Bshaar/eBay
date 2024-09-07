@@ -5,8 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useIsAuthenticated } from "../../api";
 import { useLogout } from "../../context/AuthenticationContext";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
-import { useRef, useState } from "react";
-import { API_URL } from "../../constants/BaseUrl";
+import { useRef } from "react";
 
 function Navbar() {
     const navigate = useNavigate();
