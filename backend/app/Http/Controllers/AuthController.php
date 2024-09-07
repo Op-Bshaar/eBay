@@ -30,9 +30,6 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
-        if (!$user->is_verified) {
-            return response()->json(['message' => 'Account not verified'], 403);
-        }
 
         return response()->json([
             'user' => $user,
@@ -57,10 +54,6 @@ class AuthController extends Controller
         }
 
         $token = $user->createToken('Personal Access Token')->plainTextToken;
-        if (!$user->is_verified) {
-            return response()->json(['message' => 'Account not verified'], 403);
-        }
-
 
         return response()->json([
             'user' => $user,
@@ -82,9 +75,6 @@ class AuthController extends Controller
 
         if (!Hash::check($request->password, $user->password)) {
             return response()->json(['message' => 'Invalid credentials'], 401);
-        }
-        if (!$user->is_verified) {
-            return response()->json(['message' => 'Account not verified'], 403);
         }
 
 
