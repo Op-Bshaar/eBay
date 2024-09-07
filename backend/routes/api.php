@@ -44,12 +44,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //admin route
 
-
 Route::middleware(['AdminMiddleware'])->group(function () {
     Route::get('admin/dashboard',  [AdminController::class, 'dashborad']);
     Route::get('admin/users',  [AdminController::class, 'index']);
 });
-
 
 
 
