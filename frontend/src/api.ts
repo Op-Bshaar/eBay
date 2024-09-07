@@ -79,7 +79,6 @@ export function useIsAuthenticated() {
     }, []);
     return isAuthenticated;
 }
-// checks if user is authenticated (logged in)
 
 /**
  * checks if user is authenticated (logged in)
