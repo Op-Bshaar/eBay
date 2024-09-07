@@ -6,69 +6,69 @@ import { BASE_URL } from "../../constants/BaseUrl";
 import { Link } from "react-router-dom";
 
 function Home() {
-  const [products, setProducts] = useState<Products[]>([]);
-  const [error, setError] = useState<string | null>(null);
+    const [products, setProducts] = useState<Products[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/products`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Fetch error:", error);
-        setError("An error occurred while fetching products.");
-      }
-    };
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch(`${BASE_URL}/api/products`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error("Fetch error:", error);
+                setError("An error occurred while fetching products.");
+            }
+        };
 
-    fetchProducts();
-  }, []);
+        fetchProducts();
+    }, []);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+    if (error) {
+        return <div>{error}</div>;
+    }
 
-  return (
-    <>
-      <div style={{ display: "flex" }}>
-        <Hero />
-        <HeroItem />
-      </div>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "1px",
-          justifyContent: "center",
-          margin: "0 auto",
-          position: "relative",
-        }}
-      >
-        {products.length > 0 ? (
-          products.map(({ id, title, image, price, description }) => (
-            <div key={id} style={{ textAlign: "center" }}>
-              <Link to={`/products/${id}`}>
-                <h2>{title}</h2>
-                <img
-                  style={{ width: "100px", height: "100px" }}
-                  src={image}
-                  alt={title}
-                />
-              </Link>
-              <p>{price}</p>
-              <p>{description}</p>
+    return (
+        <>
+            <div style={{ display: "flex" }}>
+                <Hero />
+                <HeroItem />
             </div>
-          ))
-        ) : (
-          <p>No products available</p>
-        )}
-      </div>
-    </>
-  );
+
+            <div
+                style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(4, 1fr)",
+                    gap: "1px",
+                    justifyContent: "center",
+                    margin: "0 auto",
+                    position: "relative",
+                }}
+            >
+                {products.length > 0 ? (
+                    products.map(({ id, title, image, price, description }) => (
+                        <div key={id} style={{ textAlign: "center" }}>
+                            <Link to={`/products/${id}`}>
+                                <h2>{title}</h2>
+                                <img
+                                    style={{ width: "100px", height: "100px" }}
+                                    src={image}
+                                    alt={title}
+                                />
+                            </Link>
+                            <p>{price}</p>
+                            <p>{description}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No products available</p>
+                )}
+            </div>
+        </>
+    );
 }
 
 export default Home;

@@ -92,7 +92,7 @@ function Login() {
     };
 
     return (
-        <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit}>
             <h1>ادخل بيناتك</h1>
             <div className="login-form-content">
                 <div className="input-group">
@@ -173,7 +173,7 @@ function Login() {
                         {errorMessage}
                     </p>
                 )}
-                <button type="submit" className="button submit-button" disabled={isLoading }>
+                <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل الدخول
                 </button>
                 <Link to="/register">حساب جديد</Link>
