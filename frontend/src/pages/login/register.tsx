@@ -59,19 +59,19 @@ function Register() {
                         setIsUsernameTaken(_usernameTaken);
                     }
 
-          // !!_errors["phone"] returns true if phone exists in _errors
-          const _phoneTaken = !!_errors["phone"];
-          // setIsPhoneTaken only if it changed to avoid unnecessary  updates
-          if (isPhoneTaken != _phoneTaken) {
-            setIsPhoneTaken(_usernameTaken);
-          }
+                    // !!_errors["phone"] returns true if phone exists in _errors
+                    const _phoneTaken = !!_errors["phone"];
+                    // setIsPhoneTaken only if it changed to avoid unnecessary  updates
+                    if (isPhoneTaken != _phoneTaken) {
+                        setIsPhoneTaken(_usernameTaken);
+                    }
 
-          // !!_errors["email"] returns true if email exists in _errors
-          const _emailTaken = !!_errors["email"];
-          // setIsEmailTaken only if it changed to avoid unnecessary  updates
-          if (isEmailTaken != _emailTaken) {
-            setIsEmailTaken(_emailTaken);
-          }
+                    // !!_errors["email"] returns true if email exists in _errors
+                    const _emailTaken = !!_errors["email"];
+                    // setIsEmailTaken only if it changed to avoid unnecessary  updates
+                    if (isEmailTaken != _emailTaken) {
+                        setIsEmailTaken(_emailTaken);
+                    }
 
                     if (!_emailTaken && !_usernameTaken && !_phoneTaken) {
                         setErrorMessage("خطأ في الادخال!");
@@ -81,12 +81,12 @@ function Register() {
                 else if (!error.response && error.request) {
                     setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
                 }
-                    // server responded with an error other than 422
+                // server responded with an error other than 422
                 else {
                     setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
                 }
             }
-                // handle non Axios Errors
+            // handle non Axios Errors
             else {
                 setErrorMessage("حدث خطأ ما! الرجاء المحاولة مجدداً.");
             }
@@ -94,73 +94,73 @@ function Register() {
         }
     };
 
-  usernameRef.current?.setCustomValidity(
-    isUsernameTaken ? "username taken!" : ""
-  );
-  phoneRef.current?.setCustomValidity(isPhoneTaken ? "phone taken!" : "");
-  emailRef.current?.setCustomValidity(isEmailTaken ? "email taken!" : "");
-  return (
-    <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
-      <h1>ادخل بيناتك</h1>
-      <div className="login-form-content">
-        <div className="input-group">
-          <label htmlFor="username">اسم المستخدم</label>
-          <input
-            type="text"
-            id="username"
-            placeholder="ادخل اسم المستخدم"
-            minLength={2}
-            pattern="^[\p{L}\p{N}_]+$"
-            required
-            ref={usernameRef}
-            onChange={() => {
-              if (isUsernameTaken) {
-                setIsUsernameTaken(false);
-              }
-            }}
-          />
-          {isUsernameTaken && (
-            <p role="alert" aria-live="assertive" className="login-sub-error">
-              تم استخدام هذا الاسم من قبل!
-            </p>
-          )}
-        </div>
-        <div className="input-group">
-          <label htmlFor="email">البريد الالكتروني:</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="ادخل بريدك الإلكتروني"
-            required
-            ref={emailRef}
-            onChange={() => {
-              if (isEmailTaken) {
-                setIsEmailTaken(false);
-              }
-            }}
-          />
+    usernameRef.current?.setCustomValidity(
+        isUsernameTaken ? "username taken!" : ""
+    );
+    phoneRef.current?.setCustomValidity(isPhoneTaken ? "phone taken!" : "");
+    emailRef.current?.setCustomValidity(isEmailTaken ? "email taken!" : "");
+    return (
+        <form className="login-form" onSubmit={handleSubmit}>
+            <h1>ادخل بيناتك</h1>
+            <div className="login-form-content">
+                <div className="input-group">
+                    <label htmlFor="username">اسم المستخدم</label>
+                    <input
+                        type="text"
+                        id="username"
+                        placeholder="ادخل اسم المستخدم"
+                        minLength={2}
+                        pattern="^[\p{L}\p{N}_]+$"
+                        required
+                        ref={usernameRef}
+                        onChange={() => {
+                            if (isUsernameTaken) {
+                                setIsUsernameTaken(false);
+                            }
+                        }}
+                    />
+                    {isUsernameTaken && (
+                        <p role="alert" aria-live="assertive" className="login-sub-error">
+                            تم استخدام هذا الاسم من قبل!
+                        </p>
+                    )}
+                </div>
+                <div className="input-group">
+                    <label htmlFor="email">البريد الالكتروني:</label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="ادخل بريدك الإلكتروني"
+                        required
+                        ref={emailRef}
+                        onChange={() => {
+                            if (isEmailTaken) {
+                                setIsEmailTaken(false);
+                            }
+                        }}
+                    />
 
-          {isEmailTaken && (
-            <p role="alert" aria-live="assertive" className="login-sub-error">
-              تم استخدام هذا البريد من قبل!
-            </p>
-          )}
-        </div>
-        <div className="input-group">
-          <label htmlFor="phone">رقم الجوال:</label>
-          <input
-            pattern="^[\d+]\d*$"
-            id="phone"
-            placeholder="ادخل رقم جوالك"
-            minLength={10}
-            required
-            ref={phoneRef}
-            onChange={() => {
-              if (isPhoneTaken) {
-                setIsPhoneTaken(false);
-              }
-            }}
-          />
+                    {isEmailTaken && (
+                        <p role="alert" aria-live="assertive" className="login-sub-error">
+                            تم استخدام هذا البريد من قبل!
+                        </p>
+                    )}
+                </div>
+                <div className="input-group">
+                    <label htmlFor="phone">رقم الجوال:</label>
+                    <input
+                        pattern="^[\d+]\d*$"
+                        id="phone"
+                        placeholder="ادخل رقم جوالك"
+                        minLength={10}
+                        required
+                        ref={phoneRef}
+                        onChange={() => {
+                            if (isPhoneTaken) {
+                                setIsPhoneTaken(false);
+                            }
+                        }}
+                    />
 
                     {isPhoneTaken && (
                         <p role="alert" aria-live="assertive" className="login-sub-error">
