@@ -15,16 +15,13 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/verifyCode',[AuthController::class, 'verifyCode']);
 
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
 //product route
-
-
-Route::middleware('auth:sanctum')->get('/products/search', [ProductController::class, 'search']);
-
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products/search', [ProductController::class, 'search']);
 
 // Route for seller
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
@@ -35,7 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 // cart Route
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
     Route::post('/cart', [CartController::class, 'store']);

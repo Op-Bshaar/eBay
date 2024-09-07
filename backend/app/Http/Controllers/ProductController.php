@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Middleware\Middleware;
@@ -12,13 +12,13 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Products::get();
+        $products = Product::get();
         return response()->json($products);
     }
 
     public function show($id)
     {
-        $product = Products::find($id);
+        $product = Product::find($id);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
@@ -35,7 +35,7 @@ class ProductController extends Controller
             'image' => 'string',
         ]);
 
-        $product = Products::create([
+        $product = Product::create([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
@@ -48,7 +48,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        $product = Products::find($id);
+        $product = Product::find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
@@ -72,7 +72,7 @@ class ProductController extends Controller
 
     public function destroy($id)
     {
-        $product = Products::find($id);
+        $product = Product::find($id);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
@@ -90,7 +90,7 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $products = Products::where('title', 'LIKE', "%".$query."%")->get();
+        $products = Product::where('title', 'LIKE', "%".$query."%")->get();
         return response()->json($products);
     }
 }

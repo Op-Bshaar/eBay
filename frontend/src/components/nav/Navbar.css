@@ -24,6 +24,7 @@
 }
 .search-icon {
   width: auto;
+  display:inline-block;
   height: 30px;
   margin: 0 2%;
   color: #0077ff;

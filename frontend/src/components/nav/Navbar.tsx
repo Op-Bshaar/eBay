@@ -1,32 +1,27 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useIsAuthenticated } from "../../api";
 import { useLogout } from "../../context/AuthenticationContext";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
-import { useState } from "react";
-import { BASE_URL } from "../../constants/BaseUrl";
+import { useRef, useState } from "react";
+import { API_URL } from "../../constants/BaseUrl";
 
 function Navbar() {
+    const navigate = useNavigate();
     const { user } = useAuthenticationContext();
-    const [query, setQuery] = useState("");
-    const [products, setProducts] = useState([]);
-    const [error, setError] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
     const logout = useLogout();
     const isAuthenticated = useIsAuthenticated();
     const handleSearch = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
-        try {
-            const response = await fetch(`${BASE_URL}/api/products/search?query=${encodeURIComponent(query)}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            setProducts(data);
-        } catch (error) {
-            console.error("Fetch error:", error);
-            setError("An error occurred while fetching products.");
+        const query = inputRef.current?.value;
+        if (query) {
+            navigate(`products/search?query=${encodeURIComponent(query)}`);
+        }
+        else {
+            navigate('/');
         }
     };
     return (
@@ -40,15 +35,15 @@ function Navbar() {
                 ) : (
                     <Link to="/register">سجل دخول</Link>
                 )}
-                <div onSubmit={handleSearch} className="search-bar">
+                <form onSubmit={handleSearch} className="search-bar">
                     <input
                         id="search-by-name"
                         type="search"
                         placeholder="ابحث باسم المنتج"
-                        onChange={(e) => setQuery(e.target.value)}
+                        ref={inputRef }
                     />
-                    <FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} />
-                </div>
+                    <button className="wrapper-button" type="submit"><FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} /></button>
+                </form>
                 <Link className="nav-link " to="/">
                     البيع في سوق
                 </Link>
