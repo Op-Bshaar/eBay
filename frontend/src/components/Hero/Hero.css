@@ -16,10 +16,10 @@
 }
 .menu{
   top:30px;
-  left:0 px;
+  left:0;
   position: absolute;
   text-align: center;
-  right: 0 px;
+  right: 0;
   cursor: pointer;
 }
 

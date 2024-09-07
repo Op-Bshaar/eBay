@@ -11,7 +11,6 @@ import Settings from "./pages/admin/Settings";
 function App() {
     return (
         <AuthenticationProvider>
-            <div className="tajawal-extralight">
                 <BrowserRouter>
                     <Navbar />
                     <Routes>
@@ -23,7 +22,6 @@ function App() {
                         <Route path="/admin/settings" element={<Settings />} />
                     </Routes>
                 </BrowserRouter>
-            </div>
         </AuthenticationProvider>
     );
 }

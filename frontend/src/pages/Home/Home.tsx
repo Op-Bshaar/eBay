@@ -32,7 +32,7 @@ function Home() {
     }
 
     return (
-        <>
+        <div className="tajawal-extralight">
             <div style={{ display: "flex" }}>
                 <Hero />
                 <HeroItem />
@@ -67,7 +67,7 @@ function Home() {
                     <p>No products available</p>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

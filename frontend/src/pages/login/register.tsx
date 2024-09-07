@@ -100,7 +100,7 @@ function Register() {
     phoneRef.current?.setCustomValidity(isPhoneTaken ? "phone taken!" : "");
     emailRef.current?.setCustomValidity(isEmailTaken ? "email taken!" : "");
     return (
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
             <h1>ادخل بيناتك</h1>
             <div className="login-form-content">
                 <div className="input-group">

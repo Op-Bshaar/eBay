@@ -52,7 +52,6 @@ const items: MenuItem[] = [
 
 const Hero: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
