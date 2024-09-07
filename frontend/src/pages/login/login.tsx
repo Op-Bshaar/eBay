@@ -169,7 +169,7 @@ function Login() {
                     />
                 </div>
                 {errorMessage && (
-                    <p role="alert" aria-live="assertive" className="login-error">
+                    <p role="alert" aria-live="assertive" className="error-message">
                         {errorMessage}
                     </p>
                 )}

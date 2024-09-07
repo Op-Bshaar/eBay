@@ -18,9 +18,9 @@ Route::post('/verifyCode',[AuthController::class, 'verifyCode']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 //product route
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::get('/products/search', [ProductController::class, 'search']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::get('/products', [ProductController::class, 'index']);
 
 // Route for seller
 Route::middleware('auth:sanctum')->group(function () {

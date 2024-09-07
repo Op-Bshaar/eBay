@@ -1,0 +1,21 @@
+.loader {
+    width: 25vmin;
+    height: 25vmin;
+    border-radius: 50%;
+    border-width: 2vmin;
+    border-bottom-color: red;
+    border-top-color: green;
+    border-left-color: blue;
+    border-right-color: yellow;
+    border-style: solid;
+    animation: rotation 2.5s ease-in-out infinite;
+}
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+} 
