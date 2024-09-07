@@ -113,6 +113,9 @@ class AuthController extends Controller
     public function verifyCode(Request $request): JsonResponse
     {
         $request->validate([
+
+
+            
             'phone' => 'required|string',
             'verification_code' => 'required|digit:6',
         ]);
