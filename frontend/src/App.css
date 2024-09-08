@@ -37,7 +37,6 @@ body {
     padding: 1% 2.5%;
     cursor: pointer;
 }
-
 @media(any-hover:hover) and (any-pointer:fine) {
     .link:hover {
         color: #00aaff;

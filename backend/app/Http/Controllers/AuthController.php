@@ -6,7 +6,8 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\RateLimiter;
 
 
 class AuthController extends Controller
@@ -105,12 +106,19 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
+        $emailSent = true; // Assume the email is sent successfully by default
 
+        try {
+            event(new Registered($user)); // Send verification email
+        } catch (\Exception $e) {
+            $emailSent = false; // Set emailSent to false if email fails to send
+        }
         return response()->json([
             'message' => 'Registration successful',
             'token_type' => 'Bearer',
             'access_token' => $token,
             'user' => $user,
+            'verification_email_sent' => $emailSent,
         ], 201);
     }
     public function verifyCode(Request $request): JsonResponse
@@ -135,5 +143,26 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'Successfully logged out'], 200);
+    }
+    public function requestVerificationEmail (Request $request) {
+        // Define a unique throttle key, based on the user
+        $throttleKey = 'send-verification-email-' . $request->user()->id;
+        // Check if the user has a valid email address
+        if (!$request->user()->email) {
+            return response()->json(['error' => 'No email address found for the user.'], 400); // 400 Bad Request
+        }
+        // Send the email
+        try {
+            $request->user()->sendEmailVerificationNotification();
+            
+            // Apply throttling only if email was successfully sent
+            RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling
+    
+            return response()->json(['message' => 'Verification link sent!'
+        
+        ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to send verification link. Please try again later.'], 500);
+        }
     }
 }

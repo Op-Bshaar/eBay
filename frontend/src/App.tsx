@@ -13,6 +13,7 @@ import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
 import EmailVerification from "./pages/login/EmailVerification";
 import { PAGE_URLS } from "./constants/URL";
 import Password from "./pages/login/password";
+import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path={PAGE_URLS.login} element={<Login />} />
           <Route path={PAGE_URLS.register} element={<Register />} />
           <Route path={PAGE_URLS.password} element={<Password />} />
+          <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
           <Route
             path={PAGE_URLS.email_verification}
             element={<EmailVerification />}
