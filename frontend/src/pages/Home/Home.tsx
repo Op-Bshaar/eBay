@@ -35,15 +35,16 @@ function Home() {
     <div className="tajawal-extralight">
       <div style={{ display: "flex", gap: 10 }}>
         <Hero />
+
         <HeroItem />
       </div>
+
       <div
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4, 1fr)",
           gap: "1px",
           justifyContent: "center",
-          margin: "0 auto",
           padding: "20px",
           boxSizing: "border-box",
         }}

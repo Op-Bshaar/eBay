@@ -22,13 +22,12 @@ class PasswordResetController extends Controller
      */
     public function sendResetLink(Request $request)
     {
-        // Validate the request
+    
         $request->validate(['email' => 'required|email']);
 
-        // Get user by email
         $user = User::where('email', $request->email)->first();
 
-        // Always return the same response for security reasons
+     
         if (!$user) {
             return response()->json(['message' => 'If the email exists, a reset link will be sent.'], 200);
         }
@@ -36,7 +35,7 @@ class PasswordResetController extends Controller
         // Generate reset token
         $resetToken = Str::random(60);
 
-        // Store token in password_reset_tokens table
+      
         DB::table('password_reset_tokens')->updateOrInsert(
             ['email' => $user->email],
             [
@@ -45,7 +44,7 @@ class PasswordResetController extends Controller
             ]
         );
 
-        // Generate reset URL
+
         $resetUrl = url("/reset-password?token=$resetToken&email=" . $user->email);
 
         // Use Mailable class to send the reset link
@@ -62,39 +61,38 @@ class PasswordResetController extends Controller
      */
     public function reset(Request $request)
     {
-        // Validate the request
+       
         $request->validate([
             'email' => 'required|email',
             'token' => 'required',
             'password' => 'required|min:8|confirmed',
         ]);
 
-        // Get the token record from the database
+        
         $tokenRecord = DB::table('password_reset_tokens')
             ->where('email', $request->email)
             ->first();
 
-        // Check if token and email are valid
         if (!$tokenRecord || !Hash::check($request->token, $tokenRecord->token)) {
             return response()->json(['message' => 'Invalid token or email.'], 400);
         }
 
-        // Check if token has expired
+       
         if (Carbon::parse($tokenRecord->created_at)->addMinutes(60)->isPast()) {
             return response()->json(['message' => 'Token has expired.'], 400);
         }
 
-        // Get the user by email
+
         $user = User::where('email', $request->email)->first();
         if (!$user) {
             return response()->json(['message' => 'Invalid email.'], 400);
         }
 
-        // Update the user's password
+
         $user->password = Hash::make($request->password);
         $user->save();
 
-        // Delete the password reset token after successful password reset
+
         DB::table('password_reset_tokens')->where('email', $request->email)->delete();
 
         return response()->json(['message' => 'Password has been successfully reset.'], 200);
