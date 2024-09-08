@@ -34,6 +34,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $user,
             'access_token' => $token,
+            'is_admin'=>$user->is_admin
         ]);
     }
     public function loginEmail(Request $request): JsonResponse
@@ -92,6 +93,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:255',
             'phone' => 'required|string|unique:users,phone',
+            'is_admin'=>'boolean'
         ]);
 
         $user = User::create([
@@ -99,6 +101,7 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_admin'=>$request->input('is_admin', false)
         ]);
 
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
@@ -115,7 +118,7 @@ class AuthController extends Controller
         $request->validate([
 
 
-            
+
             'phone' => 'required|string',
             'verification_code' => 'required|digit:6',
         ]);
