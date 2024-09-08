@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { API_URL } from './constants/BaseUrl';
 import { useEffect, useState } from 'react';
+import { API_URL } from './constants/URL';
 
 const api = axios.create({
     baseURL: API_URL,

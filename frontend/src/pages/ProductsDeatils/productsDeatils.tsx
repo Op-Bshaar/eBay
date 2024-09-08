@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../constants/BaseUrl";
+import { BASE_URL } from "../../constants/URL";
 
 function ProductsDeatils() {
   const { id } = useParams<{ id: string }>();

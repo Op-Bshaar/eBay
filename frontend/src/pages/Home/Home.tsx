@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Hero from "../../components/Hero/Hero";
 import HeroItem from "../../components/Hero-item/HeroItem";
 import { Products } from "../../utils/itemdata";
-import { BASE_URL } from "../../constants/BaseUrl";
+import { BASE_URL } from "../../constants/URL";
 import { Link } from "react-router-dom";
 
 function Home() {

@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./login-form.css";
 import { useRef, useState } from "react";
-import { redirectAfterLogin } from "./LoginRedirect";
+import { useRedirectAfterLogin } from "./LoginRedirect";
 import {
   useAuthenticationContext,
   User,
@@ -9,9 +9,10 @@ import {
 import axios from "axios";
 import api, { setToken } from "../../api";
 import PasswordInput from "./PasswordInput";
+import { PAGE_URLS } from "../../constants/URL";
 
 function Register() {
-    const navigate = useNavigate();
+    const redirect = useRedirectAfterLogin();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
     const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
@@ -46,7 +47,7 @@ function Register() {
                 _user["email_verified_at"] != null,
                 _user["phone_verified_at"] != null
             ));
-            redirectAfterLogin(navigate);
+            redirect();
         }
         catch (error) {
             if (axios.isAxiosError(error)) {
@@ -182,7 +183,7 @@ function Register() {
                 </button>
                 <p>
                     لديك حساب؟
-                    <Link to={"/login"}>تسجيل دخول</Link>
+                    <Link to={PAGE_URLS.login}>تسجيل دخول</Link>
                 </p>
             </div>
         </form>
