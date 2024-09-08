@@ -46,6 +46,10 @@ function Register() {
                 _user["email_verified_at"] != null,
                 _user["phone_verified_at"] != null
             ));
+            const verification_email_sent = response.data.verification_email_sent;
+            if (verification_email_sent) {
+                sessionStorage.setItem("verification_email_sent", verification_email_sent);
+            }
             navigate(PAGE_URLS.email_verification);
         }
         catch (error) {
