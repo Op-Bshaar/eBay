@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { API_URL } from "../../constants/URL";
 import { User } from "../../utils/itemdata";
+import api from "../../api";
+import axios from "axios";
 
 function Users() {
   const [users, setUsers] = useState<User[]>([]);
@@ -9,12 +11,8 @@ function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch(`${API_URL}/admin/users`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setUsers(data);
+        const response = await api.get("admin/users");
+        setUsers(Array.isArray(response.data) ? response.data : response.data.users || [])
       } catch (error) {
         console.error("Axios fetch error:", error);
         setError("An error occurred while fetching users.");

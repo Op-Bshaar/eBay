@@ -35,39 +35,38 @@ function Home() {
     <div className="tajawal-extralight">
       <div style={{ display: "flex", gap: 10 }}>
         <Hero />
-
         <HeroItem />
+          
       </div>
-
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "1px",
-          justifyContent: "center",
-          padding: "20px",
-          boxSizing: "border-box",
-        }}
-      >
-        {products.length > 0 ? (
-          products.map(({ id, title, image, price, description }) => (
-            <div key={id} style={{ textAlign: "center" }}>
-              <Link to={`/products/${id}`}>
-                <h2>{title}</h2>
-                <img
-                  style={{ width: "100px", height: "100px" }}
-                  src={image}
-                  alt={title}
-                />
-              </Link>
-              <p>{price}</p>
-              <p>{description}</p>
-            </div>
-          ))
-        ) : (
-          <p>No products available</p>
-        )}
-      </div>
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "1px",
+              justifyContent: "center",
+              padding: "20px",
+              boxSizing: "border-box",
+            }}
+          >
+            {products.length > 0 ? (
+              products.map(({ id, title, image, price, description }) => (
+                <div key={id} style={{ textAlign: "center" }}>
+                  <Link to={`/products/${id}`}>
+                    <h2>{title}</h2>
+                    <img
+                      style={{ width: "100px", height: "100px" }}
+                      src={image}
+                      alt={title}
+                    />
+                  </Link>
+                  <p>{price}</p>
+                  <p>{description}</p>
+                </div>
+              ))
+            ) : (
+              <p>No products available</p>
+            )}
+        </div>
     </div>
   );
 }
