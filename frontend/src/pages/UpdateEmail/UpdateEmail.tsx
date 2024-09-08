@@ -16,6 +16,7 @@ function UpdateEmail() {
     const [inputErrorMessage, setInputErrorMessage] = useState("");
     const [responseErrorMessage, setResponseErrorMessage] = useState("");
     const [emailTaken, setEmailTaken] = useState(false);
+    const [firstTry, setFirstTry] = useState(true);
     const emailInputRef = useRef<HTMLInputElement>(null);
     // validate input
     useEffect(() => {
@@ -92,9 +93,12 @@ function UpdateEmail() {
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                             setEmail(e.target.value);
                             setEmailTaken(false);
+                            if (firstTry) {
+                                setFirstTry(false);
+                            }
                         }} />
                 </div>
-                {inputErrorMessage &&
+                {inputErrorMessage && !firstTry &&
                     <div role="alert" aria-live="assertive" className="error-message">
                         {inputErrorMessage}
                     </div>}

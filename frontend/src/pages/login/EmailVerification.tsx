@@ -10,7 +10,6 @@ import "../../Loader.css";
 import { isAxiosError } from "axios";
 
 function VerifiyEmail() {
-    const navigate = useNavigate();
     const timeBetweenRetriesInMS = 60000;//ms
     const genericError = "حدث خطأ ما, حاول مرة أخرى.";
     useRequireAuthentication();
@@ -18,10 +17,14 @@ function VerifiyEmail() {
     const [errorMessage, setErrorMessage] = useState(verificationEmailSentOnRegister ? "" : genericError);
     const [isLoading, setIsLoading] = useState(false);
     const [isRetryDisabled, setIsRetryDisabled] = useState(false);
+    const [firstTry, setFirstTry] = useState(true);
     const user = useAuthenticationContext().user;
     const isEmailVerified = user?.isEmailVerified;
     const requestVerificationEmail = async () => {
         try {
+            if (firstTry) {
+                setFirstTry(false);
+            }
             setIsLoading(true);
             setErrorMessage("");
             // Disable the button
@@ -60,13 +63,14 @@ function VerifiyEmail() {
         </>
     }
     else if (user && user.email) {
+        const errorElement = !firstTry &&
+            <div role="alert" aria-live="assertive" className="error-message">
+                {errorMessage}
+            </div>;
         page =
             <>
                 <input className="center-text" type="text" value={user.email} disabled />
-                {errorMessage ?
-                    <div role="alert" aria-live="assertive" className="error-message">
-                        {errorMessage}
-                    </div> :
+                {errorMessage ? errorElement :
                     isLoading ?
                         <div className="small-loader" /> :
                         <div className="text-align-start">
@@ -75,7 +79,7 @@ function VerifiyEmail() {
                 }
                 <div className="email-verifictation-button-container">
                     <button onClick={requestVerificationEmail} className="button" disabled={isRetryDisabled}>
-                        إعادة إرسال رابط التفعيل
+                    {firstTry ? "إرسال رابط التفعيل" : "إعادة إرسال رابط التفعيل"}
                     </button>
                     <Link to={PAGE_URLS.update_email} className="button">تغيير البريد الإلكنروني</Link>
                 </div>
