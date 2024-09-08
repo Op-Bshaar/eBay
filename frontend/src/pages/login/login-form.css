@@ -68,10 +68,17 @@
     padding:2.5%;
     max-width: 200px;
 }
-.login-sub-error {
-    color: #ff0000;
-    margin:3px 0 0 auto;
+.login-form-link-container {
+    display: flex;
+    width: 100%;
+    flex-direction:row;
+    justify-content:space-between;
+    margin:5vh auto 0 auto;
 }
+    .login-sub-error {
+        color: #ff0000;
+        margin: 3px 0 0 auto;
+    }
 .input-groupp select {
     width: 100%;
 }

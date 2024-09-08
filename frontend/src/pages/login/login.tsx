@@ -100,105 +100,105 @@ function Login() {
     }
   };
 
-  return (
-    <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
-      <h1>ادخل بيناتك</h1>
-      <div className="login-form-content">
-        <div className="input-group">
-          <label htmlFor="login-method">اختر طريقة الدخول:</label>
-          <select
-            id="login-method"
-            value={loginMethod}
-            onChange={(e) =>
-              setLoginMethod(e.target.value as "username" | "email" | "phone")
-            }
-            required
-          >
-            <option value="username">اسم المستخدم</option>
-            <option value="email">البريد الالكتروني</option>
-            <option value="phone">رقم الجوال</option>
-          </select>
-        </div>
+    return (
+        <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
+            <h1>ادخل بيناتك</h1>
+            <div className="login-form-content">
+                <div className="input-group">
+                    <label htmlFor="login-method">اختر طريقة الدخول:</label>
+                    <select
+                        id="login-method"
+                        value={loginMethod}
+                        onChange={(e) =>
+                            setLoginMethod(e.target.value as "username" | "email" | "phone")
+                        }
+                        required
+                    >
+                        <option value="username">اسم المستخدم</option>
+                        <option value="email">البريد الالكتروني</option>
+                        <option value="phone">رقم الجوال</option>
+                    </select>
+                </div>
 
-        {loginMethod === "username" && (
-          <div className="input-group">
-            <label htmlFor="username">اسم المستخدم:</label>
-            <input
-              className="hide-valid"
-              ref={usernameRef}
-              pattern="^[\p{L}\p{N}_]+$"
-              id="username"
-              minLength={2}
-              type="text"
-              placeholder="ادخل اسم المستخدم"
-              required
-            />
-          </div>
-        )}
+                {loginMethod === "username" && (
+                    <div className="input-group">
+                        <label htmlFor="username">اسم المستخدم:</label>
+                        <input
+                            className="hide-valid"
+                            ref={usernameRef}
+                            pattern="^[\p{L}\p{N}_]+$"
+                            id="username"
+                            minLength={2}
+                            type="text"
+                            placeholder="ادخل اسم المستخدم"
+                            required
+                        />
+                    </div>
+                )}
 
-        {loginMethod === "email" && (
-          <div className="input-group">
-            <label htmlFor="email">البريد الالكتروني:</label>
-            <input
-              ref={emailRef}
-              className="hide-valid"
-              type="email"
-              id="email"
-              placeholder="ادخل بريدك الإلكتروني"
-              required
-            />
-          </div>
-        )}
+                {loginMethod === "email" && (
+                    <div className="input-group">
+                        <label htmlFor="email">البريد الالكتروني:</label>
+                        <input
+                            ref={emailRef}
+                            className="hide-valid"
+                            type="email"
+                            id="email"
+                            placeholder="ادخل بريدك الإلكتروني"
+                            required
+                        />
+                    </div>
+                )}
 
-        {loginMethod === "phone" && (
-          <div className="input-group">
-            <label htmlFor="phone">رقم الجوال:</label>
-            <input
-              className="hide-valid"
-              ref={phoneRef}
-              pattern="^[\d+]\d*$"
-              id="phone"
-              placeholder="ادخل رقم جوالك"
-              minLength={10}
-              required
-            />
-          </div>
-        )}
+                {loginMethod === "phone" && (
+                    <div className="input-group">
+                        <label htmlFor="phone">رقم الجوال:</label>
+                        <input
+                            className="hide-valid"
+                            ref={phoneRef}
+                            pattern="^[\d+]\d*$"
+                            id="phone"
+                            placeholder="ادخل رقم جوالك"
+                            minLength={10}
+                            required
+                        />
+                    </div>
+                )}
 
-        <div className="input-group">
-          <label htmlFor="password">كلمة المرور:</label>
-          <input
-            className="hide-valid"
-            ref={passwordRef}
-            type="password"
-            id="password"
-            placeholder="ادخل كلمة المرور"
-            minLength={8}
-            required
-          />
-        </div>
-        {errorMessage && (
-          <p role="alert" aria-live="assertive" className="error-message">
-            {errorMessage}
-          </p>
-        )}
-        <button
-          type="submit"
-          className="button submit-button"
-          disabled={isLoading}
-        >
-          تسجيل الدخول
-        </button>
-        <div style={{display:"flex" , gap:130,marginTop:20}}>
-        <Link className="link" to={PAGE_URLS.register}>
-          حساب جديد
-        </Link>
-        <Link className="link" to={PAGE_URLS.password}>
-          لقد نسيت كلمه المرور؟
-        </Link>
-        </div>
-      </div>
-    </form>
-  );
+                <div className="input-group">
+                    <label htmlFor="password">كلمة المرور:</label>
+                    <input
+                        className="hide-valid"
+                        ref={passwordRef}
+                        type="password"
+                        id="password"
+                        placeholder="ادخل كلمة المرور"
+                        minLength={8}
+                        required
+                    />
+                </div>
+                {errorMessage && (
+                    <p role="alert" aria-live="assertive" className="error-message">
+                        {errorMessage}
+                    </p>
+                )}
+                <button
+                    type="submit"
+                    className="button submit-button"
+                    disabled={isLoading}
+                >
+                    تسجيل الدخول
+                </button>
+                <div className="login-form-link-container">
+                    <Link className="link" to={PAGE_URLS.register}>
+                        حساب جديد
+                    </Link>
+                    <Link className="link" to={PAGE_URLS.password}>
+                        نسيت كلمه المرور؟
+                    </Link>
+                </div>
+            </div>
+        </form>
+    );
 }
 export default Login;
