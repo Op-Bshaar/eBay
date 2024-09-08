@@ -30,9 +30,9 @@ async function load(
       );
       const products: Product[] = [];
       // TODO: read products from response
-      const productlist = response.data.products;
-      productlist.forEach((ProductData: Product) => {
-        products.push(new Product(ProductData.Price,ProductData.PName,ProductData.SellerName,ProductData.Category,ProductData.PID))
+      const productlist = response.data;
+      productlist.forEach((item: any) => {
+        products.push(new Product(item.id,item.price,item.seller_id,item.title, item.description, item.image))
       });
       setProducts(products);
       // TODO: display products
@@ -85,7 +85,7 @@ function useSearchResult(): [
   useEffect(() => {
     loadSearchResult();
   }, [location]);
-  return [[], errorElement, isLoading];
+  return [products, errorElement, isLoading];
 }
 function SearchPage() {
   const [products, errorElement, isLoading] = useSearchResult();
