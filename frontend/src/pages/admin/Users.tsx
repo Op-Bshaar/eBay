@@ -7,7 +7,7 @@ function Users() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchUsers = async () => {
       try {
         const response = await fetch(`${API_URL}/admin/users`);
         if (!response.ok) {
@@ -16,26 +16,27 @@ function Users() {
         const data = await response.json();
         setUsers(data);
       } catch (error) {
-        console.error("Fetch error:", error);
-        setError("An error occurred while fetching products.");
+        console.error("Axios fetch error:", error);
+        setError("An error occurred while fetching users.");
       }
     };
 
-    fetchProducts();
+    fetchUsers();
   }, []);
 
   if (error) {
     return <div>{error}</div>;
   }
+
   return (
     <>
       <div>Users</div>
       <ul>
-         {users.map(user=>(
+        {users.map(user => (
           <li key={user.id}>
-              {user.email}{user.id}{user.is_admin}{user.phone}{user.username}
+            {user.email} {user.id} {user.is_admin ? 'Admin' : 'User'} {user.phone} {user.username}
           </li>
-         ))}
+        ))}
       </ul>
     </>
   );
