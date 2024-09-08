@@ -93,7 +93,7 @@ function SearchPage() {
     <div className="tagawal-extralight search-page">
       <div className={"center-message"}>
         {errorElement}
-        {products.length === 0 && (
+        {products.length === 0 && !isLoading && (
           <div className="error-message">لا توجد منتجات مطابقة.</div>
         )}
         {isLoading() && <div className="loader" />}
