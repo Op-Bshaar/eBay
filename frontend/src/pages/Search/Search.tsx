@@ -29,13 +29,11 @@ async function load(
         }
       );
       const products: Product[] = [];
-      // TODO: read products from response
       const productlist = response.data;
       productlist.forEach((item: any) => {
         products.push(new Product(item.id,item.price,item.seller_id,item.title, item.description, item.image))
       });
       setProducts(products);
-      // TODO: display products
     }
   } catch (error) {
     if (isAxiosError(error) && error.request && !error.response) {
@@ -54,54 +52,58 @@ async function load(
   }
 }
 function useSearchResult(): [
-  products: Product[],
-  JSX.Element | null,
-  () => boolean
+    products: Product[],
+    JSX.Element | null,
+    boolean
 ] {
-  const location = useLocation();
-  const query = new URLSearchParams(location.search).get("query") ?? "";
-  const [errorElement, setErrorElement] = useState<JSX.Element | null>(null);
-  const [abortController, setAbortController] =
-    useState<AbortController | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
-  const RetryButton = (retry: () => Promise<void>) => (
-    <button className="retry-button" onClick={retry}>
-      أعد المحاولة.
-    </button>
-  );
-  const loadSearchResult = async () => {
-    await load(
-      query,
-      abortController,
-      setAbortController,
-      setErrorElement,
-      () => RetryButton(loadSearchResult),
-      setProducts
+    const location = useLocation();
+    const query = new URLSearchParams(location.search).get("query") ?? "";
+    const [errorElement, setErrorElement] = useState<JSX.Element | null>(null);
+    const [abortController, setAbortController] =
+        useState<AbortController | null>(null);
+    const [loading,setLoading] = useState(false);
+    const [products, setProducts] = useState<Product[]>([]);
+    const RetryButton = (retry: () => Promise<void>) => (
+        <button className="retry-button" onClick={retry}>
+            أعد المحاولة.
+        </button>
     );
-  };
-  const isLoading = () => abortController != null;
-  //load search result everytime location changes.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    loadSearchResult();
-  }, [location]);
-  return [products, errorElement, isLoading];
+    const loadSearchResult = async () => {
+        setLoading(true);
+        await load(
+            query,
+            abortController,
+            setAbortController,
+            setErrorElement,
+            () => RetryButton(loadSearchResult),
+            setProducts
+        );
+        setLoading(false);
+    };
+    //load search result everytime location changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        loadSearchResult();
+    }, [location]);
+    return [products, errorElement, loading];
 }
 function SearchPage() {
-  const [products, errorElement, isLoading] = useSearchResult();
-  return (
-    <div className="tagawal-extralight search-page">
-      <div className={"center-message"}>
-        {errorElement}
-        {products.length === 0 && (
-          <div className="error-message">لا توجد منتجات مطابقة.</div>
-        )}
-        {isLoading() && <div className="loader" />}
-        {products.map((product, index) => (
-          <ProductView key={index} product={product} />
-        ))}
-      </div>
-    </div>
-  );
+    const [products, errorElement, loading] = useSearchResult();
+    const productsViews = products.length === 0 ?
+        <div className="error-message">لا توجد منتجات مطابقة.</div> :
+        products.map((product, index) => (
+            <ProductView key={index} product={product} />
+        ))
+    return (
+        <div className="tagawal-extralight search-page">
+            <div className={"center-message"}>
+                {errorElement}
+                {loading ?
+                    <div className="loader" /> :
+                    productsViews
+                }
+            </div>
+        </div>
+    );
 }
 export default SearchPage;
