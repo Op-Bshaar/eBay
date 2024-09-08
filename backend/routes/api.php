@@ -29,9 +29,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
 
-
-
-
 // cart Route
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
@@ -42,12 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //passwordrest
 
-
-
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
 Route::post('/reset-password', [PasswordResetController::class, 'reset']);
-
-
 
 //admin route
 
