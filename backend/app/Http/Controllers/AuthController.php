@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\RateLimiter;
-
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -168,9 +168,17 @@ class AuthController extends Controller
         if (!$request->user()->email) {
             return response()->json(['error' => 'No email address found for the user.'], 400); // 400 Bad Request
         }
+            // Check if the request is throttled
+            if (RateLimiter::tooManyAttempts($throttleKey, 1)) {
+                return response()->json(['error' => 'Too many requests. Please try again later.'], 429); // 429 Too Many Requests
+            }
         // Send the email
         try {
             $request->user()->sendEmailVerificationNotification();
+                    // Check for email failures (immediate)
+        if (Mail::failures()) {
+            return response()->json(['error' => 'Failed to send verification link. Please try again later.'], 500);
+        }
             
             // Apply throttling only if email was successfully sent
             RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling

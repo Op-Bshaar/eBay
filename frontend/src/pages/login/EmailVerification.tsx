@@ -29,7 +29,7 @@ function VerifiyEmail() {
             setErrorMessage("");
             // Disable the button
             setIsRetryDisabled(true);
-            await api.post('request-verification-email');
+            const response = await api.post('request-verification-email');
             setErrorMessage("");
             // Re-enable the button after timeout
             setTimeout(() => {
