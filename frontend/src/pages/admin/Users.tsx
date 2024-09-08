@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "../../constants/BaseUrl";
+import { API_URL } from "../../constants/URL";
 import { User } from "../../utils/itemdata";
 
 function Users() {
@@ -9,7 +9,7 @@ function Users() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/api/admin/users`);
+        const response = await fetch(`${API_URL}/admin/users`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
