@@ -12,6 +12,7 @@ import SearchPage from "./pages/Search/Search";
 import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
 import EmailVerification from "./pages/login/EmailVerification";
 import { PAGE_URLS } from "./constants/URL";
+import Password from "./pages/login/password";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path={PAGE_URLS.search} element={<SearchPage />} />
           <Route path={PAGE_URLS.login} element={<Login />} />
           <Route path={PAGE_URLS.register} element={<Register />} />
+          <Route path={PAGE_URLS.password} element={<Password />} />
           <Route
             path={PAGE_URLS.email_verification}
             element={<EmailVerification />}

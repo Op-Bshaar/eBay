@@ -7,4 +7,5 @@ export const PAGE_URLS = {
     login: "/login",
     register: "/register",
     email_verification: "/email-verification",
+    password:"/password"
 }

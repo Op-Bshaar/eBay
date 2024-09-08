@@ -39,7 +39,7 @@ function Home() {
       <div style={{ flex: "1" }}>
         <Hero />
       </div>
-      <div style={{  padding: "20px", overflowY: "auto" }}>
+      <div style={{ padding: "20px", overflowY: "auto" }}>
         <HeroItem />
         <div
           style={{
