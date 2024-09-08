@@ -144,6 +144,23 @@ class AuthController extends Controller
 
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
+    public function updateEmail(Request $request)
+    {       
+        // Validate the email input
+        $request->validate( [
+            'email' => 'required|email|unique:users,email',
+        ]);
+        // Get the currently authenticated user
+        $user =  $request->user();
+        $user->email = $request->input('email');
+        $user->email_verified_at = null; // Reset email verification status
+        $user->save();
+        return response()->json([
+            'message' => 'Email updated successfully.',
+            'user' => $user,
+        ], 200);
+    }
+    
     public function requestVerificationEmail (Request $request) {
         // Define a unique throttle key, based on the user
         $throttleKey = 'send-verification-email-' . $request->user()->id;
