@@ -19,7 +19,7 @@ function App() {
             <BrowserRouter>
                 <Navbar />
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path={PAGE_URLS.home } element={<Home />} />
                     <Route path={PAGE_URLS.search} element={<SearchPage />} />
                     <Route path={PAGE_URLS.login } element={<Login />} />
                     <Route path={PAGE_URLS.register } element={<Register />} />

@@ -27,13 +27,7 @@ function Navbar() {
         <>
             <nav className="navbar tajawal-extralight">
                 <h1>سوق</h1>
-                {user ? (
-                    <li style={{ listStyleType: "none" }}>
-                        <span>أهلا {user.username}</span>
-                    </li>
-                ) : (
-                    <Link to="/register">سجل دخول</Link>
-                )}
+                {user && (<span>أهلا {user.username}</span>)}
                 <form onSubmit={handleSearch} className="search-bar">
                     <input
                         id="search-by-name"

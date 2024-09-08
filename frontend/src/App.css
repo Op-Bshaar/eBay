@@ -21,6 +21,23 @@ body {
     text-decoration: none;
     font-size: 1em;
     padding: 1% 2.5%;
+    cursor:default;
+}
+
+
+.link {
+    text-decoration: inherit;
+    border:none;
+    background:none;
+    color: #0077ff;
+    font-size:1em;
+    cursor:pointer;
+}
+
+@media(any-hover:hover) and (any-pointer:fine) {
+    .link:hover {
+        color: #00aaff;
+    }
 }
 .wrapper-button{
     background:none;
@@ -45,4 +62,7 @@ body {
 
 .error-message {
     color: #ff0000;
+}
+.center-text{
+    text-align:center;
 }

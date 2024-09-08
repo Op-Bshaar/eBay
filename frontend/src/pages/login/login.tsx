@@ -177,7 +177,7 @@ function Login() {
                 <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل الدخول
                 </button>
-                <Link to={PAGE_URLS.register }>حساب جديد</Link>
+                <Link className="link" to={PAGE_URLS.register }>حساب جديد</Link>
             </div>
         </form>
     );

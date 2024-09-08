@@ -68,16 +68,6 @@
     padding:2.5%;
     max-width: 200px;
 }
-
-.login-form-content a {
-    text-decoration: none;
-    color: #0077ff;
-}
-@media(any-hover:hover) and (any-pointer:fine) {
-    .login-form-content a:hover {
-        color: #00aaff;
-    }
-}
 .login-sub-error {
     color: #ff0000;
     margin:3px 0 0 auto;
