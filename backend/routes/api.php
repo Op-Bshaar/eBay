@@ -15,6 +15,11 @@ Route::post('/loginemail', [AuthController::class, 'loginEmail']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/verifyCode',[AuthController::class, 'verifyCode']);
 
+//passwordrest
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
+Route::post('/reset-password', [PasswordResetController::class, 'reset']);
+
+
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 //product route
@@ -29,9 +34,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
 
-
-
-
 // cart Route
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/cart', [CartController::class, 'index']);
@@ -40,21 +42,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/cart/{id}', [CartController::class, 'destroy']);
 });
 
-//passwordrest
-
-
-
-Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
-Route::post('/reset-password', [PasswordResetController::class, 'reset']);
 
 
 
 //admin route
 
-Route::middleware(['AdminMiddleware'])->group(function () {
-    Route::get('admin/dashboard',  [AdminController::class, 'dashborad']);
-    Route::get('admin/users',  [AdminController::class, 'index']);
-    
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware('AdminMiddleware')->group(function () {
+        Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
+        Route::get('admin/users', [AdminController::class, 'index']);
+    });
 });
 
 

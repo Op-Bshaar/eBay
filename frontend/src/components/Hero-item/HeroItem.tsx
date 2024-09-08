@@ -6,32 +6,31 @@ import { itemdata } from "../../utils/itemdata";
 import "./HeroItem.css";
 
 const HeroItem: React.FC = () => {
-    const settings = {
-        infinite: true,
-        speed: 500,
-        slidesToShow: 7,
-        slidesToScroll: 3,
-    };
-    const handleClick = (item: any) => {
-        alert(`hello ${item.id}`);
-    }
-    return (
-        <div className="hero-item-container">
-            <Slider {...settings}>
-                {itemdata.map((item) => (
-                    <div key={item.id}
-                        className="hero-item"
-                        onClick={() => handleClick(item)}
-                    >
-                        <div className="icon-container">
-                            {item.icon}
-                        </div>
-                        <span className="item-text">{item.item}</span>
-                    </div>
-                ))}
-            </Slider>
-        </div>
-    );
+  const settings = {
+    infinite: true,
+    speed: 500,
+    slidesToShow: 7,
+    slidesToScroll: 3,
+  };
+  const handleClick = (item: any) => {
+    alert(`hello ${item.id}`);
+  };
+  return (
+    <div className="hero-item-container">
+      <Slider {...settings}>
+        {itemdata.map((item) => (
+          <div
+            key={item.id}
+            className="hero-item"
+            onClick={() => handleClick(item)}
+          >
+            <div className="icon-container">{item.icon}</div>
+            <span className="item-text">{item.item}</span>
+          </div>
+        ))}
+      </Slider>
+    </div>
+  );
 };
 
 export default HeroItem;

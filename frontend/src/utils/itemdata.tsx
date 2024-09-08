@@ -63,3 +63,11 @@ export interface CartItem{
     quantity:number,
     product:Products;
 }
+
+export interface User{
+    id:number,
+    username:string,
+    email:string,
+    phone:string,
+    is_admin:boolean,
+}
