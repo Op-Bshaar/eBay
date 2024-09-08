@@ -6,6 +6,7 @@ import "../../Loader.css";
 import { isAxiosError } from "axios";
 import Product from "../../Product";
 import ProductView from "../../components/ProductView/ProductView";
+import "../../components/ProductView/ProductView.css"
 async function load(
   query: string,
   abortController: AbortController | null,
@@ -100,7 +101,11 @@ function SearchPage() {
                 {errorElement}
                 {loading ?
                     <div className="loader" /> :
+                    <div className="product-view">
+                      {
                     productsViews
+                      }
+                    </div>
                 }
             </div>
         </div>
