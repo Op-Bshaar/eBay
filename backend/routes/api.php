@@ -13,7 +13,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/loginphone', [AuthController::class, 'loginPhone']);
 Route::post('/loginemail', [AuthController::class, 'loginEmail']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::post('/verifyCode',[AuthController::class, 'verifyCode']);
+Route::post('/verifyCode', [AuthController::class, 'verifyCode']);
 
 //passwordrest
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
