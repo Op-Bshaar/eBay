@@ -32,7 +32,7 @@ async function load(
       // TODO: read products from response
       const productlist = response.data.products;
       productlist.forEach((ProductData: Product) => {
-        products.push(new Product(ProductData.Price,ProductData.PName,ProductData.SellerName,ProductData.Category))
+        products.push(new Product(ProductData.Price,ProductData.PName,ProductData.SellerName,ProductData.Category,ProductData.PID))
       });
       setProducts(products);
       // TODO: display products
