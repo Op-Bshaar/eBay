@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../api";
+import { API_URL } from "../../constants/URL";
 import { User } from "../../utils/itemdata";
 
 function Users() {
@@ -9,15 +9,12 @@ function Users() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get('/admin/users');
-        const data = response.data;
-        
-        if (Array.isArray(data)) {
-          setUsers(data);
-        } else {
-          console.error('Expected an array but got:', data);
-          setError('Unexpected data format');
+        const response = await fetch(`${API_URL}/admin/users`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const data = await response.json();
+        setUsers(data);
       } catch (error) {
         console.error("Axios fetch error:", error);
         setError("An error occurred while fetching users.");

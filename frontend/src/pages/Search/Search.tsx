@@ -30,8 +30,12 @@ async function load(
       );
       const products: Product[] = [];
       // TODO: read products from response
-      // products.append(new Product(....));
+      const productlist = response.data.products;
+      productlist.forEach((ProductData: Product) => {
+        products.push(new Product(ProductData.Price,ProductData.PName,ProductData.SellerName,ProductData.Category,ProductData.PID))
+      });
       setProducts(products);
+      // TODO: display products
     }
   } catch (error) {
     if (isAxiosError(error) && error.request && !error.response) {

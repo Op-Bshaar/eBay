@@ -1,5 +1,4 @@
 import { CartContext } from "./cartContext";
-import { BASE_URL } from "../constants/BaseUrl";
 import { CartItem } from "../utils/itemdata";
 import { useState, useEffect, PropsWithChildren, FC } from "react";
 import { useAuthenticationContext } from "./AuthenticationContext";

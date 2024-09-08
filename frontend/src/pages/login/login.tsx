@@ -1,13 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./login-form.css";
 import { useRef, useState } from "react";
 import axios from "axios";
-import {  redirectAfterLogin } from "./LoginRedirect";
+import {  useRedirectAfterLogin } from "./LoginRedirect";
 import { useAuthenticationContext, User } from "../../context/AuthenticationContext";
 import api, { setToken } from "../../api";
+import { PAGE_URLS } from "../../constants/URL";
 
 function Login() {
-    const navigate = useNavigate();
+    const redirect = useRedirectAfterLogin();
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
@@ -52,7 +53,7 @@ function Login() {
                 _user["email_verified_at"] != null,
                 _user["phone_verified_at"] != null
             ));
-            redirectAfterLogin(navigate);
+            redirect();
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 // Handle 401 Unauthorized error
@@ -176,7 +177,7 @@ function Login() {
                 <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل الدخول
                 </button>
-                <Link to="/register">حساب جديد</Link>
+                <Link to={PAGE_URLS.register }>حساب جديد</Link>
             </div>
         </form>
     );
