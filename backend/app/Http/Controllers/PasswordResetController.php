@@ -45,7 +45,8 @@ class PasswordResetController extends Controller
         );
 
 
-        $resetUrl = url("/api/reset-password?token=$resetToken&email=" . $user->email);
+        $resetUrl = url("http://localhost:5173/rest-password?token=$resetToken&email=" . urlencode($user->email));
+
 
      
         Mail::to($user->email)->send(new PasswordResetMail($resetUrl));
@@ -98,6 +99,7 @@ class PasswordResetController extends Controller
         return response()->json(['message' => 'Password has been successfully reset.',200 ]);
 
     }
+
     public function showResetForm(Request $request)
     {
         return response()->json([

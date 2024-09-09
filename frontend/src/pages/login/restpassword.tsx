@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../../api";
+import './restpassword.css'
 
 function RestPassword() {
   const [password, setPassword] = useState("");
@@ -23,7 +24,7 @@ function RestPassword() {
     }
 
     try {
-      const response = await api.post("/reset-password", {
+      const response = await api.post("/rest-password", {
         email,
         token,
         password,
@@ -39,9 +40,9 @@ function RestPassword() {
   };
 
   return (
-    <div>
+    <div className="content-restpass">
       <form onSubmit={handleSubmit}>
-        <label>:كلمه مرور جديده</label>
+        <label>كلمه مرور جديده</label>
         <input
           type="password"
           value={password}
