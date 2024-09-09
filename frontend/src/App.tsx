@@ -16,7 +16,7 @@ import Password from "./pages/login/password";
 import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import ReloadUser from "./pages/ReloadUser";
 import RestPassword from "./pages/login/restpassword";
-
+import ProductForm from "./pages/Sell/Sell";
 function App() {
     return (
         <AuthenticationProvider>
@@ -38,6 +38,7 @@ function App() {
                     <Route path="/admin/users" element={<Users />} />
                     <Route path="/admin/settings" element={<Settings />} />
                     <Route path="/products/:id" element={<ProductsDeatils />} />
+                    <Route path="/sell" element={<ProductForm/>}/>
                 </Routes>
             </BrowserRouter>
         </AuthenticationProvider>
