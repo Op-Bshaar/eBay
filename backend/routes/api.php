@@ -18,7 +18,7 @@ Route::post('/verifyCode', [AuthController::class, 'verifyCode']);
 //passwordrest
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
 Route::get('/reset-password', [PasswordResetController::class, 'showResetForm']);
-Route::post('/reset-password', [PasswordResetController::class, 'reset']);
+Route::post('/rest-password', [PasswordResetController::class, 'reset']);
 
 // update-email
 Route::middleware('auth:sanctum')->post('/update-email', [AuthController::class,'updateEmail']);

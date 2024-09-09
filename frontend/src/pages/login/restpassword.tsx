@@ -23,7 +23,7 @@ function RestPassword() {
     }
 
     try {
-      const response = await api.post("/reset-password", {
+      const response = await api.post("/rest-password", {
         email,
         token,
         password,
@@ -41,7 +41,7 @@ function RestPassword() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>:كلمه مرور جديده</label>
+        <label>كلمه مرور جديده</label>
         <input
           type="password"
           value={password}
