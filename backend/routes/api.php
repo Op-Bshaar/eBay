@@ -68,9 +68,3 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-//verify user test
-Route::get('/test-verify-email', function (Request $request) {
-    $user = $request->user();
-    $user->email_verified_at = Carbon::now();
-    $user->save();
-})->middleware(['auth:sanctum']);
