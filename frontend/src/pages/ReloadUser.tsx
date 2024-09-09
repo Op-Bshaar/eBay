@@ -20,9 +20,9 @@ function ReloadUser({ redirectTo = PAGE_URLS.home }: {redirectTo?:string}) {
             const _user = response.data;
             const user = new User(
                 _user["username"], _user["phone"], _user["email"],
-                _user["phone_verified_at"] != null,
-                _user["email_verified_at"] != null
-            )
+                !!_user["phone_verified_at"],
+                !!_user["email_verified_at"]
+            );
             setUser(user);
             navigate(redirectTo);
         }

@@ -68,6 +68,7 @@
     width: 100%;
     padding:2.5%;
     max-width: 200px;
+    margin:1vh auto;
 }
 .login-form-link-container {
     display: flex;

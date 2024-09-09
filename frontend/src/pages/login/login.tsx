@@ -54,13 +54,11 @@ function Login() {
       setToken(response.data.access_token);
       const _user = response.data.user;
       setUser(
-        new User(
-          _user["username"],
-          _user["phone"],
-          _user["email"],
-          _user["email_verified_at"] != null,
-          _user["phone_verified_at"] != null
-        )
+          new User(
+              _user["username"], _user["phone"], _user["email"],
+              !!_user["phone_verified_at"],
+              !!_user["email_verified_at"]
+          )
       );
       redirect();
     } catch (error) {

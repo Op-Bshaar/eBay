@@ -4,7 +4,7 @@ import { useRequireAuthentication } from "./LoginRedirect";
 import "./login-form.css";
 import "./EmailVerification.css";
 import { PAGE_URLS } from "../../constants/URL";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from "../../api";
 import "../../Loader.css";
 import { isAxiosError } from "axios";

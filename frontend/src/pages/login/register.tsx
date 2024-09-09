@@ -9,6 +9,7 @@ import axios from "axios";
 import api, { setToken } from "../../api";
 import PasswordInput from "./PasswordInput";
 import { PAGE_URLS } from "../../constants/URL";
+import "../../Loader.css";
 
 function Register() {
     const navigate = useNavigate();
@@ -43,8 +44,8 @@ function Register() {
             const _user = response.data.user;
             setUser(new User(
                 _user["username"], _user["phone"], _user["email"],
-                _user["phone_verified_at"] != null,
-                _user["email_verified_at"] != null
+                !!_user["phone_verified_at"],
+                !!_user["email_verified_at"]
             ));
             const verification_email_sent = response.data.verification_email_sent;
             if (verification_email_sent) {
@@ -184,6 +185,7 @@ function Register() {
                         {errorMessage}
                     </p>
                 )}
+                {isLoading && <div className="small-loader" />}
                 <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل
                 </button>
