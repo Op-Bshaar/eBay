@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { API_URL } from "../../constants/URL";
-import { User } from "../../utils/itemdata";
 import api from "../../api";
-import axios from "axios";
+import { User } from "../../utils/itemdata";
+import './Users.css'; 
 
 function Users() {
   const [users, setUsers] = useState<User[]>([]);
@@ -12,7 +11,7 @@ function Users() {
     const fetchUsers = async () => {
       try {
         const response = await api.get("admin/users");
-        setUsers(Array.isArray(response.data) ? response.data : response.data.users || [])
+        setUsers(Array.isArray(response.data) ? response.data : response.data.users || []);
       } catch (error) {
         console.error("Axios fetch error:", error);
         setError("An error occurred while fetching users.");
@@ -23,20 +22,35 @@ function Users() {
   }, []);
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className="error-message">{error}</div>;
   }
 
   return (
-    <>
-      <div>Users</div>
-      <ul>
-        {users.map(user => (
-          <li key={user.id}>
-            {user.email} {user.id} {user.is_admin ? 'Admin' : 'User'} {user.phone} {user.username}
-          </li>
-        ))}
-      </ul>
-    </>
+    <div className="user-container">
+      <h1>المستخدمين</h1>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Phone</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.email}</td>
+              <td>{user.username}</td>
+              <td>{user.phone}</td>
+              <td>{user.is_admin ? 'Admin' : 'User'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
