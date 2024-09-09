@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Hero from "../../components/Hero/Hero";
-import HeroItem from "../../components/Hero-item/HeroItem";
+import HeroItem from "../../components/TopBar/TopBar";
 import { Products } from "../../utils/itemdata";
 import { BASE_URL } from "../../constants/URL";
 import { Link } from "react-router-dom";
+import SideBar from "../../components/SideBar/SideBar";
+import TopBar from "../../components/TopBar/TopBar";
 
 function Home() {
   const [products, setProducts] = useState<Products[]>([]);
@@ -37,10 +38,10 @@ function Home() {
       style={{ display: "flex", height: "100vh" }}
     >
       <div style={{ flex: "1" }}>
-        <Hero />
+        <SideBar />
       </div>
       <div style={{ padding: "20px", overflowY: "auto" }}>
-        <HeroItem />
+        <TopBar />
         <div
           style={{
             display: "grid",

@@ -50,7 +50,7 @@ const items: MenuItem[] = [
   { key: "15", icon: <ContainerOutlined />, label: "أجهزة منزليه" }
 ];
 
-const Hero: React.FC = () => {
+const SideBar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -77,4 +77,4 @@ const Hero: React.FC = () => {
   );
 };
 
-export default Hero;
+export default SideBar;

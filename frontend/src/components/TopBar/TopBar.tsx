@@ -3,7 +3,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import React from "react";
 import { itemdata } from "../../utils/itemdata";
-import "./HeroItem.css";
+import "./TopBar.css";
 
 const HeroItem: React.FC = () => {
   const settings = {
