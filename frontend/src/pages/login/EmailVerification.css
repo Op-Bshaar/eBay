@@ -1,3 +1,29 @@
-.email-verification-page {
-    text-align:center;
+.email-verifictation-success-message{
+    color:#00c000;
+    margin: 1vh auto;
+}
+.email-verifictation{
+    margin: 5vh auto;
+}
+
+    .email-verifictation .button {
+        min-width: 15vw;
+        min-height: 6vh
+    }
+.email-verifictation-content {
+    width: 75vw;
+}
+.email-verifictation-content > * {
+    margin: 1vh auto;
+}
+.email-verifictation-button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+    row-gap: 1vh;
+}
+.email-verifictation-button-container .button{
+    min-width:10em;
 }

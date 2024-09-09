@@ -7,7 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordResetController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Carbon\Carbon;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/loginphone', [AuthController::class, 'loginPhone']);
@@ -19,7 +19,14 @@ Route::post('/verifyCode', [AuthController::class, 'verifyCode']);
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
 Route::post('/reset-password', [PasswordResetController::class, 'reset']);
 
+// update-email
+Route::middleware('auth:sanctum')->post('/update-email', [AuthController::class,'updateEmail']);
 
+
+//request email verification
+ 
+Route::middleware('auth:sanctum')->post('/request-verification-email', [AuthController::class,'requestVerificationEmail'])->name('verification.send');
+//logout
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 //product route
@@ -55,7 +62,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-
+// return current user
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+//verify user test
+Route::get('/test-verify-email', function (Request $request) {
+    $user = $request->user();
+    $user->email_verified_at = Carbon::now();
+    $user->save();
+})->middleware(['auth:sanctum']);

@@ -1,22 +1,43 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { AuthenticationContext, User } from "./AuthenticationContext";
 
 function AuthenticationProvider({ children }: { children: ReactNode }) {
-    const storedUser = localStorage.getItem("user");
-    const [user, setUserState] = useState<User | null>(storedUser ? JSON.parse(storedUser) : null);
-    const setUser = (_user: User | null) => {
-        setUserState(_user);
-        if (_user) {
-            localStorage.setItem("user", JSON.stringify(_user));
-        }
-        else {
+    const [user, setUserState] = useState<User | null>(getStoredUser());
+    const setUser = (newUser: User | null) => {
+        setUserState(newUser);
+        if (newUser) {
+            localStorage.setItem("user", JSON.stringify(newUser));
+        } else {
             localStorage.removeItem("user");
         }
     }
+
+    useEffect(() => {
+
+        // Function to handle storage events
+        const handleStorageChange = (event: StorageEvent) => {
+            if (event.storageArea === localStorage) {
+                const newUser = getStoredUser();
+                setUserState(newUser);
+            }
+        };
+
+        // Add event listener
+        window.addEventListener('storage', handleStorageChange);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+        };
+    }, []);
     return (
-        <AuthenticationContext.Provider value={{user, setUser} } >
-      {children}
-    </AuthenticationContext.Provider>
-  );
-};
+        <AuthenticationContext.Provider value={{ user, setUser }} >
+            {children}
+        </AuthenticationContext.Provider>
+    );
+}
+function getStoredUser(): User |null {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+}
 export default AuthenticationProvider;

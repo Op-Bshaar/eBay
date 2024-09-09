@@ -13,30 +13,35 @@ import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
 import EmailVerification from "./pages/login/EmailVerification";
 import { PAGE_URLS } from "./constants/URL";
 import Password from "./pages/login/password";
+import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
+import ReloadUser from "./pages/ReloadUser";
 
 function App() {
-  return (
-    <AuthenticationProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path={PAGE_URLS.home} element={<Home />} />
-          <Route path={PAGE_URLS.search} element={<SearchPage />} />
-          <Route path={PAGE_URLS.login} element={<Login />} />
-          <Route path={PAGE_URLS.register} element={<Register />} />
-          <Route path={PAGE_URLS.password} element={<Password />} />
-          <Route
-            path={PAGE_URLS.email_verification}
-            element={<EmailVerification />}
-          />
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/users" element={<Users />} />
-          <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/products/:id" element={<ProductsDeatils />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthenticationProvider>
-  );
+    return (
+        <AuthenticationProvider>
+            <BrowserRouter>
+                <Navbar />
+                <Routes>
+                    <Route path={PAGE_URLS.home} element={<Home />} />
+                    <Route path={PAGE_URLS.search} element={<SearchPage />} />
+                    <Route path={PAGE_URLS.login} element={<Login />} />
+                    <Route path={PAGE_URLS.register} element={<Register />} />
+                    <Route path={PAGE_URLS.password} element={<Password />} />
+                    <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
+                    <Route path={PAGE_URLS.email_verified_successfuly} element={<ReloadUser redirectTo={PAGE_URLS.email_verification} />} />
+                    <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
+                    <Route
+                        path={PAGE_URLS.email_verification}
+                        element={<EmailVerification />}
+                    />
+                    <Route path="/admin/dashboard" element={<Dashboard />} />
+                    <Route path="/admin/users" element={<Users />} />
+                    <Route path="/admin/settings" element={<Settings />} />
+                    <Route path="/products/:id" element={<ProductsDeatils />} />
+                </Routes>
+            </BrowserRouter>
+        </AuthenticationProvider>
+    );
 }
 
 export default App;
