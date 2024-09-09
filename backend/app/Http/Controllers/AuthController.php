@@ -175,19 +175,13 @@ class AuthController extends Controller
         // Send the email
         try {
             $request->user()->sendEmailVerificationNotification();
-                    // Check for email failures (immediate)
-        if (Mail::failures()) {
-            return response()->json(['error' => 'Failed to send verification link. Please try again later.'], 500);
-        }
-            
             // Apply throttling only if email was successfully sent
-            RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling
-    
+           // RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling
             return response()->json(['message' => 'Verification link sent!'
         
         ], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to send verification link. Please try again later.'], 500);
+            return response()->json(['error' => 'Failed to send verification link. Please try again later.','e'=>$e->getMessage()], 500);
         }
     }
 }
