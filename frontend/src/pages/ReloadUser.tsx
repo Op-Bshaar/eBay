@@ -26,9 +26,7 @@ function ReloadUser({ redirectTo = PAGE_URLS.home }: {redirectTo?:string}) {
             setUser(user);
             navigate(redirectTo);
         }
-        catch {
-
-        }
+        catch { /* empty */ }
     }
     useEffect(() => {
         load();

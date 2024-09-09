@@ -176,7 +176,7 @@ class AuthController extends Controller
         try {
             $request->user()->sendEmailVerificationNotification();
             // Apply throttling only if email was successfully sent
-           // RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling
+            RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling
             return response()->json(['message' => 'Verification link sent!'
         
         ], 200);

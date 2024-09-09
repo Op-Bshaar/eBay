@@ -50,6 +50,9 @@ function Register() {
             if (verification_email_sent) {
                 sessionStorage.setItem("verification_email_sent", verification_email_sent);
             }
+            else {
+                sessionStorage.removeItem("verification_email_sent")
+            }
             navigate(PAGE_URLS.email_verification);
         }
         catch (error) {

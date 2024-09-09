@@ -29,8 +29,7 @@ function VerifiyEmail() {
             setErrorMessage("");
             // Disable the button
             setIsRetryDisabled(true);
-            const response = await api.post('request-verification-email');
-            setErrorMessage("");
+            await api.post('request-verification-email');
             // Re-enable the button after timeout
             setTimeout(() => {
                 setIsRetryDisabled(false);
@@ -79,15 +78,12 @@ function VerifiyEmail() {
                 }
                 <div className="email-verifictation-button-container">
                     <button onClick={requestVerificationEmail} className="button" disabled={isRetryDisabled}>
-                    {firstTry ? "إرسال رابط التفعيل" : "إعادة إرسال رابط التفعيل"}
+                    {firstTry && errorMessage ? "إرسال رابط التفعيل" : "إعادة إرسال رابط التفعيل"}
                     </button>
                     <Link to={PAGE_URLS.update_email} className="button">تغيير البريد الإلكنروني</Link>
                 </div>
             </>;
-    }
-    // clean session storage
-    if (verificationEmailSentOnRegister) {
-        sessionStorage.removeItem("verification_email_sent");
+        console.log(errorMessage);
     }
     return (
         <div className="login-form email-verifictation tajawal-extralight">

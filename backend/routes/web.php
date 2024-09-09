@@ -3,14 +3,32 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Events\Verified;
+use App\Models\User;
  
 Route::get('/login', function (Request $request) {
     return Redirect::away(env('FRONT_URL') . '/login');
 });
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-     return redirect(env('FRONT_URL') . '/email-verified-successfuly');
-})->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
+    
+    // Find the user by ID
+    $user = User::findOrFail($id);
+
+    // Check if the hash matches the user's email verification hash
+    if (! hash_equals($hash, sha1($user->getEmailForVerification()))) {
+        return Redirect::away(env('FRONT_URL') . '/invalid-email-verification-link');
+    }
+
+    // Mark the email as verified
+    if (! $user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+        event(new Verified($user));   
+         // Redirect to React frontend
+        return Redirect::away(env('FRONT_URL') . '/email-verified-successfully');
+    }
+    return Redirect::away(env('FRONT_URL') . '/invalid-email-verification-link');
+
+})->middleware(['signed'])->name('verification.verify');
 
 Route::get('/', function () {
     return view('welcome');
