@@ -32,10 +32,8 @@ function App() {
                     <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
                     <Route path={PAGE_URLS.email_verified_successfuly} element={<ReloadUser redirectTo={PAGE_URLS.email_verification} />} />
                     <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
-                    <Route
-                        path={PAGE_URLS.email_verification}
-                        element={<EmailVerification />}
-                    />
+                    <Route path={PAGE_URLS.email_verification}  element={<EmailVerification />}/>
+                    <Route path={PAGE_URLS.invalid_email_verification_link}  element={<EmailVerification />}/>
                     <Route path="/admin/dashboard" element={<Dashboard />} />
                     <Route path="/admin/users" element={<Users />} />
                     <Route path="/admin/settings" element={<Settings />} />

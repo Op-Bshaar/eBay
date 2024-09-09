@@ -11,5 +11,6 @@ export const PAGE_URLS = {
     password:"/password",
     restpassword:"/rest-password",
     reload_user:"/reload-user",
-    email_verified_successfuly:"/email-verified-successfully",
+    email_verified_successfuly: "/email-verified-successfully",
+    invalid_email_verification_link:"invalid-email-verification-link",
 }
