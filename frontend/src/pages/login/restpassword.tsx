@@ -46,7 +46,7 @@ function RestPassword() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter new password"
+          placeholder="ادخل كلمه المرور"
           required
         />
         <label>تأكيد كلمه المرور الجديدة</label>
@@ -54,7 +54,7 @@ function RestPassword() {
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm new password"
+          placeholder="تأكيد كلمه المررو"
           required
         />
         <button type="submit">اعاده كلمه المرور</button>
