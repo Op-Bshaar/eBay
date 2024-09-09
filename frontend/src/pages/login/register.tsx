@@ -187,7 +187,7 @@ function Register() {
                 <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل
                 </button>
-                <p>
+                <p style={{width:'100%'} }>
                     لديك حساب؟
                     <Link className="link" to={PAGE_URLS.login}>تسجيل دخول</Link>
                 </p>
