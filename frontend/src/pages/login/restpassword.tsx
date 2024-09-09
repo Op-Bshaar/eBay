@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import api from "../../api"; // Your configured Axios instance
+import api from "../../api";
 
 function RestPassword() {
   const [password, setPassword] = useState("");
@@ -34,7 +34,7 @@ function RestPassword() {
       navigate("/login"); 
     } catch (error) {
       console.error("Error resetting password:", error);
-      setError("There was an error resetting your password. Please try again.");
+      setError("معذره حدثت مشكله");
     }
   };
 
