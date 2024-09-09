@@ -43,8 +43,8 @@ function Register() {
             const _user = response.data.user;
             setUser(new User(
                 _user["username"], _user["phone"], _user["email"],
-                _user["email_verified_at"] != null,
-                _user["phone_verified_at"] != null
+                _user["phone_verified_at"] != null,
+                _user["email_verified_at"] != null
             ));
             const verification_email_sent = response.data.verification_email_sent;
             if (verification_email_sent) {
