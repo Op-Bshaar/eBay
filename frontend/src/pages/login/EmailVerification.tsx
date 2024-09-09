@@ -1,4 +1,4 @@
-﻿import { ReactNode, useState } from "react";
+﻿import { ReactNode, useEffect, useState } from "react";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { useRequireAuthentication } from "./LoginRedirect";
 import "./login-form.css";
@@ -10,20 +10,26 @@ import "../../Loader.css";
 import { isAxiosError } from "axios";
 
 function VerifiyEmail() {
-    const timeBetweenRetriesInMS = 60000;//ms
+    const _verification_email_sent = sessionStorage.getItem("verification_email_sent") === 'true';
+    const [verification_email_sent, setVerification_email_sent] = useState(_verification_email_sent);
+    const timeBetweenRetriesInMS = 60001;//ms
     const genericError = "حدث خطأ ما, حاول مرة أخرى.";
     useRequireAuthentication();
-    const verificationEmailSentOnRegister = sessionStorage.getItem("verification_email_sent") === "true";
-    const [errorMessage, setErrorMessage] = useState(verificationEmailSentOnRegister ? "" : genericError);
+    const [errorMessage, setErrorMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [isRetryDisabled, setIsRetryDisabled] = useState(false);
-    const [firstTry, setFirstTry] = useState(true);
     const user = useAuthenticationContext().user;
     const isEmailVerified = user?.isEmailVerified;
+    // Use useEffect to clear sessionStorage only after the state has been updated
+    useEffect(() => {
+        if (verification_email_sent) {
+            sessionStorage.removeItem("verification_email_sent");
+        }
+    }, [verification_email_sent]);
     const requestVerificationEmail = async () => {
         try {
-            if (firstTry) {
-                setFirstTry(false);
+            if (!verification_email_sent) {
+                setVerification_email_sent(true);
             }
             setIsLoading(true);
             setErrorMessage("");
@@ -41,6 +47,15 @@ function VerifiyEmail() {
             if (isAxiosError(error)) {
                 if (error.request && !error.response) {
                     setErrorMessage(" تحقق من الاتصال بالشبكة ثم حاول مرة أخرى.");
+                }
+                //429 Too Many Requests
+                else if (error.response?.status === 429) {
+                    setErrorMessage("يمكنك طلب إعادة الإرسال بعد دقيقة.");
+                    setIsRetryDisabled(true);
+                    // Re-enable the button after timeout
+                    setTimeout(() => {
+                        setIsRetryDisabled(false);
+                    }, timeBetweenRetriesInMS);
                 }
                 else {
                     setErrorMessage(genericError);
@@ -62,28 +77,27 @@ function VerifiyEmail() {
         </>
     }
     else if (user && user.email) {
-        const errorElement = !firstTry &&
-            <div role="alert" aria-live="assertive" className="error-message">
-                {errorMessage}
-            </div>;
+        const errorElement = <div role="alert" aria-live="assertive" className="error-message">
+            {errorMessage}
+        </div>;
         page =
             <>
                 <input className="center-text" type="text" value={user.email} disabled />
                 {errorMessage ? errorElement :
                     isLoading ?
                         <div className="small-loader" /> :
+                        verification_email_sent &&
                         <div className="text-align-start">
                             تم إرسال رابط إلى بريدك الإلكنروني.
                         </div>
                 }
                 <div className="email-verifictation-button-container">
                     <button onClick={requestVerificationEmail} className="button" disabled={isRetryDisabled}>
-                    {firstTry && errorMessage ? "إرسال رابط التفعيل" : "إعادة إرسال رابط التفعيل"}
+                    {verification_email_sent ? "إعادة إرسال رابط التفعيل" : "إرسال رابط التفعيل"}
                     </button>
                     <Link to={PAGE_URLS.update_email} className="button">تغيير البريد الإلكنروني</Link>
                 </div>
             </>;
-        console.log(errorMessage);
     }
     return (
         <div className="login-form email-verifictation tajawal-extralight">

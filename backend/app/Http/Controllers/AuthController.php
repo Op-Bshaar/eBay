@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Mail;
-
+use App\Jobs\SendVerificationEmail;
 class AuthController extends Controller
 {
     //
@@ -106,19 +106,15 @@ class AuthController extends Controller
         ]);
 
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
-        $emailSent = true; // Assume the email is sent successfully by default
 
         try {
-            event(new Registered($user)); // Send verification email
-        } catch (\Exception $e) {
-            $emailSent = false; // Set emailSent to false if email fails to send
-        }
+            SendVerificationEmail::dispatch($user);
+        } catch (\Exception $e) {}
         return response()->json([
             'message' => 'Registration successful',
             'token_type' => 'Bearer',
             'access_token' => $token,
             'user' => $user,
-            'verification_email_sent' => $emailSent,
         ], 201);
     }
     public function verifyCode(Request $request): JsonResponse
