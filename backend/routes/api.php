@@ -17,6 +17,7 @@ Route::post('/verifyCode', [AuthController::class, 'verifyCode']);
 
 //passwordrest
 Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLink']);
+Route::get('/reset-password', [PasswordResetController::class, 'showResetForm']);
 Route::post('/reset-password', [PasswordResetController::class, 'reset']);
 
 // update-email
