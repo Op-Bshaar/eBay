@@ -2,8 +2,7 @@ import {HtmlHTMLAttributes, useState} from "react";
 import Product from "../../Product";
 import api from "../../api";
 import React from "react";
-//import { useAuthenticationContext, User } from "../../context/AuthenticationContext";
-//const { user, setUser } = useAuthenticationContext();
+import "./Sell.css"
 //TODO: finish sell
 const ProductForm: React.FC = () => {
     const [product, setProduct] = useState<Product>(
@@ -40,17 +39,18 @@ return (
      <form onSubmit={handleSubmit}>
       
       <div>
-        <label>مواصفات المنتج:</label>
-        <label>Name</label>
-        <input type="text" name="اسم المنتج" value={product.price} onChange={handleChange} />
-        <label>description</label>
-        <input type="text" name="الوصف" value={product.description} onChange={handleChange} />
-        <label>price</label>
-        <input type="text" name="السعر" value={product.price} onChange={handleChange} />
-        <label>image</label>
-        <input type="text" name="الصورة" value={product.image} onChange={handleChange} />
+        <label className="objective">مواصفات المنتج:</label>
+        <br></br>
+        <label className="lab">Name</label>
+        <input type="text" name="اسم المنتج" value={product.price} onChange={handleChange} className="name"/>
+        <label className="lab">description</label>
+        <input type="text" name="الوصف" value={product.description} onChange={handleChange} className="description"/>
+        <label className="lab">price</label>
+        <input type="text" name="السعر" value={product.price} onChange={handleChange} className="price"/>
+        <label className="lab">image</label>
+        <input type="text" name="الصورة" value={product.image} onChange={handleChange} className="image"/>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" className="submittionbutton">Submit</button>
     </form>
     )
 };
