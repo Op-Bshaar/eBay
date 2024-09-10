@@ -58,12 +58,6 @@ export interface Product{
     description:string
 }
 
-export interface CartItem{
-    productId:number,
-    quantity:number,
-    product:Product;
-}
-
 export interface User{
     id:number,
     username:string,

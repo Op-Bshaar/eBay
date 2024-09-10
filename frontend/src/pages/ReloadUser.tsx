@@ -3,7 +3,7 @@ import "../Loader.css"
 import { useRequireAuthentication } from "./login/LoginRedirect";
 import { PAGE_URLS } from "../constants/URL";
 import api from "../api";
-import { readUser, useAuthenticationContext, User } from "../context/AuthenticationContext";
+import { readUser, useAuthenticationContext } from "../context/AuthenticationContext";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 

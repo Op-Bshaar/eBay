@@ -1,5 +1,4 @@
-import { CartContext } from "./cartContext";
-import { CartItem } from "../utils/itemdata";
+import { CartContext, CartItem } from "./CartContext";
 import { useState, useEffect, PropsWithChildren, FC } from "react";
 import api from "../api";
 

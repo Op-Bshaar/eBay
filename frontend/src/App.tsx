@@ -4,7 +4,6 @@ import Login from "./pages/login/login";
 import Register from "./pages/login/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
-import AuthenticationProvider from "./context/AuthenticationProvider";
 import Dashboard from "./pages/admin/Dashboard";
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
@@ -17,6 +16,7 @@ import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import ReloadUser from "./pages/ReloadUser";
 import RestPassword from "./pages/login/restpassword";
 import ProductForm from "./pages/Sell/Sell";
+import AuthenticationProvider from "./context/AuthenticationProvider";
 function App() {
     const request_email_verification = <ReloadUser redirectTo={PAGE_URLS.email_verification} />;
     return (
