@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import HeroItem from "../../components/TopBar/TopBar";
-import { Products } from "../../utils/itemdata";
+import { Product } from "../../utils/itemdata";
 import { BASE_URL } from "../../constants/URL";
 import { Link } from "react-router-dom";
 import SideBar from "../../components/SideBar/SideBar";
 import TopBar from "../../components/TopBar/TopBar";
 
 function Home() {
-  const [products, setProducts] = useState<Products[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
