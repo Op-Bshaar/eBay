@@ -4,14 +4,17 @@ import { BASE_URL } from "../../constants/URL";
 import "../../context/cartProvider"
 import { useCart } from "../../context/cartContext";
 import Product from "../../Product";
-const {addItemToCart,CartItem,removeItemToCart} = useCart();
+
 
 function ProductsDeatils() {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const {addItemToCart,CartItem,removeItemToCart} = useCart();
+  useEffect(() => {
+    console.log("Cart size is:", CartItem.length);
+  }, [CartItem]);
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -45,8 +48,11 @@ function ProductsDeatils() {
   }
   const handleBuy = () =>
     {
+      console.log("id is:")
+      console.log(product.id)
       addItemToCart(product.id)
     }
+    
   return (
     <div>
       <h1>{product.title}</h1>
@@ -54,8 +60,10 @@ function ProductsDeatils() {
       <p>{product.description}</p>
       <p>Price: ${product.price}</p>
       <button onClick={handleBuy}>buy</button>
+      
       <div>
         <p>your cart</p>
+        
         {CartItem.length==0?
         (<p>your cart is empty</p>)
         :
