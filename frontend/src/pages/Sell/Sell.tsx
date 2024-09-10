@@ -42,13 +42,13 @@ return (
         <label className="objective">مواصفات المنتج:</label>
         <br></br>
         <label className="lab">Name</label>
-        <input type="text" name="اسم المنتج" value={product.price} onChange={handleChange} className="name"/>
+        <input type="text" name="title" value={product.title} onChange={handleChange} className="name"/>
         <label className="lab">description</label>
-        <input type="text" name="الوصف" value={product.description} onChange={handleChange} className="description"/>
+        <input type="text" name="description" value={product.description} onChange={handleChange} className="description"/>
         <label className="lab">price</label>
-        <input type="text" name="السعر" value={product.price} onChange={handleChange} className="price"/>
+        <input type="text" name="price" value={product.price} onChange={handleChange} className="price"/>
         <label className="lab">image</label>
-        <input type="text" name="الصورة" value={product.image} onChange={handleChange} className="image"/>
+        <input type="text" name="image" value={product.image} onChange={handleChange} className="image"/>
       </div>
       <button type="submit" className="submittionbutton">Submit</button>
     </form>
