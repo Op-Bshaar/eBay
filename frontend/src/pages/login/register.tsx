@@ -1,16 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./login-form.css";
 import { useRef, useState } from "react";
-import {
-    readUser,
-  useAuthenticationContext,
-  User,
-} from "../../context/AuthenticationContext";
 import axios from "axios";
 import api, { setToken } from "../../api";
 import PasswordInput from "./PasswordInput";
 import { PAGE_URLS } from "../../constants/URL";
 import "../../Loader.css";
+import { useAuthenticationContext } from "../../context/AuthenticationContext";
+import { readUser } from "../../User";
 
 function Register() {
     const navigate = useNavigate();

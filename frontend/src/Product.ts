@@ -1,13 +1,11 @@
 class Product {
     public price: string;
     public title: string;
-    //public SellerName: string;
-    //public Category: string;
     public id: string;
     public description: string;
     public image: string
     public seller_id: string;
-    constructor(id: string,price: string,seller_id: string, title: string, /**SellerName: string, Category: string, PID: string,**/ description: string, image: string)
+    constructor(id: string,price: string,seller_id: string, title: string, description: string, image: string)
     {
         this.id = id;
         this.price = price;
@@ -17,5 +15,19 @@ class Product {
         this.image= image;
     }
 
+}
+/**
+ * reads product from value returned from api
+ * @param product_data json object returned from api call
+ * @returns product object
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function readProduct(product_data: any): Product {
+    return new Product(product_data.id,
+        product_data.price,
+        product_data.seller_id,
+        product_data.title,
+        product_data.description,
+        product_data.image)
 }
 export default Product;

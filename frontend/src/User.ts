@@ -1,6 +1,3 @@
-import { createContext, useContext } from "react";
-import api, { clearUserToken } from "../api";
-
 export class User {
     id: string;
     username: string;
@@ -19,28 +16,7 @@ export class User {
         this.isAdmin = isAdmin;
     }
 }
-interface AuthenticationContextType { user: User | null; setUser: (user: User | null) => void; }
-export const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
-export function useAuthenticationContext(): AuthenticationContextType {
-    const context = useContext(AuthenticationContext);
-    if (!context) {
-        throw new Error("useAuthentication must be used within an AuthenticationProvider");
-    }
-    return context;
-}
-export function useLogout() {
-    const { setUser } = useAuthenticationContext();
-    const logout = async () => {
-        try {
-            await api.post('/logout');
-        } catch { /* empty */ }
-        finally {
-            setUser(null);
-            clearUserToken();
-        }
-    };
-    return logout;
-}
+
 /**
  * reads user from value returned from api
  * @param user_data json object returned from api call
