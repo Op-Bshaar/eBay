@@ -1,134 +1,99 @@
-import { CartContext, CartItem } from "./CartContext";
-import { useState, useEffect, PropsWithChildren, FC } from "react";
+﻿import { ReactNode, useRef, useState } from "react";
+import { CartContext } from "./CartContext";
 import api from "../api";
-
-const CartProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const response = await api.get("/cart");
-        const cart = response.data;
-        const cartItemsMapped = cart.items.map(
-          ({ product, quantity, price }: any) => ({
-            productId: product.id,
-            title: product.title,
-            image: product.image,
-            quantity,
-            price,
-          })
-        );
-        setCartItems(cartItemsMapped);
-        setTotalAmount(cart.totalAmount);
-      } catch (error: any) {
-        setError(error.message || "Something went wrong.");
-      }
-    };
-    fetchCart();
-  }, []);
-
-  // Add Item to Cart
-  const addItemToCart = async (productId: string) => {
-    try {
-      const response = await api.post("/cart", {
-        productId,
-        quantity: 1,
-      });
-
-      const cart = response.data;
-      const cartItemsMapped = cart.items.map(
-        ({ product, quantity, price }: any) => ({
-          productId: product.id,
-          title: product.title,
-          image: product.image,
-          quantity,
-          price,
-        })
-      );
-
-      setCartItems(cartItemsMapped);
-      setTotalAmount(cart.totalAmount);
-    } catch (error: any) {
-      setError(error.message);
+import { CartItem } from "../Cart";
+import { isAxiosError } from "axios";
+function CartProvider({ children }: { children: ReactNode }) {
+    const [cartItemsState, setCartItemsState] = useState<CartItem[]>([]);
+    const [isSynced, setIsSynced] = useState(true);
+    const changesFromLastUpdate = useRef(0);
+    const setChangesFromLastUpdate = (changes: number) => {
+        changesFromLastUpdate.current = changes;
+        const _isSynced = changes === 0;
+        if (isSynced !== _isSynced) {
+            setIsSynced(_isSynced);
+        }
     }
-  };
-
-  // Update Item Quantity in Cart
-  const updateItemToCart = async (productId: string, quantity: number) => {
-    try {
-      const response = await api.put(`cart}/${productId}`, {
-        quantity,
-      });
-
-      const cart = response.data;
-      const cartItemsMapped = cart.items.map(
-        ({ product, quantity, price }: any) => ({
-          productId: product.id,
-          title: product.title,
-          image: product.image,
-          quantity,
-          price,
-        })
-      );
-
-      setCartItems(cartItemsMapped);
-      setTotalAmount(cart.totalAmount);
-    } catch (error: any) {
-      setError(error.message);
+    const setCartItems = (cartItems: CartItem[]) => {
+        setCartItemsState(cartItems);
+        setChangesFromLastUpdate(changesFromLastUpdate.current + 1);
     }
-  };
+    const [errorMessage, setErrorMessage] = useState("");
+    const [isLoading , setIsLoading] = useState(false);
 
-  // Remove Item from Cart
-  const removeItemToCart = async (productId: string) => {
-    try {
-      const response = await api.delete(`cart/${productId}`);
-
-      const cart = response.data;
-      const cartItemsMapped = cart.items.map(
-        ({ product, quantity, price }: any) => ({
-          productId: product.id,
-          title: product.title,
-          image: product.image,
-          quantity,
-          price,
-        })
-      );
-
-      setCartItems(cartItemsMapped);
-      setTotalAmount(cart.totalAmount);
-    } catch (error: any) {
-      setError(error.message);
+    const reloadCart = async () => {
+        try {
+            const changesFromLastUpdateBeforeLoad = changesFromLastUpdate.current;
+            setIsLoading(true);
+            setErrorMessage("");
+            const response = await api.get('/cart');
+            const data: CartItem[] = response.data;
+            // check if no updates happend while waiting for response
+            if (changesFromLastUpdate.current === changesFromLastUpdateBeforeLoad) {
+                setCartItemsState(data);
+                setChangesFromLastUpdate(0);
+            }
+        }
+        catch (error) {
+            handleErrors (error, setErrorMessage);
+        }
+        finally {
+            setIsLoading(false);
+        }
     }
-  };
-
-  // Clear Cart
-  const clearItems = async () => {
-    try {
-      const response = await api.delete(`/cart`);
-
-      setCartItems([]); // Clear the cart
-      setTotalAmount(0);
-    } catch (error: any) {
-      setError(error.message);
+    const updateCart = async () => {
+        try {
+            const changesFromLastUpdateBeforeLoad = changesFromLastUpdate.current;
+            setIsLoading(true);
+            setErrorMessage("");
+            const response = await api.put('/cart');
+            const data: CartItem[] = response.data;
+            // check if no updates happend while waiting for response
+            if (changesFromLastUpdate.current === changesFromLastUpdateBeforeLoad) {
+                setCartItemsState(data);
+                setChangesFromLastUpdate(0);
+            }
+        }
+        catch (error) {
+            handleErrors (error, setErrorMessage);
+        }
+        finally {
+            setIsLoading(false);
+        }
     }
-  };
-
-  return (
-    <CartContext.Provider
-      value={{
-        CartItem: cartItems,
-        price: totalAmount,
-        addItemToCart,
-        updateItemToCart,
-        removeItemToCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+    return (
+        <CartContext.Provider value={{
+            cartItems: cartItemsState,
+            errorMessage: errorMessage,
+            isLoading: isLoading ,
+            isSynced: isSynced,
+            setCartItems: setCartItems,
+            reloadCart: reloadCart,
+            updateCart: updateCart,
+        }}>
+            {children}
+        </CartContext.Provider>
+    );
 };
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleErrors (error: any, setErrorMessage: (errorMessage: string) => void) {
+    const genericError = "حدث خطأ ما.";
+    if (isAxiosError(error)) {
+        if (error.request && !error.response) {
+            setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
+        }
+        else if (error.response) {
+            // Unautherized
+            if (error.response.status === 401) {
+                setErrorMessage("قم بتسجيل الدخول لعرض السلة.");
+            }
+            else {
+                setErrorMessage(genericError);
+            }
+        }
+        else {
+            setErrorMessage(genericError);
+        }
+    }
+}
 export default CartProvider;
