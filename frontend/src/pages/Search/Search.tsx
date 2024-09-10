@@ -19,7 +19,8 @@ async function load(
     if (query) {
       if (abortController) {
         abortController.abort();
-      }
+        }
+        setProducts([]);
       setErrorElement(null);
       const _abortController = new AbortController();
       setAbortController(_abortController);
@@ -82,9 +83,9 @@ function useSearchResult(): [
         setLoading(false);
     };
     //load search result everytime location changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         loadSearchResult();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
     return [products, errorElement, loading];
 }
@@ -98,14 +99,14 @@ function SearchPage() {
     return (
         <div className="tagawal-extralight search-page">
             <div className={"center-message"}>
-                {errorElement}
-                {loading ?
-                    <div className="loader" /> :
-                    <div className="product-view">
-                      {
-                    productsViews
-                      }
-                    </div>
+                {errorElement ? errorElement :
+                    loading ?
+                        <div className="loader" /> :
+                        <div className="product-view">
+                            {
+                                productsViews
+                            }
+                        </div>
                 }
             </div>
         </div>

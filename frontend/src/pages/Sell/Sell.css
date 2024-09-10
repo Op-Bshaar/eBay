@@ -1,12 +1,12 @@
 
-form {
+.sell-form form {
     max-width: 600px;
     margin: 0 auto;
     padding: 1rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #f9f9f9;
-  }
+}
 
   .objective {
     font-size: 1.2rem;
@@ -23,16 +23,16 @@ form {
     display: block;
     margin: 0.5rem 0 0.2rem;
   }
-  
 
-  input[type="text"] {
+
+.sell-form input[type="text"] {
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
+}
   
 
   .name {

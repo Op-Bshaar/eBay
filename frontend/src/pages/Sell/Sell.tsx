@@ -1,4 +1,4 @@
-import {HtmlHTMLAttributes, useState} from "react";
+import {useState} from "react";
 import Product from "../../Product";
 import api from "../../api";
 import React from "react";
@@ -35,7 +35,7 @@ const ProductForm: React.FC = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className ="sell-form" onSubmit={handleSubmit}>
 
             <div>
                 <label className="objective">مواصفات المنتج:</label>
