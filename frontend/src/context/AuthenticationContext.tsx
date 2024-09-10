@@ -27,11 +27,13 @@ export function useAuthenticationContext(): AuthenticationContextType {
 export function useLogout() {
     const { setUser } = useAuthenticationContext();
     const logout = async () => {
-        clearUserToken();
-        setUser(null);
         try {
             await api.post('/logout');
         } catch { /* empty */ }
+        finally {
+            setUser(null);
+            clearUserToken();
+        }
     };
     return logout;
 }
