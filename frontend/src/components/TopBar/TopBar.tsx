@@ -6,6 +6,7 @@ import { itemdata } from "../../utils/itemdata";
 import "./TopBar.css";
 
 const HeroItem: React.FC = () => {
+  // const[isopen,setIsopne]=usestate();
   const settings = {
     infinite: true,
     speed: 500,
@@ -34,3 +35,7 @@ const HeroItem: React.FC = () => {
 };
 
 export default HeroItem;
+function usestate(): [any, any] {
+  throw new Error("Function not implemented.");
+}
+
