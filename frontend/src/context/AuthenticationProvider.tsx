@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
-import { AuthenticationContext, User } from "./AuthenticationContext";
+import { AuthenticationContext } from "./AuthenticationContext";
+import { User } from "../User";
 
 function AuthenticationProvider({ children }: { children: ReactNode }) {
     const [user, setUserState] = useState<User | null>(getStoredUser());

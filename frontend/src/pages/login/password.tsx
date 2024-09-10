@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import api from "../../api";
 import "./password.css";
 function Password() {

@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import "./SearchPage.css";
 import "../../Loader.css";
 import { isAxiosError } from "axios";
-import Product from "../../Product";
+import Product, { readProduct } from "../../Product";
 import ProductView from "../../components/ProductView/ProductView";
 import "../../components/ProductView/ProductView.css"
 async function load(
@@ -32,8 +32,9 @@ async function load(
       );
       const products: Product[] = [];
       const productlist = response.data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       productlist.forEach((item: any) => {
-        products.push(new Product(item.id,item.price,item.seller_id,item.title, item.description, item.image))
+        products.push(readProduct(item))
       });
       setProducts(products);
     }

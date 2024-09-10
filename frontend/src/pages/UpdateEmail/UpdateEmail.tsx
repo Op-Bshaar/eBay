@@ -1,11 +1,12 @@
 ﻿import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useAuthenticationContext, User } from "../../context/AuthenticationContext";
+import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import "../login/login-form.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import api from "../../api";
 import { isAxiosError } from "axios";
 import { PAGE_URLS } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
+import { readUser } from "../../User";
 function UpdateEmail() {
     useRequireAuthentication();
     const { user, setUser } = useAuthenticationContext();
@@ -40,11 +41,7 @@ function UpdateEmail() {
             setResponseErrorMessage("");
             const response = await api.post("update-email", { 'email': new_email });
             const _user = response.data.user;
-            setUser(new User(
-                _user["username"], _user["phone"], _user["email"],
-                _user["email_verified_at"] != null,
-                _user["phone_verified_at"] != null
-            ));
+            setUser(readUser(_user));
             navigate(PAGE_URLS.request_email_verification);
         }
         catch (error) {

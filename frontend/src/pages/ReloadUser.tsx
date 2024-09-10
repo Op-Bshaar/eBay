@@ -3,14 +3,18 @@ import "../Loader.css"
 import { useRequireAuthentication } from "./login/LoginRedirect";
 import { PAGE_URLS } from "../constants/URL";
 import api from "../api";
-import { readUser, useAuthenticationContext } from "../context/AuthenticationContext";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
+import { useAuthenticationContext } from "../context/AuthenticationContext";
+import { readUser } from "../User";
+
 
 /**
- * page that updates user then redirect 
- * @returns
+ * reads user from value returned from api
+ * @param user_data json object returned from api call
+ * @returns User object.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ReloadUser({ redirectTo = PAGE_URLS.home }: { redirectTo?: string }) {
     useRequireAuthentication();
     const navigate = useNavigate();

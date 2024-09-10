@@ -3,13 +3,10 @@ import "./login-form.css";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { useRedirectAfterLogin } from "./LoginRedirect";
-import {
-    readUser,
-  useAuthenticationContext,
-  User,
-} from "../../context/AuthenticationContext";
 import api, { setToken } from "../../api";
 import { PAGE_URLS } from "../../constants/URL";
+import { useAuthenticationContext } from "../../context/AuthenticationContext";
+import { readUser } from "../../User";
 
 function Login() {
   const redirect = useRedirectAfterLogin();
