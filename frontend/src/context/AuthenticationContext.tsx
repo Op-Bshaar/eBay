@@ -3,9 +3,9 @@ import api, { clearUserToken } from "../api";
 import { User } from "../User";
 
 
-interface AuthenticationContextType { user: User | null; setUser: (user: User | null) => void; }
-export const AuthenticationContext = createContext<AuthenticationContextType | undefined>(undefined);
-export function useAuthenticationContext(): AuthenticationContextType {
+interface IAuthenticationContext { user: User | null; setUser: (user: User | null) => void; }
+export const AuthenticationContext = createContext<IAuthenticationContext | undefined>(undefined);
+export function useAuthenticationContext(): IAuthenticationContext {
     const context = useContext(AuthenticationContext);
     if (!context) {
         throw new Error("useAuthentication must be used within an AuthenticationProvider");

@@ -6,20 +6,10 @@ export interface CartItem {
     quantity: number,
     product: Product;
 }
-interface ICart{
-    CartItem:CartItem[];
-    price:number,
-    addItemToCart:( productId:string)=>void;
-    updateItemToCart:( productId:string,quantity:number)=>void;
-    removeItemToCart:( productId:string)=>void;
+class Cart{
+    items: CartItem[] = [];
 }
-
-export const CartContext = createContext<ICart>({
-    CartItem:[],
-    price:0,
-    addItemToCart:()=>{},
-    updateItemToCart:()=>{},
-    removeItemToCart:()=>{},
-})
+interface ICartContext { cart: Cart | null, reloadCart: () => void, errorMessage: string };
+export const CartContext = createContext<ICartContext | undefined>(undefined);
 
 export const useCart = ()=>useContext(CartContext);
