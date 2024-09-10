@@ -1,7 +1,6 @@
 import { CartContext } from "./cartContext";
 import { CartItem } from "../utils/itemdata";
 import { useState, useEffect, PropsWithChildren, FC } from "react";
-import { useAuthenticationContext } from "./AuthenticationContext";
 import api from "../api";
 
 const CartProvider: FC<PropsWithChildren> = ({ children }) => {

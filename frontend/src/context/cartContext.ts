@@ -17,7 +17,6 @@ export const CartContext = createContext<ICart>({
     addItemToCart:()=>{},
     updateItemToCart:()=>{},
     removeItemToCart:()=>{},
-    // clearcart:()=>{}
 })
 
 export const useCart = ()=>useContext(CartContext);

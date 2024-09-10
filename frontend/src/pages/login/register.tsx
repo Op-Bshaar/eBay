@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./login-form.css";
 import { useRef, useState } from "react";
 import {
+    readUser,
   useAuthenticationContext,
   User,
 } from "../../context/AuthenticationContext";
@@ -42,11 +43,7 @@ function Register() {
             });
             setToken(response.data.access_token);
             const _user = response.data.user;
-            setUser(new User(
-                _user["username"], _user["phone"], _user["email"],
-                !!_user["phone_verified_at"],
-                !!_user["email_verified_at"]
-            ));
+            setUser(readUser(_user));
             sessionStorage.setItem("verification_email_sent", "true");
             navigate(PAGE_URLS.request_email_verification);
         }

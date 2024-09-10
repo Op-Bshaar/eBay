@@ -50,7 +50,7 @@ export const itemdata = [
 ]
 
 
-export interface Products{
+export interface Product{
     id:string,
     image:string,
     title:string,
@@ -61,7 +61,7 @@ export interface Products{
 export interface CartItem{
     productId:number,
     quantity:number,
-    product:Products;
+    product:Product;
 }
 
 export interface User{
