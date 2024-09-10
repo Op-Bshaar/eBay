@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('payment_method');
             $table->string('status')->default('pending');
-            $table->integer('user_id');
+            $table->foreignId('user_id')->constrained();
+            $table->decimal('total_price');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
         });
     }
 

@@ -22,4 +22,13 @@ class AdminController extends Controller
             'users' => User::all()
         ]);
     }
+
+    public function settings()
+    {
+        $mysettings=[
+            'sitename'=>'EBay',
+            'version'=>'1.0.0'
+        ];
+    return response()->json($mysettings);
+    }
 }

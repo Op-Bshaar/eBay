@@ -23,12 +23,13 @@ class CheckoutController extends Controller
 
     public function Checkoutprocess(Request $request)
     {
+
         $request->validate([
             'payment_method' => 'required|string',
         ]);
     
         $cartitems = Cart::with('product')->where('user_id', Auth::id())->get();
-    
+
         if ($cartitems->count() == 0) {
             return response()->json(['message' => 'cart is empty'], 400);
         }
