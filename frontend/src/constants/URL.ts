@@ -13,5 +13,6 @@ export const PAGE_URLS = {
     restpassword: "/rest-password",
     reload_user: "/reload-user",
     email_verified_successfuly: "/email-verified-successfully",
-    invalid_email_verification_link: "invalid-email-verification-link",
+    invalid_email_verification_link: "/invalid-email-verification-link",
+    cart:'/cart',
 }

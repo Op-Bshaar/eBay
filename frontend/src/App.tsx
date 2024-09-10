@@ -18,6 +18,7 @@ import RestPassword from "./pages/login/restpassword";
 import ProductForm from "./pages/Sell/Sell";
 import AuthenticationProvider from "./context/AuthenticationProvider";
 import CartProvider from "./context/cartProvider";
+import CartPage from "./pages/Cart/CartPage";
 function App() {
     const request_email_verification = <ReloadUser redirectTo={PAGE_URLS.email_verification} />;
     return (
@@ -38,6 +39,7 @@ function App() {
                         <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
                         <Route path={PAGE_URLS.request_email_verification} element={request_email_verification} />
                         <Route path={PAGE_URLS.invalid_email_verification_link} element={request_email_verification} />
+                        <Route path={PAGE_URLS.cart} element= <CartPage/> />
                         <Route path="/admin/dashboard" element={<Dashboard />} />
                         <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/settings" element={<Settings />} />
