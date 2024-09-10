@@ -37,7 +37,7 @@ function Navbar() {
                     />
                     <button className="wrapper-button" type="submit"><FontAwesomeIcon className="search-icon" icon={faMagnifyingGlass} /></button>
                 </form>
-                <Link className="nav-link " to="/">
+                <Link className="nav-link " to="/sell">
                     البيع في سوق
                 </Link>
                 {isAuthenticated ? (

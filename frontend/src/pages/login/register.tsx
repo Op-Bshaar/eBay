@@ -47,14 +47,8 @@ function Register() {
                 !!_user["phone_verified_at"],
                 !!_user["email_verified_at"]
             ));
-            const verification_email_sent = response.data.verification_email_sent;
-            if (verification_email_sent) {
-                sessionStorage.setItem("verification_email_sent", verification_email_sent);
-            }
-            else {
-                sessionStorage.removeItem("verification_email_sent")
-            }
-            navigate(PAGE_URLS.email_verification);
+            sessionStorage.setItem("verification_email_sent", "true");
+            navigate(PAGE_URLS.request_email_verification);
         }
         catch (error) {
             if (axios.isAxiosError(error)) {
@@ -72,7 +66,7 @@ function Register() {
                     const _phoneTaken = !!_errors["phone"];
                     // setIsPhoneTaken only if it changed to avoid unnecessary  updates
                     if (isPhoneTaken != _phoneTaken) {
-                        setIsPhoneTaken(_usernameTaken);
+                        setIsPhoneTaken(_phoneTaken);
                     }
 
                     // !!_errors["email"] returns true if email exists in _errors
@@ -185,7 +179,6 @@ function Register() {
                         {errorMessage}
                     </p>
                 )}
-                {isLoading && <div className="small-loader" />}
                 <button type="submit" className="button submit-button" disabled={isLoading}>
                     تسجيل
                 </button>

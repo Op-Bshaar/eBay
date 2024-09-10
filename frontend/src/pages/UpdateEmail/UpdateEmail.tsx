@@ -45,7 +45,7 @@ function UpdateEmail() {
                 _user["email_verified_at"] != null,
                 _user["phone_verified_at"] != null
             ));
-            navigate(PAGE_URLS.email_verification);
+            navigate(PAGE_URLS.request_email_verification);
         }
         catch (error) {
             if (isAxiosError(error)) {
