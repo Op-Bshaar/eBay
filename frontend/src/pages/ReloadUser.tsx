@@ -3,7 +3,7 @@ import "../Loader.css"
 import { useRequireAuthentication } from "./login/LoginRedirect";
 import { PAGE_URLS } from "../constants/URL";
 import api from "../api";
-import { useAuthenticationContext, User } from "../context/AuthenticationContext";
+import { readUser, useAuthenticationContext, User } from "../context/AuthenticationContext";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 
@@ -21,11 +21,7 @@ function ReloadUser({ redirectTo = PAGE_URLS.home }: { redirectTo?: string }) {
             setErrorMessage("");
             const response = await api.get("user");
             const _user = response.data;
-            const user = new User(
-                _user["username"], _user["phone"], _user["email"],
-                !!_user["phone_verified_at"],
-                !!_user["email_verified_at"]
-            );
+            const user = readUser(_user);
             setUser(user);
             navigate(redirectTo);
         }
