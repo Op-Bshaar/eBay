@@ -76,6 +76,16 @@
   cursor: pointer;
 }
 
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-item {
+    display: flex;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
