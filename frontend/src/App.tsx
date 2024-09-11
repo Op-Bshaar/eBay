@@ -4,9 +4,9 @@ import Login from "./pages/login/login";
 import Register from "./pages/login/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
-import Dashboard from "../../admindashboard/src/App";
-import Users from "./pages/admin/Users";
-import Settings from "./pages/admin/Settings";
+import DashBoard from "../../admindashboard/src/Pages/dashboard";
+import Users from "../../admindashboard/src/Pages/Users";
+import Settings from "../../admindashboard/src/Pages/Settings";
 import SearchPage from "./pages/Search/Search";
 import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
 import EmailVerification from "./pages/login/EmailVerification";
@@ -40,7 +40,7 @@ function App() {
                         <Route path={PAGE_URLS.request_email_verification} element={request_email_verification} />
                         <Route path={PAGE_URLS.invalid_email_verification_link} element={request_email_verification} />
                         <Route path={PAGE_URLS.cart} element= <CartPage/> />
-                        <Route path="/admin/dashboard" element={<Dashboard />} />
+                        <Route path="/admin/dashboard" element={<DashBoard />} />
                         <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/settings" element={<Settings />} />
                         <Route path="/products/:id" element={<ProductsDeatils />} />
