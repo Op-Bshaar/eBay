@@ -65,6 +65,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware('AdminMiddleware')->group(function () {
         Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
         Route::get('admin/users', [AdminController::class, 'index']);
+        Route::get('admin/products',[AdminController::class, 'products']);
+        Route::get('admin/orders',[AdminController::class, 'orders']);
         Route::get('admin/settings', [AdminController::class, 'settings']);
     });
 });

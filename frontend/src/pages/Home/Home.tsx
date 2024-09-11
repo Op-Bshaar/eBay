@@ -13,7 +13,7 @@ function Home() {
     const fetchProducts = async () => {
       try {
         const response = await api.get(`/products`);
-          const data = await response.data;
+        const data = await response.data;
         setProducts(data);
       } catch (error) {
         console.error("Fetch error:", error);
@@ -28,48 +28,48 @@ function Home() {
     return <div>{error}</div>;
   }
 
-    return (
+  return (
+    <div
+      className="tajawal-extralight"
+      style={{ display: "flex", height: "100vh" }}
+    >
+      <div style={{ flex: "1" }}>
+        <SideBar />
+      </div>
+      <div style={{ padding: "20px", overflowY: "auto" }}>
+        <TopBar />
         <div
-            className="tajawal-extralight"
-            style={{ display: "flex", height: "100vh" }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "1px",
+            justifyContent: "center",
+            padding: "20px",
+            boxSizing: "border-box",
+          }}
         >
-            <div style={{ flex: "1" }}>
-                <SideBar />
-            </div>
-            <div style={{ padding: "20px", overflowY: "auto" }}>
-                <TopBar />
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(4, 1fr)",
-                        gap: "1px",
-                        justifyContent: "center",
-                        padding: "20px",
-                        boxSizing: "border-box",
-                    }}
-                >
-                    {products.length > 0 ? (
-                        products.map(({ id, title, image, price, description }) => (
-                            <div key={id} style={{ textAlign: "center" }}>
-                                <Link to={`/products/${id}`}>
-                                    <h2>{title}</h2>
-                                    <img
-                                        style={{ width: "100px", height: "100px" }}
-                                        src={image}
-                                        alt={title}
-                                    />
-                                </Link>
-                                <p>{price}</p>
-                                <p>{description}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No products available</p>
-                    )}
-                </div>
-            </div>
+          {products.length > 0 ? (
+            products.map(({ id, title, image, price, description }) => (
+              <div key={id} style={{ textAlign: "center" }}>
+                <Link to={`/products/${id}`}>
+                  <h2>{title}</h2>
+                  <img
+                    style={{ width: "100px", height: "100px" }}
+                    src={image}
+                    alt={title}
+                  />
+                </Link>
+                <p>{price}</p>
+                <p>{description}</p>
+              </div>
+            ))
+          ) : (
+            <p>No products available</p>
+          )}
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default Home;

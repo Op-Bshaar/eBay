@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
 
 class AdminController extends Controller
 {
@@ -33,5 +35,15 @@ class AdminController extends Controller
             'version' => '1.0.0'
         ];
         return response()->json($mySettings);
+    }
+    public function orders(){
+        return response()->json([
+            'orderes' => Order::all()
+        ]);
+    }
+    public function products(){
+        return response()->json([
+            'product' => Product::all()
+        ]); 
     }
 }
