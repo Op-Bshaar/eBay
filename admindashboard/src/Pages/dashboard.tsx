@@ -7,21 +7,19 @@ import '../../data'
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Menu from "../components/menu/Menu";
-function dashboard() {
+function DashBoard() {
   return (
     <>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/menu" element={<Menu />} />
-      </Routes>
+    <>element={<Menu />} </>
+      
       <h1>بشار</h1>
-    </BrowserRouter>
+    
     </>
     
 
   );
 }
 
-export default dashboard;
+export default DashBoard;
 
 
