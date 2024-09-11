@@ -4,7 +4,7 @@ import Login from "./pages/login/login";
 import Register from "./pages/login/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
-import Dashboard from "../../admindashboard/src/AdminDashBoard";
+import Dashboard from "../../admindashboard/src/App";
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
 import SearchPage from "./pages/Search/Search";
