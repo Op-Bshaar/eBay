@@ -27,14 +27,20 @@ function CartPage() {
             <Link className="link" to={PAGE_URLS.home}> تصفح منتجاتنا.</Link>
         </p>;
     const cart = (
-        <div className="cart-items-container">
-            {
-                cartItems.map((item, index) =>
-                    <div className ="cart-item" key={index}>
-                        <ProductView product={item.product} clickToGo={false} />
-                        <button className="button remove-from-cartbutton" onClick={() => removeFromCart(item.product)}>احذف من السلة</button>
-                    </div>
-                )}
+        <div className="cart-page">
+            <div className="cart-items-container">
+                {
+                    cartItems.map((item, index) =>
+                        <div className="cart-item" key={index}>
+                            <ProductView product={item.product} clickToGo={false} />
+                            <button className="button remove-from-cart-button" onClick={() => removeFromCart(item.product)}>احذف من السلة</button>
+                        </div>
+                    )}
+            </div>
+            <div className="cart-buttons-container">
+                <button className="button">حذف السلة</button>
+                <button className="button">شراء</button>
+            </div>
         </div>);
 
     return (

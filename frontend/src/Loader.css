@@ -4,10 +4,8 @@
     height: 15vmin;
     border-radius: 50%;
     border-width: 2vmin;
-    border-bottom-color: blue;
-    border-top-color:blue;
+    border-color: blue;
     border-left-color: transparent;
-    border-right-color: blue;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
     border-style: solid;
     animation: rotation 2.5s linear infinite;

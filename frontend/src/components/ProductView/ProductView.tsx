@@ -7,7 +7,7 @@ function ProductView({ product, clickToGo = true, showGoButton }: ProductViewPro
     showGoButton = showGoButton != undefined ? showGoButton : !clickToGo;
     const view = (
         <div className="product-item">
-            <img src={product.image} alt={"لا توجد صورة"} className="product-image" />
+            {product.image && <img src={product.image} className="product-image" />}
             <div className="product-properties">
                 <h2 className="product-title">{product.title}</h2>
                 <p className="product-description">{product.description}</p>

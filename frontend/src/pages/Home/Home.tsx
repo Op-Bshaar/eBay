@@ -4,14 +4,18 @@ import TopBar from "../../components/TopBar/TopBar";
 import api from "../../api";
 import Product from "../../Product";
 import ProductView from "../../components/ProductView/ProductView";
-
+import "../../Loader.css";
+import "./Home.css";
+import ErrorMessage from "../../components/errorMessage/Error";
 function Home() {
     const [products, setProducts] = useState<Product[]>([]);
-    const [error, setError] = useState<string | null>(null);
-
+    const [error, setError] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
+                setError("");
+                setIsLoading(true);
                 const response = await api.get(`/products`);
                 const data = await response.data;
                 setProducts(data);
@@ -19,13 +23,21 @@ function Home() {
                 console.error("Fetch error:", error);
                 setError("An error occurred while fetching products.");
             }
+            finally {
+                setIsLoading(false);
+            }
         };
 
         fetchProducts();
     }, []);
 
-    if (error) {
-        return <div>{error}</div>;
+    if (error || isLoading) {
+        return (
+            <div className="tajawal-extralight home-message big-message">
+                {isLoading && <div className="loader" />}
+                {error && <ErrorMessage>error</ErrorMessage>}
+            </div>
+        );
     }
 
     return (

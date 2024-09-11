@@ -60,7 +60,6 @@ class CartController extends Controller
              $cartItem->makeHidden(['id','cart_id','product_id', 'created_at', 'updated_at']);
              // Hide 'created_at', 'updated_at' for product
              $cartItem->product->makeHidden(['created_at', 'updated_at']);
-             $cartItem->product->image = url('images/' . $cartItem->product->image);
         return $cartItem;
         });
         return response()->json([
@@ -88,7 +87,6 @@ class CartController extends Controller
              $cartItem->makeHidden(['id','cart_id','product_id', 'created_at', 'updated_at']);
              // Hide 'created_at', 'updated_at' for product
              $cartItem->product->makeHidden(['created_at', 'updated_at']);
-             $cartItem->product->image = url('images/' . $cartItem->product->image);
 
         return $cartItem;
         });
