@@ -1,15 +1,16 @@
 .loader {
     box-sizing: border-box;
-    width: 25vmin;
-    height: 25vmin;
+    width: 15vmin;
+    height: 15vmin;
     border-radius: 50%;
     border-width: 2vmin;
-    border-bottom-color: red;
-    border-top-color: green;
-    border-left-color: blue;
-    border-right-color: yellow;
+    border-bottom-color: blue;
+    border-top-color:blue;
+    border-left-color: transparent;
+    border-right-color: blue;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
     border-style: solid;
-    animation: rotation 2.5s ease-in-out infinite;
+    animation: rotation 2.5s linear infinite;
 }
 .small-loader {
     box-sizing:border-box;
@@ -17,10 +18,10 @@
     height: 10vmin;
     border-radius: 50%;
     border-width: 2vmin;
-    border-bottom-color: red;
-    border-top-color: green;
-    border-left-color: blue;
-    border-right-color: yellow;
+    border-bottom-color: blue;
+    border-top-color: blue;
+    border-left-color: transparent;
+    border-right-color: blue;
     border-style: solid;
     animation: rotation 2.5s ease-in-out infinite;
 }
