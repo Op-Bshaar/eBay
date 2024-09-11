@@ -30,6 +30,7 @@ class CheckoutController extends Controller
     {
         $request->validate([
             'payment_method' => 'required|string',
+            'address'=>'required|string',
         ]);
 
 
@@ -51,7 +52,8 @@ class CheckoutController extends Controller
             'user_id' => Auth::id(),
             'total_price' => $totalPrice,
             'payment_method' => $request->input('payment_method'),
-            'status' => 'pending'
+            'status' => 'pending',
+            'address'=>$request->input('address'),
         ]);
 
 
@@ -71,6 +73,7 @@ class CheckoutController extends Controller
         return response()->json([
             'message' => 'Order placed successfully',
             'order_id' => $order->id,
+            'address' => $order->address,
         ], 201);
     }
 }
