@@ -16,3 +16,4 @@
 /frontend/frontend.esproj
 /frontend/obj/Debug
 .env
+/backend/public/images
