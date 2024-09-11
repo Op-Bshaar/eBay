@@ -4,67 +4,67 @@ import api from "../../api";
 import './restpassword.css'
 
 function RestPassword() {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-  // Get token and email from URL parameters
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
-  const email = searchParams.get("email");
+    // Get token and email from URL parameters
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
+    const email = searchParams.get("email");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setError("معذره كلمات المرور غير متطابقه");
-      return;
-    }
+        if (password !== confirmPassword) {
+            setError("معذره كلمات المرور غير متطابقه");
+            return;
+        }
 
-    try {
-      const response = await api.post("/rest-password", {
-        email,
-        token,
-        password,
-        password_confirmation: confirmPassword, 
-      });
-      
-      setMessage(response.data.message);
-      navigate("/login"); 
-    } catch (error) {
-      console.error("Error resetting password:", error);
-      setError("معذره حدثت مشكله");
-    }
-  };
+        try {
+            const response = await api.post("/rest-password", {
+                email,
+                token,
+                password,
+                password_confirmation: confirmPassword,
+            });
 
-  return (
-    <div className="content-restpass">
-      <form onSubmit={handleSubmit}>
-        <label>كلمه مرور جديده</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="ادخل كلمه المرور"
-          required
-        />
-        <label>تأكيد كلمه المرور الجديدة</label>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="تأكيد كلمه المررو"
-          required
-        />
-        <button type="submit">اعاده كلمه المرور</button>
-      </form>
+            setMessage(response.data.message);
+            navigate("/login");
+        } catch (error) {
+            console.error("Error resetting password:", error);
+            setError("معذره حدثت مشكله");
+        }
+    };
 
-      {message && <p style={{ color: "green" }}>{message}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
-  );
+    return (
+        <div className="content-restpass tajawal-extralight">
+            <form onSubmit={handleSubmit}>
+                <label>كلمه مرور جديده</label>
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="أدخل كلمه المرور"
+                    required
+                />
+                <label>تأكيد كلمه المرور الجديدة</label>
+                <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    minLength={8}
+                    placeholder="تأكيد كلمه المررور"
+                    required
+                />
+                <button className="button" type="submit">إعاده كلمه المرور</button>
+            </form>
+            {message && <p style={{ color: "green" }}>{message}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
+    );
 }
 
 export default RestPassword;

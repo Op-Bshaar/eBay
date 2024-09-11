@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../../api";
 import "./password.css";
-function Password() {
+function RequestPasswordReset() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ function Password() {
           placeholder="ادخل بريدك الإلكتروني"
           required
         />
-        <button type="submit">اعاده الارسال</button>
+        <button className="button" type="submit">اعاده الارسال</button>
       </form>
 
       {message && <p style={{ color: "green" }}>{message}</p>}
@@ -39,4 +39,4 @@ function Password() {
   );
 }
 
-export default Password;
+export default RequestPasswordReset;

@@ -14,7 +14,7 @@ class CartController extends Controller
     {
         // Validate the request to ensure we get an array of products with product_id and quantity
         $data = $request->validate([
-            'cart' => 'required|array',
+            'cart' => 'array',
             'cart.*.product_id' => 'required|exists:products,id',
             'cart.*.quantity' => 'required|integer|min:1'
         ]);

@@ -34,7 +34,7 @@ function PasswordInput({ passwordRef, passwordLable = "كلمة المرور:" }
                     onChange={handlePasswordChange}
                     id="password"
                     type="password"
-                    placeholder="ادخل كلمة المرور"
+                    placeholder="أدخل كلمة المرور"
                     minLength={8}
                     required
                     ref={passwordRef}
