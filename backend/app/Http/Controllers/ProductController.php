@@ -32,19 +32,30 @@ class ProductController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|string',
-            'image' => 'string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        $product = Product::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'price' => $request->price,
-            'image' => $request->image,
-            'seller_id' => Auth::id(),
-        ]);
-
-        return response()->json($product, 201);
+    
+        // Check if image is being uploaded
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+    
+            // Save product with image name
+            $product = Product::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price,
+                'image' => $imageName,  // store just the image name
+                'seller_id' => Auth::id(),
+            ]);
+    
+            return response()->json($product, 201);
+        } else {
+            return response()->json(['error' => 'Image upload failed'], 400);
+        }
     }
+    
 
     public function update(Request $request, $id)
     {
