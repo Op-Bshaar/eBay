@@ -6,6 +6,8 @@ import "./Cart.css";
 import ErrorView from "../../components/errorMessage/Error";
 import { useEffect } from "react";
 import { useCartOperations } from "../../Cart";
+import { PAGE_URLS } from "../../constants/URL";
+import { Link } from "react-router-dom";
 function CartPage() {
     useRequireAuthentication();
     const { cartItems, reloadCart, errorMessage,isCartLoading } = useCart();
@@ -17,14 +19,20 @@ function CartPage() {
     }, []);
     const loader = <div className="absolute-center"><div className="loader" /></div>;
     const errorElement = <ErrorView className="absolute-center big-message">{errorMessage}</ErrorView>;
-    const emptyCart = <div></div>;
+    const emptyCart =
+        <p className="absolute-center empty-cart">
+            <span>
+                السلة فارغة,
+            </span>
+            <Link className="link" to={PAGE_URLS.home}> تصفح منتجاتنا.</Link>
+        </p>;
     const cart = (
         <div className="cart-items-container">
             {
                 cartItems.map((item, index) =>
                     <div className ="cart-item" key={index}>
                         <ProductView product={item.product}  />
-                        <button className="button" onClick={() => removeFromCart(item.product)}>احذف من السلة</button>
+                        <button className="button remove-from-cartbutton" onClick={() => removeFromCart(item.product)}>احذف من السلة</button>
                     </div>
                 )}
         </div>);

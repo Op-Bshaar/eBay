@@ -2,6 +2,7 @@
     box-sizing:border-box;
     border:solid;
     border-radius:25px;
+    border-color:#00aaff10;
     padding:5vh 5vw;
     display: grid;
     width: 95%;
@@ -15,6 +16,23 @@
 .cart-item>* {
     margin: 1vh auto;
 }
-    .cart-item > button {
-        padding:8%;
+    .remove-from-cartbutton {
+        background-color:#aa0000;
+        padding:2vmin;
     }
+.empty-cart{
+
+    text-align:center;
+    font-size:2em;
+    font-size:clamp(2em,5vw,4em);
+    width:100%;
+}
+    .empty-cart>*{
+        margin:auto;
+        padding:0;
+    }
+    @media(any-hover:hover) and (any-pointer:fine) {
+        .remove-from-cartbutton:hover {
+        background-color: #ff3300;
+    }
+}
