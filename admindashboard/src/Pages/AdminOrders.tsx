@@ -5,24 +5,18 @@ import { Link } from "react-router-dom";
 import SideBar from "../../../frontend/src/components/SideBar/SideBar";
 import TopBar from "../../../frontend/src/components/TopBar/TopBar";
 import api from "../../../frontend/src/api";
-import EditForm from "./AdminEdit";
-import "./css/AdminProducts.css";
-import Editpopup from "./Editpopup";
-
-function AdminProducts() {
+import "./css/AdminProducts.css"
+function AdminOrders() {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const [EditIsVisible, Showpopup] = useState(false);
-    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
+  
     useEffect(() => {
-      
       const fetchProducts = async () => {
         try {
-          const response = await api.get(`/admin/products`);
+          const response = await api.get(`/admin/orders`);
           const data = await response.data;
-          setProducts(data.product);
-          console.log(data.product);
+          setProducts(data.order);
+          console.log(data.order);
         } catch (error) {
           console.error("Fetch error:", error);
           setError("An error occurred while fetching products.");
@@ -31,19 +25,10 @@ function AdminProducts() {
   
       fetchProducts();
     }, []);
+  
     if (error) {
       return <div>{error}</div>;
     }
-    const handleEditClick=(product: Product)=>
-      {
-        setSelectedProduct(product);
-        Showpopup(true);
-      };
-    const handleEditClose=()=>
-      {
-        setSelectedProduct(null);
-        Showpopup(false);
-      };
     console.log(products);
     return (
       <div
@@ -70,23 +55,19 @@ function AdminProducts() {
                       
                         products.map((product, index) =>
                           <div>
-                            <button className="editbutton" onClick={()=>handleEditClick(product)}>Edit</button>
+                            <button className="editbutton">Edit</button>
                             <ProductView key={index} product={product}/>
                           </div> )
                         
                         
                     ) : (
-                        <p>No products available</p>
+                        <p>No orders available</p>
                     )}
                 </div>
             </div>
-            <Editpopup isVisible={EditIsVisible} onClose={handleEditClose}>
-              {selectedProduct && <EditForm product={selectedProduct}/>}
-            </Editpopup>
         </div>
-      
     );
   }
   
-  export default AdminProducts;
+  export default AdminOrders;
   
