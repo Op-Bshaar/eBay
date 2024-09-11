@@ -36,7 +36,7 @@ export const menu = [
       {
         id: 3,
         title: "الطلبات",
-        url: "/orders",
+        url: "/admin/orders",
         icon: "order.svg",
       },
     ],

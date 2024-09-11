@@ -70,7 +70,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        if ($product->seller_id !== Auth::id()) {
+        if ($product->seller_id !== Auth::id() && !(Auth::user()->is_admin)) {
             return response()->json(['message' => 'Unauthorized action'], 403);
         }
 
