@@ -25,6 +25,9 @@ function CartProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleCartResponse = async (apiCall: () => Promise<any>) => {
         try {
+            if (isLoading) {
+                return;
+            }
             const changesFromLastUpdateBeforeLoad = changesFromLastUpdate.current;
             setIsLoading(true);
             setErrorMessage("");
