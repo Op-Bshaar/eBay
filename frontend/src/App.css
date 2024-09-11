@@ -80,3 +80,17 @@ body {
     transform: translateY(-50%) translateX(-50%);
     background: inherit;
 }
+.plain-text {
+    text-decoration: inherit;
+    color: #000000;
+    background: none;
+    border: none;
+}
+.big-message {
+    box-sizing: border-box;
+    font-size: clamp(1em, 5vw, 4em);
+    padding: 0;
+    width: 90%;
+    margin: 5vh auto;
+    text-align: center;
+}

@@ -53,7 +53,7 @@ class CartController extends Controller
             $cartItem->delete();
         }
          // Reload the cartItems relationship to get the updated cart
-        $cart->load('cartItems.product');
+        $cart->refresh();;
          // Hide unwanted fields in both cartItems and products
          $cartItems = $cart->cartItems->map(function ($cartItem) {
             // Hide 'product_id', 'created_at', 'updated_at' for cart item

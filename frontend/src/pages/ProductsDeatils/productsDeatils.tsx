@@ -1,86 +1,100 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { BASE_URL } from "../../constants/URL";
-import "../../context/cartProvider"
-import { useCart } from "../../context/cartContext";
-import Product from "../../Product";
-
-
+﻿import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { PAGE_URLS } from "../../constants/URL";
+import { useCart } from "../../context/CartContext";
+import Product, { readProduct } from "../../Product";
+import ErrorMessage from "../../components/errorMessage/Error";
+import "../../Loader.css";
+import api from "../../api";
+import { isAxiosError } from "axios";
+import {  cartContainsItem, useCartOperations } from "../../Cart";
 function ProductsDeatils() {
-  const { id } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const {addItemToCart,CartItem,removeItemToCart} = useCart();
-  useEffect(() => {
-    console.log("Cart size is:", CartItem.length);
-  }, [CartItem]);
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/api/products/${id}`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setProduct(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Fetch error:", error);
-        setError("An error occurred while fetching product details.");
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!product) {
-    return <div>Product not found.</div>;
-  }
-  const handleBuy = () =>
-    {
-      console.log("id is:")
-      console.log(product.id)
-      addItemToCart(product.id)
-    }
-    
-  return (
-    <div>
-      <h1>{product.title}</h1>
-      <img src={product.image} alt={product.title} style={{ width: "200px" }} />
-      <p>{product.description}</p>
-      <p>Price: ${product.price}</p>
-      <button onClick={handleBuy}>buy</button>
-      
-      <div>
-        <p>your cart</p>
-        
-        {CartItem.length==0?
-        (<p>your cart is empty</p>)
-        :
-        (<div>
-          <ul>
-            {CartItem.map((item =>
-              (<li key={item.productId}>
-                <img src={item.product.image} alt={item.product.title}/>
-                <span>{item.product.title}: {item.quantity}x${item.product.price}</span>
-              </li>)
-              ))
+    const id = useParams<{ id: string }>().id ?? "";
+    const [product, setProduct] = useState<Product | null>(null);
+    const [errorMessage, setErrorMessage] = useState<string>("");
+    const [isLoadingProduct, setIsLoadingProduct] = useState(false);
+    const { cartItems } = useCart();
+    const isProductInCart = product ? cartContainsItem(cartItems, product) : false;
+    const [addToCart, removeFromCart] = useCartOperations();
+    const fetchProduct = async (id:string) => {
+        try {
+            setErrorMessage("");
+            setIsLoadingProduct(true);
+            setProduct(null);
+            const response = await api.get(`/products/${id}`);
+            const data = response.data;
+            setProduct(readProduct(data));
+        } catch (error) {
+            const genericError = "حدث خطأ ما.";
+            if (isAxiosError(error)) {
+                if (error.request && !error.response) {
+                    setErrorMessage("تعذر الاتصال, تحقق من الاتصال بالشبكة.");
+                }
+                // not found
+                else if (error.response?.status === 404) {
+                    setErrorMessage("");
+                }
+                else {
+                    setErrorMessage(genericError);
+                }
             }
-          </ul>
-        </div>)};
-      </div>
-    </div>
-  );
+            else {
+                setErrorMessage(genericError);
+            }
+            console.error("get error:", error);
+        }
+        finally {
+            setIsLoadingProduct(false);
+        }
+    };
+    useEffect(() => {
+        fetchProduct(id);
+    }, [id]);
+    const productLoader = <div className="loader" />;
+    const errorElement = <ErrorMessage className="big-message">{errorMessage}
+        <button className="link" onClick={() => fetchProduct(id)}>أعد المحاولة.</button>
+    </ErrorMessage>;
+    const productNotFound = <div className="big-message">المنتج غير موجود.</div>;
+    if (!product) {
+        return (
+            <div className="tajawal-extralight product-details-page">
+                <div className="absolute-center ">
+                    {isLoadingProduct ? productLoader :
+                        errorMessage ? errorElement :
+                        productNotFound}
+                </div>
+            </div>
+        );
+    }
+    return (
+        <div className="product-details-page">
+
+            <article className=" product-details">
+                <h1>{product.title}</h1>
+                <img src={product.image} alt={product.title} style={{ width: "200px" }} />
+                <p>{product.description}</p>
+                <p>Price: ${product.price}</p>
+                <button className="button"
+                    onClick={isProductInCart ?
+                        () => removeFromCart(product) :
+                        () => addToCart(product)}>
+                    {isProductInCart ?
+                        "احذف من السلة" :
+                        "أضف إلى السلة"}
+                </button>
+            </article>
+
+            {isProductInCart &&
+                <aside>
+                    <p>
+                        تمت إضافة المنتج إلى السلة
+                    </p>
+                    <Link to={PAGE_URLS.cart} className="link">اذهب إلى السلة.</Link>
+                </aside>
+            }
+
+        </div>
+    );
 }
 
 export default ProductsDeatils;

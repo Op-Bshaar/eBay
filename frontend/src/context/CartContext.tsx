@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 import { CartItem } from "../Cart";
 interface ICartContext {
     cartItems: CartItem[],
-    isLoading: boolean,
+    isCartLoading: boolean,
     isSynced: boolean,
     setCartItems: (cartItems: CartItem[]) => void,
     updateCart: () => Promise<void>,

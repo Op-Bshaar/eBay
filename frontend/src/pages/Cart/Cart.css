@@ -1,0 +1,20 @@
+.cart-items-container {
+    box-sizing:border-box;
+    border:solid;
+    border-radius:25px;
+    padding:5vh 5vw;
+    display: grid;
+    width: 95%;
+    grid-template-columns: repeat(auto-fit, minmax(max(20%,300px), 1fr));
+    gap: 5%;
+    margin:5vh auto;
+}
+.cart-item{
+    text-align:center;
+}
+.cart-item>* {
+    margin: 1vh auto;
+}
+    .cart-item > button {
+        padding:8%;
+    }

@@ -1,11 +1,12 @@
-﻿import { ReactNode, useRef, useState } from "react";
+﻿import { ReactNode, useEffect, useRef, useState } from "react";
 import { CartContext } from "./CartContext";
-import api from "../api";
+import api, { useIsAuthenticated } from "../api";
 import { CartItem } from "../Cart";
 import { isAxiosError } from "axios";
 function CartProvider({ children }: { children: ReactNode }) {
     const [cartItemsState, setCartItemsState] = useState<CartItem[]>([]);
-    const [isSynced, setIsSynced] = useState(true);
+    const [isSynced, setIsSynced] = useState(false);
+    const isAuthenticated = useIsAuthenticated();
     const changesFromLastUpdate = useRef(0);
     const setChangesFromLastUpdate = (changes: number) => {
         changesFromLastUpdate.current = changes;
@@ -21,13 +22,14 @@ function CartProvider({ children }: { children: ReactNode }) {
     const [errorMessage, setErrorMessage] = useState("");
     const [isLoading , setIsLoading] = useState(false);
 
-    const reloadCart = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const handleCartResponse = async (apiCall: () => Promise<any>) => {
         try {
             const changesFromLastUpdateBeforeLoad = changesFromLastUpdate.current;
             setIsLoading(true);
             setErrorMessage("");
-            const response = await api.get('/cart');
-            const data: CartItem[] = response.data;
+            const response = await apiCall();
+            const data: CartItem[] = response.data.cart;
             // check if no updates happend while waiting for response
             if (changesFromLastUpdate.current === changesFromLastUpdateBeforeLoad) {
                 setCartItemsState(data);
@@ -35,37 +37,36 @@ function CartProvider({ children }: { children: ReactNode }) {
             }
         }
         catch (error) {
-            handleErrors (error, setErrorMessage);
+            handleErrors(error, setErrorMessage);
         }
         finally {
             setIsLoading(false);
         }
     }
-    const updateCart = async () => {
-        try {
-            const changesFromLastUpdateBeforeLoad = changesFromLastUpdate.current;
-            setIsLoading(true);
+    const reloadCart = () => handleCartResponse(() => api.get('/cart'));
+    const updateCart = () => handleCartResponse(() => api.put('/cart', {
+        cart: cartItemsState.map(item => ({
+            product_id: item.product.id,
+            quantity: item.quantity
+        }))
+    }));
+    // load cart on first visit and when authentication changes.
+    useEffect(() => {
+        if (isAuthenticated) {
+            reloadCart()
+        }
+        else {
+            setCartItems([]);
             setErrorMessage("");
-            const response = await api.put('/cart');
-            const data: CartItem[] = response.data;
-            // check if no updates happend while waiting for response
-            if (changesFromLastUpdate.current === changesFromLastUpdateBeforeLoad) {
-                setCartItemsState(data);
-                setChangesFromLastUpdate(0);
-            }
+            setChangesFromLastUpdate(0);
         }
-        catch (error) {
-            handleErrors (error, setErrorMessage);
-        }
-        finally {
-            setIsLoading(false);
-        }
-    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated])
     return (
         <CartContext.Provider value={{
             cartItems: cartItemsState,
             errorMessage: errorMessage,
-            isLoading: isLoading ,
+            isCartLoading: isLoading ,
             isSynced: isSynced,
             setCartItems: setCartItems,
             reloadCart: reloadCart,
@@ -94,6 +95,9 @@ function handleErrors (error: any, setErrorMessage: (errorMessage: string) => vo
         else {
             setErrorMessage(genericError);
         }
+    }
+    else {
+        setErrorMessage(genericError);
     }
 }
 export default CartProvider;

@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 import { useAuthenticationContext } from "../context/AuthenticationContext";
 import { readUser } from "../User";
+import ErrorMessage from "../components/errorMessage/Error";
 
 
 /**
@@ -46,10 +47,10 @@ function ReloadUser({ redirectTo = PAGE_URLS.home }: { redirectTo?: string }) {
     return (
         <div className="absolute-center">
             {errorMessage ?
-                <div role="alert" aria-live="assertive" className="error-message">
+                <ErrorMessage>
                     <p>{errorMessage}</p>
                     <button onClick={load } className="button">إعادة الاتصال.</button>
-                </div> :
+                </ErrorMessage> :
                 <div className="loader" />}
         </div>
     );

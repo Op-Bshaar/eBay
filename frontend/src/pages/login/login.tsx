@@ -7,6 +7,7 @@ import api, { setToken } from "../../api";
 import { PAGE_URLS } from "../../constants/URL";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { readUser } from "../../User";
+import ErrorView from "../../components/errorMessage/Error";
 
 function Login() {
   const redirect = useRedirectAfterLogin();
@@ -168,9 +169,7 @@ function Login() {
                     />
                 </div>
                 {errorMessage && (
-                    <p role="alert" aria-live="assertive" className="error-message">
-                        {errorMessage}
-                    </p>
+                    <ErrorView>{errorMessage}</ErrorView>
                 )}
                 <button
                     type="submit"

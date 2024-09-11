@@ -7,6 +7,7 @@ import { isAxiosError } from "axios";
 import Product, { readProduct } from "../../Product";
 import ProductView from "../../components/ProductView/ProductView";
 import "../../components/ProductView/ProductView.css"
+import ErrorMessage from "../../components/errorMessage/Error";
 async function load(
   query: string,
   abortController: AbortController | null,
@@ -41,13 +42,13 @@ async function load(
   } catch (error) {
     if (isAxiosError(error) && error.request && !error.response) {
       setErrorElement(
-        <div className="error-message">
+        <ErrorMessage>
           تعذر الاتصال, تحقق من الاتصال بالشبكة.{retryButton()}
-        </div>
+          </ErrorMessage>
       );
     } else {
       setErrorElement(
-        <div className="error-message">حدث خطأ ما.{retryButton()}</div>
+        <ErrorMessage>حدث خطأ ما.{retryButton()}</ErrorMessage>
       );
     }
   } finally {
@@ -99,7 +100,7 @@ function SearchPage() {
         ))
     return (
         <div className="tagawal-extralight search-page">
-            <div className={"center-message"}>
+            <div className={"absolute-center center-message"}>
                 {errorElement ? errorElement :
                     loading ?
                         <div className="loader" /> :

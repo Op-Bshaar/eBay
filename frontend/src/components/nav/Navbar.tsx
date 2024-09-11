@@ -6,6 +6,7 @@ import { useIsAuthenticated } from "../../api";
 import { useLogout } from "../../context/AuthenticationContext";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { useRef } from "react";
+import { PAGE_URLS } from "../../constants/URL";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Navbar() {
     return (
         <>
             <nav className="navbar tajawal-extralight">
-                <h1>سوق</h1>
+                <Link className="plain-text" to={PAGE_URLS.home }><h1>سوق</h1></Link>
                 {user && (<span>أهلا {user.username}</span>)}
                 <form onSubmit={handleSearch} className="search-bar">
                     <input
