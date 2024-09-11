@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../../admindashboard/src/App'
+import '../../../../admindashboard/src/Pages/dashboard'
 function Dashboard() {
   return (
     <div>Dashboard</div>

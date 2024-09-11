@@ -2,11 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import './AdminDashBoard.css'
+import '../../data'
 
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Menu from "./components/menu/Menu";
-function App() {
+import Menu from "../components/menu/Menu";
+function dashboard() {
   return (
     <>
     <BrowserRouter>
@@ -21,6 +22,6 @@ function App() {
   );
 }
 
-export default App;
+export default dashboard;
 
 
