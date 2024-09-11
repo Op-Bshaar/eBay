@@ -4,7 +4,8 @@ import Login from "./pages/login/login";
 import Register from "./pages/login/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
-// import DashBoard from "../../admindashboard/src/Pages/dashboard";
+import AdminProducts from "../../admindashboard/src/Pages/AdminProducts"
+import DashBoard from "../../admindashboard/src/Pages/dashboard";
 import Users from "../../admindashboard/src/Pages/Users";
 import Settings from "../../admindashboard/src/Pages/Settings";
 import SearchPage from "./pages/Search/Search";
@@ -43,6 +44,8 @@ function App() {
                         {/* <Route path="/admin/dashboard" element={<DashBoard />} /> */}
                         <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/settings" element={<Settings />} />
+                        <Route path="/admin" element={<DashBoard/>} />
+                        <Route path="/admin/products" element={<AdminProducts />} />
                         <Route path="/products/:id" element={<ProductsDeatils />} />
                         <Route path="/sell" element={<ProductForm />} />
                     </Routes>
