@@ -13,7 +13,7 @@ function ProductView({ product, clickToGo = true, showGoButton }: ProductViewPro
                 <p className="product-description">{product.description}</p>
                 <p className="product-price">${product.price}</p>
             </div>
-            {showGoButton && <button className = "button">عرض المنتج</button> }
+            {showGoButton && <Link to={`/products/${product.id}`}  className = "button">عرض المنتج</Link> }
         </div>
     ); 
     return ( 
