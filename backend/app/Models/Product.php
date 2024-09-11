@@ -17,4 +17,13 @@ class Product extends Model
     public function carts(){
      return $this->hasMany(Cart::class);
     }
+        /**
+     * Get the full URL for the image.
+     *
+     * @return string
+     */
+    public function getImageAttribute($value)
+    {
+        return url('images/' . $value);
+    }
 }

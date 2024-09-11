@@ -13,9 +13,6 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::get();
-        foreach ($products as $product) {
-            $product->image = url('images/' . $product->image);
-        }
         return response()->json($products);
     }
 
@@ -25,7 +22,6 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
-        $product->image = url('images/' . $product->image);
         return response()->json($product);
     }
 
@@ -111,9 +107,6 @@ class ProductController extends Controller
     {
         $query = $request->input('query');
         $products = Product::where('title', 'LIKE', "%".$query."%")->get();
-        foreach ($products as $product) {
-            $product->image = url('images/' . $product->image);
-        }
         return response()->json($products);
     }
 }
