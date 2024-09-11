@@ -1,23 +1,39 @@
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 2vh 3vw;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    flex-wrap: wrap;
-}
-.nav-item{
   display: flex;
   align-items: center;
-  gap:2vw;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 2vh 3vw;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  flex-wrap: wrap;
 }
-.menu-icon{
-  display: none;
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  transition: transform 0.3s ease-in-out;
+}
+.menu-toggle {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.menu-icon, .close-icon {
   font-size: 2rem;
   cursor: pointer;
+  position: absolute;
+  right: 0;
+}
+.close-icon {
+  display: none;
+}
+.menu-icon.hidden {
+  display: none;
+}
+.close-icon.visible {
+  display: block;
 }
 
 .search-bar {
@@ -30,7 +46,7 @@
   margin-left: 2vw;
 }
 .search-bar input {
-  width:100%;
+  width: 100%;
   max-width: 100%;
   height: 5vh;
   cursor: pointer;
@@ -40,15 +56,15 @@
 }
 .search-icon {
   width: auto;
-  display:inline-block;
+  display: inline-block;
   height: 5vh;
   margin: 0 0.5vw;
   color: #0077ff;
   cursor: pointer;
 }
 .navbar h1 {
-    margin: 0;
-    flex-shrink: 1;
+  margin: 0;
+  flex-shrink: 1;
 }
 .nav-link {
   margin: 0 2vw;
@@ -56,38 +72,36 @@
   text-decoration: none;
   flex-shrink: 1;
 }
-
 .icon-text-style {
   cursor: pointer;
 }
 
-
-
 @media (max-width: 768px) {
-  .navbar{
+  .navbar {
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
     background-color: #6e767e;
   }
-  .menu-icon{
-    display: block;
+  .menu-toggle {
+    display: flex;
+    margin-top: 20px;
   }
-  .nav-item{
+  .nav-item {
     display: none;
     flex-direction: column;
     width: 100%;
     padding: 1vh 0;
   }
-  .nav-item.open{
-    display:flex;
+  .nav-item.open {
+    display: flex;
     align-items: flex-start;
   }
-  .search-bar input{
+  .search-bar input {
     width: 100%;
     margin: 1vh 0;
   }
-  .nav-link{
+  .nav-link {
     margin: 1vh 0;
   }
 }

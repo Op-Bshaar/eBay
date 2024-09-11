@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useIsAuthenticated } from "../../api";
@@ -14,7 +14,7 @@ function Navbar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const logout = useLogout();
   const isAuthenticated = useIsAuthenticated();
-  const [menuopen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleSearch = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -27,8 +27,9 @@ function Navbar() {
   };
 
   const toggleMenu = () => {
-    setMenuOpen(!menuopen);
+    setMenuOpen(!menuOpen);
   };
+
   return (
     <>
       <nav className="navbar tajawal-extralight">
@@ -37,12 +38,20 @@ function Navbar() {
         </Link>
         {user && <span>أهلا {user.username}</span>}
 
-        <FontAwesomeIcon
-          icon={faBars}
-          className="menu-icon"
-          onClick={toggleMenu}
-        />
-        <div className={`nav-item ${menuopen ? "open" : ""}`}>
+        <div className="menu-toggle">
+          <FontAwesomeIcon
+            icon={faBars}
+            className={`menu-icon ${menuOpen ? "hidden" : ""}`}
+            onClick={toggleMenu}
+          />
+          <FontAwesomeIcon
+            icon={faXmark}
+            className={`close-icon ${menuOpen ? "visible" : "hidden"}`}
+            onClick={toggleMenu}
+          />
+        </div>
+
+        <div className={`nav-item ${menuOpen ? "open" : ""}`}>
           <form onSubmit={handleSearch} className="search-bar">
             <input
               id="search-by-name"
@@ -57,7 +66,7 @@ function Navbar() {
               />
             </button>
           </form>
-          <Link className="nav-link " to="/sell">
+          <Link className="nav-link" to="/sell">
             البيع في سوق
           </Link>
           {isAuthenticated ? (
