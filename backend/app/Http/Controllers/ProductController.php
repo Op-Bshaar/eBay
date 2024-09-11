@@ -34,19 +34,18 @@ class ProductController extends Controller
             'price' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
-        // Check if image is being uploaded
+ 
         if($request->hasFile('image')){
             $image = $request->file('image');
             $imageName = time().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
     
-            // Save product with image name
+
             $product = Product::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,
-                'image' => $imageName,  // store just the image name
+                'image' => $imageName,  
                 'seller_id' => Auth::id(),
             ]);
     
