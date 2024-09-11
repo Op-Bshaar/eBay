@@ -111,6 +111,9 @@ class ProductController extends Controller
     {
         $query = $request->input('query');
         $products = Product::where('title', 'LIKE', "%".$query."%")->get();
+        foreach ($products as $product) {
+            $product->image = url('images/' . $product->image);
+        }
         return response()->json($products);
     }
 }

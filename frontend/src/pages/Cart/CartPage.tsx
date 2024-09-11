@@ -31,7 +31,7 @@ function CartPage() {
             {
                 cartItems.map((item, index) =>
                     <div className ="cart-item" key={index}>
-                        <ProductView product={item.product}  />
+                        <ProductView product={item.product} clickToGo={false} />
                         <button className="button remove-from-cartbutton" onClick={() => removeFromCart(item.product)}>احذف من السلة</button>
                     </div>
                 )}
