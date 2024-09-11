@@ -1,5 +1,5 @@
 .hero-item-container {
-  width: 100vw;
+  width: 100%;
   background-color: rgb(249, 249, 249);
   box-shadow: 0px 2vh 4vh rgba(0, 0, 0, 0.2);
   border-radius: 2vh 1vw;
