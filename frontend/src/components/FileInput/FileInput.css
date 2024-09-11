@@ -1,0 +1,50 @@
+.image-drop-target {
+    display: none;
+}
+
+.image-view {
+    max-height: max(10vh, 50px);
+    max-width: 90%;
+    height: auto;
+    width: auto;
+}
+@media(any-hover:hover) and (any-pointer:fine) {
+
+    .image-view {
+        display: none;
+    }
+
+    .image-drop-target {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        width: 90%;
+        min-height: 15vh;
+        margin: 3vh auto;
+        border-color: #555555;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 20px;
+        filter: drop-shadow(1vmin 1vmin 1vmin #55555555);
+        font-size: 1.2em;
+        text-align: center;
+        background-color: #ffffff;
+        color: #555555;
+        user-select: none;
+    }
+
+        .image-drop-target img {
+            max-height: max(10vh, 50px);
+            max-width: 90%;
+            height: auto;
+            width: auto;
+        }
+
+        .image-drop-target:hover {
+            color: #000000;
+            border-color: #000000;
+            filter: drop-shadow(1vmin 1vmin 1vmin #555555);
+        }
+}

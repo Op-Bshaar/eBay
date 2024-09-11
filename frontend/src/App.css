@@ -95,3 +95,7 @@ body {
     margin: 5vh auto;
     text-align: center;
 }
+
+.hidden {
+    display: none;
+}
