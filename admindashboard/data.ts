@@ -24,7 +24,7 @@ export const menu = [
       {
         id: 1,
         title: "المستخدمين",
-        url: "/users",
+        url: "/admin/users",
         icon: "user.svg",
       },
       {
