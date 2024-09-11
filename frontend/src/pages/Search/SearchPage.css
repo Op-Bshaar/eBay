@@ -10,10 +10,10 @@
         color: #447799;
     }
 
-@media(any-hover:hover) and (any-pointer:fine) {
+@media(any-hover:hover) and (pointer:fine) {
     .retry-button:hover {
-        background-color:#00000010;
-        border-radius:5px;
+        background-color: #00000010;
+        border-radius: 5px;
     }
 }
 .search-page{

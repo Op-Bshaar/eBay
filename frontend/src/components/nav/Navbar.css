@@ -131,7 +131,7 @@
     }
 }
 
-@media (any-hover: hover) and (any-pointer: fine) {
+@media(any-hover:hover) and (pointer:fine) {
     .search-icon:hover {
         color: #33aaff;
     }

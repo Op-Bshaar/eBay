@@ -8,7 +8,7 @@
     height: auto;
     width: auto;
 }
-@media(any-hover:hover) and (any-pointer:fine) {
+@media(any-hover:hover) and (pointer:fine) {
 
     .image-view {
         display: none;

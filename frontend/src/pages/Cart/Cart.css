@@ -37,7 +37,7 @@
         padding: 0;
     }
 
-@media(any-hover:hover) and (any-pointer:fine) {
+@media(any-hover:hover) and (pointer:fine) {
     .remove-from-cart-button:hover {
         background-color: #ff3300;
     }

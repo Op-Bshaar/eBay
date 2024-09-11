@@ -9,6 +9,7 @@ import FileDropArea from "../../components/FileInput/FileDropArea";
 const ProductForm: React.FC = () => {
     useRequireAuthentication();
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const [product, setProduct] = useState({
         title: "",
         description: "",
@@ -50,6 +51,7 @@ const ProductForm: React.FC = () => {
         }
 
         try {
+            setIsLoading(true);
             const response = await api.post("/products", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -58,6 +60,9 @@ const ProductForm: React.FC = () => {
             console.log("Product submitted successfully:", response.data);
         } catch (error) {
             console.error("Error submitting product:", error);
+        }
+        finally {
+            setIsLoading(false);
         }
     };
 
@@ -102,7 +107,7 @@ const ProductForm: React.FC = () => {
                 <FileInputButton file={imageFile} triggerFileInput={triggerFileInput} />
                 <FileDropArea allowedFileTypes={allowedFileTypes} file={imageFile} setFile={setImageFile} />
             </div>
-            <button type="submit" className="submittionbutton">
+            <button type="submit" className="submittionbutton" disabled={isLoading }>
                 Submit
             </button>
         </form>
