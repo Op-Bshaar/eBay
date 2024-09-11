@@ -13,6 +13,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::get();
+        foreach ($products as $product) {
+            $product->image = url('images/' . $product->image);
+        }
         return response()->json($products);
     }
 
@@ -22,38 +25,45 @@ class ProductController extends Controller
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
-
+        $product->image = url('images/' . $product->image);
         return response()->json($product);
     }
 
     public function store(Request $request)
     {
+    
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|string',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
- 
+  
         if($request->hasFile('image')){
+        
             $image = $request->file('image');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+      
             $image->move(public_path('images'), $imageName);
     
-
+       
             $product = Product::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,
-                'image' => $imageName,  
+                'image' => $imageName, 
                 'seller_id' => Auth::id(),
             ]);
     
+
             return response()->json($product, 201);
         } else {
+   
             return response()->json(['error' => 'Image upload failed'], 400);
         }
     }
+    
     
 
     public function update(Request $request, $id)
