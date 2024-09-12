@@ -121,6 +121,7 @@ function Login() {
                             id="username"
                             minLength={2}
                             type="text"
+                            autoCapitalize="none"
                             placeholder="ادخل اسم المستخدم"
                             required
                         />

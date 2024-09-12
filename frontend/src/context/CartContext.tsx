@@ -3,7 +3,7 @@ import { CartItem } from "../Cart";
 interface ICartContext {
     cartItems: CartItem[],
     isCartLoading: boolean,
-    isSynced: boolean,
+    isCartSynced: boolean,
     setCartItems: (cartItems: CartItem[]) => void,
     updateCart: () => Promise<void>,
     reloadCart: () => Promise<void>,

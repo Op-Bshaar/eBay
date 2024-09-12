@@ -31,28 +31,25 @@ function Home() {
 
         fetchProducts();
     }, []);
-
-    if (error || isLoading) {
-        return (
-            <div className="tajawal-extralight home-message big-message">
-                {isLoading && <div className="loader" />}
-                {error && <ErrorMessage>error</ErrorMessage>}
-            </div>
-        );
-    }
+    const productsView = error || isLoading ?
+        <div className="tajawal-extralight home-message big-message">
+            {isLoading && <div className="loader" />}
+            {error && <ErrorMessage>error</ErrorMessage>}
+        </div> :
+        <div className="products-container fill-flex">
+            {products.length > 0 ? (
+                products.map((product, index) => <ProductView key={index} product={product} />)
+            ) : (
+                <p>No products available</p>
+            )}
+        </div>;
     return (
         <div className="tajawal-extralight">
             <div className="topbar-container">
                 <TopBar />
                 <div className="sidebar-container">
                     <SideBar />
-                    <div className="products-container fill-flex">
-                        {products.length > 0 ? (
-                            products.map((product, index) => <ProductView key={index} product={product} />)
-                        ) : (
-                            <p>No products available</p>
-                        )}
-                    </div>
+                    {productsView}
                 </div>
             </div>
         </div>

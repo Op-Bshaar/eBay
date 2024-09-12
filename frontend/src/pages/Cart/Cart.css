@@ -59,4 +59,5 @@
     box-sizing:border-box;
     margin-top:1vh;
     min-width: 10vw;
+    min-height:6vh;
 }

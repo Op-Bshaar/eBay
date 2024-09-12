@@ -4,21 +4,37 @@ import ProductView from "../../components/ProductView/ProductView";
 import "../../Loader.css";
 import "./Cart.css";
 import ErrorView from "../../components/errorMessage/Error";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { currencySymbol } from "../../constants/Currency";
 function CartPage() {
     useRequireAuthentication();
-    const { cartItems, reloadCart, errorMessage, isCartLoading } = useCart();
+    const { cartItems, reloadCart, errorMessage, isCartLoading, isCartSynced, updateCart } = useCart();
     const [, removeFromCart, clearCart] = useCartOperations();
+    const [isNavigatingToOrder, setIsNavigatingToOrder] = useState(false);
+    const navigate = useNavigate();
     // reload cart on first render.
     useEffect(() => {
         reloadCart();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const loader = <div className="absolute-center"><div className="loader" /></div>;
+    if (isNavigatingToOrder) {
+        if (!errorMessage && !isCartLoading && isCartSynced) {
+            navigate(PAGE_URLS.place_order);
+        }
+        return (
+            <div className="absolute-center tajawal-extralight">
+                {isCartLoading && loader}
+                {errorMessage &&
+                    <ErrorView className="big-message">{errorMessage}
+                        <button className="link" onClick={updateCart}>أعد المحاولة</button>
+                    </ErrorView>}
+            </div>
+        );
+    }
     const errorElement = <ErrorView className="absolute-center big-message">{errorMessage}</ErrorView>;
     const emptyCart =
         <p className="absolute-center empty-cart">
@@ -32,6 +48,10 @@ function CartPage() {
         if (confirmClear) {
             clearCart();
         }
+    };
+    const handleOrder = async () => {
+        setIsNavigatingToOrder(true);
+        updateCart();
     };
     const cart = (
         <div className="cart-page">
@@ -47,7 +67,7 @@ function CartPage() {
             <div className="cart-buttons-container">
                 <p>المجموع: {`${cartItems.reduce((sum, item) => sum + Number(item.product.price), 0)}${currencySymbol}`}</p>
                 <button className="button remove-from-cart-button cart-button" onClick={handleClearCart}>حذف السلة</button>
-                <button className="button cart-button">شراء</button>
+                <button onClick={handleOrder } className="button cart-button">تأكيد الطلب</button>
             </div>
         </div>);
 
