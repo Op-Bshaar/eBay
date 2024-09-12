@@ -1,19 +1,33 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthenticationProvider from "./context/AuthenticationProvider";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+
+import AdminOrders from "./Pages/AdminOrders";
+import AdminProducts from "./Pages/AdminProducts";
+import { useAuthenticationContext } from "./context/AuthenticationContext";
 import Login from "./Pages/login/login";
 import DashBoard from "./Pages/dashboard";
+import Users from "./Pages/Users";
 
-function Dashboard() {
+function App() {
+  const  useIsAuthenticated  = useAuthenticationContext();
+
   return (
-    // <AuthenticationProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="admin/dashobaard" element={<DashBoard />} />
-        </Routes>
-      </BrowserRouter>
-    // </AuthenticationProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        {useIsAuthenticated ? (
+          <>
+            <Route path="/admin/dashboard" element={<DashBoard />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="*" element={<Navigate to="/admin/dashboard" />} />
+          </>
+        ) : (
+          <Route path="*" element={<Navigate to="/login" />} />
+        )}
+      </Routes>
+    </BrowserRouter>
   );
 }
 
-export default Dashboard;
+export default App;
