@@ -17,13 +17,15 @@ function CartPage() {
     const navigate = useNavigate();
     // reload cart on first render.
     useEffect(() => {
-        reloadCart();
+        if (cartItems.length === 0) {
+            reloadCart();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [cartItems.length]);
     const loader = <div className="absolute-center"><div className="loader" /></div>;
     if (isNavigatingToOrder) {
         if (!errorMessage && !isCartLoading && isCartSynced) {
-            navigate(PAGE_URLS.place_order);
+            navigate(`/${PAGE_URLS.place_order}`);
         }
         return (
             <div className="absolute-center tajawal-extralight">
@@ -74,8 +76,8 @@ function CartPage() {
     return (
         <div className="tajawal-extralight">
             {
-                errorMessage ? errorElement :
-                    cartItems.length > 0 ? cart :
+                cartItems.length > 0 ? cart :
+                    errorMessage ? errorElement :
                         isCartLoading ? loader : emptyCart
             }
         </div>

@@ -32,12 +32,13 @@ function OrderPage() {
                     </div>
                 </div>
             )}
-            < div className="order-item-container">
-            <div className="order-item">
-                <span>المجموع:</span>
-                    <span>{total}{currencySymbol }</span>
+            {cartItems.length > 1 && < div className="order-item-container">
+                <div className="order-item">
+                    <span>المجموع:</span>
+                    <span>{total}{currencySymbol}</span>
+                </div>
             </div>
-        </div>
+            }
         </div>)
     return (
         <div className="tajawal-extralight order-page">
@@ -47,6 +48,9 @@ function OrderPage() {
                     placeholder="القاهرة, حدائق الأهرام ...." maxLength={255} autoComplete={"shipping street-address" } />
             </div>
             {items}
+            <div className="center-text">
+                <button className="button">تنفيذ الطلب</button>
+            </div>
         </div>
     );
 }
