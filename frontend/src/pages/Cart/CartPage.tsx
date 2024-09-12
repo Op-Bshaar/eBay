@@ -46,8 +46,8 @@ function CartPage() {
             </div>
             <div className="cart-buttons-container">
                 <p>المجموع: {`${cartItems.reduce((sum, item) => sum + Number(item.product.price), 0)}${currencySymbol}`}</p>
-                <button className="button remove-from-cart-button" onClick={handleClearCart}>حذف السلة</button>
-                <button className="button">شراء</button>
+                <button className="button remove-from-cart-button cart-button" onClick={handleClearCart}>حذف السلة</button>
+                <button className="button cart-button">شراء</button>
             </div>
         </div>);
 

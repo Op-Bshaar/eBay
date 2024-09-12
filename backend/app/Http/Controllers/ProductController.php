@@ -12,13 +12,14 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::get();
+        $products = Product::with('category')->get();
         return response()->json($products);
     }
 
     public function show($id)
     {
-        $product = Product::find($id);
+        // Eager load the 'category' relationship
+        $product = Product::with('category')->find($id);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
@@ -31,8 +32,9 @@ class ProductController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required',
-            'price' => 'required|string',
+            'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
   
         if($request->hasFile('image')){
@@ -49,6 +51,7 @@ class ProductController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'image' => $imageName, 
+                'category_id' => $request->category_id,
                 'seller_id' => Auth::id(),
             ]);
     

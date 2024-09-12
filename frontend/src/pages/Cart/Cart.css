@@ -55,3 +55,8 @@
     flex-direction: column;
     row-gap:5vh;
 }
+.cart-button{
+    box-sizing:border-box;
+    margin-top:1vh;
+    min-width: 10vw;
+}
