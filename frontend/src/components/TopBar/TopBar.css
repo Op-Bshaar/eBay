@@ -6,7 +6,7 @@
     margin: 0 auto;
 }
 .hero-item {
-    font-size: max(0.8em, 2vw);
+    font-size: max(0.8em, 1.5vw);
     margin: 0 max(1vw, 20px);
     padding:1%;
     text-align: center;
