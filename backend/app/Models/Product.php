@@ -35,6 +35,10 @@ class Product extends Model
      */
     public function getImageAttribute($value)
     {
-        return url('images/' . $value);
+        if (empty($value)) {
+             return ''; // Return empty string if value is empty
+        }
+
+         return url('images/' . $value);
     }
 }
