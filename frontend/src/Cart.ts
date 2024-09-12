@@ -48,7 +48,9 @@ function getItemProduct(item: CartItem | Product): [CartItem, Product] {
     return [cartItem, product];
 }
 export function useCartOperations(updateCartAfterOperations = true):
-    [(product: Product) => void, (product: Product) => void] {
+    [(product: Product) => void,
+        (product: Product) => void,
+        () => void] {
     const { cartItems, setCartItems, updateCart } = useCart();
     const [shouldUpdateCart, setShouldUpdateCart] = useState(false);
     useEffect(() => {
@@ -71,5 +73,11 @@ export function useCartOperations(updateCartAfterOperations = true):
             setShouldUpdateCart(true);
         }
     }
-    return [addToCart, removeFromCart];
+    const clearCart = () => {
+        setCartItems([]);
+        if (updateCartAfterOperations) {
+            setShouldUpdateCart(true);
+        }
+    }
+    return [addToCart, removeFromCart, clearCart];
 }

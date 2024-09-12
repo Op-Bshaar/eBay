@@ -32,3 +32,6 @@
     right:100%;
     padding:10px;
 }
+.side-bar-menue-folded {
+    max-width: max(15vw, 100px);
+}

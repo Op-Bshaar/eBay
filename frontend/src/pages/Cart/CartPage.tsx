@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 function CartPage() {
     useRequireAuthentication();
     const { cartItems, reloadCart, errorMessage,isCartLoading } = useCart();
-    const [, removeFromCart] = useCartOperations();
+    const [, removeFromCart,clearCart] = useCartOperations();
     // reload cart on first render.
     useEffect(() => {
         reloadCart();
@@ -26,6 +26,12 @@ function CartPage() {
             </span>
             <Link className="link" to={PAGE_URLS.home}> تصفح منتجاتنا.</Link>
         </p>;
+    const handleClearCart = () => {
+        const confirmClear = window.confirm("هل تريد حذف جميع العناصر من السلة؟");
+        if (confirmClear) {
+            clearCart();
+        }
+    };
     const cart = (
         <div className="cart-page">
             <div className="cart-items-container">
@@ -38,7 +44,7 @@ function CartPage() {
                     )}
             </div>
             <div className="cart-buttons-container">
-                <button className="button">حذف السلة</button>
+                <button className="button remove-from-cart-button" onClick={handleClearCart }>حذف السلة</button>
                 <button className="button">شراء</button>
             </div>
         </div>);

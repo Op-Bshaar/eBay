@@ -7,6 +7,7 @@ import { isAxiosError } from "axios";
 import Product, { readProduct } from "../../Product";
 import ProductView from "../../components/ProductView/ProductView";
 import "../../components/ProductView/ProductView.css"
+import "../ProductsContainer.css";
 import ErrorMessage from "../../components/errorMessage/Error";
 async function load(
   query: string,
@@ -98,19 +99,19 @@ function SearchPage() {
         products.map((product, index) => (
             <ProductView key={index} product={product} />
         ))
-    return (
-        <div className="tagawal-extralight search-page">
-            <div className={"absolute-center center-message"}>
-                {errorElement ? errorElement :
-                    loading ?
-                        <div className="loader" /> :
-                        <div className="product-view">
-                            {
-                                productsViews
-                            }
-                        </div>
-                }
+    if (errorElement || loading) {
+        return (
+            <div className="tagawal-extralight search-page">
+                <div className={"absolute-center center-message"}>
+                    {errorElement && errorElement}
+                    {loading && <div className="loader" />}
+                </div>
             </div>
+        )
+    }
+    return (
+        <div className="tagawal-extralight search-page products-container">
+            {productsViews}
         </div>
     );
 }

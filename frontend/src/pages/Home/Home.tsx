@@ -6,6 +6,7 @@ import Product from "../../Product";
 import ProductView from "../../components/ProductView/ProductView";
 import "../../Loader.css";
 import "./Home.css";
+import "../ProductsContainer.css";
 import ErrorMessage from "../../components/errorMessage/Error";
 function Home() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -39,32 +40,19 @@ function Home() {
             </div>
         );
     }
-
     return (
-        <div
-            className="tajawal-extralight"
-            style={{ display: "flex", height: "100vh" }}
-        >
-            <div style={{ flex: "1" }}>
-                <SideBar />
-            </div>
-            <div style={{ padding: "20px", overflowY: "auto" }}>
+        <div className="tajawal-extralight">
+            <div className="topbar-container">
                 <TopBar />
-                <div
-                    style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(4, 1fr)",
-                        gap: "1px",
-                        justifyContent: "center",
-                        padding: "20px",
-                        boxSizing: "border-box",
-                    }}
-                >
-                    {products.length > 0 ? (
-                        products.map((product, index) => <ProductView key={index} product={product} />)
-                    ) : (
-                        <p>No products available</p>
-                    )}
+                <div className="sidebar-container">
+                    <SideBar />
+                    <div className="products-container fill-flex">
+                        {products.length > 0 ? (
+                            products.map((product, index) => <ProductView key={index} product={product} />)
+                        ) : (
+                            <p>No products available</p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

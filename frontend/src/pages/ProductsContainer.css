@@ -1,0 +1,14 @@
+.products-container {
+    box-sizing: border-box;
+    max-width: 95%;
+    border: solid;
+    border-radius: 25px;
+    border-color: #00aaff10;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1%;
+    gap: 2.5vh 2.5vw;
+    justify-content: space-evenly;
+    align-items:start;
+    margin:2.5vh auto;
+}

@@ -5,11 +5,13 @@ import "./Sell.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
+import { Link } from "react-router-dom";
 
 const ProductForm: React.FC = () => {
     useRequireAuthentication();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [createdProductId, setCreatedProductId] = useState<number | null>(null);
     const [product, setProduct] = useState({
         title: "",
         description: "",
@@ -51,13 +53,16 @@ const ProductForm: React.FC = () => {
         }
 
         try {
+            if (createdProductId) {
+                setCreatedProductId(null);
+            }
             setIsLoading(true);
             const response = await api.post("/products", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
-            console.log("Product submitted successfully:", response.data);
+            setCreatedProductId(response.data.id);
         } catch (error) {
             console.error("Error submitting product:", error);
         }
@@ -65,9 +70,16 @@ const ProductForm: React.FC = () => {
             setIsLoading(false);
         }
     };
-
+    if (createdProductId) {
+        return (
+            <div className="tajawal-extralight product-created-successfully">
+                <p>تمت إضافة المنتج بنجاج.</p>
+                <Link to={`/products/${createdProductId}`} className="button" >عرض المنتج</Link>
+            </div>
+        );
+    }
     return (
-        <form className="sell-form" onSubmit={handleSubmit}>
+        <form className="sell-form tajawal-extralight" onSubmit={handleSubmit}>
             <div>
                 <label className="objective">مواصفات المنتج:</label>
                 <br />
