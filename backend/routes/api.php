@@ -7,9 +7,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
+
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/loginphone', [AuthController::class, 'loginPhone']);
@@ -36,8 +38,16 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 
 //product route
 Route::get('/products/search', [ProductController::class, 'search']);
+
 Route::get('/products/{id}', [ProductController::class, 'show']);
+
 Route::get('/products', [ProductController::class, 'index']);
+
+
+
+//route carogory
+Route::get('/categories', [CategoryController::class, 'index']);
+
 
 // Route for seller
 Route::middleware('auth:sanctum')->group(function () {
@@ -45,6 +55,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);
 });
+
+
+//Route for category 
+
 
 // cart Route
 Route::middleware('auth:sanctum')->group(function() {
