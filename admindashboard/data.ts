@@ -1,7 +1,7 @@
 export const menu = [
   {
     id: 1,
-    title: "main",
+    title: "الرئيسيه",
     listItems: [
       {
         id: 1,
@@ -19,7 +19,7 @@ export const menu = [
   },
   {
     id: 2,
-    title: "lists",
+    title: "اللسته",
     listItems: [
       {
         id: 1,
@@ -43,7 +43,7 @@ export const menu = [
   },
   {
     id: 4,
-    title: "Maintenance",
+    title: "الصيانه",
     listItems: [
       {
         id: 1,

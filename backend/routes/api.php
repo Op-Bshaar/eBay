@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
@@ -31,6 +32,8 @@ Route::middleware('auth:sanctum')->post('/request-verification-email', [AuthCont
 //logout
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
+
+
 //product route
 Route::get('/products/search', [ProductController::class, 'search']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
@@ -55,9 +58,11 @@ Route::middleware('auth:sanctum')->group(function() {
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/checkout', [CheckoutController::class, 'index']);
     Route::post('/checkout', [CheckoutController::class, 'Checkoutprocess']);
-});
+}); 
 
-
+//reviews Route
+Route::post('/products/{productId}/review', [ReviewController::class, 'store'])
+    ->middleware('auth:sanctum');
 
 //admin route
 

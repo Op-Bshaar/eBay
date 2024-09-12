@@ -1,25 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
-import './AdminDashBoard.css'
-import '../../data'
-
-
-
 import Menu from "../components/menu/Menu";
+
+import  './css/dashborad.scss'
 function DashBoard() {
   return (
-    <>
-    <Menu></Menu>
-      
-      <h1>بشار</h1>
-    
-    </>
-    
-
+    <div className="dashboard-container">
+      <Menu />
+      <div className="dashboard-content">
+      </div>
+    </div>
   );
 }
 
 export default DashBoard;
-
-

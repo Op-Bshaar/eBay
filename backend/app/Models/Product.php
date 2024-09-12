@@ -8,16 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','description','price','image','seller_id'];
+    protected $fillable = ['title', 'description', 'price', 'image', 'seller_id'];
 
-    public function seller(){
+    public function seller()
+    {
         return $this->belongsTo(User::class, 'seller_id');
     }
 
-    public function carts(){
-     return $this->hasMany(Cart::class);
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
     }
-        /**
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+    /**
      * Get the full URL for the image.
      *
      * @return string

@@ -36,7 +36,7 @@ function Navbar() {
         <Link className="plain-text" to={PAGE_URLS.home}>
           <h1>سوق</h1>
         </Link>
-        {user && <span>أهلا {user.username}</span>}
+        {user && <span style={{color:"rgb(4, 95, 214)"}}>أهلا {user.username}</span>}
 
         <div className="menu-toggle">
           <FontAwesomeIcon
