@@ -10,8 +10,8 @@ import { PAGE_URLS } from "../../constants/URL";
 import { Link } from "react-router-dom";
 function CartPage() {
     useRequireAuthentication();
-    const { cartItems, reloadCart, errorMessage,isCartLoading } = useCart();
-    const [, removeFromCart,clearCart] = useCartOperations();
+    const { cartItems, reloadCart, errorMessage, isCartLoading } = useCart();
+    const [, removeFromCart, clearCart] = useCartOperations();
     // reload cart on first render.
     useEffect(() => {
         reloadCart();
@@ -44,7 +44,8 @@ function CartPage() {
                     )}
             </div>
             <div className="cart-buttons-container">
-                <button className="button remove-from-cart-button" onClick={handleClearCart }>حذف السلة</button>
+                <p>المجموع: {`${cartItems.reduce((sum, item) => sum + item.product.price, '')}`}</p>
+                <button className="button remove-from-cart-button" onClick={handleClearCart}>حذف السلة</button>
                 <button className="button">شراء</button>
             </div>
         </div>);
