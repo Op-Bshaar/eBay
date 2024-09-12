@@ -6,15 +6,16 @@ import { useAuthenticationContext } from "./context/AuthenticationContext";
 import Login from "./Pages/login/login";
 import DashBoard from "./Pages/dashboard";
 import Users from "./Pages/Users";
+import { useIsAuthenticated } from "./api";
 
 function App() {
-  const  useIsAuthenticated  = useAuthenticationContext();
+  const isAuthenticated = useIsAuthenticated();
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        {useIsAuthenticated ? (
+        {isAuthenticated ? (
           <>
             <Route path="/admin/dashboard" element={<DashBoard />} />
             <Route path="/admin/orders" element={<AdminOrders />} />

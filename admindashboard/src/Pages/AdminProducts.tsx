@@ -4,6 +4,7 @@ import ProductView from "../../../frontend/src/components/ProductView/ProductVie
 import { Link } from "react-router-dom";
 import SideBar from "../../../frontend/src/components/SideBar/SideBar";
 import TopBar from "../../../frontend/src/components/TopBar/TopBar";
+import Navbar from "../../../frontend/src/components/nav/Navbar"
 import api from "../../../frontend/src/api";
 import EditForm from "./AdminEdit";
 import "./css/AdminProducts.css";
@@ -50,6 +51,7 @@ function AdminProducts() {
             className="tajawal-extralight"
             style={{ display: "flex", height: "100vh" }}
         >
+        
             <div style={{ flex: "1" }}>
                 <SideBar />
             </div>

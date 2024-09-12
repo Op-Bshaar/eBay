@@ -1,7 +1,14 @@
-@import "../../styles/variables.scss";
-@import "../../styles/responsive.scss";
+// Menu.scss
+
+@import "../../styles/variables.scss"; // Import shared variables
+@import "../../styles/responsive.scss"; // Import responsive styles if needed
 
 .menu {
+  width: 250px; // Fixed width for the menu
+  background-color: $dark-bg; // Background color for menu
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); // Shadow for menu
+
   .item {
     display: flex;
     flex-direction: column;
@@ -14,7 +21,7 @@
       color: $soft-color;
       text-transform: uppercase;
 
-      @include lg{
+      @include lg {
         display: none;
       }
     }
@@ -25,13 +32,20 @@
       gap: 10px;
       padding: 10px;
       border-radius: 5px;
+      color: $main-color; // Text color for list items
 
       &:hover {
         background-color: $soft-bg;
+        color: $main-color; // Ensure text color remains visible on hover
       }
 
-      .listItemTitle{
-        @include lg{
+      img {
+        width: 20px; // Adjust icon size if needed
+        height: 20px;
+      }
+
+      .listItemTitle {
+        @include lg {
           display: none;
         }
       }
