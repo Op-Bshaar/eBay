@@ -1,16 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-
-import './AdminDashBoard.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AuthenticationProvider from "./context/AuthenticationProvider";
+import Login from "./Pages/login/login";
+import DashBoard from "./Pages/dashboard";
 
 function Dashboard() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-    
-    </>
-  )
+    // <AuthenticationProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="admin/dashobaard" element={<DashBoard />} />
+        </Routes>
+      </BrowserRouter>
+    // </AuthenticationProvider>
+  );
 }
 
-export default Dashboard
+export default Dashboard;
