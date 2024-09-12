@@ -28,7 +28,6 @@ class ReviewController extends Controller
         $review->save();
 
         return response()->json([
-            'product_id' => $productId,
            'rating' => $request->input('rating'),
             'comment' => $request->input('comment'),
         ],201); 
