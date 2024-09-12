@@ -1,1 +1,0 @@
-UPDATE products SET price = '0' WHERE price REGEXP '[^0-9.]';
