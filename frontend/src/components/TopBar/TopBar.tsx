@@ -1,12 +1,13 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { itemdata } from "../../utils/itemdata";
 import "./TopBar.css";
 
 const HeroItem: React.FC = () => {
     const sliderRef = useRef<Slider | null>(null);
+    const[filtredItems,setFiltredItems] = useState(itemdata);
     const settings = {
         ref:sliderRef,
         infinite: true,
@@ -33,8 +34,9 @@ const HeroItem: React.FC = () => {
         ]
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleClick = (item: any) => {
-        alert(`hello ${item.id}`);
+    const handleClick = (item:{item:string}) => {
+       const filtered = itemdata.filter(data=>data.item === item.item);
+       setFiltredItems(filtered);
     };
     return (
         <div>
