@@ -14,5 +14,6 @@ export const PAGE_URLS = {
     reload_user: "/reload-user",
     email_verified_successfuly: "/email-verified-successfully",
     invalid_email_verification_link: "/invalid-email-verification-link",
-    cart:'/cart',
+    cart: '/cart',
+    place_order:'place-order',
 }
