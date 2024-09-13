@@ -1,6 +1,191 @@
-.product-details-page{
-    display:flex;
-    width:100%;
-    box-sizing:border-box;
-    font-size:1em;
-}
+.product-details-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+    padding: 2vh 0;
+    background-color: #f9f9f9;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 2vh 2vw;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .product-details:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-details img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin-bottom: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .product-details img:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-details h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 1vh;
+    font-weight: bold;
+    animation: slideIn 0.7s ease-in-out;
+  }
+  
+  .product-details p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin: 1vh 0;
+    color: #555;
+    animation: slideIn 1s ease-in-out;
+  }
+  
+  .product-details p:first-of-type {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #444;
+  }
+  
+  .product-details p:nth-of-type(2) {
+    font-size: 1.5em;
+    color: #2ecc71;
+    font-weight: bold;
+    margin-bottom: 2vh;
+  }
+  
+  .button {
+    padding: 1em 2em;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .remove-from-cart-button {
+    background-color: #e74c3c;
+  }
+  
+  .remove-from-cart-button:hover {
+    background-color: #c0392b;
+  }
+  
+  aside {
+    margin-top: 2vh;
+    padding: 1.5vh 2vw;
+    background-color: #f5f5f5;
+    border-left: 4px solid #3498db;
+    border-radius: 8px;
+    animation: slideInCart 0.8s ease-in-out;
+  }
+  
+  aside p {
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #555;
+  }
+  
+
+  .link {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .link:hover {
+    color: #2980b9;
+  }
+  
+
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInCart {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .product-details {
+      padding: 4vh 4vw;
+    }
+  
+    .product-details h1 {
+      font-size: 1.5em;
+    }
+  
+    .product-details p {
+      font-size: 1em;
+    }
+  
+    .button {
+      padding: 0.8em 1.5em;
+      font-size: 1em;
+    }
+  }
+  

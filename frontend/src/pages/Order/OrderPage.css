@@ -2,7 +2,7 @@
 html, body {
     touch-action: none; 
   }
-  
+
 .order-page {
     font-size: 1em;
     background-color: #f9f9f9; 
@@ -130,8 +130,8 @@ html, body {
       margin-right: 20px;
     }
     .order-item-container {
-      padding-right: 10px;
-      margin-right:16px;
+      padding-right: 1px;
+      margin-right:-3px;
       width: 100%;
     }
   }

@@ -7,6 +7,7 @@ import ErrorMessage from "../../components/errorMessage/Error";
 import "../../Loader.css";
 import "../Cart/Cart.css";
 import api from "../../api";
+import './ProductDetails.css'
 import { isAxiosError } from "axios";
 import { cartContainsItem, useCartOperations } from "../../Cart";
 

@@ -55,6 +55,7 @@ function Navbar() {
           <form onSubmit={handleSearch} className="search-bar">
             <input
               id="search-by-name"
+           
               type="search"
               placeholder="ابحث باسم المنتج"
               ref={inputRef}

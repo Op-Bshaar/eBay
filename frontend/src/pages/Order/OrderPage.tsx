@@ -61,6 +61,7 @@ function OrderPage() {
           type="text"
           id="address"
           value={address}
+          style={{fontFamily:"Tajawal"}}
           placeholder="القاهرة, حدائق الأهرام ...."
           maxLength={255}
           autoComplete={"shipping street-address"}

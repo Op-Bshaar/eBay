@@ -1,7 +1,11 @@
+*{
+    font-family: "Tajawal";
+}
 .hero-container * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 .hero-container {
   width: 100%;
