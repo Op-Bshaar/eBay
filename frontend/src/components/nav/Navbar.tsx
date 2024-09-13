@@ -34,9 +34,9 @@ function Navbar() {
     <>
       <nav className="navbar tajawal-extralight">
         <Link className="plain-text" to={PAGE_URLS.home}>
-          <h1>سوق</h1>
+          <h1 className="namestyle">سوق</h1>
         </Link>
-        {user && <span style={{color:"rgb(4, 95, 214)"}}>أهلا {user.username}</span>}
+        {user && <span className="namestyle">أهلا {user.username}</span>}
 
         <div className="menu-toggle">
           <FontAwesomeIcon

@@ -87,3 +87,22 @@
 #login-method{
     padding: 5px;
 }
+@media (max-width: 768px){
+    .login-form{
+        padding-right: 25px;
+    }
+
+}
+
+
+#login-method{
+    color: blue;
+    font-size: 1em;
+    font-weight: bold;
+    font-family: "Tajawal";
+}
+
+
+.input-groupe{
+   background-color: rgb(225, 220, 224);
+}

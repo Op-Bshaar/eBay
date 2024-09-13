@@ -1,142 +1,153 @@
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    padding: 2vh 3vw;
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    width: 100%;
-    flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 2vh 3vw;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 2vw;
-    transition: transform 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  transition: transform 0.3s ease-in-out;
 }
 
 .menu-toggle {
-    display: flex;
-    align-items: center;
-    position: relative;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.menu-icon, .close-icon {
-    font-size: 2rem;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
+.menu-icon,
+.close-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
 }
 
 .close-icon {
-    display: none;
+  display: none;
 }
 
 .menu-icon.hidden {
-    display: none;
+  display: none;
 }
 
 .close-icon.visible {
-    display: block;
+  display: block;
 }
 
 .search-bar {
-    display: flex;
-    align-items: center;
-    margin-left: 2vw;
-    flex-grow: 1;
-    max-width: 35%;
-    min-width: 100px;
-    margin-left: 2vw;
+  display: flex;
+  align-items: center;
+  margin-left: 2vw;
+  flex-grow: 1;
+  max-width: 35%;
+  min-width: 100px;
+  margin-left: 2vw;
 }
 
-    .search-bar input {
-        width: 100%;
-        height: 3em;
-        cursor: pointer;
-        padding: 0 1vw;
-        text-align: center;
-        line-height: 30px;
-    }
+.search-bar input {
+  width: 100%;
+  height: 3em;
+  cursor: pointer;
+  padding: 0 1vw;
+  text-align: center;
+  line-height: 30px;
+}
 
 .search-icon {
-    width: auto;
-    display: inline-block;
-    height: 3em;
-    margin: 0 0.5vw;
-    color: #0077ff;
-    cursor: pointer;
+  width: auto;
+  display: inline-block;
+  height: 3em;
+  margin: 0 0.5vw;
+  color: #0077ff;
+  cursor: pointer;
 }
 
 .navbar h1 {
-    margin: 0;
-    flex-shrink: 1;
+  margin: 0;
+  flex-shrink: 1;
 }
 
 .nav-link {
-    margin: 0 2vw;
-    color: black;
-    text-decoration: none;
-    flex-shrink: 1;
+  margin: 0 2vw;
+  color: black;
+  text-decoration: none;
+  flex-shrink: 1;
 }
 
 .icon-text-style {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 @media (min-width: 769px) {
-    .menu-toggle {
-        display: none;
-    }
+  .menu-toggle {
+    display: none;
+  }
 
-    .nav-item {
-        display: flex;
-    }
+  .nav-item {
+    display: flex;
+  }
 }
 
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        gap: 10px;
-        align-items: flex-start;
-        background-color: #6e767e;
-    }
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    background-color: #6e767e;
+    margin-right: 23.5px;
+  }
+  .namestyle{
+    color:white;
+  }
 
-    .menu-toggle {
-        display: flex;
-        margin-top: 20px;
-    }
+  .menu-toggle {
+    display: flex;
+    margin-top: 20px;
+  }
 
-    .nav-item {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        padding: 1vh 0;
-    }
+  .nav-item {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 1vh 0;
+    padding-right: 10px;
+  }
 
-        .nav-item.open {
-            display: flex;
-            align-items: flex-start;
-        }
+  .nav-item.open {
+    display: flex;
+    align-items: flex-start;
+  }
 
-    .search-bar input {
-        width: 100%;
-        margin: 1vh 0;
-    }
+  .search-bar input {
+    width: 100%;
+    margin: 1vh 0;
+  }
 
-    .nav-link {
-        margin: 1vh 0;
-    }
+  .nav-link {
+    margin: 1vh 0;
+  }
+
+  .menu-icon,
+.close-icon {
+  margin-right: 5px;
+}
 }
 
-@media(any-hover:hover) and (pointer:fine) {
-    .search-icon:hover {
-        color: #33aaff;
-    }
+@media (any-hover: hover) and (pointer: fine) {
+  .search-icon:hover {
+    color: #33aaff;
+  }
 }
 
 .search-icon:active {
-    color: #004488;
+  color: #004488;
 }
