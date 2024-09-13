@@ -1,29 +1,50 @@
-.email-verifictation-success-message{
-    color:#00c000;
-    margin: 1vh auto;
+.email-verifictation-success-message {
+  color: #00c000;
+  margin: 1vh auto;
 }
-.email-verifictation{
-    margin: 5vh auto;
+.email-verifictation {
+  margin: 5vh auto;
 }
 
-    .email-verifictation .button {
-        min-width: 15vw;
-        min-height: 6vh
-    }
+.center-text{
+    font-family: "Tajawal";
+    font-weight: bold;
+}
+
+.email-verifictation .button {
+  min-width: 15vw;
+  min-height: 6vh;
+}
 .email-verifictation-content {
-    width: 75vw;
+  width: 75vw;
 }
 .email-verifictation-content > * {
-    margin: 1vh auto;
+  margin: 0.5vh auto;
 }
 .email-verifictation-button-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 100%;
-    flex-wrap: wrap;
-    row-gap: 1vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+  row-gap: 1vh;
 }
-.email-verifictation-button-container .button{
-    min-width:10em;
+.email-verifictation-button-container .button {
+  min-width: 10em;
+}
+
+@media (max-width: 768px) {
+  .email-verifictation-button-container {
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .email-verifictation .button {
+    min-width: 30%;
+    min-height: 1vh;
+  }
+  .email-verifictation-button-container .button {
+    min-width: 30%;
+  }
 }
