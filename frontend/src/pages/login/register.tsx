@@ -110,6 +110,7 @@ function Register() {
                         placeholder="ادخل اسم المستخدم"
                         minLength={2}
                         pattern="^[\p{L}\p{N}_]+$"
+                        autoCapitalize="none"
                         required
                         ref={usernameRef}
                         onChange={() => {
@@ -159,6 +160,7 @@ function Register() {
                                 setIsPhoneTaken(false);
                             }
                         }}
+                        inputMode="tel"
                     />
 
                     {isPhoneTaken && (

@@ -103,6 +103,8 @@ const ProductForm: React.FC = () => {
                 <input
                     type="text"
                     name="price"
+                    pattern="^\d+(\.\d{1,2})?$"
+                    inputMode="numeric"
                     value={product.price}
                     onChange={handleChange}
                     className="price"

@@ -1,3 +1,5 @@
+import { Category } from "./Category";
+
 class Product {
     public price: string;
     public title: string;
@@ -5,7 +7,8 @@ class Product {
     public description: string;
     public image: string
     public seller_id: string;
-    constructor(id: string,price: string,seller_id: string, title: string, description: string, image: string)
+    public category: Category | null;
+    constructor(id: string, price: string, seller_id: string, title: string, description: string, image: string, category: Category | null = null)
     {
         this.id = id;
         this.price = price;
@@ -13,6 +16,7 @@ class Product {
         this.title = title;
         this.description= description;
         this.image= image;
+        this.category = category;
     }
 
 }
@@ -28,6 +32,8 @@ export function readProduct(product_data: any): Product {
         product_data.seller_id,
         product_data.title,
         product_data.description,
-        product_data.image)
+        product_data.image,
+        product_data.category ?? null
+    )
 }
 export default Product;

@@ -1,0 +1,50 @@
+.order-page{
+    font-size:1em;
+}
+.order-items-container {
+    display: flex;
+    flex-direction: column;
+    width:98%;
+    box-sizing: border-box;
+    margin: 1vh auto;
+}
+.order-item-container {
+    display: flex;
+    flex-direction: column;
+    height: clamp(30px,8vh, 100px);
+    box-sizing: border-box;
+    justify-content: center;
+    background-color: #aaaaaa;
+    color: #000000;
+}
+    .order-item-container:first-child {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .order-item-container:last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        font-size:1.2em;
+        font-weight:750;
+    }
+    .order-item-container:nth-child(2n) {
+        background-color: #eeeeee;
+    }
+
+.order-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1vh 1vw;
+}
+.address-input{
+}
+    .address-input label {
+        font-size: 2em;
+        margin: 1vh 1vw;
+    }
+    .address-input input {
+        height: 2em;
+        margin: 1vh 1vw;
+        width: max(300px,50vw);
+    }

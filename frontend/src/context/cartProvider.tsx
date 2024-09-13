@@ -70,7 +70,7 @@ function CartProvider({ children }: { children: ReactNode }) {
             cartItems: cartItemsState,
             errorMessage: errorMessage,
             isCartLoading: isLoading ,
-            isSynced: isSynced,
+            isCartSynced: isSynced,
             setCartItems: setCartItems,
             reloadCart: reloadCart,
             updateCart: updateCart,
