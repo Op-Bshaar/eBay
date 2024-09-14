@@ -1,5 +1,6 @@
 ﻿export const currencySymbol = 'ر.س.';
-export function displayMoney(amount: string | number) {
+export const maxAddressLength = 255;
+export const displayMoney = (amount: string | number) => {
     if (typeof amount === 'number') {
         amount = new Intl.NumberFormat('en-UK', {
             style: 'decimal',
