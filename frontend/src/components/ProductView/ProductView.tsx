@@ -20,8 +20,8 @@ function ProductView({
       {product.image && <img src={product.image} className="product-image" />}
           <p className="product-price">{displayMoney(product.price)}</p>
       {showGoButton && (
-        <Link to={`/products/${product.id}`} className="button">
-          عرض المنتج
+        <Link to={`/products/${product.id}`} className="button product-view-button">
+          التفاصيل
         </Link>
       )}
     </>

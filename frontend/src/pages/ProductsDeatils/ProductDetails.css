@@ -10,8 +10,8 @@
     background-color: #f9f9f9;
     animation: fadeIn 1s ease-in-out;
   }
-  
-  .product-details {
+
+.product-details {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,23 +22,25 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     max-width: 600px;
     width: 100%;
+    box-sizing: border-box;
     text-align: center;
-  }
+}
   
   .product-details:hover {
     transform: scale(1.03);
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
   }
-  
-  .product-details img {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    margin-bottom: 1.5em;
-    border-radius: 8px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
+
+    .product-details img {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        margin-bottom: 1.5em;
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
   
   .product-details img:hover {
     transform: scale(1.05);
@@ -72,26 +74,6 @@
     font-weight: bold;
     margin-bottom: 2vh;
   }
-  
-  .button {
-    padding: 1em 2em;
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 600;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #2980b9;
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
   .remove-from-cart-button {
     background-color: #e74c3c;
   }
@@ -107,11 +89,6 @@
     border-left: 4px solid #3498db;
     border-radius: 8px;
     animation: slideInCart 0.8s ease-in-out;
-}
-@media(prefers-reduced-motion: reduce) {
-    .product-details-page aside {
-        animation: none;
-    }
 }
 .product-details-page aside p {
     font-size: 1.2em;
@@ -187,10 +164,15 @@
     .product-details p {
       font-size: 1em;
     }
-  
-    .button {
-      padding: 0.8em 1.5em;
-      font-size: 1em;
+
+    .product-details-page .button {
+        padding: 0.8em 1.5em;
+        font-size: 1em;
     }
   }
-  
+
+@media(prefers-reduced-motion: reduce) {
+    .product-details-page, .product-details-page aside {
+        animation: none;
+    }
+}

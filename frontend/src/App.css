@@ -15,16 +15,18 @@ body {
     display: inline-block;
     text-align: center;
     color: white;
-    background-color: #0000ff;
     border-radius: 5px;
     border: none;
     user-select: none;
     text-decoration: inherit;
     font-size: 1em;
-    padding: 1% 2.5%;
-    cursor: default;
     font: inherit;
-    transition: background-color 0.2s linear;
+    background-color: #3498db;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    padding: 1em 2em;
+    font-weight: 600;
 }
 
 
@@ -49,7 +51,9 @@ body {
 }
 @media(any-hover:hover) and (pointer:fine) {
     .button:hover {
-        background-color: #3377ff;
+        background-color: #2980b9;
+        transform: scale(1.025);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
     .link:hover {
         color: #00aaff;

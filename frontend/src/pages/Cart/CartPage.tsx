@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
 import { Link, useNavigate } from "react-router-dom";
-import { currencySymbol } from "../../constants/Currency";
+import {  displayMoney } from "../../constants/Currency";
 function CartPage() {
     useRequireAuthentication();
     const { cartItems, reloadCart, errorMessage, isCartLoading, isCartSynced, updateCart } = useCart();
@@ -66,10 +66,12 @@ function CartPage() {
                         </div>
                     )}
             </div>
-            <div className="cart-buttons-container">
-                <p>المجموع: {`${cartItems.reduce((sum, item) => sum + Number(item.product.price), 0)}${currencySymbol}`}</p>
-                <button className="button remove-from-cart-button cart-button" onClick={handleClearCart}>حذف السلة</button>
-                <button onClick={handleOrder } className="button cart-button">تأكيد الطلب</button>
+            <div>
+                <p className="center-text">المجموع: {`${displayMoney(cartItems.reduce((sum, item) => sum + Number(item.product.price), 0))}`}</p>
+                <div className="cart-buttons-container">
+                    <button className="button remove-from-cart-button cart-button" onClick={handleClearCart}>حذف السلة</button>
+                    <button onClick={handleOrder} className="button cart-button">تأكيد الطلب</button>
+                </div>
             </div>
         </div>);
 

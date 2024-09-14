@@ -1,5 +1,5 @@
 ﻿import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { currencySymbol, displayMoney } from "../../constants/Currency";
+import { displayMoney } from "../../constants/Currency";
 import { useCart } from "../../context/CartContext";
 import "./OrderPage.css";
 import "../../Loader.css";
@@ -31,10 +31,16 @@ function OrderPage() {
             {cartItems.map((item, index) => (
                 <div className="order-item-container" key={index}>
                     <div className="order-item">
-                        <span>{item.product.title}</span>
+                        <span className="order-title-image-container">
+                            <span className="order-item-image-container">
+                                {item.product.image && <img src={item.product.image} />}
+                            </span>
+                            <span>
+                                {item.product.title}
+                            </span>
+                        </span>
                         <span>
-                            {item.product.price}
-                            {currencySymbol}
+                            {displayMoney(item.product.price) }
                         </span>
                     </div>
                 </div>
@@ -45,7 +51,6 @@ function OrderPage() {
                         <span>المجموع:</span>
                         <span>
                             {displayMoney(total())}
-                            {currencySymbol}
                         </span>
                     </div>
                 </div>
@@ -69,7 +74,7 @@ function OrderPage() {
             </div>
             {items}
             <div className="center-text">
-                <button className="button">ادفع({displayMoney(total())})</button>
+                <button className="button pay-button">ادفع ( {displayMoney(total())} )</button>
             </div>
         </div>
     );
