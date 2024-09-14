@@ -70,16 +70,19 @@
     align-items:center;
 }
 .order-item-image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     box-sizing: border-box;
-    height: 3vh;
-    width: 3vw;
+    height: 7vh;
+    width: 7vw;
     margin: auto 1vw;
 }
     .order-item-image-container img {
         padding: 0;
         margin: 0;
-        max-height: 3vh;
-        max-width: 3vw;
+        max-height: 7vh;
+        max-width: 7vw;
     }
 
 .address-input {
