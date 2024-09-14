@@ -6,7 +6,11 @@
     padding: 2vh 0;
     transition: background-color 0.5s ease-in-out;
 }
-
+.address-input-container{
+    text-align:start;
+}
+    .order-address-form {
+    }
 
 .order-items-container {
     display: flex;
@@ -51,24 +55,21 @@
     }
 
 
-    .order-item-container:hover {
-        transform: scale(1.02);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
 
 .order-item {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
     padding: 1vh 1vw;
 }
-.order-title-image-container{
-    display:flex;
-    flex-direction:row;
-    align-items:center;
+
+.order-title-image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
+
 .order-item-image-container {
     display: flex;
     flex-direction: row;
@@ -78,6 +79,7 @@
     width: 7vw;
     margin: auto 1vw;
 }
+
     .order-item-image-container img {
         padding: 0;
         margin: 0;
@@ -85,81 +87,48 @@
         max-width: 7vw;
     }
 
-.address-input {
-    text-align: center;
-    margin-bottom: 2vh;
-}
-
-    .address-input label {
-        font-size: 1.8em;
-        margin: 1vh 1vw;
-        color: #333333;
-    }
-
-    .address-input input {
-        height: 2.5em;
-        margin: 1vh 1vw;
-        width: max(300px, 50vw);
-        border: 2px solid #cccccc;
-        border-radius: 5px;
-        padding: 0.5em;
-        transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease;
-    }
-
-        .address-input input:focus:not(:user-invalid) {
-            border-color: #666666;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        .address-input input:user-invalid {
-            border-color: #ff0000;
-        }
-        .address-input input:invalid:focus {
-            outline: auto;
-            outline-color: #ffaa00;
-        }
-.pay-button{
+.pay-button {
     background-color: #333333;
     color: #ffffff;
     border: none;
     padding: 2vh 2vw;
-    margin:2vh auto;
+    margin: 2vh auto;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
     .pay-button:disabled {
         background-color: #888888;
     }
-    @media(any-hover:hover) and (pointer:fine) {
-        .pay-button:hover:not(:disabled) {
+
+@media(any-hover:hover) and (pointer:fine) {
+    .pay-button:hover:not(:disabled) {
         background-color: #555555;
         transform: scale(1.05);
         box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     }
+    .order-item-container:hover {
+        transform: scale(1.0025);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
 }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
 
-        to {
-            opacity: 1;
-        }
+@keyframes fadeIn {
+    from {
+        opacity: 0;
     }
 
-    @media (max-width: 768px) {
-        .address-input label {
-            margin-right: 20px;
-        }
-
-        .address-input input {
-            margin-right: 20px;
-        }
-
-        .order-item-container {
-            padding-right: 1px;
-            margin-right: -3px;
-            width: 100%;
-        }
+    to {
+        opacity: 1;
     }
+}
+
+@media (max-width: 768px) {
+    .order-item-container {
+        padding-right: 1px;
+        margin-right: -3px;
+        width: 100%;
+    }
+}
