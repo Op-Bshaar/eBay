@@ -1,6 +1,6 @@
 ﻿import { useCallback, useEffect, useState } from "react";
 import "../../Loader.css";
-import { emptyAddress } from "../../components/AddressInput/Address";
+import { addressToText, emptyAddress } from "../../components/AddressInput/Address";
 import AddressInput from "../../components/AddressInput/AddressInput";
 import { displayMoney } from "../../constants/Currency";
 import { useCart } from "../../context/CartContext";
@@ -10,6 +10,7 @@ function OrderPage() {
     const { cartItems, isCartLoading, isCartSynced, reloadCart,errorMessage } = useCart();
     const [address, setAddress] = useState(emptyAddress);
     const [isAddressValid, setIsAddressValid] = useState(false);
+    const getAddressText = useCallback(() => addressToText(address),[address]);
     const total = useCallback(() => cartItems.reduce(
         (sum, cartItem) => sum + Number(cartItem.product.price),
         0
@@ -72,7 +73,7 @@ function OrderPage() {
             </div>
             {items}
             <div className="center-text">
-                <button onClick={handleOrder} disabled={!isAddressValid }
+                <button onClick={handleOrder} disabled={!isAddressValid || getAddressText().length > 255}
                     className="button pay-button">ادفع ( {displayMoney(total())} )</button>
             </div>
         </div>

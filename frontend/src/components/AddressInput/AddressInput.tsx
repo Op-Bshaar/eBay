@@ -8,13 +8,12 @@ interface AddressInputProps {
     setIsValid: (isValid: boolean) => void;
     className?: string;
 }
-function AddressInput({ address, setAddress, isValid, setIsValid, className="" }: AddressInputProps) {
+function AddressInput({ address, setAddress, isValid, setIsValid, className = "" }: AddressInputProps) {
     const formRef = useRef<HTMLFormElement>(null);
     const cityInputRef = useRef<HTMLInputElement>(null);
     const districtInputRef = useRef<HTMLInputElement>(null);
     const streetInputRef = useRef<HTMLInputElement>(null);
     const postalCodeRef = useRef<HTMLInputElement>(null);
-    console.log(address);
     const _isValid = formRef.current?.checkValidity() === true;
     if (_isValid !== isValid) {
         setIsValid(_isValid);
@@ -30,14 +29,19 @@ function AddressInput({ address, setAddress, isValid, setIsValid, className="" }
     };
     return (
         <form className={`address-form ${className}`} ref={formRef}>
-            <label htmlFor="street">اسم الشارع:</label>
-            <input id="street" name="street" onChange={handleChange} ref={streetInputRef} required />
+            <label htmlFor="street">عنوان الشارع:</label>
+            <input id="street" name="street" onChange={handleChange} ref={streetInputRef}
+                placeholder="2929 ريحانة بنت زيد" required />
             <label htmlFor="district">الحي:</label>
-            <input id="district" name="district" onChange={handleChange} ref={districtInputRef} required />
+            <input id="district" name="district" onChange={handleChange} ref={districtInputRef}
+                placeholder="8118 حي العارض" required />
             <label htmlFor="city">المدينة:</label>
-            <input id="city" name="city" onChange={handleChange} ref={cityInputRef} required />
+            <input id="city" name="city" onChange={handleChange} ref={cityInputRef}
+                placeholder="الرياض" required />
             <label htmlFor="postal-code">الرمز البريدي:</label>
-            <input className="postal-code-input" autoComplete="postal-code" id="postal-code" pattern="^\d+$" name="postal-code" inputMode="numeric" onChange={handleChange} ref={postalCodeRef} required />
+            <input className="postal-code-input" autoComplete="postal-code" id="postal-code"
+                pattern="^\d+$" name="postalCode" inputMode="numeric"
+                onChange={handleChange} placeholder="13337" ref={postalCodeRef} required />
         </form>
     );
 }
