@@ -1,20 +1,24 @@
-﻿import React, { useRef } from 'react';
-import Address from './Address';
+﻿import React, { useCallback, useRef } from 'react';
+import Address, { addressToText } from './Address';
 import "./AddressForm.css";
+import { maxAddressLength } from '../../constants/Constants';
 interface AddressInputProps {
     address: Address;
     setAddress: (address: Address) => void;
     isValid: boolean;
     setIsValid: (isValid: boolean) => void;
     className?: string;
+    maxLength?: number;
 }
-function AddressInput({ address, setAddress, isValid, setIsValid, className = "" }: AddressInputProps) {
+function AddressInput({ address, setAddress, isValid, setIsValid, className = "", maxLength=maxAddressLength }: AddressInputProps) {
     const formRef = useRef<HTMLFormElement>(null);
     const cityInputRef = useRef<HTMLInputElement>(null);
     const districtInputRef = useRef<HTMLInputElement>(null);
     const streetInputRef = useRef<HTMLInputElement>(null);
     const postalCodeRef = useRef<HTMLInputElement>(null);
-    const _isValid = formRef.current?.checkValidity() === true;
+    const getAddressText = useCallback(() => addressToText(address), [address]);
+    const _isValid = formRef.current?.checkValidity() === true &&
+        getAddressText().length <= maxLength;
     if (_isValid !== isValid) {
         setIsValid(_isValid);
     }

@@ -10,7 +10,7 @@ import api from "../../api";
 import './ProductDetails.css'
 import { isAxiosError } from "axios";
 import { cartContainsItem, useCartOperations } from "../../Cart";
-import { displayMoney } from "../../constants/Currency";
+import { displayMoney } from "../../constants/Constants";
 
 function ProductsDeatils() {
     const id = useParams<{ id: string }>().id ?? "";

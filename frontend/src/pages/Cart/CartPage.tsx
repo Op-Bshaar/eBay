@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
 import { Link, useNavigate } from "react-router-dom";
-import {  displayMoney } from "../../constants/Currency";
+import { displayMoney } from "../../constants/Constants";
 function CartPage() {
     useRequireAuthentication();
     const { cartItems, reloadCart, errorMessage, isCartLoading, isCartSynced, updateCart } = useCart();
