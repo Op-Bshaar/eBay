@@ -9,26 +9,26 @@ import { useRef, useState } from "react";
 import { PAGE_URLS } from "../../constants/URL";
 
 function Navbar() {
-  const navigate = useNavigate();
-  const { user } = useAuthenticationContext();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const logout = useLogout();
-  const isAuthenticated = useIsAuthenticated();
-  const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const { user } = useAuthenticationContext();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const logout = useLogout();
+    const isAuthenticated = useIsAuthenticated();
+    const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleSearch = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    const query = inputRef.current?.value;
-    if (query) {
-      navigate(`products/search?query=${encodeURIComponent(query)}`);
-    } else {
-      navigate("/");
-    }
-  };
+    const handleSearch = async (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        const query = inputRef.current?.value.trim();
+        if (query) {
+            navigate(`products/search?query=${encodeURIComponent(query)}`);
+        } else {
+            navigate("/");
+        }
+    };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     return (
         <>

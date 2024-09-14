@@ -1,4 +1,4 @@
-﻿import { ChangeEvent, useCallback, useEffect, useState } from "react";
+﻿import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { displayMoney } from "../../constants/Currency";
 import { useCart } from "../../context/CartContext";
 import "./OrderPage.css";
@@ -6,6 +6,7 @@ import "../../Loader.css";
 function OrderPage() {
     const { cartItems, isCartLoading, isCartSynced, reloadCart } = useCart();
     const [address, setAddress] = useState("");
+    const addressInputRef = useRef<HTMLInputElement>(null);
     const total = useCallback(() => cartItems.reduce(
         (sum, cartItem) => sum + Number(cartItem.product.price),
         0
@@ -26,6 +27,10 @@ function OrderPage() {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setAddress(event.currentTarget.value);
     };
+    const handleOrder = () => {
+
+    };
+    const isAddressValid = addressInputRef.current?.validity.valid && !!addressInputRef.current?.value;
     const items = (
         <div className="order-items-container">
             {cartItems.map((item, index) => (
@@ -60,21 +65,26 @@ function OrderPage() {
     return (
         <div className="tajawal-extralight order-page">
             <div className="address-input">
-                <label htmlFor="address">العنوان:</label>
+                <label htmlFor="address">عنوان الشحن:</label>
                 <input
                     onChange={handleChange}
                     type="text"
                     id="address"
                     value={address}
+                    ref={addressInputRef}
                     style={{ fontFamily: "Tajawal" }}
-                    placeholder="القاهرة, حدائق الأهرام ...."
-                    maxLength={255}
+                    placeholder="أدخل العنوان كاملاً"
+                    aria-label="أدخل عنوان الشحن الكامل"
                     autoComplete={"shipping street-address"}
+                    required
+                    minLength={10 }
+                    maxLength={255 }
                 />
             </div>
             {items}
             <div className="center-text">
-                <button className="button pay-button">ادفع ( {displayMoney(total())} )</button>
+                <button onClick={handleOrder} disabled={!isAddressValid }
+                    className="button pay-button">ادفع ( {displayMoney(total())} )</button>
             </div>
         </div>
     );

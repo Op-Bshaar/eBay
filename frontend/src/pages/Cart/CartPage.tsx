@@ -4,7 +4,7 @@ import ProductView from "../../components/ProductView/ProductView";
 import "../../Loader.css";
 import "./Cart.css";
 import ErrorView from "../../components/errorMessage/Error";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ function CartPage() {
     const [, removeFromCart, clearCart] = useCartOperations();
     const [isNavigatingToOrder, setIsNavigatingToOrder] = useState(false);
     const navigate = useNavigate();
+    const allProductsAvailable = useCallback(() => cartItems.every(item => item.product.isAvailable),[cartItems]);
     // reload cart on first render.
     useEffect(() => {
         if (cartItems.length === 0) {
@@ -23,10 +24,12 @@ function CartPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const loader = <div className="absolute-center"><div className="loader" /></div>;
-    if (isNavigatingToOrder) {
-        if (!errorMessage && !isCartLoading && isCartSynced) {
+    useEffect(() => {
+        if (isNavigatingToOrder && !errorMessage && !isCartLoading && isCartSynced) {
             navigate(`/${PAGE_URLS.place_order}`);
         }
+    });
+    if (isNavigatingToOrder) {
         return (
             <div className="absolute-center tajawal-extralight">
                 {isCartLoading && loader}
@@ -51,7 +54,7 @@ function CartPage() {
             clearCart();
         }
     };
-    const handleOrder = async () => {
+    const handleOrder = () => {
         setIsNavigatingToOrder(true);
         updateCart();
     };
@@ -70,7 +73,7 @@ function CartPage() {
                 <p className="center-text">المجموع: {`${displayMoney(cartItems.reduce((sum, item) => sum + Number(item.product.price), 0))}`}</p>
                 <div className="cart-buttons-container">
                     <button className="button remove-from-cart-button cart-button" onClick={handleClearCart}>حذف السلة</button>
-                    <button onClick={handleOrder} className="button cart-button">تأكيد الطلب</button>
+                    <button onClick={handleOrder} disabled={!allProductsAvailable()} className="button cart-button">تأكيد الطلب</button>
                 </div>
             </div>
         </div>);

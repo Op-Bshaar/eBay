@@ -9,34 +9,38 @@ interface ProductViewProps {
   showGoButton?: boolean;
 }
 function ProductView({
-  product,
-  clickToGo = true,
-  showGoButton,
+    product,
+    clickToGo = true,
+    showGoButton,
 }: ProductViewProps) {
-  showGoButton = showGoButton != undefined ? showGoButton : !clickToGo;
-  const view = (
-    <>
-      <h3 className="product-title">{product.title}</h3>
-      {product.image && <img src={product.image} className="product-image" />}
-          <p className="product-price">{displayMoney(product.price)}</p>
-      {showGoButton && (
-        <Link to={`/products/${product.id}`} className="button product-view-button">
-          التفاصيل
-        </Link>
-      )}
-    </>
-  );
-  return (
-    <article className="product-item">
-      {clickToGo ? (
-        <Link to={`/products/${product.id}`} className="wrapper-button">
-          {view}
-        </Link>
-      ) : (
-        view
-      )}
-    </article>
-  );
+    showGoButton = showGoButton != undefined ? showGoButton : !clickToGo;
+    const view = (
+        <>
+            <h3 className="product-title">{product.title}</h3>
+            {product.image && <img src={product.image} className="product-image" />}
+            <p className="product-price">{displayMoney(product.price)}</p>
+            {showGoButton && (
+                <Link to={`/products/${product.id}`} className="button product-view-button">
+                    التفاصيل
+                </Link>
+            )}
+            {!product.isAvailable &&
+                <p className="error-message">المنتج غير متوفر.</p>}
+        </>
+    );
+    return (
+        <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`}>
+            {clickToGo ? (
+                <Link to={`/products/${product.id}`}
+                    aria-label={`اضغط للذهاب إلى تفاصيل ${product.title}`}
+                    className="wrapper-button">
+                    {view}
+                </Link>
+            ) : (
+                view
+            )}
+        </div>
+    );
 }
 
 export default ProductView;

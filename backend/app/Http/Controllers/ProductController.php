@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->where('isAvailable', true)->get();
         return response()->json($products);
     }
 
@@ -108,8 +108,13 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('query');
-        $products = Product::where('title', 'LIKE', "%".$query."%")->get();
+        $query = trim($request->input('query'));
+         if (!$query) {
+            return response()->json([], 400); // Bad request
+        }
+        $products = Product::where('title', 'LIKE', "%{$query}%")
+        ->where('isAvailable', true)
+        ->get();
         return response()->json($products);
     }
 }

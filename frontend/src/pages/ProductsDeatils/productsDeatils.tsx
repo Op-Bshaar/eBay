@@ -13,7 +13,6 @@ import { cartContainsItem, useCartOperations } from "../../Cart";
 import { displayMoney } from "../../constants/Currency";
 
 function ProductsDeatils() {
-
     const id = useParams<{ id: string }>().id ?? "";
     const [product, setProduct] = useState<Product | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -88,16 +87,19 @@ function ProductsDeatils() {
                     />}
                 <p>{product.description}</p>
                 <p>السعر: {displayMoney(product.price)}</p>
-                <button
-                    className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
-                    onClick={
-                        isProductInCart
-                            ? () => removeFromCart(product)
-                            : () => addToCart(product)
-                    }
-                >
-                    {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
-                </button>
+                {
+                    product.isAvailable &&
+                    <button
+                        className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
+                        onClick={
+                            isProductInCart
+                                ? () => removeFromCart(product)
+                                : () => addToCart(product)
+                        }
+                    >
+                        {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
+                    </button>
+                }
             </article>
 
             {isProductInCart && (
@@ -108,6 +110,8 @@ function ProductsDeatils() {
                     </Link>
                 </aside>
             )}
+            {!product.isAvailable &&
+                <p className="error-message">المنتج غير متوفر.</p>}
         </div>
     );
 }
