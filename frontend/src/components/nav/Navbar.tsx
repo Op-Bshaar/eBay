@@ -30,59 +30,58 @@ function Navbar() {
     setMenuOpen(!menuOpen);
   };
 
-  return (
-    <>
-      <nav className="navbar tajawal-extralight">
-        <Link className="plain-text" to={PAGE_URLS.home}>
-          <h1 className="namestyle">سوق</h1>
-        </Link>
-        {user && <span className="namestyle">أهلا {user.username}</span>}
+    return (
+        <>
+            <nav className="navbar tajawal-extralight">
+                <Link className="plain-text" to={PAGE_URLS.home}>
+                    <h1 className="namestyle">سوق</h1>
+                </Link>
+                {user && <span className="namestyle">أهلا {user.username}</span>}
 
-        <div className="menu-toggle">
-          <FontAwesomeIcon
-            icon={faBars}
-            className={`menu-icon ${menuOpen ? "hidden" : ""}`}
-            onClick={toggleMenu}
-          />
-          <FontAwesomeIcon
-            icon={faXmark}
-            className={`close-icon ${menuOpen ? "visible" : "hidden"}`}
-            onClick={toggleMenu}
-          />
-        </div>
+                <div className="menu-toggle">
+                    <FontAwesomeIcon
+                        icon={faBars}
+                        className={`menu-icon ${menuOpen ? "hidden" : ""}`}
+                        onClick={toggleMenu}
+                    />
+                    <FontAwesomeIcon
+                        icon={faXmark}
+                        className={`close-icon ${menuOpen ? "visible" : "hidden"}`}
+                        onClick={toggleMenu}
+                    />
+                </div>
 
-        <div className={`nav-item ${menuOpen ? "open" : ""}`}>
-          <form onSubmit={handleSearch} className="search-bar">
-            <input
-              id="search-by-name"
-           
-              type="search"
-              placeholder="ابحث باسم المنتج"
-              ref={inputRef}
-            />
-            <button className="wrapper-button" type="submit">
-              <FontAwesomeIcon
-                className="search-icon"
-                icon={faMagnifyingGlass}
-              />
-            </button>
-          </form>
-          <Link className="nav-link" to="/sell">
-            البيع في سوق
-          </Link>
-          {isAuthenticated ? (
-            <button onClick={logout} className="button">
-              تسجيل الخروج
-            </button>
-          ) : (
-            <Link className="button" to="login">
-              تسجيل الدخول
-            </Link>
-          )}
-        </div>
-      </nav>
-    </>
-  );
+                <div className={`nav-item ${menuOpen ? "open" : ""}`}>
+                    <form onSubmit={handleSearch} className="search-bar">
+                        <input
+                            id="search-by-name"
+                            type="search"
+                            placeholder="ابحث باسم المنتج"
+                            ref={inputRef}
+                        />
+                        <button title="بحث" aria-label="بحث" className="wrapper-button" type="submit">
+                            <FontAwesomeIcon
+                                className="search-icon"
+                                icon={faMagnifyingGlass}
+                            />
+                        </button>
+                    </form>
+                    <Link className="nav-link" to="/sell">
+                        البيع في سوق
+                    </Link>
+                    {isAuthenticated ? (
+                        <button onClick={logout} className="button">
+                            تسجيل الخروج
+                        </button>
+                    ) : (
+                        <Link className="button" to="login">
+                            تسجيل الدخول
+                        </Link>
+                    )}
+                </div>
+            </nav>
+        </>
+    );
 }
 
 export default Navbar;

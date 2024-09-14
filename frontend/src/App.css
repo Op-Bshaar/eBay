@@ -38,11 +38,6 @@ body {
     padding: 1% 2.5%;
     cursor: pointer;
 }
-@media(any-hover:hover) and (pointer:fine) {
-    .link:hover {
-        color: #00aaff;
-    }
-}
 .wrapper-button{
     background:none;
     border:none;
@@ -55,6 +50,9 @@ body {
 @media(any-hover:hover) and (pointer:fine) {
     .button:hover {
         background-color: #3377ff;
+    }
+    .link:hover {
+        color: #00aaff;
     }
 }
 .button:disabled {
