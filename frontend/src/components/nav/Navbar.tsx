@@ -51,12 +51,12 @@ function Navbar() {
                     />
                 </div>
 
-                <div role="search" className={`nav-item ${menuOpen ? "open" : ""}`}>
-                    <form onSubmit={handleSearch} className="search-bar">
+                <div className={`nav-item ${menuOpen ? "open" : ""}`}>
+                    <form role="search" onSubmit={handleSearch} className="search-bar">
                         <input
                             id="search-by-name"
                             type="search"
-                            area-discreption="ابحث باسم المنتج"
+                            aria-description="ابحث باسم المنتج"
                             placeholder="ابحث باسم المنتج"
                             ref={inputRef}
                         />
