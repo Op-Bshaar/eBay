@@ -21,7 +21,7 @@ function CartPage() {
             reloadCart();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [cartItems.length]);
+    }, []);
     const loader = <div className="absolute-center"><div className="loader" /></div>;
     if (isNavigatingToOrder) {
         if (!errorMessage && !isCartLoading && isCartSynced) {
