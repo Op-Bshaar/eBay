@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Product from "../../Product";
 import "./ProductView.css";
-import { currencySymbol } from "../../constants/Currency";
+import { displayMoney } from "../../constants/Currency";
 
 interface ProductViewProps {
   product: Product;
@@ -18,7 +18,7 @@ function ProductView({
     <>
       <h3 className="product-title">{product.title}</h3>
       {product.image && <img src={product.image} className="product-image" />}
-          <p className="product-price">{product.price}{currencySymbol}</p>
+          <p className="product-price">{displayMoney(product.price)}</p>
       {showGoButton && (
         <Link to={`/products/${product.id}`} className="button">
           عرض المنتج

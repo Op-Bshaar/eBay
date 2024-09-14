@@ -10,6 +10,7 @@ import api from "../../api";
 import './ProductDetails.css'
 import { isAxiosError } from "axios";
 import { cartContainsItem, useCartOperations } from "../../Cart";
+import { displayMoney } from "../../constants/Currency";
 
 function ProductsDeatils() {
 
@@ -86,7 +87,7 @@ function ProductsDeatils() {
                         style={{ width: "200px" }}
                     />}
                 <p>{product.description}</p>
-                <p>Price: ${product.price}</p>
+                <p>السعر: {displayMoney(product.price)}</p>
                 <button
                     className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
                     onClick={
