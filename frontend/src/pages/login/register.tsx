@@ -19,6 +19,8 @@ function Register() {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
+    const firstNameRef = useRef<HTMLInputElement>(null);
+    const lastNameRef = useRef<HTMLInputElement>(null);
     // set if waiting for server respons.
     // used to disable submit button.
     const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +31,8 @@ function Register() {
         const email = emailRef.current?.value || "";
         const password = passwordRef.current?.value || "";
         const phone = phoneRef.current?.value || "";
+        const first_name = firstNameRef.current?.value || "";
+        const last_name = lastNameRef.current?.value || "";
         try {
             setIsLoading(true);
             setErrorMessage("");
@@ -37,6 +41,8 @@ function Register() {
                 email,
                 phone,
                 password,
+                first_name,
+                last_name
             });
             setToken(response.data.access_token);
             const _user = response.data.user;
@@ -103,10 +109,11 @@ function Register() {
             <h1>ادخل بيناتك</h1>
             <div className="login-form-content">
                 <div className="input-group">
-                    <label htmlFor="username">اسم المستخدم</label>
+                    <label htmlFor="username">اسم المستخدم:</label>
                     <input
                         type="text"
                         id="username"
+                        autoComplete="username"
                         placeholder="ادخل اسم المستخدم"
                         minLength={2}
                         pattern="^[\p{L}\p{N}_]+$"
@@ -126,10 +133,21 @@ function Register() {
                     )}
                 </div>
                 <div className="input-group">
+                    <label htmlFor="first-name">الاسم الأول:</label>
+                    <input id="first-name" autoComplete="given-name" pattern="^[\p{L}\p{M}]+$" minLength={2}
+                        maxLength={20} placeholder="أدخل الاسم الأول" ref={firstNameRef} required />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="last-name">الاسم الأخير:</label>
+                    <input id="last-name" autoComplete="family-name" pattern="^[\p{L}\p{M}]+$" minLength={2}
+                        maxLength={20} placeholder="أدخل الاسم الأخير" ref={lastNameRef} required />
+                </div>
+                <div className="input-group">
                     <label htmlFor="email">البريد الالكتروني:</label>
                     <input
                         id="email"
-                        type="email"
+                        type="email" 
+                        autoComplete="email"
                         placeholder="ادخل بريدك الإلكتروني"
                         required
                         ref={emailRef}
@@ -151,6 +169,7 @@ function Register() {
                     <input
                         pattern="^[\d+]\d*$"
                         id="phone"
+                        autoComplete="tel"
                         placeholder="ادخل رقم جوالك"
                         minLength={10}
                         required

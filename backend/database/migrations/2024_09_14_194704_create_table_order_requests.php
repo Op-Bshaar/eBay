@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('total_price',8,2);
             $table->decimal('paid_amount',8,2)->default(0);
             $table->string('status',30)->default('pending');
+            $table->string('gateway_payment_id')->nullable();
             $table->timestamps();
         });
     }

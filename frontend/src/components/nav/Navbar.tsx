@@ -36,7 +36,7 @@ function Navbar() {
                 <Link className="plain-text" to={PAGE_URLS.home}>
                     <h1 className="namestyle">سوق</h1>
                 </Link>
-                {user && <span className="namestyle">أهلا {user.username}</span>}
+                {user && <span className="namestyle">أهلا {user.firstName}</span>}
 
                 <div className="menu-toggle">
                     <FontAwesomeIcon
