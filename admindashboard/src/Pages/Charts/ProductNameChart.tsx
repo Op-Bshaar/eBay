@@ -56,17 +56,17 @@ interface NameChartProp
                         labels: Object.keys(productmap),
                         datasets: [
                             {
-                                label: 'Product Distribution',
+                                label: 'عدد البائعين',
                                 data: Object.values(productmap),
                                 backgroundColor: ['#FF6832', '#36A2EB', '#FFCE56'],
-                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                hoverBackgroundColor: ['#FF8C42 ', '#4A90E2', '#FFDD57'],
                             },
                         ],
                     };
 
                     return(
                         <div className="user-container">
-                            <h1>product name chart:</h1>
+                            <h1>عدد السلع في المتجر:</h1>
                                 <div>
                                     <Doughnut data={data}/>
                                     </div>
