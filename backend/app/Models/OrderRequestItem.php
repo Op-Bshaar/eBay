@@ -11,7 +11,7 @@ class OrderRequestItem extends Model
     // The table associated with the model.
     protected $table = 'order_request_items';
     protected $fillable = [
-        'request_id',
+        'order_request_id',
         'product_id',
         'quantity',
         'status',

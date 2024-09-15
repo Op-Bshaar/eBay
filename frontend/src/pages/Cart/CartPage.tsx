@@ -6,12 +6,15 @@ import "./Cart.css";
 import "./AddressPage.css";
 import ErrorView from "../../components/errorMessage/Error";
 import { useCallback, useEffect, useState } from "react";
-import { useCartOperations } from "../../Cart";
+import { CartItem, useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { displayMoney } from "../../constants/Constants";
 import { emptyAddress } from "../../components/AddressInput/Address";
 import AddressInput from "../../components/AddressInput/AddressInput";
+import api from "../../api";
+import { isAxiosError } from "axios";
+import ErrorMessage from "../../components/errorMessage/Error";
 function CartPage() {
     useRequireAuthentication();
     const { cartItems, reloadCart, errorMessage, isCartLoading } = useCart();
@@ -26,7 +29,7 @@ function CartPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (shouldInputAddress) {
-        return <AddressPage/>;
+        return <AddressPage cartItems={cartItems} />;
     }
     const loader = <div className="absolute-center"><div className="loader" /></div>;
     const errorElement = <ErrorView className="absolute-center big-message">{errorMessage}</ErrorView>;
@@ -76,16 +79,56 @@ function CartPage() {
         </div>
     );
 }
-function AddressPage() {
+interface AddressPageProps { cartItems:CartItem[] };
+function AddressPage({ cartItems }: AddressPageProps) {
     const [address, setAddress] = useState(emptyAddress);
     const [isAddressValid, setIsAddressValid] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+    const items = cartItems.map(item => {
+        return {
+            product_id: item.product.id,
+            quantity: item.quantity
+        }
+    })
     const handleOrder = () => {
-
+        setIsLoading(true);
+        setErrorMessage("");
+        api.post('/orders', {
+            items,
+            address,
+        }).then(response => {
+            navigate(`/orders/${response.data.order_id}`);
+        }).catch(error => {
+            let message = "حدث خطأ ما.";
+            if (isAxiosError(error)) {
+                if (error.request && !error.response) {
+                    message = "تعذر الاتصال, تحقق من الشبكة."
+                }
+                // some products are unavailable
+                else if (error.response?.status === 400) {
+                    navigate(PAGE_URLS.cart);
+                }
+            }
+            setErrorMessage(message);
+        }).
+            finally(() => setIsLoading(false));
+    }
+    if (errorMessage) {
+        return (
+            <ErrorMessage className="absolute-center tajawal-extralight center-message center-text">
+                {errorMessage}
+                <button onClick={handleOrder} className="link">أعد المحاولة.</button>
+            </ErrorMessage>
+        );
     }
     return (
         <div className="address-page" >
-            <AddressInput address={address} setAddress={setAddress} isValid={isAddressValid} setIsValid={setIsAddressValid} />
-            <button className="button" onClick={handleOrder} disabled={!isAddressValid }>تأكيد العنوان</button>
-        </div>);
+            <AddressInput address={address} setAddress={setAddress} isValid={isAddressValid} setIsValid={setIsAddressValid} disabled={isLoading} />
+            <button className="button" onClick={handleOrder} disabled={!isAddressValid || isLoading}>تأكيد العنوان</button>
+            {isLoading && <div className="small-loader" />}
+        </div>
+    );
 }
 export default CartPage;

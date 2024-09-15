@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\OrderRequestItem;
 use App\Models\OrderRequest;
+use App\Models\Cart;
 use DB;
 class OrderRequestController extends Controller
 {
@@ -55,7 +56,7 @@ class OrderRequestController extends Controller
             // Create OrderRequestItem for each item
             foreach ($validated['items'] as $item) {
                 OrderRequestItem::create([
-                    'request_id' => $orderRequest->id,
+                    'order_request_id' => $orderRequest->id,
                     'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                 ]);
@@ -65,10 +66,16 @@ class OrderRequestController extends Controller
                 $product->isAvailable = false;
                 $product->save();
             }
+            $user = auth()->user();
+            $cart = Cart::where('user_id', $user->id)->first();
 
+            if ($cart) {
+                 $cart->updateOrCreateCartItems([]); // Clear the cart if it exists
+                 $cart->delete();
+            }
             // Commit the transaction
             DB::commit();
-
+            
             // Return the order ID
             return response()->json(['order_id' => $orderRequest->id], 201);
 
