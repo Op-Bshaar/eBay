@@ -39,6 +39,12 @@ export const menu = [
         url: "/admin/orders",
         icon: "order.svg",
       },
+      {
+        id: 4,
+        title: "الاحصائيات",
+        url: "/admin/statistics",
+        icon: "statistics.svg",
+      },
     ],
   },
   {
