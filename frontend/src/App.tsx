@@ -45,11 +45,11 @@ function App() {
                         <Route path={PAGE_URLS.cart} element= <CartPage/> />
                         <Route path={PAGE_URLS.place_order} element= <OrderPage/> />
                         {/* <Route path="/admin/dashboard" element={<DashBoard />} /> */}
-                        <Route path="/admin/users" element={<Users />} />
+                        {/* <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/settings" element={<Settings />} />
                         <Route path="/admin" element={<DashBoard/>} />
                         <Route path="/admin/products" element={<AdminProducts />} />
-                        <Route path="/admin/orders" element={<AdminOrders />} />
+                        <Route path="/admin/orders" element={<AdminOrders />} /> */}
                         <Route path="/products/:id" element={<ProductsDeatils />} />
                         <Route path="/sell" element={<ProductForm />} />
                     </Routes>
