@@ -79,8 +79,8 @@ function CartPage() {
         </div>
     );
 }
-interface AddressPageProps { cartItems:CartItem[] };
-function AddressPage({ cartItems }: AddressPageProps) {
+function AddressPage() {
+    const { cartItems,reloadCart } = useCart();
     const [address, setAddress] = useState(emptyAddress);
     const [isAddressValid, setIsAddressValid] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -100,7 +100,7 @@ function AddressPage({ cartItems }: AddressPageProps) {
             address,
         }).then(response => {
             navigate(`/orders/${response.data.order_id}`);
-        }).catch(error => {
+        }).then(reloadCart).catch(error => {
             let message = "حدث خطأ ما.";
             if (isAxiosError(error)) {
                 if (error.request && !error.response) {
