@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'price', 'image', 'seller_id'];
+    protected $fillable = ['title', 'description', 'price', 'image', 'seller_id','isAvailable'];
 
     public function seller()
     {
@@ -40,5 +40,11 @@ class Product extends Model
         }
 
          return url('images/' . $value);
+    }
+    protected function casts(): array
+    {
+        return [
+            'isAvailable' => 'bool',
+        ];
     }
 }

@@ -91,18 +91,21 @@ class AuthController extends Controller
     {
         $request->validate([
             'username' => 'required|string|max:255|unique:users,username',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|max:255',
             'phone' => 'required|string|unique:users,phone',
-            'is_admin'=>'boolean'
         ]);
 
         $user = User::create([
             'phone' => $request->phone,
             'username' => $request->username,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin'=>$request->input('is_admin', false)
+            'is_admin'=>false,
         ]);
 
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;

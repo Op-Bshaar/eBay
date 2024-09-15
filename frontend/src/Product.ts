@@ -8,7 +8,8 @@ class Product {
     public image: string
     public seller_id: string;
     public category: Category | null;
-    constructor(id: string, price: string, seller_id: string, title: string, description: string, image: string, category: Category | null = null)
+    public isAvailable: boolean;
+    constructor(id: string, price: string, seller_id: string, title: string, description: string, image: string, isAvailable:boolean, category: Category | null = null)
     {
         this.id = id;
         this.price = price;
@@ -16,6 +17,7 @@ class Product {
         this.title = title;
         this.description= description;
         this.image= image;
+        this.isAvailable = isAvailable;
         this.category = category;
     }
 
@@ -33,6 +35,7 @@ export function readProduct(product_data: any): Product {
         product_data.title,
         product_data.description,
         product_data.image,
+        product_data.isAvailable,
         product_data.category ?? null
     )
 }

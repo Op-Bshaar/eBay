@@ -10,9 +10,9 @@ import api from "../../api";
 import './ProductDetails.css'
 import { isAxiosError } from "axios";
 import { cartContainsItem, useCartOperations } from "../../Cart";
+import { displayMoney } from "../../constants/Constants";
 
 function ProductsDeatils() {
-
     const id = useParams<{ id: string }>().id ?? "";
     const [product, setProduct] = useState<Product | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
@@ -86,17 +86,20 @@ function ProductsDeatils() {
                         style={{ width: "200px" }}
                     />}
                 <p>{product.description}</p>
-                <p>Price: ${product.price}</p>
-                <button
-                    className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
-                    onClick={
-                        isProductInCart
-                            ? () => removeFromCart(product)
-                            : () => addToCart(product)
-                    }
-                >
-                    {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
-                </button>
+                <p>السعر: {displayMoney(product.price)}</p>
+                {
+                    product.isAvailable &&
+                    <button
+                        className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
+                        onClick={
+                            isProductInCart
+                                ? () => removeFromCart(product)
+                                : () => addToCart(product)
+                        }
+                    >
+                        {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
+                    </button>
+                }
             </article>
 
             {isProductInCart && (
@@ -107,6 +110,8 @@ function ProductsDeatils() {
                     </Link>
                 </aside>
             )}
+            {!product.isAvailable &&
+                <p className="error-message">المنتج غير متوفر.</p>}
         </div>
     );
 }

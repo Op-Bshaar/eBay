@@ -58,9 +58,9 @@ function Home() {
 
   const productsView =
     error || isLoading ? (
-      <div className="tajawal-extralight home-message big-message">
+      <div className="home-message big-message">
         {isLoading && <div className="loader" />}
-        {error && <ErrorMessage>معذره حدثت مشكله</ErrorMessage>}
+        {error && <ErrorMessage>معذرة حدثت مشكلة</ErrorMessage>}
       </div>
     ) : (
       <div className="products-container fill-flex">
@@ -69,7 +69,7 @@ function Home() {
             <ProductView key={index} product={product} />
           ))
         ) : (
-          <p>No products available</p>
+          <p>لا توجد منتجات حالياً.</p>
         )}
       </div>
     );

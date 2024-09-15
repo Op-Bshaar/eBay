@@ -23,6 +23,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'phone',
+        'first_name',
+        'last_name',
         'is_admin'
     ];
 
@@ -53,5 +55,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function  isAdmin():bool{
         return $this->is_admin;
+    }
+    public function orderRequests(){
+        return $this->hasMany(OrderRequest::class);
     }
 }
