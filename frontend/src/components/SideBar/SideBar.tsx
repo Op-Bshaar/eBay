@@ -15,7 +15,7 @@ import "./SideBar.css";
 type MenuItem = Required<MenuProps>["items"][number];
 
 interface SideBarProps {
-  categories: { id: number; name: string }[];
+  categories: { id: number; name: any }[];
   onCategorySelect: (categoryId: number) => void;
 }
 
@@ -26,10 +26,10 @@ const SideBar: React.FC<SideBarProps> = ({ categories, onCategorySelect }) => {
   };
 
   const handleMenuClick = (e: { key: string }) => {
-    const categoryId = Number(e.key);
-    if (!isNaN(categoryId)) {
-      onCategorySelect(categoryId);
-    }
+   const categoryName = categories.find(category=>category.id.toString()===e.key)?.name;
+   if(categoryName){
+    onCategorySelect(categoryName);
+   }
   };
 
   const items: MenuItem[] = [

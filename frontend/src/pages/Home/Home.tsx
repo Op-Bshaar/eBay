@@ -13,7 +13,7 @@ import { Category } from "../../Category";
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -46,14 +46,20 @@ function Home() {
     fetchCategories();
   }, []);
 
-  const handleCategoryChange = (categoryId: number) => {
-    console.log(categoryId);
-    setSelectedCategory(categoryId);
+  const handleCategoryChange = (categoryName: any) => {
+    console.log(categoryName);
+    setSelectedCategory(categoryName);
   };
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category?.id === selectedCategory)
+    ? products.filter((product) => {
+      console.log("Product:", product);
+
+      console.log("Selected Category:", selectedCategory);
+      console.log("Product Category ID:", product.category?.id); 
+       return product.category?.name === selectedCategory
+    })
     : products;
 
   const productsView =
