@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderRequestController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
@@ -95,3 +96,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// order request routes
+Route::middleware('auth:sanctum')->post(('/orders'),[OrderRequestController::class, 'placeOrder']);
+Route::middleware('auth:sanctum')->get(('/orders/{order_id}'),[OrderRequestController::class, 'getOrder']);
+Route::middleware('auth:sanctum')->get(('/orders'),[OrderRequestController::class, 'getOrders']);

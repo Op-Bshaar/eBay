@@ -3,18 +3,20 @@ import { useRequireAuthentication } from "../login/LoginRedirect";
 import ProductView from "../../components/ProductView/ProductView";
 import "../../Loader.css";
 import "./Cart.css";
+import "./AddressPage.css";
 import ErrorView from "../../components/errorMessage/Error";
 import { useCallback, useEffect, useState } from "react";
 import { useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { displayMoney } from "../../constants/Constants";
+import { emptyAddress } from "../../components/AddressInput/Address";
+import AddressInput from "../../components/AddressInput/AddressInput";
 function CartPage() {
     useRequireAuthentication();
-    const { cartItems, reloadCart, errorMessage, isCartLoading, isCartSynced, updateCart } = useCart();
+    const { cartItems, reloadCart, errorMessage, isCartLoading } = useCart();
     const [, removeFromCart, clearCart] = useCartOperations();
-    const [isNavigatingToOrder, setIsNavigatingToOrder] = useState(false);
-    const navigate = useNavigate();
+    const [shouldInputAddress, setShouldInputAddress] = useState(false);
     const allProductsAvailable = useCallback(() => cartItems.every(item => item.product.isAvailable),[cartItems]);
     // reload cart on first render.
     useEffect(() => {
@@ -23,23 +25,10 @@ function CartPage() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const loader = <div className="absolute-center"><div className="loader" /></div>;
-    useEffect(() => {
-        if (isNavigatingToOrder && !errorMessage && !isCartLoading && isCartSynced) {
-            navigate(`/${PAGE_URLS.place_order}`);
-        }
-    });
-    if (isNavigatingToOrder) {
-        return (
-            <div className="absolute-center tajawal-extralight">
-                {isCartLoading && loader}
-                {errorMessage &&
-                    <ErrorView className="big-message">{errorMessage}
-                        <button className="link" onClick={updateCart}>أعد المحاولة</button>
-                    </ErrorView>}
-            </div>
-        );
+    if (shouldInputAddress) {
+        return <AddressPage/>;
     }
+    const loader = <div className="absolute-center"><div className="loader" /></div>;
     const errorElement = <ErrorView className="absolute-center big-message">{errorMessage}</ErrorView>;
     const emptyCart =
         <p className="absolute-center empty-cart">
@@ -55,8 +44,7 @@ function CartPage() {
         }
     };
     const handleOrder = () => {
-        setIsNavigatingToOrder(true);
-        updateCart();
+        setShouldInputAddress(true);
     };
     const cart = (
         <div className="cart-page">
@@ -88,5 +76,16 @@ function CartPage() {
         </div>
     );
 }
+function AddressPage() {
+    const [address, setAddress] = useState(emptyAddress);
+    const [isAddressValid, setIsAddressValid] = useState(false);
+    const handleOrder = () => {
 
+    }
+    return (
+        <div className="address-page" >
+            <AddressInput address={address} setAddress={setAddress} isValid={isAddressValid} setIsValid={setIsAddressValid} />
+            <button className="button" onClick={handleOrder} disabled={!isAddressValid }>تأكيد العنوان</button>
+        </div>);
+}
 export default CartPage;

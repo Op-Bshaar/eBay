@@ -3,12 +3,13 @@ import { PAGE_URLS } from "../../constants/URL";
 import { clearUserToken, useIsAuthenticated } from "../../api";
 import { useEffect } from "react";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
+import { redirectAfterLogin } from "../../constants/Constants";
 export function useRedirectAfterLogin() {
     const navigate = useNavigate();
     const redirect = () => {
         // Retrieve the stored location or fallback to the default redirect
-        const loginRedirect = sessionStorage.getItem('redirectAfterLogin') || '/';
-        sessionStorage.removeItem('redirectAfterLogin');
+        const loginRedirect = sessionStorage.getItem(redirectAfterLogin) || '/';
+        sessionStorage.removeItem(redirectAfterLogin);
         navigate(loginRedirect);
     }
     return redirect;
@@ -29,8 +30,21 @@ export function useRequireAuthentication() {
             clearUserToken();
         }
         if (!isAuthenticated) {
-            sessionStorage.setItem('redirectAfterLogin', location.pathname);
+            sessionStorage.setItem(redirectAfterLogin, location.pathname);
             navigate(PAGE_URLS.login);
+        }
+    });
+}
+
+export function useRequireEmailVerification() {
+    useRequireAuthentication();
+    const navigate = useNavigate();
+    const context = useAuthenticationContext();
+    const user = context.user;
+    useEffect(() => {
+        if (!user?.isEmailVerified) {
+            sessionStorage.setItem(redirectAfterLogin, location.pathname);
+            navigate(PAGE_URLS.request_email_verification);
         }
     });
 }

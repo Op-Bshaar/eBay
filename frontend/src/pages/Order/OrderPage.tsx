@@ -1,34 +1,11 @@
-﻿import { useCallback, useEffect, useState } from "react";
-import "../../Loader.css";
-import { emptyAddress } from "../../components/AddressInput/Address";
-import AddressInput from "../../components/AddressInput/AddressInput";
+﻿import "../../Loader.css";
 import { displayMoney } from "../../constants/Constants";
-import { useCart } from "../../context/CartContext";
 import "./OrderPage.css";
-import ErrorMessage from "../../components/errorMessage/Error";
+import { useRequireEmailVerification } from "../login/LoginRedirect";
+import { CartItem } from "../../Cart";
 function OrderPage() {
-    const { cartItems, isCartLoading, isCartSynced, reloadCart,errorMessage } = useCart();
-    const [address, setAddress] = useState(emptyAddress);
-    const [isAddressValid, setIsAddressValid] = useState(false);
-    const total = useCallback(() => cartItems.reduce(
-        (sum, cartItem) => sum + Number(cartItem.product.price),
-        0
-    ), [cartItems]);
-    useEffect(() => {
-        if (!isCartSynced) {
-            reloadCart();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isCartSynced]);
-    if (isCartLoading || !isCartSynced || errorMessage) {
-        return (
-            <div className="absolute-center">
-                {errorMessage ?
-                    <ErrorMessage>{errorMessage}</ErrorMessage> :
-                    <div className="loader" />}
-            </div>
-        );
-    }
+    useRequireEmailVerification();
+    const cartItems: CartItem[] = [];
     const handleOrder = () => {
 
     };
@@ -56,7 +33,7 @@ function OrderPage() {
                     <div className="order-item">
                         <span>المجموع:</span>
                         <span>
-                            {displayMoney(total())}
+                            {displayMoney(0)}
                         </span>
                     </div>
                 </div>
@@ -65,15 +42,11 @@ function OrderPage() {
     );
     return (
         <div className="tajawal-extralight order-page">
-            <div className="address-input-container">
-                <h1>عنوان الشحن:</h1>
-                <AddressInput className="order-address-form" address={address} setAddress={setAddress}
-                    isValid={isAddressValid} setIsValid={setIsAddressValid} />
-            </div>
             {items}
             <div className="center-text">
-                <button onClick={handleOrder} disabled={!isAddressValid}
-                    className="button pay-button">ادفع ( {displayMoney(total())} )</button>
+                <button onClick={handleOrder} className="button pay-button">ادفع
+                    ( {displayMoney(0)} )
+                </button>
             </div>
         </div>
     );
