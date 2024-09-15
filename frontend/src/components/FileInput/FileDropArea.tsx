@@ -41,7 +41,7 @@ function FileDropArea({ file, setFile, allowedFileTypes }: FileDropAreaProps) {
         <div className="image-drop-target" onDragOver={handleDragOver} onDrop={handleDrop}>
             {file && <p>{file.name}</p>}
             {imageURL && <img src={imageURL} />}
-            <p>قم بإفلات الصورة هنا.</p>
+            <p>قم بوضع الصورة هنا.</p>
         </div>
     );
 };

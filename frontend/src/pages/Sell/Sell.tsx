@@ -83,7 +83,7 @@ const ProductForm: React.FC = () => {
             <div>
                 <label className="objective">مواصفات المنتج:</label>
                 <br />
-                <label className="lab">Name</label>
+                <label className="lab">الاسم</label>
                 <input
                     type="text"
                     name="title"
@@ -91,7 +91,7 @@ const ProductForm: React.FC = () => {
                     onChange={handleChange}
                     className="name"
                 />
-                <label className="lab">Description</label>
+                <label className="lab">المواصفات</label>
                 <input
                     type="text"
                     name="description"
@@ -99,7 +99,7 @@ const ProductForm: React.FC = () => {
                     onChange={handleChange}
                     className="description"
                 />
-                <label className="lab">Price</label>
+                <label className="lab">السعر</label>
                 <input
                     type="text"
                     name="price"
@@ -109,7 +109,7 @@ const ProductForm: React.FC = () => {
                     onChange={handleChange}
                     className="price"
                 />
-                <label className="lab">Image</label>
+                <label className="lab">الصوره</label>
                 <input
                     type="file"
                     name="image"

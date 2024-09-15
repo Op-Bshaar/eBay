@@ -15,7 +15,7 @@ import "./SideBar.css";
 type MenuItem = Required<MenuProps>["items"][number];
 
 interface SideBarProps {
-  categories: { id: number; name: any }[];
+  categories: { id: number; name: string }[];
   onCategorySelect: (categoryId: number) => void;
 }
 
@@ -26,10 +26,8 @@ const SideBar: React.FC<SideBarProps> = ({ categories, onCategorySelect }) => {
   };
 
   const handleMenuClick = (e: { key: string }) => {
-   const categoryName = categories.find(category=>category.id.toString()===e.key)?.name;
-   if(categoryName){
-    onCategorySelect(categoryName);
-   }
+    const categoryId = Number(e.key);
+    onCategorySelect(categoryId);
   };
 
   const items: MenuItem[] = [
@@ -52,22 +50,6 @@ const SideBar: React.FC<SideBarProps> = ({ categories, onCategorySelect }) => {
         { key: "12", label: "اي شي" },
       ]}
     ]},
-    // { key: "sub3", label: "ألعاب فيديو", icon: <AppstoreOutlined />, children: [
-    //     { key: "9", label: "اي شي" },
-    //     { key: "10", label: "اي شي" },
-    //     { key: "sub3", label: "قطع", children: [
-    //       { key: "11", label: "اي شي" },
-    //       { key: "12", label: "اي شي" },
-    //     ]}
-    //   ]},
-    //   { key: "sub4", label: "ألعاب فيديو", icon: <AppstoreOutlined />, children: [
-    //     { key: "9", label: "اي شي" },
-    //     { key: "10", label: "اي شي" },
-    //     { key: "sub3", label: "قطع", children: [
-    //       { key: "11", label: "اي شي" },
-    //       { key: "12", label: "اي شي" },
-    //     ]}
-    //   ]},
   ];
 
   return (

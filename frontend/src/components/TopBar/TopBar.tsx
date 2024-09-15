@@ -31,8 +31,8 @@ const HeroItem: React.FC<{ onCategorySelect: (categoryId: number) => void }> = (
     ],
   };
 
-  const handleClick = (categoryName: any) => {
-    onCategorySelect(categoryName);
+  const handleClick = (categoryId: number) => {
+    onCategorySelect(categoryId);
   };
 
   return (

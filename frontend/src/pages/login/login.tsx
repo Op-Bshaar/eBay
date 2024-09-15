@@ -3,9 +3,10 @@ import "./login-form.css";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { useRedirectAfterLogin } from "./LoginRedirect";
-import api, { setToken } from "../../api";
+import api,{setToken} from "../../api";
 import { PAGE_URLS } from "../../constants/URL";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
+
 import { readUser } from "../../User";
 import ErrorView from "../../components/errorMessage/Error";
 
@@ -93,7 +94,7 @@ function Login() {
 
     return (
         <form className="login-form tajawal-extralight" onSubmit={handleSubmit}>
-            <h1>ادخل بيناتك</h1>
+            <h1>ادخل البيانات</h1>
             <div className="login-form-content">
                 <div className="input-group">
                     <label htmlFor="login-method">اختر طريقة الدخول:</label>

@@ -13,7 +13,7 @@ import { Category } from "../../Category";
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,6 +36,7 @@ function Home() {
     const fetchCategories = async () => {
       try {
         const response = await api.get(`/categories`);
+        console.log(response.data);
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -46,20 +47,19 @@ function Home() {
     fetchCategories();
   }, []);
 
-  const handleCategoryChange = (categoryName: any) => {
-    console.log(categoryName);
-    setSelectedCategory(categoryName);
+  const handleCategoryChange = (categoryId: number) => {
+    console.log(categoryId);
+    setSelectedCategory(categoryId);
   };
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-    ? products.filter((product) => {
-      console.log("Product:", product);
+    ? products.filter((product) => 
+      {
+        console.log(product.category?.id);
+        product.category?.id === selectedCategory
 
-      console.log("Selected Category:", selectedCategory);
-      console.log("Product Category ID:", product.category?.id); 
-       return product.category?.name === selectedCategory
-    })
+      })
     : products;
 
   const productsView =
