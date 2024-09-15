@@ -27,9 +27,7 @@ const SideBar: React.FC<SideBarProps> = ({ categories, onCategorySelect }) => {
 
   const handleMenuClick = (e: { key: string }) => {
     const categoryId = Number(e.key);
-    if (!isNaN(categoryId)) {
-      onCategorySelect(categoryId);
-    }
+    onCategorySelect(categoryId);
   };
 
   const items: MenuItem[] = [
@@ -52,22 +50,6 @@ const SideBar: React.FC<SideBarProps> = ({ categories, onCategorySelect }) => {
         { key: "12", label: "اي شي" },
       ]}
     ]},
-    // { key: "sub3", label: "ألعاب فيديو", icon: <AppstoreOutlined />, children: [
-    //     { key: "9", label: "اي شي" },
-    //     { key: "10", label: "اي شي" },
-    //     { key: "sub3", label: "قطع", children: [
-    //       { key: "11", label: "اي شي" },
-    //       { key: "12", label: "اي شي" },
-    //     ]}
-    //   ]},
-    //   { key: "sub4", label: "ألعاب فيديو", icon: <AppstoreOutlined />, children: [
-    //     { key: "9", label: "اي شي" },
-    //     { key: "10", label: "اي شي" },
-    //     { key: "sub3", label: "قطع", children: [
-    //       { key: "11", label: "اي شي" },
-    //       { key: "12", label: "اي شي" },
-    //     ]}
-    //   ]},
   ];
 
   return (

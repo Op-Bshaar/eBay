@@ -9,6 +9,7 @@ use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
@@ -72,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function() {
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/checkout', [CheckoutController::class, 'index']);
     Route::post('/checkout', [CheckoutController::class, 'Checkoutprocess']);
+    Route::post('/payment-notification',[PaymentController::class, 'handleNotification']);
 }); 
 
 //reviews Route

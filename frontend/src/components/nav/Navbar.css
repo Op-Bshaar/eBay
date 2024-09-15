@@ -92,18 +92,19 @@
     display: none;
   }
 
+
   .nav-item {
     display: flex;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 844px) {
   .navbar {
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
     background-color: #6e767e;
-    margin-right: 23.5px;
+
   }
   .namestyle{
     color:white;

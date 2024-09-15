@@ -36,6 +36,7 @@ function Home() {
     const fetchCategories = async () => {
       try {
         const response = await api.get(`/categories`);
+        console.log(response.data);
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -53,7 +54,12 @@ function Home() {
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category?.id === selectedCategory)
+    ? products.filter((product) => 
+      {
+        console.log(product.category?.id);
+        product.category?.id === selectedCategory
+
+      })
     : products;
 
   const productsView =
