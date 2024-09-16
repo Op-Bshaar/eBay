@@ -89,6 +89,8 @@ class PaymentService
             'payer_city' => $this->order_request->city,
             'payer_zip' => $this->order_request->postal_code,
             'term_url_3ds' => route('payment.3ds.callback'),
+            'recurring_init' =>'N',
+            'req_token' => 'N',
         ];
 
         $this->validatePayload();
