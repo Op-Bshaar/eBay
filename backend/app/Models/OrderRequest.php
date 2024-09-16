@@ -20,6 +20,11 @@ class OrderRequest extends Model
         'total_price',
         'paid_amount',
         'status',
+        'country',
+        'city',
+        'district',
+        'street',
+        'postal_code',
     ];
 
     // The attributes that should be cast to native types.
@@ -32,6 +37,10 @@ class OrderRequest extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function items(){
+        return $this->hasMany(OrderRequestItem::class);
     }
 
 }

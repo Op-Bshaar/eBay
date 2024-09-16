@@ -94,6 +94,11 @@ const EditForm: React.FC<{product: Product}> = ({product: initialProduct }) => {
           className="price"
           value={product.price}
         />
+        <input
+          type="text"
+          name="category_id"
+          onChange={handleChange}
+          className="category_id"/>
         <label className="lab">Image</label>
         <img src={product.image}/>
         <input

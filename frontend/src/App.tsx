@@ -7,6 +7,8 @@ import Home from "./pages/Home/Home";
 import AdminProducts from "../../admindashboard/src/Pages/AdminProducts"
 import AdminOrders from "../../admindashboard/src/Pages/AdminOrders"
 import DashBoard from "../../admindashboard/src/Pages/dashboard";
+import AdminChartsMenu from "../../admindashboard/src/Pages/Charts/AdminChartsMenu";
+import ProductNameChart from "../../admindashboard/src/Pages/Charts/ProductNameChart";
 import Users from "../../admindashboard/src/Pages/Users";
 import Settings from "../../admindashboard/src/Pages/Settings";
 import SearchPage from "./pages/Search/Search";
@@ -43,13 +45,15 @@ function App() {
                         <Route path={PAGE_URLS.request_email_verification} element={request_email_verification} />
                         <Route path={PAGE_URLS.invalid_email_verification_link} element={request_email_verification} />
                         <Route path={PAGE_URLS.cart} element= <CartPage/> />
-                        <Route path={PAGE_URLS.place_order} element= <OrderPage/> />
-                        {/* <Route path="/admin/dashboard" element={<DashBoard />} /> */}
-                        {/* <Route path="/admin/users" element={<Users />} />
+                        <Route path={"/orders:id"} element= <OrderPage/> />
+                        <Route path="/admin/dashboard" element={<DashBoard />} /> 
+                        <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/settings" element={<Settings />} />
-                        <Route path="/admin" element={<DashBoard/>} />
+                        <Route path="/admin" element={<DashBoard />} />
                         <Route path="/admin/products" element={<AdminProducts />} />
-                        <Route path="/admin/orders" element={<AdminOrders />} /> */}
+                        <Route path="/admin/orders" element={<AdminOrders />} /> 
+                        <Route path="admin/statistics" element={<AdminChartsMenu/>}/>
+                        <Route path="/admin/statistics/ProductNameChart" element={<ProductNameChart />} />
                         <Route path="/products/:id" element={<ProductsDeatils />} />
                         <Route path="/sell" element={<ProductForm />} />
                     </Routes>

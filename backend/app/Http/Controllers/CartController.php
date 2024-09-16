@@ -22,48 +22,10 @@ class CartController extends Controller
         // Get the authenticated user's cart
         $user = Auth::user();
         $cart = Cart::firstOrCreate(['user_id' => $user->id]);
-
-        // Retrieve the current cart items from the database
-        $existingCartItems = $cart->cartItems->keyBy('product_id'); // Map items by product_id for easy lookup
-
-        // Loop through the products sent by the user in the request
-        foreach ($data['cart'] as $item) {
-            $productId = $item['product_id'];
-            $quantity = $item['quantity'];
-
-            // Check if the product is already in the cart
-            if ($existingCartItems->has($productId)) {
-                // Update the quantity if it already exists
-                $existingCartItems[$productId]->update(['quantity' => $quantity]);
-            } else {
-                // Add a new product to the cart if it's not present
-                $cart->cartItems()->create([
-                    'product_id' => $productId,
-                    'quantity' => $quantity
-                ]);
-            }
-
-            // Remove the product from the collection since it's processed
-            $existingCartItems->forget($productId);
-        }
-
-        // Any remaining items in $existingCartItems are not present in the request,
-        // so we remove them from the cart (deleting them from cart_items table).
-        foreach ($existingCartItems as $cartItem) {
-            $cartItem->delete();
-        }
-         // Reload the cartItems relationship to get the updated cart
-        $cart->refresh();;
-         // Hide unwanted fields in both cartItems and products
-         $cartItems = $cart->cartItems->map(function ($cartItem) {
-            // Hide 'product_id', 'created_at', 'updated_at' for cart item
-             $cartItem->makeHidden(['id','cart_id','product_id', 'created_at', 'updated_at']);
-             // Hide 'created_at', 'updated_at' for product
-             $cartItem->product->makeHidden(['created_at', 'updated_at']);
-        return $cartItem;
-        });
+        $cart->updateOrCreateCartItems($data['cart']);
+        $cartItems = $cart->cartItems()->with('product')->get();
         return response()->json([
-            'cart' => $cart->cartItems, // Return updated cart items
+            'cart' => $cartItems, // Return updated cart items
             'message' => 'Cart updated successfully.',
         ]);
     }
@@ -80,18 +42,8 @@ class CartController extends Controller
                 'message' => 'Cart is empty.'
             ], 200);
         }
-        
-         // Hide unwanted fields in both cartItems and products
-         $cartItems = $cart->cartItems->map(function ($cartItem) {
-            // Hide 'product_id', 'created_at', 'updated_at' for cart item
-             $cartItem->makeHidden(['id','cart_id','product_id', 'created_at', 'updated_at']);
-             // Hide 'created_at', 'updated_at' for product
-             $cartItem->product->makeHidden(['created_at', 'updated_at']);
-
-        return $cartItem;
-        });
         return response()->json([
-            'cart' => $cartItems, // return the cart items
+            'cart' => $cart->cartItems, // return the cart items
             'message' => 'Cart retrieved successfully.'
         ], 200);
     }

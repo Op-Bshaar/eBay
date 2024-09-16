@@ -1,5 +1,12 @@
 ﻿export const currencySymbol = 'ر.س.';
-export const maxAddressLength = 255;
+export const addressMaxLengths = {
+    country: 100,
+    city: 100,
+    district: 100,
+    street: 255,
+    postal_code: 20,
+}
+export const redirectAfterLogin ="redirectAfterLogin";
 export const displayMoney = (amount: string | number) => {
     if (typeof amount === 'number') {
         amount = new Intl.NumberFormat('en-UK', {

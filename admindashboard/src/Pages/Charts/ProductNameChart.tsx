@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import api from "../../../../frontend/src/api";
 import {Doughnut} from 'react-chartjs-2';
-import { User } from "../../../../frontend/src/utils/itemdata";
-import './Users.css'; 
+import { ArcElement,Tooltip,Legend } from "chart.js";
+import { Chart } from "chart.js";
 import  Product from "../../../../frontend/src/Product";
-import ArcElement from "chart.js/auto";
-import { DoughnutController } from "chart.js/auto";
+Chart.register(ArcElement,Legend,Tooltip);
 function ProductNameChart() {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -29,6 +28,7 @@ function ProductNameChart() {
       return <div>{error}</div>;
     }
 
+    return <NameChart products={products}/>
     
 }
 interface NameChartProp
@@ -43,7 +43,7 @@ interface NameChartProp
                         {
                             acc[prod.title]++;
                         }
-                    else{}
+                    else{acc[prod.title] = 1;}
                     
                     return acc},{})
 
@@ -56,17 +56,17 @@ interface NameChartProp
                         labels: Object.keys(productmap),
                         datasets: [
                             {
-                                label: 'Product Distribution',
+                                label: 'عدد البائعين',
                                 data: Object.values(productmap),
-                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
-                                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                                backgroundColor: ['#FF6832', '#36A2EB', '#FFCE56'],
+                                hoverBackgroundColor: ['#FF8C42 ', '#4A90E2', '#FFDD57'],
                             },
                         ],
                     };
 
                     return(
                         <div className="user-container">
-                            <h1>product name chart:</h1>
+                            <h1>عدد السلع في المتجر:</h1>
                                 <div>
                                     <Doughnut data={data}/>
                                     </div>
@@ -76,4 +76,4 @@ interface NameChartProp
                         </div>)
         };
     
-export default NameChart;
+export default ProductNameChart;
