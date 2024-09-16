@@ -28,19 +28,18 @@ function PasswordInput({ passwordRef, passwordLable = "كلمة المرور:" }
 
     return (
         <>
-            <div className="input-group">
+            <div className="input-group1">
                 <label htmlFor="password">{passwordLable}</label>
                 <input
                     onChange={handlePasswordChange}
                     id="password"
                     type="password"
                     placeholder="أدخل كلمة المرور"
-                    minLength={8}
-                    required
+                    minLength={8}                   
                     ref={passwordRef}
                 />
             </div>
-            <div className="input-group">
+            <div className="input-group1">
                 <label htmlFor="confirm-password">تأكيد كلمة المرور:</label>
                 <input
                     onChange={handleConfirmPasswordChange}
@@ -48,7 +47,7 @@ function PasswordInput({ passwordRef, passwordLable = "كلمة المرور:" }
                     id="confirm-password"
                     type="password"
                     placeholder="تأكيد كلمة المرور"
-                    required
+                    
                 />
             </div>
         </>
