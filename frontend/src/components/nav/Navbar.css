@@ -145,12 +145,23 @@
 }
 }
 
+.cart-icon {
+    color: gray;
+}
 @media (any-hover: hover) and (pointer: fine) {
   .search-icon:hover {
     color: #33aaff;
   }
+    .cart-icon:hover {
+        color: #334488;
+    }
+    .nav-link:hover{
+        color:#003366;
+    }
 }
-
+.cart-icon:active {
+    color: #6688ff;
+}
 .search-icon:active {
   color: #004488;
 }
