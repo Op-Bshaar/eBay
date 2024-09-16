@@ -123,11 +123,18 @@ function AddressPage() {
             </ErrorMessage>
         );
     }
+    if (isLoading) {
+        return (
+            <div className="address-page-loader-container">
+                <div className="loader" />
+            </div>
+        );
+    }
     return (
         <div className="address-page" >
             <AddressInput address={address} setAddress={setAddress} isValid={isAddressValid} setIsValid={setIsAddressValid} disabled={isLoading} />
             <button className="button" onClick={handleOrder} disabled={!isAddressValid || isLoading}>تأكيد العنوان</button>
-            {isLoading && <div className="small-loader" />}
+            
         </div>
     );
 }
