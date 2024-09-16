@@ -99,6 +99,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // order request routes
+Route::middleware(['auth:sanctum', 'verified'])->get(('/orders/get-payment-link/{order_id}'),[PaymentController::class, 'getPaymentLink']);
 Route::middleware('auth:sanctum')->post(('/orders'),[OrderRequestController::class, 'placeOrder']);
 Route::middleware('auth:sanctum')->get(('/orders/{order_id}'),[OrderRequestController::class, 'getOrder']);
 Route::middleware('auth:sanctum')->get(('/orders'),[OrderRequestController::class, 'getOrders']);

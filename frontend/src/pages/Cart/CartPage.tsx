@@ -6,7 +6,7 @@ import "./Cart.css";
 import "./AddressPage.css";
 import ErrorView from "../../components/errorMessage/Error";
 import { useCallback, useEffect, useState } from "react";
-import { CartItem, useCartOperations } from "../../Cart";
+import { useCartOperations } from "../../Cart";
 import { PAGE_URLS } from "../../constants/URL";
 import { Link, useNavigate } from "react-router-dom";
 import { displayMoney } from "../../constants/Constants";
@@ -29,7 +29,7 @@ function CartPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (shouldInputAddress) {
-        return <AddressPage cartItems={cartItems} />;
+        return <AddressPage/>;
     }
     const loader = <div className="absolute-center"><div className="loader" /></div>;
     const errorElement = <ErrorView className="absolute-center big-message">{errorMessage}</ErrorView>;

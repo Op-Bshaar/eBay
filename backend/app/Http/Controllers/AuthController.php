@@ -10,6 +10,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendVerificationEmail;
+use Illuminate\Support\Facades\Redirect;
 class AuthController extends Controller
 {
     //
@@ -161,6 +162,12 @@ class AuthController extends Controller
     }
     
     public function requestVerificationEmail (Request $request) {
+        if($request->user()->email_verified_at)
+        {
+            return response()->json([
+                'is_verified' => true,
+                'message' => 'Email already verified.',],200);
+        }
         // Define a unique throttle key, based on the user
         $throttleKey = 'send-verification-email-' . $request->user()->id;
         // Check if the user has a valid email address
@@ -176,7 +183,9 @@ class AuthController extends Controller
             $request->user()->sendEmailVerificationNotification();
             // Apply throttling only if email was successfully sent
             RateLimiter::hit($throttleKey, 60); // 60 seconds for throttling
-            return response()->json(['message' => 'Verification link sent!'
+            return response()->json([
+                'is_verified' => false,
+                'message' => 'Verification link sent!'
         
         ], 200);
         } catch (\Exception $e) {

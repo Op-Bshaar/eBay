@@ -5,6 +5,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Auth\Events\Verified;
 use App\Models\User;
+use App\Http\Controllers\PaymentController;
  
 Route::get('/login', function (Request $request) {
     return Redirect::away(env('FRONT_URL') . '/login');
@@ -33,3 +34,6 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
 Route::get('/', function () {
     return view('welcome');
 });
+// payment
+Route::get('/payment/3ds-callback', [PaymentController::class, 'handle3DSecureCallback'])
+    ->name('payment.3ds.callback');

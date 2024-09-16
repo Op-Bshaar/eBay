@@ -4,13 +4,14 @@ import { useRedirectAfterLogin, useRequireAuthentication } from "./LoginRedirect
 import "./login-form.css";
 import "./EmailVerification.css";
 import { PAGE_URLS } from "../../constants/URL";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api";
 import "../../Loader.css";
 import { isAxiosError } from "axios";
 
 function VerifiyEmail() {
     const redirect = useRedirectAfterLogin();
+    const navigate = useNavigate();
     const _verification_email_sent =
         sessionStorage.getItem("verification_email_sent") === "true";
     const [verification_email_sent, setVerification_email_sent] = useState(
@@ -39,7 +40,10 @@ function VerifiyEmail() {
             setErrorMessage("");
             // Disable the button
             setIsRetryDisabled(true);
-            await api.post("request-verification-email");
+            const response = await api.post("request-verification-email");
+            if (response.data.is_verified) {
+                navigate(PAGE_URLS.email_verified_successfuly);
+            }
             // Re-enable the button after timeout
             setTimeout(() => {
                 setIsRetryDisabled(false);
