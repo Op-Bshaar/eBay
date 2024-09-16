@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Order;
 use App\Mail\PaymentNotification;
@@ -36,7 +35,7 @@ class PaymentController extends Controller
     
         } catch (\Exception $e) {
             // Log and return an error if the payment link generation fails
-            \Log::error('Payment link generation failed: ' . $e->getMessage());
+            Log::error('Payment link generation failed: ' . $e->getMessage());
     
             return response()->json(['message' => 'Unable to generate payment link. Please try again.'], 500);
         }
@@ -72,7 +71,7 @@ class PaymentController extends Controller
         // This is for testing purposes, so you can log or return the request data.
         
         // Log request data for debugging
-        \Log::info('3D-Secure Callback Data: ', $request->all());
+        Log::info('3D-Secure Callback Data: ', $request->all());
 
         // Return a simple response for testing
         return response()->json([

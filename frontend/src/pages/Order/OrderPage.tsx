@@ -121,8 +121,8 @@ function OrderPage() {
             {order && orderItems.length > 1 && (
                 <div className="order-item-container">
                     <div className="order-item">
-                        <span>المجموع:</span>
-                        <span>
+                        <span style={{color:"#81E68C"}}>المجموع:</span>
+                        <span style={{color:"#81E68C"}}>
                             {displayMoney(order.total_price)}
                         </span>
                     </div>
@@ -132,9 +132,11 @@ function OrderPage() {
     );
     const payment = (order && orderItems.length > 0 && order.status === 'pending' &&
         <div>
-            <button onClick={handleOrder} disabled={isLoadingPaymentLink } className="button pay-button">ادفع
-            ( {displayMoney(order.total_price)} )
+            <button onClick={handleOrder} disabled={isLoadingPaymentLink } className="button pay-button">  
+               ادفع عن طريق ادفع باي  
+           
             </button>
+            <img  src = "../../../public/assets/WhatsApp Image 2024-09-16 at 11.49.42 AM.jpeg" />
             {loadingPaymentLinkErrorMessage && 
                 <ErrorMessage>
                     {loadingPaymentLinkErrorMessage}
@@ -142,7 +144,8 @@ function OrderPage() {
             }
             {isLoadingPaymentLink &&
                 <div className= "small-loader"/>}
-            <p>الدفع بواسطة (ادفع باي).</p>
+
+
         </div>
     );
     return (
