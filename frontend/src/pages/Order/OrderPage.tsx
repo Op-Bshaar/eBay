@@ -78,7 +78,7 @@ function OrderPage() {
         return (
             <div className="tajawal-extralight">
             <p>يتم التحويل إلى بوابة الدفع.</p>
-                <div className="loader absolute-center" />
+                <div className="loader" />
             </div>
         );
     }
