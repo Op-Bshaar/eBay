@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Models\OrderRequestItem;
 use App\Models\OrderRequest;
 use App\Models\Cart;
-use illuminate\support\Facades\DB;
+use DB;
 class OrderRequestController extends Controller
 {
     public function placeOrder(Request $request){
