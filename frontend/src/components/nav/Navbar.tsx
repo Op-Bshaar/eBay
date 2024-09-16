@@ -41,7 +41,7 @@ function Navbar() {
                 <Link className="plain-text" to={PAGE_URLS.home}>
                     <h1 className="namestyle">سوق</h1>
                 </Link>
-                <Link className="link" to={PAGE_URLS.home}>طلباتي</Link>
+                <Link className="link" to={PAGE_URLS.order}>طلباتي</Link>
                 <Link aria-label="السلة" to={PAGE_URLS.cart}>
                     <FontAwesomeIcon icon={faShoppingCart} className="cart-icon"/>
                 </Link>
