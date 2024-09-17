@@ -39,3 +39,8 @@
 .side-bar-menue-folded {
     max-width: max(15vw, 100px);
 }
+@media(orientation: portrait){
+    .side-bar{
+        display:none;
+    }
+}
