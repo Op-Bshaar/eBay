@@ -25,6 +25,7 @@ import CartProvider from "./context/cartProvider";
 import CartPage from "./pages/Cart/CartPage";
 import OrderPage from "./pages/Order/OrderPage";
 import GetAllOrder from "./pages/Order/GetAllOrder";
+import AddressInput from "./pages/AddressInput/AddressInput";
 function App() {
     const request_email_verification = <ReloadUser redirectTo={PAGE_URLS.email_verification} />;
     return (
@@ -47,6 +48,7 @@ function App() {
                         <Route path={PAGE_URLS.request_email_verification} element={request_email_verification} />
                         <Route path={PAGE_URLS.invalid_email_verification_link} element={request_email_verification} />
                         <Route path={PAGE_URLS.cart} element= <CartPage/> />
+                        {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
                         <Route path={"/orders/:id"} element= <OrderPage/> />
                         <Route path="/admin/dashboard" element={<DashBoard />} /> 
                         <Route path="/admin/users" element={<Users />} />

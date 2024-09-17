@@ -35,6 +35,7 @@
 
 
 
+
 .cart-buttons-container {
     display: flex;
     flex-direction: row;
@@ -78,3 +79,7 @@
     }
 }
 
+
+button{
+    margin-top: 20px;
+}

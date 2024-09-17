@@ -9,6 +9,7 @@ export const PAGE_URLS = {
     request_email_verification: "/request-email-verification",
     email_verification: "/email-verification",
     update_email: "/update-email",
+    addressInput:"/address-input",
     password: "/password",
     restpassword: "/rest-password",
     reload_user: "/reload-user",

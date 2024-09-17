@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import { useParams } from "react-router-dom";
 import Order from "../../utils/Order";
-import { addressToText } from "../../components/AddressInput/Address";
+import { addressToText } from "../AddressInput/Address";
 import ErrorMessage from "../../components/errorMessage/Error";
 import { isAxiosError } from "axios";
 function OrderPage() {

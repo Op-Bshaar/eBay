@@ -1,0 +1,86 @@
+/* Container for the form */
+.address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 400px;
+    margin: auto;
+    margin-top: 5vh;
+    font-family: 'Tajawal'; /* Apply default font */
+  }
+  
+  /* Label styles */
+  .address-form label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  /* Input fields and select box styling */
+  .address-form input,
+  .address-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+  }
+  
+  /* Placeholder styling */
+  .address-form input::placeholder {
+    color: #999;
+    font-style: italic;
+  }
+  
+  /* Focused state for inputs and select */
+  .address-form input:focus,
+  .address-form select:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+  
+  /* Disabled state for input fields */
+  .address-form input:disabled,
+  .address-form select:disabled {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    color: #6c757d;
+  }
+  
+  /* Styling for postal code input */
+  .postal-code-input {
+    text-align: right;
+    direction: rtl;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  /* Error message for invalid inputs */
+  .address-form input:invalid {
+    border-color: rgb(181, 202, 206);
+  }
+  
+  /* Arabic support: Align RTL content properly */
+  body[dir="rtl"] .address-form {
+    direction: rtl;
+    text-align: right;
+  }
+  
+  body[dir="rtl"] .address-form input,
+  body[dir="rtl"] .address-form select {
+    padding-left: 15px;
+    padding-right: 10px;
+  }
+  
+  body[dir="rtl"] .address-form label {
+    text-align: right;
+  }
+  
