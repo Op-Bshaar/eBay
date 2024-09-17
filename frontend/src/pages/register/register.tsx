@@ -2,12 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import "../register/register.css";
 import { useRef, useState } from "react";
 import axios from "axios";
-import api, { setToken } from "../../api";
-import PasswordInput from "./PasswordInput";
+import api,{setToken} from "../../helpers/api";
+import PasswordInput from "../login/PasswordInput";
 import { PAGE_URLS } from "../../constants/URL";
-import "../../Loader.css";
+import "../../styles/Loader.css";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
-import { readUser } from "../../User";
+import { readUser } from "../../utils/User";
 
 function Register() {
   const navigate = useNavigate();

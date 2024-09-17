@@ -1,7 +1,7 @@
 ﻿import { ReactNode, useEffect, useRef, useState } from "react";
 import { CartContext } from "./CartContext";
-import api, { useIsAuthenticated } from "../api";
-import { CartItem } from "../Cart";
+import api,{useIsAuthenticated} from "../helpers/api";
+import { CartItem } from "../utils/Cart";
 import { isAxiosError } from "axios";
 function CartProvider({ children }: { children: ReactNode }) {
     const [cartItemsState, setCartItemsState] = useState<CartItem[]>([]);

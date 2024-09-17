@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useIsAuthenticated } from "../../api";
+import { useIsAuthenticated } from "../../helpers/api";
 import { useLogout } from "../../context/AuthenticationContext";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { useRef, useState } from "react";

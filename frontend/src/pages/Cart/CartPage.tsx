@@ -1,18 +1,18 @@
 ﻿import { useCart } from "../../context/CartContext";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import ProductView from "../../components/ProductView/ProductView";
-import "../../Loader.css";
+import "../../styles/Loader.css";
 import "./Cart.css";
 import "./AddressPage.css";
 import ErrorView from "../../components/errorMessage/Error";
 import { useCallback, useEffect, useState } from "react";
-import { useCartOperations } from "../../Cart";
+import { useCartOperations } from "../../utils/Cart";
 import { PAGE_URLS } from "../../constants/URL";
 import { Link, useNavigate } from "react-router-dom";
 import { displayMoney } from "../../constants/Constants";
 import { emptyAddress } from "../../components/AddressInput/Address";
 import AddressInput from "../../components/AddressInput/AddressInput";
-import api from "../../api";
+import api from "../../helpers/api";
 import { isAxiosError } from "axios";
 import ErrorMessage from "../../components/errorMessage/Error";
 function CartPage() {

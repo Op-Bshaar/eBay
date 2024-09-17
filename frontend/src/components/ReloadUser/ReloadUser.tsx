@@ -1,13 +1,13 @@
 ﻿import { useNavigate } from "react-router-dom";
-import "../Loader.css"
-import { useRequireAuthentication } from "./login/LoginRedirect";
-import { PAGE_URLS } from "../constants/URL";
-import api from "../api";
+import "../../styles/Loader.css";
+import { useRequireAuthentication } from "../../pages/login/LoginRedirect";
+import { PAGE_URLS } from "../../constants/URL";
+import api from "../../helpers/api";
 import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
-import { useAuthenticationContext } from "../context/AuthenticationContext";
-import { readUser } from "../User";
-import ErrorMessage from "../components/errorMessage/Error";
+import { useAuthenticationContext } from "../../context/AuthenticationContext";
+import { readUser } from "../../utils/User";
+import ErrorMessage from "../errorMessage/Error";
 
 
 /**

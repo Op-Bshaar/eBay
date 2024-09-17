@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import api from "../../api";
+
+import api from "../../helpers/api";
 // import "../../Loader.css";
 // import "./Home.css";
 // import "../ProductsContainer.css";

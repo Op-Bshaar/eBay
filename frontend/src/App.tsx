@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import "./App.css";
+import '../src/styles/App.css'
 import Login from "./pages/login/login";
-import Register from "./pages/login/register";
+import Register from "./pages/register/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
 import AdminProducts from "../../admindashboard/src/Pages/AdminProducts"
@@ -13,12 +13,12 @@ import Users from "../../admindashboard/src/Pages/Users";
 import Settings from "../../admindashboard/src/Pages/Settings";
 import SearchPage from "./pages/Search/Search";
 import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
-import EmailVerification from "./pages/login/EmailVerification";
+import EmailVerification from "./pages/EmailVerification/EmailVerification";
 import { PAGE_URLS } from "./constants/URL";
-import RequestPasswordReset from "./pages/login/password";
+import RequestPasswordReset from "./pages/ForgetPassword/password";
 import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
-import ReloadUser from "./pages/ReloadUser";
-import RestPassword from "./pages/login/restpassword";
+import ReloadUser from "./components/ReloadUser/ReloadUser";
+import RestPassword from "./pages/RestPassword/restpassword";
 import ProductForm from "./pages/Sell/Sell";
 import AuthenticationProvider from "./context/AuthenticationProvider";
 import CartProvider from "./context/cartProvider";

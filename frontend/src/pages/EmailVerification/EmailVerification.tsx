@@ -1,12 +1,12 @@
 ﻿import { ReactNode, useEffect, useState } from "react";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
-import { useRedirectAfterLogin, useRequireAuthentication } from "./LoginRedirect";
-import "./login-form.css";
+import { useRedirectAfterLogin, useRequireAuthentication } from "../login/LoginRedirect";
+import '../login/login-form.css'
 import "./EmailVerification.css";
 import { PAGE_URLS } from "../../constants/URL";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../api";
-import "../../Loader.css";
+import api from "../../helpers/api";
+import "../../styles/Loader.css";
 import { isAxiosError } from "axios";
 
 function VerifiyEmail() {

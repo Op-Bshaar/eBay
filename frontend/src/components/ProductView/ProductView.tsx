@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Product from "../../Product";
+import Product from "../../utils/Product";
 import "./ProductView.css";
 import { displayMoney } from "../../constants/Constants";
 

@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
-import api, { clearUserToken } from "../api";
-import { User } from "../User";
+import api from "../helpers/api";
+import { User } from "../utils/User";
+import { clearUserToken } from "../helpers/api";
 
 
 interface IAuthenticationContext { user: User | null; setUser: (user: User | null) => void; }

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import api from "../../../frontend/src/api";
+import api from "../../../frontend/src/helpers/api";
 import React from "react";
 import { useRequireAuthentication } from "../../../frontend/src/pages/login/LoginRedirect";
 import ProductsDeatils from "../../../frontend/src/pages/ProductsDeatils/productsDeatils"
-import Product from "../../../frontend/src/Product";
+import Product from "../../../frontend/src/utils/Product";
 const EditForm: React.FC<{product: Product}> = ({product: initialProduct }) => {
   useRequireAuthentication();
 

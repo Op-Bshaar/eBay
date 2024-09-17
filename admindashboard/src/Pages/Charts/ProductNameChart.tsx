@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import api from "../../../../frontend/src/api";
+import api from "../../api";
 import {Doughnut} from 'react-chartjs-2';
 import { ArcElement,Tooltip,Legend } from "chart.js";
 import { Chart } from "chart.js";
-import  Product from "../../../../frontend/src/Product";
+import  Product from "../../../../frontend/src/utils/Product";
 Chart.register(ArcElement,Legend,Tooltip);
 function ProductNameChart() {
     const [products, setProducts] = useState<Product[]>([]);

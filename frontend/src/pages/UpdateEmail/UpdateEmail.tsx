@@ -2,11 +2,11 @@
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import "../login/login-form.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";
-import api from "../../api";
+import api from "../../helpers/api";
 import { isAxiosError } from "axios";
 import { PAGE_URLS } from "../../constants/URL";
 import { useNavigate } from "react-router-dom";
-import { readUser } from "../../User";
+import { readUser } from "../../utils/User";
 function UpdateEmail() {
     useRequireAuthentication();
     const { user, setUser } = useAuthenticationContext();

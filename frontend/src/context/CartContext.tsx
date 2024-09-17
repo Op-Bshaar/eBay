@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { CartItem } from "../Cart";
+import { CartItem } from "../utils/Cart";
 interface ICartContext {
     cartItems: CartItem[],
     isCartLoading: boolean,

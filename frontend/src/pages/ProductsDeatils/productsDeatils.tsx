@@ -2,14 +2,14 @@
 import { Link, useParams } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
 import { useCart } from "../../context/CartContext";
-import Product, { readProduct } from "../../Product";
+import Product, { readProduct } from "../../utils/Product";
 import ErrorMessage from "../../components/errorMessage/Error";
-import "../../Loader.css";
+import "../../styles/Loader.css";
 import "../Cart/Cart.css";
-import api from "../../api";
+import api from "../../helpers/api";
 import './ProductDetails.css'
 import { isAxiosError } from "axios";
-import { cartContainsItem, useCartOperations } from "../../Cart";
+import { cartContainsItem, useCartOperations } from "../../utils/Cart";
 import { displayMoney } from "../../constants/Constants";
 
 function ProductsDeatils() {

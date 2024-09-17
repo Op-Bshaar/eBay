@@ -1,4 +1,4 @@
-import { CartItem } from "../Cart";
+import { CartItem } from "./Cart";
 
 interface Order {
     total_price: string;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import api from "../../../frontend/src/api";
+import api from "../api";
 import { User } from "../../../frontend/src/utils/itemdata";
 import './Users.css'; 
 

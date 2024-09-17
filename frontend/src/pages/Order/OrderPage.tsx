@@ -1,9 +1,9 @@
-﻿import "../../Loader.css";
+﻿import "../../styles/Loader.css";
 import { displayMoney } from "../../constants/Constants";
 import "./OrderPage.css";
 import { useRequireEmailVerification } from "../login/LoginRedirect";
 import { useEffect, useState } from "react";
-import api from "../../api";
+import api from "../../helpers/api";
 import { useParams } from "react-router-dom";
 import Order from "../../utils/Order";
 import { addressToText } from "../../components/AddressInput/Address";

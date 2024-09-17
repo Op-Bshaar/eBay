@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import api from "../../api";
+import api from "../../helpers/api";
 import React from "react";
 import "./Sell.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";

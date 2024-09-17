@@ -1,6 +1,6 @@
 import {  useLocation, useNavigate } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
-import { clearUserToken, useIsAuthenticated } from "../../api";
+import { clearUserToken,useIsAuthenticated } from "../../helpers/api";
 import { useEffect } from "react";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { redirectAfterLogin } from "../../constants/Constants";

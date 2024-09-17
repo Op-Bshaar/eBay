@@ -3,11 +3,12 @@ import "./login-form.css";
 import { useRef, useState } from "react";
 import axios from "axios";
 import { useRedirectAfterLogin } from "./LoginRedirect";
-import api,{setToken} from "../../api";
+import api,{setToken} from "../../helpers/api";
+
 import { PAGE_URLS } from "../../constants/URL";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 
-import { readUser } from "../../User";
+import { readUser } from "../../utils/User";
 import ErrorView from "../../components/errorMessage/Error";
 
 function Login() {

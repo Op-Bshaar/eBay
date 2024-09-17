@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import  Product from "../../../frontend/src/Product";
+import  Product from "../../../frontend/src/utils/Product";
 import ProductView from "../../../frontend/src/components/ProductView/ProductView";
 import { Link } from "react-router-dom";
 import SideBar from "../../../frontend/src/components/SideBar/SideBar";
 import TopBar from "../../../frontend/src/components/TopBar/TopBar";
 import Navbar from "../../../frontend/src/components/nav/Navbar"
-import api from "../../../frontend/src/api";
+import api from "../../../frontend/src/helpers/api";
 import EditForm from "./AdminEdit";
 import "./css/AdminProducts.css";
 import Editpopup from "./Editpopup";

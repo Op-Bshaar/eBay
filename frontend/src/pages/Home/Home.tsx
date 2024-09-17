@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import HeroItem from "../../components/TopBar/TopBar";
-import api from "../../api";
-import Product from "../../Product";
+import api from "../../helpers/api";
+import Product from "../../utils/Product";
 import ProductView from "../../components/ProductView/ProductView";
-import "../../Loader.css";
+import "../../styles/Loader.css";
 import "./Home.css";
-import "../ProductsContainer.css";
+import "../../styles/ProductsContainer.css";
 import ErrorMessage from "../../components/errorMessage/Error";
-import { Category } from "../../Category";
+import { Category } from "../../utils/Category";
 
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);

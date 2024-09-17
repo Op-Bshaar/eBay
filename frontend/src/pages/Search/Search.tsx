@@ -1,13 +1,13 @@
 ﻿import { useEffect, useState } from "react";
-import api from "../../api";
+import api from "../../helpers/api";
 import { useLocation } from "react-router-dom";
 import "./SearchPage.css";
-import "../../Loader.css";
+import "../../styles/Loader.css";
 import { isAxiosError } from "axios";
-import Product, { readProduct } from "../../Product";
+import Product, { readProduct } from "../../utils/Product";
 import ProductView from "../../components/ProductView/ProductView";
 import "../../components/ProductView/ProductView.css";
-import "../ProductsContainer.css";
+import "../../styles/ProductsContainer.css";
 import ErrorMessage from "../../components/errorMessage/Error";
 async function load(
   query: string,
