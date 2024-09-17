@@ -98,7 +98,7 @@
   }
 }
 
-@media (max-width: 844px) {
+@media (max-width: 844px) {  
   .navbar {
     flex-direction: column;
     gap: 10px;

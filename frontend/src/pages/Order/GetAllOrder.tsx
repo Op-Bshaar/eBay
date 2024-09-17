@@ -63,7 +63,7 @@ function GetAllOrder() {
 
   return (
     <div className="tajawal-extralight orders-page">
-      <h1>كل الطلبات</h1>
+      <h1 className="all-orders">كل الطلبات</h1>
       {OrderView}
     </div>
   );
