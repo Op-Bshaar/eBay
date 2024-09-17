@@ -60,7 +60,7 @@ function Home() {
 
     const productsView =
         error || isLoading ? (
-            <div className="home-message big-message">
+            <div className="fill-flext home-message big-message">
                 {isLoading && <div className="loader" />}
                 {error && <ErrorMessage>معذرة حدثت مشكلة</ErrorMessage>}
             </div>
