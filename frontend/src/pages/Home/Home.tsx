@@ -52,14 +52,11 @@ function Home() {
         setSelectedCategory(categoryId);
     };
 
-    // Filter products based on the selected category
-    const filteredProducts = selectedCategory
-        ? products.filter((product) => {
-            console.log(product.category?.id);
-            product.category?.id === selectedCategory
+  // Filter products based on the selected category
+  const filteredProducts = selectedCategory
+  ? products.filter((product) => product.category?.id === selectedCategory)
+  : products;
 
-        })
-        : products;
 
     const productsView =
         error || isLoading ? (
