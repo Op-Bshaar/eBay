@@ -25,7 +25,6 @@ import CartProvider from "./context/cartProvider";
 import CartPage from "./pages/Cart/CartPage";
 import OrderPage from "./pages/Order/OrderPage";
 import GetAllOrder from "./pages/Order/GetAllOrder";
-import AddressInput from "./pages/AddressInput/AddressInput";
 function App() {
     const request_email_verification = <ReloadUser redirectTo={PAGE_URLS.email_verification} />;
     return (

@@ -95,10 +95,21 @@
     }
 
 }
-
-
-#login-method{
-    color: blue;
+@media(any-hover:hover) and (pointer:fine) {
+    #login-method:hover {
+        background-color: #ffffff;
+        filter: drop-shadow(1vmin 1vmin 1vmin #00000020);
+    }
+}
+#login-method:focus {
+    background-color: #ffffff;
+    filter: drop-shadow(1vmin 1vmin 1vmin #00000020);
+}
+#login-method {
+    color: #0055ff;
+    background-color: #fcfffa;
+    filter: drop-shadow(1vmin 1vmin 1vmin #00000010);
+    border:none;
     font-size: 1em;
     font-weight: bold;
     font-family: "Tajawal";
