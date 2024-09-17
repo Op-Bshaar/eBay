@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-
 import api from "../../helpers/api";
-// import "../../Loader.css";
-// import "./Home.css";
-// import "../ProductsContainer.css";
+// import "./Loader.css"; // Load styles for loader
+// import "./Orders.css"; // Custom styles for the Orders page
 import ErrorMessage from "../../components/errorMessage/Error";
+
+import "./GetAllOrder.css";
 
 interface IOrder {
   product_id: string;
@@ -31,7 +31,7 @@ function GetAllOrder() {
         setOrder(response.data);
       } catch (error) {
         console.error("Fetch error:", error);
-        setError("An error occurred while fetching products.");
+        setError("An error occurred while fetching orders.");
       } finally {
         setIsLoading(false);
       }
@@ -40,34 +40,33 @@ function GetAllOrder() {
     fetchProducts();
   }, []);
 
-  // Filter products based on the selected category
-
   const OrderView =
     error || isLoading ? (
       <div className="home-message big-message">
-        {isLoading && <div className="loader" />}
+        {isLoading && <div className="loader" />} {/* Loader while loading */}
         {error && <ErrorMessage>معذرة حدثت مشكلة</ErrorMessage>}
       </div>
     ) : (
-      <div className="Orders-container fill-flex">
-        {order.map((ordr) => (
-          <div>
+      <div className="orders-container fill-flex">
+        {order.map((ordr, index) => (
+          <div key={index} className="order-card">
             <h3>{ordr.city}</h3>
-            <h3>{ordr.country}</h3>
-            <h3>{ordr.district}</h3>
-            <h3>{ordr.postal_code}</h3>
-            <h3>{ordr.postal_code}</h3>
-            <h3>{ordr.street}</h3>
-            <h3>{ordr.status}</h3>
+            <p>Country: {ordr.country}</p>
+            <p>District: {ordr.district}</p>
+            <p>Postal Code: {ordr.postal_code}</p>
+            <p>Street: {ordr.street}</p>
+            <p>Status: {ordr.status}</p>
           </div>
         ))}
       </div>
     );
 
-  return <div className="tajawal-extralight">
-    {OrderView}
-    <h1>hhh</h1>
-  </div>;
+  return (
+    <div className="tajawal-extralight orders-page">
+      <h1>كل الطلبات</h1>
+      {OrderView}
+    </div>
+  );
 }
 
 export default GetAllOrder;

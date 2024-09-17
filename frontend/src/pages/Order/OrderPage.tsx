@@ -149,7 +149,7 @@ function OrderPage() {
         {loadingPaymentLinkErrorMessage && (
           <ErrorMessage>{loadingPaymentLinkErrorMessage}</ErrorMessage>
         )}
-            {isLoadingPaymentLink && <div className="small-loader" />}
+        {isLoadingPaymentLink && <div className="small-loader" />}
       </div>
     );
   return (
