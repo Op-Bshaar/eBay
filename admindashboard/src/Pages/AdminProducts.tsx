@@ -9,7 +9,8 @@ import api from "../../../frontend/src/helpers/api";
 import EditForm from "./AdminEdit";
 import "./css/AdminProducts.css";
 import Editpopup from "./Editpopup";
-
+const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 function AdminProducts() {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
@@ -46,6 +47,7 @@ function AdminProducts() {
         Showpopup(false);
       };
     console.log(products);
+    
     return (
       <div
             className="tajawal-extralight"
@@ -53,7 +55,10 @@ function AdminProducts() {
         >
         
             <div style={{ flex: "1" }}>
-                <SideBar />
+            <SideBar
+                        categories={categories}
+                        onCategorySelect={handleCategoryChange}
+                    />
             </div>
             <div style={{ padding: "20px", overflowY: "auto" }}>
                 <TopBar />
