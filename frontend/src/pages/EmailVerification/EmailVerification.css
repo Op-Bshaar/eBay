@@ -6,15 +6,11 @@
   margin: 5vh auto;
 }
 
-.center-text{
-    font-family: "Tajawal";
-    font-weight: bold;
+.center-text {
+  font-family: "Tajawal";
+  font-weight: bold;
 }
 
-.email-verifictation .button {
-  min-width: 15vw;
-  min-height: 6vh;
-}
 .email-verifictation-content {
   width: 75vw;
 }
@@ -22,15 +18,7 @@
   margin: 0.5vh auto;
 }
 .email-verifictation-button-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 100%;
-  flex-wrap: wrap;
-  row-gap: 1vh;
-}
-.email-verifictation-button-container .button {
-  min-width: 10em;
+  margin: 10px;
 }
 
 @media (max-width: 768px) {
@@ -40,11 +28,78 @@
     gap: 10px;
     margin-top: 20px;
   }
-  .email-verifictation .button {
-    min-width: 30%;
-    min-height: 1vh;
+
+  .button2 {
+    margin-top: 4vh;
   }
-  .email-verifictation-button-container .button {
-    min-width: 30%;
+}
+
+.button1,
+.button2 {
+  text-decoration: none;
+  background-color: #a6aca6;
+  color: white;
+  font-family: "Tajawal", sans-serif;
+  font-weight: bold;
+  border-radius: 8px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  text-align: center;
+  font-size: 1em;
+  width: auto;
+  max-width: 80vw;
+}
+.button2{
+  margin-top: 3vh;
+}
+
+.button1:hover,
+.button2:hover {
+  background-color: #8c948c;
+}
+
+.button1:active,
+.button2:active {
+  background-color: #8c948c;
+}
+
+.button1:disabled,
+.button2:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.button1 {
+  background-color: #7b8082;
+}
+
+.button1:hover {
+  background-color: #7b8082;
+}
+
+.button2 {
+  background-color: #7b8082;
+}
+
+.button2:hover {
+  background-color: #7b8082;
+}
+
+@media (max-width: 768px) {
+  .button1,
+  .button2 {
+    min-width: 10vw;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .button1,
+  .button2 {
+    min-width: 10vw;
+    font-size: 0.8em;
   }
 }

@@ -41,10 +41,13 @@ function Navbar() {
                 <Link className="plain-text" to={PAGE_URLS.home}>
                     <h1 className="namestyle">سوق</h1>
                 </Link>
+                <div className="order-cart" style={{display:"flex",gap:"70px"}}>
                 <Link className="link" to={PAGE_URLS.order}>طلباتي</Link>
                 <Link aria-label="السلة" to={PAGE_URLS.cart}>
-                    <FontAwesomeIcon icon={faShoppingCart} className="cart-icon"/>
+                    <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
                 </Link>
+                </div>
+                
                 {user && <span className="namestyle">أهلا {user.username}</span>}
 
                 <div className="menu-toggle">

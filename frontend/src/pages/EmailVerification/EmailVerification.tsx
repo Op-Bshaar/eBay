@@ -112,14 +112,14 @@ function VerifiyEmail() {
                 <div className="email-verifictation-button-container">
                     <button
                         onClick={requestVerificationEmail}
-                        className="button"
+                        className="button1"
                         disabled={isRetryDisabled}
                     >
                         {verification_email_sent
                             ? "إعادة إرسال رابط التفعيل"
                             : "إرسال رابط التفعيل"}
                     </button>
-                    <Link to={PAGE_URLS.update_email} className="button">
+                    <Link to={PAGE_URLS.update_email} className="button2">
                         تغيير البريد الإلكتروني
                     </Link>
                 </div>
