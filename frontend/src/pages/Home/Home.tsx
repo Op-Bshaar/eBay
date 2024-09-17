@@ -11,46 +11,46 @@ import ErrorMessage from "../../components/errorMessage/Error";
 import { Category } from "../../utils/Category";
 
 function Home() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [error, setError] = useState<string>("");
+    const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setError("");
-        setIsLoading(true);
-        const response = await api.get(`/products`);
-        const data = await response.data;
-        setProducts(data);
-      } catch (error) {
-        console.error("Fetch error:", error);
-        setError("An error occurred while fetching products.");
-      } finally {
-        setIsLoading(false);
-      }
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setError("");
+                setIsLoading(true);
+                const response = await api.get(`/products`);
+                const data = await response.data;
+                setProducts(data);
+            } catch (error) {
+                console.error("Fetch error:", error);
+                setError("An error occurred while fetching products.");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        const fetchCategories = async () => {
+            try {
+                const response = await api.get(`/categories`);
+                console.log(response.data);
+                setCategories(response.data);
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        };
+
+        fetchProducts();
+        fetchCategories();
+    }, []);
+
+    const handleCategoryChange = (categoryId: number) => {
+        console.log(categoryId);
+        setSelectedCategory(categoryId);
     };
-
-    const fetchCategories = async () => {
-      try {
-        const response = await api.get(`/categories`);
-        console.log(response.data);
-        setCategories(response.data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchProducts();
-    fetchCategories();
-  }, []);
-
-  const handleCategoryChange = (categoryId: number) => {
-    console.log(categoryId);
-    setSelectedCategory(categoryId);
-  };
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
@@ -58,38 +58,38 @@ function Home() {
   : products;
 
 
-  const productsView =
-    error || isLoading ? (
-      <div className="home-message big-message">
-        {isLoading && <div className="loader" />}
-        {error && <ErrorMessage>معذرة حدثت مشكلة</ErrorMessage>}
-      </div>
-    ) : (
-      <div className="products-container fill-flex">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product, index) => (
-            <ProductView key={index} product={product} />
-          ))
+    const productsView =
+        error || isLoading ? (
+            <div className="fill-flext home-message big-message">
+                {isLoading && <div className="loader" />}
+                {error && <ErrorMessage>معذرة حدثت مشكلة</ErrorMessage>}
+            </div>
         ) : (
-          <p>لا توجد منتجات حالياً.</p>
-        )}
-      </div>
-    );
+            <div className="products-container fill-flex">
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product, index) => (
+                        <ProductView key={index} product={product} />
+                    ))
+                ) : (
+                    <p>لا توجد منتجات حالياً.</p>
+                )}
+            </div>
+        );
 
-  return (
-    <div className="tajawal-extralight">
-      <div className="topbar-container">
-        <HeroItem onCategorySelect={handleCategoryChange} />
-        <div className="sidebar-container">
-          <SideBar
-            categories={categories}
-            onCategorySelect={handleCategoryChange}
-          />
-          {productsView}
+    return (
+        <div className="tajawal-extralight">
+            <div className="topbar-container">
+                <HeroItem onCategorySelect={handleCategoryChange} />
+                <div className="sidebar-container">
+                    <SideBar
+                        categories={categories}
+                        onCategorySelect={handleCategoryChange}
+                    />
+                    {productsView}
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Home;

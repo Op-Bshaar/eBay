@@ -3,29 +3,22 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-between;
+
 }
 .topbar-container{
     box-sizing:border-box;
     width:100%;
+    text-align:center;
 }
 .fill-flex {
     flex: 1;
 }
 
 .home-message {
-    display: flex;
-    box-sizing: border-box;
-    width: 100%;
-    height: 80vh;
-    align-items: center;
-    justify-content: center;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 2vh 4vw;
-    margin: 2vh 0;
-    text-align: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .home-message .error-message {
@@ -33,4 +26,6 @@
     font-size: 1.2em;
     font-weight: bold;
 }
-
+    .home-message .loader {
+        margin-top:5vh;
+    }
