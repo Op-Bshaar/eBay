@@ -9,9 +9,11 @@ import api from "../../../frontend/src/helpers/api";
 import EditForm from "./AdminEdit";
 import "./css/AdminProducts.css";
 import Editpopup from "./Editpopup";
-const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+
+
 function AdminProducts() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [EditIsVisible, Showpopup] = useState(false);
@@ -57,7 +59,7 @@ function AdminProducts() {
             <div style={{ flex: "1" }}>
             <SideBar
                         categories={categories}
-                        onCategorySelect={handleCategoryChange}
+                        // onCategorySelect={handleCategoryChange}
                     />
             </div>
             <div style={{ padding: "20px", overflowY: "auto" }}>
