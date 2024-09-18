@@ -15,6 +15,7 @@ return [
     */
     'edfapay' => [ 
         'payment_url' => env('EDFA_PAY_API_URL'),
+        'status_url' => env('EDFA_PAY_API_STATUS_URL'),
         'key' => env('EDFA_PAY_API_KEY'),
         'secret' => env('EDFA_PAY_API_SECRET'),],
     'postmark' => [

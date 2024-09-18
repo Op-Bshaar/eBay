@@ -35,5 +35,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 // payment
-Route::get('/payment/3ds-callback', [PaymentController::class, 'handle3DSecureCallback'])
+Route::get('/payment/3ds-callback/{order_id}', [PaymentController::class, 'handle3DSecureCallback'])
     ->name('payment.3ds.callback');
