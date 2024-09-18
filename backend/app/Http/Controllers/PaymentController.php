@@ -8,13 +8,12 @@ use App\Models\Order;
 use App\Mail\PaymentNotification;
 use App\Services\PaymentService;
 use App\Models\OrderRequest;
-
+use Illuminate\Support\Facades\Http;
 class PaymentController extends Controller
 {
     
     public function getPaymentLink(Request $request,$order_id)
     {    
-        
         $user = $request->user();
         // Fetch the OrderRequest using the URL parameter $order_id
         $orderRequest = OrderRequest::find($order_id);
@@ -25,10 +24,9 @@ class PaymentController extends Controller
         if ($orderRequest->status !== 'pending') {
             return response()->json(['message' => 'Order request is not pending.'], 400);
         }
-        $paymentService = new PaymentService();
-        $paymentService->setOrderRequest($orderRequest);
         try {
-            $paymentLink = $paymentService->generate($request->ip());
+            $paymentService = new PaymentService($orderRequest);
+            $paymentLink = $paymentService->generateInitiateLink($request->ip());
     
             // Return the payment link in the response
             return response()->json(['payment_link' => $paymentLink], 200);
@@ -65,14 +63,42 @@ class PaymentController extends Controller
 
         return response()->json(['message' => 'Payment notification handled successfully'], 200);
     }
-    public function handle3DSecureCallback(Request $request)
+    private function checkOrderStatus($order_id){
+        $orderRequest = OrderRequest::findOrFail($order_id);
+        if(!$orderRequest->gateway_payment_id)
+        {
+            return ['status' =>$orderRequest->status];
+        }
+        $paymentService = new PaymentService($orderRequest);
+        return $paymentService->getPaymentStatus();
+    }
+    public function getOrderStatus(Request $request){
+        $status_url = env('EDFA_PAY_API_STATUS_URL');
+        $merchant_key = env('EDFA_PAY_API_KEY');
+        $merchant_password = env('EDFA_PAY_API_SECRET');
+        $input = strtoupper(
+            $request->gway_id.
+            $request->order_id.
+            $merchant_password
+        );
+        $hash =sha1(md5($input));
+        $payload = [
+            'merchant_id' => $merchant_key,
+            'order_id' => $request->order_id,
+            'gway_Payment_Id' => $request->gway_id,
+            'hash' => $hash,
+        ];
+        
+        $request = Http::post($status_url, $payload);
+        return $request->json();
+    }
+    public function handle3DSecureCallback(Request $request,$order_id)
     {
         // You can handle the response here, check for success or failure
         // This is for testing purposes, so you can log or return the request data.
         
         // Log request data for debugging
         Log::info('3D-Secure Callback Data: ', $request->all());
-
         // Return a simple response for testing
         return response()->json([
             'message' => '3D-Secure callback received.',

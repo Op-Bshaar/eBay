@@ -11,23 +11,21 @@ class PaymentService
     public OrderRequest $order_request;
     private $currency = 'SAR';   
      private $payer_ip_address;
-     private $api_url;
+     private $initiate_url;
+     private $status_url;
     private $merchant_key;
     private $merchant_password;
     private $description;
-    protected $payload = [];
-    public function __construct()
+    public function __construct(OrderRequest $orderRequest)
     {   
-        $this->api_url = config('services.edfapay.payment_url');
+        $this->initiate_url = config('services.edfapay.payment_url');
+        $this->status_url = config('services.edfapay.status_url');
         $this->merchant_key = config('services.edfapay.key');
         $this->merchant_password = config('services.edfapay.secret');
-    }
-    public function setOrderRequest(OrderRequest $orderRequest)
-    {
         $this->order_request=$orderRequest;
         $this->description=$orderRequest->description(1024);
     }
-    private function validateHashInput(): bool
+    private function validateInitiateHashInput(): bool
     {
         if (
             empty($this->order_request) ||
@@ -41,9 +39,9 @@ class PaymentService
 
         return true;
     }
-    private function generateHash(): string
+    private function generateInitiateHash(): string
     {
-        if (! $this->validateHashInput()) {
+        if (! $this->validateInitiateHashInput()) {
             throw new \Exception('Hash input is not correct or not complete.');
         }
 
@@ -57,21 +55,48 @@ class PaymentService
 
         return sha1(md5($input));
     }
-    private function validatePayload(): void
+    private function validateStatusHashInput(): bool
+    {
+        if (
+            empty($this->order_request) ||
+            empty($this->order_request->gateway_payment_id) ||
+            empty($this->order_request->total_price) ||
+            empty($this->merchant_password)
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+    private function generateStatusHash(): string
+    {
+        if (! $this->validateStatusHashInput()) {
+            throw new \Exception('Hash input is not correct or not complete.');
+        }
+
+        $input = strtoupper(
+            $this->order_request->gateway_payment_id.
+            $this->order_request->total_price.
+            $this->merchant_password
+        );
+
+        return sha1(md5($input));
+    }
+    private function validatePayload($payload): void
     {
 
         // Refactor and add validate rules for each value.
-        foreach ($this->payload as $key => $value) {
+        foreach ($payload as $key => $value) {
             if ($value == '') {
                 throw new \Exception('Missing payload input: '.$key);
             }
         }
     }
-    public function preparePayload($payer_ip)
+    private function getInitiatePayLoad($payer_ip)
     {
         \Log::info('Initiating payment for order_id: ' . $this->order_request->id);
         $user = $this->order_request->user;
-        $this->payload = [
+        $payload = [
             'action' => self::ACTION,
             'edfa_merchant_id' => $this->merchant_key,
             'order_id' => $this->order_request->id,
@@ -83,53 +108,79 @@ class PaymentService
             'payer_email' => $user->email,
             'payer_phone' => $user->phone,
             'payer_ip' => $payer_ip,
-            'hash' => $this->generateHash(),
+            'hash' => $this->generateInitiateHash(),
             'payer_address' => $this->order_request->getAddress(),
             'payer_country' => $this->order_request->country,
             'payer_city' => $this->order_request->city,
             'payer_zip' => $this->order_request->postal_code,
-            'term_url_3ds' => route('payment.3ds.callback'),
+            'term_url_3ds' => route('payment.3ds.callback', ['order_id' => $this->order_request->id]),
             'recurring_init' =>'N',
             'req_token' => 'N',
         ];
-
-        $this->validatePayload();
+        
+        $this->validatePayload($payload);
+        return $payload;
     }
-
-    public function generate($payer_ip): string
+    private function getStatusPayLoad()
     {
-        $this->preparePayload($payer_ip);
+        $payload = [
+            'merchant_id' => $this->merchant_key,
+            'order_id' => $this->order_request->id,
+            'gway_Payment_Id' => $this->order_request->gateway_payment_id,
+            'hash' => $this->generateStatusHash(),
+        ];
 
-        $response = Http::asForm()->post($this->api_url, $this->payload);
+        $this->validatePayload($payload);
+        return $payload;
+    }
+    public function getPaymentStatus(){
+        $payload = $this->getStatusPayLoad();
+        $response = Http::post($this->status_url, $payload);
+
+        if ($response->failed()) {
+            \Log::error('Failed to get payment status', [
+                'response_status' => $response->status(),
+                'response_body' => $response->body(),
+                'payload' => $payload
+            ]);
+            throw new \Exception('Unable to get payment status from the gateway.');
+        }
+
+        $statusData = $response->json();
+        \Log::info('Payment status response', ['statusData' => $statusData]);
+
+        if ($statusData['status'] === 'settled') {
+            $this->order_request->status = 'paid';
+        } else {
+            $this->order_request->status = 'failed';
+        }
+
+        $this->order_request->save();
+
+        return $statusData;
+    }
+    public function generateInitiateLink($payer_ip): string
+    {
+        $this->getInitiatePayLoad($payer_ip);
+        $payload = $this->getInitiatePayLoad($payer_ip);
+        $response = Http::asForm()->post($this->initiate_url, $payload);
         if ($response->failed()) {
             \Log::error('Payment API Error', [
                 'response_status' => $response->status(),
                 'response_body' => $response->body(),
-                'payload' => $this->payload
+                'payload' => $payload
             ]);
         }
         $response->throw(); // This will throw an exception on any failure
 
         $redirectUrl = $response->json('redirect_url');
         $gwayPaymentId = basename($redirectUrl);
-        //$this->order_request->gway_payment_id = $gwayPaymentId;
+        $this->order_request->gateway_payment_id = $gwayPaymentId;
         $this->order_request->save();
-        return $redirectUrl;
-    }
-
-
-    public function handle3DSecureCallback(\Request $request)
-    {
-        // You can handle the response here, check for success or failure
-        // This is for testing purposes, so you can log or return the request data.
-        
-        // Log request data for debugging
-        \Log::info('3D-Secure Callback Data: ', $request->all());
-
-        // Return a simple response for testing
-        return response()->json([
-            'message' => '3D-Secure callback received.',
-            'data' => $request->all(),
+        \Log::info('Payment API Initiation Response', [
+        'response_body' => $response->json(),
+        'response_headers' => $response->headers(),
         ]);
+        return $redirectUrl;
     }
 }
