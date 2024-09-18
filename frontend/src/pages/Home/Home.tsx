@@ -67,8 +67,8 @@ function Home() {
         ) : (
             <div className="products-container fill-flex">
                 {filteredProducts.length > 0 ? (
-                    filteredProducts.map((product, index) => (
-                        <ProductView key={index} product={product} />
+                    filteredProducts.map((product) => (
+                        <ProductView key={product.id} product={product} />
                     ))
                 ) : (
                     <p>لا توجد منتجات حالياً.</p>

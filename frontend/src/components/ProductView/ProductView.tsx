@@ -17,7 +17,7 @@ function ProductView({
     const view = (
         <>
             <h3 className="product-title">{product.title}</h3>
-            {product.image && <img src={product.image} className="product-image" />}
+            {product.image && <img src={product.image} className="product-image" loading="lazy" />}
             <p className="product-price">{displayMoney(product.price)}</p>
             {showGoButton && (
                 <Link to={`/products/${product.id}`} className="button product-view-button">
