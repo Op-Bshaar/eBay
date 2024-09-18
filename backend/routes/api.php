@@ -68,13 +68,6 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
 
-//checkout Route
-
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/checkout', [CheckoutController::class, 'index']);
-    Route::post('/checkout', [CheckoutController::class, 'Checkoutprocess']);
-    Route::post('/payment-notification',[PaymentController::class, 'handleNotification']);
-}); 
 
 //reviews Route
 Route::post('/products/{productId}/review', [ReviewController::class, 'store'])

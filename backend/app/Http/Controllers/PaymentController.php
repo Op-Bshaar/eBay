@@ -41,30 +41,6 @@ class PaymentController extends Controller
         return response()->json(['message' => 'Unable to generate payment link. Please try again.'], 500);
     }
 }
-     public function handleNotification(Request $request)
-     {
-         Log::info('Payment notification received:', $request->all());
-
-         $validatedData = $request->validate([
-             'id' => 'required|string',
-             'status' => 'required|string',
-         ]);
-
-         $id = $validatedData['id'];
-         $status = $validatedData['status'];
-
-         $order = Order::where('id', $id)->first();
-         if ($order) {
-             $order->status = $status;
-             $order->save();
-            
-             // Send an email notification
-             Mail::to('your_contact_email@example.com')
-                 ->send(new PaymentNotification($order, $status));
-         }
-
-        return response()->json(['message' => 'Payment notification handled successfully'], 200);
-    }
     public function handle3DSecureCallback(Request $request,$order_id)
     {
         // You can handle the response here, check for success or failure
