@@ -12,20 +12,35 @@ use Illuminate\Support\Facades\Http;
 class PaymentController extends Controller
 {
     
-    public function getPaymentLink(Request $request,$order_id)
-    {    
-        $user = $request->user();
-        // Fetch the OrderRequest using the URL parameter $order_id
-        $orderRequest = OrderRequest::find($order_id);
-        if (!$orderRequest || $orderRequest->user_id !== $user->id) {
-            return response()->json(['message' => 'Order does not exist.'], 404);
-        }
+    public function getPaymentLink(Request $request, $order_id)
+{
+    $user = $request->user();
+    
+    // Fetch the OrderRequest using the URL parameter $order_id
+    $orderRequest = OrderRequest::find($order_id);
+    if (!$orderRequest || $orderRequest->user_id !== $user->id) {
+        return response()->json(['message' => 'Order does not exist.'], 404);
+    }
 
-        if ($orderRequest->status !== 'pending') {
-            return response()->json(['message' => 'Order request is not pending.'], 400);
-        }
+    if ($orderRequest->status !== 'pending') {
+        return response()->json(['message' => 'Order request is not pending.'], 400);
+    }
 
-     }
+    try {
+        $paymentService = new PaymentService($orderRequest);
+        $paymentLink = $paymentService->generateInitiateLink($request->ip());
+
+        // Return the generated payment link
+        return response()->json(['paymentLink' => $paymentLink], 200);
+    } catch (\Exception $e) {
+        Log::error('Error generating payment link for order ' . $order_id . ': ' . $e->getMessage(), [
+            'exception' => $e,
+            'user_id' => $user->id,
+            'order_id' => $order_id
+        ]);
+        return response()->json(['message' => 'Unable to generate payment link. Please try again.'], 500);
+    }
+}
      public function handleNotification(Request $request)
      {
          Log::info('Payment notification received:', $request->all());
