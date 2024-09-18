@@ -31,7 +31,7 @@ class PaymentController extends Controller
         $paymentLink = $paymentService->generateInitiateLink($request->ip());
 
         // Return the generated payment link
-        return response()->json(['paymentLink' => $paymentLink], 200);
+        return response()->json(['payment_link' => $paymentLink], 200);
     } catch (\Exception $e) {
         Log::error('Error generating payment link for order ' . $order_id . ': ' . $e->getMessage(), [
             'exception' => $e,

@@ -6,22 +6,25 @@ import Product, { readProduct } from "../../utils/Product";
 import ErrorMessage from "../../components/errorMessage/Error";
 import "../../styles/Loader.css";
 import "../Cart/Cart.css";
-import api from "../../helpers/api";
+import api, { useIsAuthenticated } from "../../helpers/api";
 import './ProductDetails.css'
 import { isAxiosError } from "axios";
 import { cartContainsItem, useCartOperations } from "../../utils/Cart";
 import { displayMoney } from "../../constants/Constants";
+import { useRedirectToLogin } from "../login/LoginRedirect";
 
 function ProductsDeatils() {
     const id = useParams<{ id: string }>().id ?? "";
+    const isAthenticated = useIsAuthenticated();
+    const redirectToLogin = useRedirectToLogin();
     const [product, setProduct] = useState<Product | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [isLoadingProduct, setIsLoadingProduct] = useState(false);
     const { cartItems } = useCart();
+    const [addToCart, removeFromCart] = useCartOperations();
     const isProductInCart = product
         ? cartContainsItem(cartItems, product)
         : false;
-    const [addToCart, removeFromCart] = useCartOperations();
     const fetchProduct = async (id: string) => {
         try {
             setErrorMessage("");
@@ -91,10 +94,11 @@ function ProductsDeatils() {
                     product.isAvailable &&
                     <button
                         className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
-                        onClick={
+                        onClick={isAthenticated ?
                             isProductInCart
                                 ? () => removeFromCart(product)
-                                : () => addToCart(product)
+                                : () => addToCart(product) :
+                            redirectToLogin
                         }
                     >
                         {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}

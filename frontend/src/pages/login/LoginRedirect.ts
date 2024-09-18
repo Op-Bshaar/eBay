@@ -35,7 +35,15 @@ export function useRequireAuthentication() {
         }
     });
 }
-
+export function useRedirectToLogin() {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const redirectToLogin = () => {
+        sessionStorage.setItem(redirectAfterLogin, location.pathname);
+        navigate(PAGE_URLS.login);
+    }
+    return redirectToLogin;
+}
 export function useRequireEmailVerification() {
     useRequireAuthentication();
     const navigate = useNavigate();
