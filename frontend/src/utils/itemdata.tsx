@@ -8,7 +8,7 @@ export const itemdata = [
         icon: <FontAwesomeIcon icon={faComputer} style={{ color: "gray" }} />
     },
     {
-        id: 2,
+        id: 43,
         item: "لابتوبات",
         icon: <FontAwesomeIcon icon={faLaptop} style={{ color: "gray" }} />
     },

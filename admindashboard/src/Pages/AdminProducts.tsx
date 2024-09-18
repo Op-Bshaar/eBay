@@ -10,7 +10,10 @@ import EditForm from "./AdminEdit";
 import "./css/AdminProducts.css";
 import Editpopup from "./Editpopup";
 
+
 function AdminProducts() {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [EditIsVisible, Showpopup] = useState(false);
@@ -46,6 +49,7 @@ function AdminProducts() {
         Showpopup(false);
       };
     console.log(products);
+    
     return (
       <div
             className="tajawal-extralight"
@@ -53,7 +57,10 @@ function AdminProducts() {
         >
         
             <div style={{ flex: "1" }}>
-                <SideBar />
+            <SideBar
+                        categories={categories}
+                        // onCategorySelect={handleCategoryChange}
+                    />
             </div>
             <div style={{ padding: "20px", overflowY: "auto" }}>
                 <TopBar />

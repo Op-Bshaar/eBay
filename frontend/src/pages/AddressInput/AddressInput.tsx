@@ -25,6 +25,7 @@ function AddressInput({
   const streetInputRef = useRef<HTMLInputElement>(null);
   const postalCodeRef = useRef<HTMLInputElement>(null);
   const _isValid = formRef.current?.checkValidity() === true;
+
   useEffect(() => {
     if (_isValid !== isValid) {
       setIsValid(_isValid);
@@ -50,65 +51,76 @@ function AddressInput({
   };
   return (
     <form className={`address-form ${className}`} ref={formRef}>
-      <label htmlFor="country">الدولة:</label>
-      <select
-        id="country"
-        name="country"
-        disabled={disabled}
-        onChange={handleChange}
-        ref={countryInputRef}
-        required
-      >
-        <option value="SA">المملكة العربية السعودية</option>
-      </select>
-      <label htmlFor="street">عنوان الشارع:</label>
-      <input
-        id="street"
-        name="street"
-        onChange={handleChange}
-        ref={streetInputRef}
-        disabled={disabled}
-        maxLength={addressMaxLengths.street}
-        placeholder="2929 ريحانة بنت زيد"
-        required
-      />
-      <label htmlFor="district">الحي:</label>
-      <input
-        id="district"
-        name="district"
-        onChange={handleChange}
-        ref={districtInputRef}
-        disabled={disabled}
-        maxLength={addressMaxLengths.district}
-        placeholder="8118 حي العارض"
-        required
-      />
-      <label htmlFor="city">المدينة:</label>
-      <input
-        id="city"
-        name="city"
-        onChange={handleChange}
-        ref={cityInputRef}
-        disabled={disabled}
-        maxLength={addressMaxLengths.city}
-        placeholder="الرياض"
-        required
-      />
-      <label htmlFor="postal-code">الرمز البريدي:</label>
-      <input
-        maxLength={addressMaxLengths.postal_code}
-        className="postal-code-input"
-        autoComplete="postal-code"
-        id="postal-code"
-        pattern="^\d+$"
-        name="postal_code"
-        inputMode="numeric"
-        disabled={disabled}
-        onChange={handleChange}
-        placeholder="13337"
-        ref={postalCodeRef}
-        required
-      />
+      <div className="form-group">
+        <label htmlFor="country">الدولة:</label>
+        <select
+          id="country"
+          name="country"
+          disabled={disabled}
+          onChange={handleChange}
+          ref={countryInputRef}
+          required
+        >
+          <option value="SA">المملكة العربية السعودية</option>
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="street">عنوان الشارع:</label>
+        <input
+          id="street"
+          name="street"
+          onChange={handleChange}
+          ref={streetInputRef}
+          disabled={disabled}
+          maxLength={addressMaxLengths.street}
+          placeholder="2929 ريحانة بنت زيد"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="district">الحي:</label>
+        <input
+          id="district"
+          name="district"
+          onChange={handleChange}
+          ref={districtInputRef}
+          disabled={disabled}
+          maxLength={addressMaxLengths.district}
+          placeholder="8118 حي العارض"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="city">المدينة:</label>
+        <input
+          id="city"
+          name="city"
+          onChange={handleChange}
+          ref={cityInputRef}
+          disabled={disabled}
+          maxLength={addressMaxLengths.city}
+          placeholder="الرياض"
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="postal-code">الرمز البريدي:</label>
+        <input
+          maxLength={addressMaxLengths.postal_code}
+          className="postal-code-input"
+          autoComplete="postal-code"
+          id="postal-code"
+          pattern="^\d+$"
+          name="postal_code"
+          inputMode="numeric"
+          disabled={disabled}
+          onChange={handleChange}
+          placeholder="13337"
+          ref={postalCodeRef}
+          required
+        />
+      </div>
     </form>
   );
 }
