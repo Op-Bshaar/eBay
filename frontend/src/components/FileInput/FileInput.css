@@ -8,8 +8,10 @@
     height: auto;
     width: auto;
 }
+.file-drop-error{
+    margin:0 1vw;
+}
 @media(any-hover:hover) and (pointer:fine) {
-
     .image-view {
         display: none;
     }
