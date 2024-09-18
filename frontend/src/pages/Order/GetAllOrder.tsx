@@ -48,14 +48,19 @@ function GetAllOrder() {
       </div>
     ) : (
       <div className="orders-container fill-flex">
-        {order.map((ordr, index) => (
+        {order.map((order, index) => (
           <div key={index} className="order-card">
-            <h3>{ordr.city}</h3>
-            <p>Country: {ordr.country}</p>
-            <p>District: {ordr.district}</p>
-            <p>Postal Code: {ordr.postal_code}</p>
-            <p>Street: {ordr.street}</p>
-            <p>Status: {ordr.status}</p>
+            <h3>{order.city}</h3>
+            <p>Country: {order.country}</p>
+            <p>District: {order.district}</p>
+            <p>Postal Code: {order.postal_code}</p>
+            <p>Street: {order.street}</p>
+            <p>Status: {order.status}</p>
+            {order.status === "executed"?(
+              <p>تم الدفع بنجاح</p>
+            ):(
+              <p>حاله الطلب:{order.status}</p>
+            )}
           </div>
         ))}
       </div>

@@ -135,7 +135,10 @@ class OrderRequestController extends Controller
         if (!$order) {
             return response()->json(['message' => 'Order not found'], 404);
         }
-
+        
+        if($order->status != "pending" && $order->status !='processing'){
+              return response()->json([['message' => 'Order can not be cancle'], 400]);
+        }
         DB::beginTransaction();
 
         try {
