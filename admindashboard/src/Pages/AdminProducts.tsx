@@ -87,7 +87,7 @@ import EditForm from "./AdminEdit";
                     filteredProducts.map((product, index) => (
                       <div>
                         <ProductView key={index} product={product} />
-                        <button className="editbutton" onClick={()=>handleEditClick(product)}>Edit</button>
+                        <button className="editbutton" onClick={()=>handleEditClick(product)}>تعديل</button>
                         </div>
                         
                     ))
