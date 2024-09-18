@@ -11,9 +11,11 @@ use App\Models\OrderRequestItem;
 use App\Models\OrderRequest;
 use App\Models\Cart;
 use DB;
+
 class OrderRequestController extends Controller
 {
-    public function placeOrder(Request $request){
+    public function placeOrder(Request $request)
+    {
         $validated = $request->validate([
             'items' => 'required|array',
             'items.*.product_id' => 'required|exists:products,id',
@@ -70,15 +72,14 @@ class OrderRequestController extends Controller
             $cart = Cart::where('user_id', $user->id)->first();
 
             if ($cart) {
-                 $cart->updateOrCreateCartItems([]); // Clear the cart if it exists
-                 $cart->delete();
+                $cart->updateOrCreateCartItems([]); // Clear the cart if it exists
+                $cart->delete();
             }
             // Commit the transaction
             DB::commit();
-            
+
             // Return the order ID
             return response()->json(['order_id' => $orderRequest->id], 201);
-
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
             DB::rollBack();
@@ -124,5 +125,37 @@ class OrderRequestController extends Controller
         // Return the list of orders as JSON
         return response()->json($orders, 200);
     }
-}
 
+    public function cancelOrder($order_id)
+    {
+        $user = Auth::user();
+
+        $order = OrderRequest::where('id', $order_id)->where('user_id', $user->id)->with('item.product')->first();
+
+        if (!$order) {
+            return response()->json(['message' => 'Order not found'], 404);
+        }
+
+        DB::beginTransaction();
+
+        try {
+            foreach ($order->items as $item) {
+                $product = item->product;
+                if ($product) {
+                    $product->isAvilable = true;
+                    $product->save();
+                }
+            }
+
+            $order->status = 'cancle';
+            $order->save();
+
+            DB::commit;
+
+            return response()->json(['message' => 'Order has been cancled  sucssfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Order placement failed'], 500);
+        }
+    }
+}
