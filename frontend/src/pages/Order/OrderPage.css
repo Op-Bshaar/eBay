@@ -110,7 +110,6 @@ img {
 .pay-button:disabled {
     background-color: #888888;
 }
-
 @media(any-hover:hover) and (pointer:fine) {
     .pay-button:hover:not(:disabled) {
         background-color: #555555;

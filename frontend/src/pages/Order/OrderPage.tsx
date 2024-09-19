@@ -83,9 +83,9 @@ function OrderPage() {
     };
     if (isNavigating) {
         return (
-            <div className="tajawal-extralight">
+            <div className="tajawal-extralight big-message absolute-center">
                 <p>يتم التحويل إلى بوابة الدفع.</p>
-                <div className="loader" />
+                <div className="loader center-loader" />
             </div>
         );
     }
