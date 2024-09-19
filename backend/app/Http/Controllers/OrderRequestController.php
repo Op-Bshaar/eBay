@@ -94,7 +94,7 @@ class OrderRequestController extends Controller
         // Find the order by ID and ensure it belongs to the authenticated user
         $order = OrderRequest::where('id', $order_id)
             ->where('user_id', $user->id)
-            ->with('items.product') // Optionally load related items and products
+            ->with('items.product')
             ->first();
 
         // If order is not found, return a 404 response
@@ -125,5 +125,24 @@ class OrderRequestController extends Controller
         // Return the list of orders as JSON
         return response()->json($orders, 200);
     }
-
+    public function cancel(Request $request, $order_id)
+    {
+        $user = $request->user();
+        $order = OrderRequest::where('id', $order_id)
+            ->where('user_id', $user->id)
+            ->with('items.product') // Optionally load related items and products
+            ->first();
+        if($order)
+        {
+            if($order->status === 'pending')
+            {
+                $order->cancelOrder();
+                return response()->json(['message' => 'Order cancelled successfully.'],200);
+            }
+            else{
+                return response()->json(['message' => 'Order is not pending, cannot cancel.'],404);
+            }
+        }
+        return response()->json(['message' => 'Order not found.'],404);
+    }
 }
