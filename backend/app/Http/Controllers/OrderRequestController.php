@@ -140,7 +140,7 @@ class OrderRequestController extends Controller
                 return response()->json(['message' => 'Order cancelled successfully.'],200);
             }
             else{
-                return response()->json(['message' => 'Order is not pending, cannot cancel.'],404);
+                return response()->json(['message' => 'Order is not pending, cannot cancel.'],400);
             }
         }
         return response()->json(['message' => 'Order not found.'],404);
