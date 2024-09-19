@@ -55,7 +55,6 @@ function GetAllOrder() {
             <p>District: {order.district}</p>
             <p>Postal Code: {order.postal_code}</p>
             <p>Street: {order.street}</p>
-            <p>Status: {order.status}</p>
             {order.status === "executed"?(
               <p>تم الدفع بنجاح</p>
             ):(
