@@ -137,7 +137,7 @@ function AddressPage() {
                 address,
             })
             .then((response) => {
-                const path = generatePath(PAGE_URLS.place_order, { id:response.data.order_id });
+                const path = generatePath(PAGE_URLS.place_order, { id: response.data.order_id });
                 navigate(path)
             })
             .then(reloadCart)
