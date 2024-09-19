@@ -114,7 +114,7 @@ class OrderRequestController extends Controller
 
         // Retrieve all orders for the user and load the items and associated products
         $orders = OrderRequest::where('user_id', $user->id)
-            ->with('items.product') // Optionally load related items and products
+            ->with('items.product') 
             ->get();
 
         // If no orders found, return an empty array
@@ -126,39 +126,4 @@ class OrderRequestController extends Controller
         return response()->json($orders, 200);
     }
 
-    public function cancelOrder($order_id)
-    {
-        $user = Auth::user();
-
-        $order = OrderRequest::where('id', $order_id)->where('user_id', $user->id)->with('item.product')->first();
-
-        if (!$order) {
-            return response()->json(['message' => 'Order not found'], 404);
-        }
-        
-        if($order->status != "pending" && $order->status !='processing'){
-              return response()->json([['message' => 'Order can not be cancle'], 400]);
-        }
-        DB::beginTransaction();
-
-        try {
-            foreach ($order->items as $item) {
-                $product = item->product;
-                if ($product) {
-                    $product->isAvilable = true;
-                    $product->save();
-                }
-            }
-
-            $order->status = 'cancle';
-            $order->save();
-
-            DB::commit;
-
-            return response()->json(['message' => 'Order has been cancled  sucssfully'], 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['message' => 'Order placement failed'], 500);
-        }
-    }
 }

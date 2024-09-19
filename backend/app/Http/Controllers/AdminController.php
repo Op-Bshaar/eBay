@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Order;
 use App\Models\Product;
 use DB;
 use Carbon\Carbon;
@@ -39,7 +39,7 @@ class AdminController extends Controller
     }
     public function orders(){
         return response()->json([
-            'orderes' => Order::all()
+            'orderes' => OrderRequest::all()
         ]);
     }
     public function ProductAmount()

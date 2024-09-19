@@ -1,4 +1,4 @@
-export interface Address {
+﻿export interface Address {
     country: string;
     city: string;
     district: string;
@@ -12,7 +12,10 @@ export const emptyAddress = {
     street: "",
     postal_code: "",
 }
+const countries: ReadonlyMap<string, string> = new Map([
+    ["SA", "المملكة العربية السعودية"],
+]);
 export function addressToText(address: Address) {
-    return `${address.street}, ${address.district}, ${address.city}, ${address.country}, ${address.postal_code}`;
+    return `${address.street}, ${address.district}, ${address.city}, ${countries.get(address.country)}, ${address.postal_code}`;
 }
 export default Address;

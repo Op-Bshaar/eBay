@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CategoryController;
@@ -47,6 +48,11 @@ Route::get('/products', [ProductController::class, 'index']);
 
 
 
+Route::get('/sellers/products', [SellerController::class, 'getAllSellersProducts']);
+Route::put('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
+Route::delete('/sellers/products/{id}', [SellerController::class, 'deleteProduct']);
+
+
 
 //Route for category 
 Route::get('/categories', [CategoryController::class, 'index']);
@@ -68,13 +74,6 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
 
-//checkout Route
-
-Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/checkout', [CheckoutController::class, 'index']);
-    Route::post('/checkout', [CheckoutController::class, 'Checkoutprocess']);
-    Route::post('/payment-notification',[PaymentController::class, 'handleNotification']);
-}); 
 
 //reviews Route
 Route::post('/products/{productId}/review', [ReviewController::class, 'store'])
@@ -106,6 +105,3 @@ Route::middleware(['auth:sanctum', 'verified'])->get(('/orders/get-payment-link/
 Route::middleware('auth:sanctum')->post(('/orders'),[OrderRequestController::class, 'placeOrder']);
 Route::middleware('auth:sanctum')->get(('/orders/{order_id}'),[OrderRequestController::class, 'getOrder']);
 Route::middleware('auth:sanctum')->get(('/orders'),[OrderRequestController::class, 'getOrders']);
-
-
-Route::get(('/test'),[PaymentController::class, 'getOrderStatus']);

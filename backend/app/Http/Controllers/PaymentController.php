@@ -41,59 +41,6 @@ class PaymentController extends Controller
         return response()->json(['message' => 'Unable to generate payment link. Please try again.'], 500);
     }
 }
-     public function handleNotification(Request $request)
-     {
-         Log::info('Payment notification received:', $request->all());
-
-         $validatedData = $request->validate([
-             'id' => 'required|string',
-             'status' => 'required|string',
-         ]);
-
-         $id = $validatedData['id'];
-         $status = $validatedData['status'];
-
-         $order = Order::where('id', $id)->first();
-         if ($order) {
-             $order->status = $status;
-             $order->save();
-            
-             // Send an email notification
-             Mail::to('your_contact_email@example.com')
-                 ->send(new PaymentNotification($order, $status));
-         }
-
-        return response()->json(['message' => 'Payment notification handled successfully'], 200);
-    }
-    private function checkOrderStatus($order_id){
-        $orderRequest = OrderRequest::findOrFail($order_id);
-        if(!$orderRequest->gateway_payment_id)
-        {
-            return ['status' =>$orderRequest->status];
-        }
-        $paymentService = new PaymentService($orderRequest);
-        return $paymentService->getPaymentStatus();
-    }
-    public function getOrderStatus(Request $request){
-        $status_url = env('EDFA_PAY_API_STATUS_URL');
-        $merchant_key = env('EDFA_PAY_API_KEY');
-        $merchant_password = env('EDFA_PAY_API_SECRET');
-        $input = strtoupper(
-            $request->gway_id.
-            $request->order_id.
-            $merchant_password
-        );
-        $hash =sha1(md5($input));
-        $payload = [
-            'merchant_id' => $merchant_key,
-            'order_id' => $request->order_id,
-            'gway_Payment_Id' => $request->gway_id,
-            'hash' => $hash,
-        ];
-        
-        $request = Http::post($status_url, $payload);
-        return $request->json();
-    }
     public function handle3DSecureCallback(Request $request,$order_id)
     {
         // You can handle the response here, check for success or failure

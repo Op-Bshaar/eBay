@@ -85,7 +85,7 @@ function Navbar() {
                         </button>
                     </form>
 
-                    <Link className="nav-link" to="/sell">
+                    <Link className="nav-link" to={PAGE_URLS.sellers}>
                         البيع في سوق
                     </Link>
                     {isAuthenticated ? (

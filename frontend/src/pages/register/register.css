@@ -1,56 +1,74 @@
 .login-form1 {
-  text-align: center;
-  margin-top: 2vh;
+    text-align: center;
+    margin-top: 2vh;
 }
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 .login-form-content1 {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 30px;
-  flex-direction: column;
-  align-items: center;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  animation: fadeInUp 1s ease-out;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  font-size: 1em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-out;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    font-size: 1em;
 }
 @media (prefers-reduced-motion: reduce) {
-  .login-form-content {
-    animation: none;
-  }
+    .login-form-content1 {
+        animation: none;
+    }
 }
+
 .input-group1 {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+    align-items: start;
+    margin-top: 10px;
+}
 
-  margin-bottom: 15px;
-  align-items: start;
-  margin-top: 10px;
-}
-.input-group1 input{
-    padding: 8px;
+    .input-group1 input:user-invalid {
+        outline: auto;
+        outline-color: #aa0000;
+    }
 
-}
-.input-group1 label {
-  margin-bottom: 5px;
-}
+    .input-group1 input:invalid:focus {
+        outline: auto;
+        outline-color: #ffaa00;
+    }
+
+    .input-group1 input:valid:not(.hide-valid) {
+        outline: auto;
+        outline-color: #006600;
+    }
+
+    .input-group1 input {
+        padding: 8px;
+    }
+
+    .input-group1 label {
+        margin-bottom: 5px;
+    }
 
 /* .submit-button {
     box-sizing:border-box;
@@ -61,6 +79,5 @@
 } */
 
 .submit-button {
-  margin-top: 20px;
+    margin-top: 20px;
 }
-
