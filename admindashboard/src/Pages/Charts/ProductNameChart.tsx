@@ -12,10 +12,10 @@ function ProductNameChart() {
       
       const fetchProducts = async () => {
         try {
-          const response = await api.get(`/admin/products`);
+          const response = await api.get(`admin/statistics/ProductAmount`);
           const data = await response.data;
-          setProducts(data.product);
-          console.log(data.product);
+          setProducts(data);
+          console.log(data);
         } catch (error) {
           console.error("Fetch error:", error);
           setError("An error occurred while fetching products.");
@@ -37,15 +37,7 @@ interface NameChartProp
     };
     const NameChart: React.FC<NameChartProp>=({products})=>
         {
-            const productmap= products.reduce((acc:{[key:string]: number},prod) =>
-                {
-                    if(acc[prod.title])
-                        {
-                            acc[prod.title]++;
-                        }
-                    else{acc[prod.title] = 1;}
-                    
-                    return acc},{})
+            const productmap= products.map(products.apprear)
 
 
 

@@ -45,7 +45,7 @@ class AdminController extends Controller
     public function ProductAmount()
     {
         $ProductAmount =DB::table("products")
-        ->select("title", DB::raw("COUNT(title) as appearances"))
+        ->select("title", DB::raw("COUNT(*) as appearances"))
         ->groupBy("title")
         ->get();
         return response()->json($ProductAmount);
