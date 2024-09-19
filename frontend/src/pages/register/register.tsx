@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../register/register.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import api,{setToken} from "../../helpers/api";
 import PasswordInput from "../login/PasswordInput";
@@ -8,6 +8,7 @@ import { PAGE_URLS } from "../../constants/URL";
 import "../../styles/Loader.css";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { readUser } from "../../utils/User";
+import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 
 function Register() {
     const navigate = useNavigate();
@@ -15,52 +16,32 @@ function Register() {
     const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
     const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-
-    const [fieldErrors, setFieldErrors] = useState({
-        username: "",
-        email: "",
-        password: "",
-        phone: "",
-        first_name: "",
-        last_name: "",
-    });
-
+    const formRef = useRef<HTMLFormElement>(null);
     const usernameRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const phoneRef = useRef<HTMLInputElement>(null);
     const firstNameRef = useRef<HTMLInputElement>(null);
     const lastNameRef = useRef<HTMLInputElement>(null);
-
+    const [triggerValidate, setTriggerValidate] = useState(false);
     const { setUser } = useAuthenticationContext();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!triggerValidate) {
+            setTriggerValidate(true);
+        }
         const username = usernameRef.current?.value || "";
         const email = emailRef.current?.value || "";
         const password = passwordRef.current?.value || "";
         const phone = phoneRef.current?.value || "";
         const first_name = firstNameRef.current?.value || "";
         const last_name = lastNameRef.current?.value || "";
-
-        const errors = {
-            username: username ? "" : "ادخل اسم المستخدم",
-            email: email ? "" : "ادخل بريدك الإلكتروني",
-            password: password ? "" : "ادخل كلمة المرور",
-            phone: phone ? "" : "ادخل رقم الجوال",
-            first_name: first_name ? "" : "ادخل الاسم الأول",
-            last_name: last_name ? "" : "ادخل الاسم الأخير",
-        };
-
-        setFieldErrors(errors);
-
-        const hasErrors = Object.values(errors).some((error) => error !== "");
-        if (hasErrors) {
+        if (!formRef.current || !formRef.current.checkValidity()) {
+            setErrorMessage("تحقق من الإدخال.");
             return;
         }
-
         try {
             setIsLoading(true);
             setErrorMessage(null);
@@ -115,7 +96,7 @@ function Register() {
     };
 
     return (
-        <form className="login-form1 tajawal-extralight" onSubmit={handleSubmit}>
+        <form className="login-form1 tajawal-extralight" ref={formRef} onChange={() => setErrorMessage("") }>
             <h1>ادخل بياناتك</h1>
             <div>
                 <div className="login-form-content1">
@@ -130,16 +111,15 @@ function Register() {
                             onChange={() => {
                                 if (isUsernameTaken) setIsUsernameTaken(false);
                             }}
+                            minLength={2}
+                            maxLength={30}
+                            required
                         />
-                        {fieldErrors.username && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
-                                {fieldErrors.username}
-                            </p>
-                        )}
+                        <InputError input={usernameRef.current} name="اسم المستخدم" triggerValidate={triggerValidate} />
                         {isUsernameTaken && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
+                            <ErrorMessage>
                                 تم استخدام هذا الاسم من قبل!
-                            </p>
+                            </ErrorMessage>
                         )}
                     </div>
 
@@ -150,12 +130,11 @@ function Register() {
                             autoComplete="given-name"
                             placeholder="أدخل الاسم الأول"
                             ref={firstNameRef}
+                            minLength={2}
+                            maxLength={30}
+                            required
                         />
-                        {fieldErrors.first_name && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
-                                {fieldErrors.first_name}
-                            </p>
-                        )}
+                        <InputError input={firstNameRef.current} name="الاسم" triggerValidate={triggerValidate} />
                     </div>
 
                     <div className="input-group1">
@@ -165,12 +144,11 @@ function Register() {
                             autoComplete="family-name"
                             placeholder="أدخل الاسم الأخير"
                             ref={lastNameRef}
+                            minLength={2}
+                            maxLength={30}
+                            required
                         />
-                        {fieldErrors.last_name && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
-                                {fieldErrors.last_name}
-                            </p>
-                        )}
+                        <InputError input={lastNameRef.current} name="الاسم" triggerValidate={triggerValidate} />
                     </div>
 
                     <div className="input-group1">
@@ -184,16 +162,13 @@ function Register() {
                             onChange={() => {
                                 if (isEmailTaken) setIsEmailTaken(false);
                             }}
+                            required
                         />
-                        {fieldErrors.email && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
-                                {fieldErrors.email}
-                            </p>
-                        )}
+                        <InputError input={emailRef.current} name="البريد الإلكتروني" triggerValidate={triggerValidate} />
                         {isEmailTaken && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
+                            <ErrorMessage>
                                 تم استخدام هذا البريد من قبل!
-                            </p>
+                            </ErrorMessage>
                         )}
                     </div>
 
@@ -201,6 +176,7 @@ function Register() {
                         <label htmlFor="phone">رقم الجوال:</label>
                         <input
                             id="phone"
+                            type="tel"
                             pattern="^[\d+]\d*$"
                             autoComplete="tel"
                             placeholder="ادخل رقم جوالك"
@@ -208,36 +184,31 @@ function Register() {
                             onChange={() => {
                                 if (isPhoneTaken) setIsPhoneTaken(false);
                             }}
+                            minLength={10}
+                            maxLength={12}
+                            required
                         />
-                        {fieldErrors.phone && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
-                                {fieldErrors.phone}
-                            </p>
-                        )}
+                        <InputError input={phoneRef.current} name="رقم الجوال" triggerValidate={triggerValidate} />
                         {isPhoneTaken && (
-                            <p role="alert" aria-live="assertive" className="login-sub-error">
+                            <ErrorMessage>
                                 تم استخدام هذا الجوال من قبل!
-                            </p>
+                            </ErrorMessage>
                         )}
                     </div>
 
                     <PasswordInput passwordRef={passwordRef} />
-                    {fieldErrors.password && (
-                        <p role="alert" aria-live="assertive" className="login-sub-error">
-                            {fieldErrors.password}
-                        </p>
-                    )}
-
+                    <InputError name="كلمة المرور" input={passwordRef.current} detailedLengthError  triggerValidate={triggerValidate}/>
                     {errorMessage && (
-                        <p role="alert" aria-live="assertive" className="error-message">
+                        <ErrorMessage>
                             {errorMessage}
-                        </p>
+                        </ErrorMessage>
                     )}
                 </div>
             </div>
 
-            <button
+            <button 
                 type="submit"
+                onClick={handleSubmit }
                 className="button submit-button"
                 disabled={isLoading}
             >
@@ -253,5 +224,82 @@ function Register() {
         </form>
     );
 }
+interface InputErrorProps {
+    input: HTMLInputElement | null;
+    name?: string;
+    required?: boolean;
+    className?: string;
+    detailedLengthError?: boolean;
+    triggerValidate?: boolean;
+}
 
+function InputError({
+    input,
+    name = "هذا الحقل",
+    className = "",
+    detailedLengthError = false,
+    triggerValidate = false,
+}: InputErrorProps) {
+    const [errorMessage, setErrorMessage] = useState("");
+    const [touched, setTouched] = useState<boolean>(false);
+    useEffect(() => {
+        const handleInput = () => {
+            input?.checkValidity();
+            const validity = input?.validity;
+            let error = "";
+            if (validity && !validity.valid) {
+                error = 'خطأ في الإدخال.';
+                if (validity.valueMissing) {
+                    error = `الرجاء إدخال ${name}.`;
+                }
+                else if (validity.patternMismatch || validity.badInput || validity.typeMismatch) {
+                    error = `${name} غير صالح.`;
+                }
+                else if (validity.tooShort) {
+                    if (detailedLengthError) {
+                        error = `${name} لا يقل عن ${input.minLength} حروف.`;
+                    }
+                    else {
+                        error = `${name} غير صالح.`;
+                    }
+                }
+                else if (validity.tooLong) {
+                    if (detailedLengthError) {
+                        error = `${name} لا يزيد عن ${input.maxLength} حروف.`;
+                    }
+                    else {
+                        error = `${name} غير صالح.`;
+                    }
+                }
+            }
+
+            // Update state with error messages
+            setErrorMessage(error);
+        };
+        const handleBlur = () => {
+            if (!touched) {
+                setTouched(true);
+            }
+        };
+        if (input) {
+            handleInput();
+            input.addEventListener('input', handleInput);
+            input.addEventListener('change', handleInput);
+            if (!touched) {
+                input.addEventListener("blur", handleBlur);
+            }
+            // Clean up the event listener
+            return () => {
+                input.removeEventListener('input', handleInput);
+                input.removeEventListener('change', handleInput);
+                if (!touched) {
+                    input.removeEventListener("blur", handleBlur);
+                }
+            };
+        }
+    }, [detailedLengthError, input, name, touched]);
+
+    // Render error messages if any
+    return (touched || triggerValidate) && errorMessage && <ErrorMessage className={className }>{errorMessage}</ErrorMessage>
+}
 export default Register;

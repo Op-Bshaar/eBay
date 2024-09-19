@@ -23,7 +23,7 @@ function FileInputButton({ file, triggerFileInput }: FileInputButtonProps) {
                 اختر صورة المنتج
             </button>
             <p >
-                {file ? `${file.name}` : "لم يتم اختيار صورة."}
+                {file ? `${file.name}` : ""}
             </p>
             {imageURL && <img className="image-view" src={imageURL} />}
         </div>

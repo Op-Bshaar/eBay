@@ -37,6 +37,7 @@ function PasswordInput({ passwordRef, passwordLable = "كلمة المرور:" }
                     placeholder="أدخل كلمة المرور"
                     minLength={8}                   
                     ref={passwordRef}
+                    required
                 />
             </div>
             <div className="input-group1">
@@ -47,7 +48,7 @@ function PasswordInput({ passwordRef, passwordLable = "كلمة المرور:" }
                     id="confirm-password"
                     type="password"
                     placeholder="تأكيد كلمة المرور"
-                    
+                    required
                 />
             </div>
         </>

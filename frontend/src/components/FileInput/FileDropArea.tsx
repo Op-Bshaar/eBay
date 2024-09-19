@@ -1,5 +1,6 @@
 ﻿import { useEffect, useState, DragEvent } from 'react';
 import "./FileInput.css"
+import ErrorMessage from '../../../../admindashboard/src/components/errorMessage/Error';
 interface FileDropAreaProps {
     file: File | null;
     setFile: (imageFile: File | null) => void;
@@ -7,7 +8,7 @@ interface FileDropAreaProps {
 }
 function FileDropArea({ file, setFile, allowedFileTypes }: FileDropAreaProps) {
     const [imageURL, setImageURL] = useState<string | null>(null);
-
+    const [errorMessage, setErrorMessage] = useState("");
     // Update imageURL when a new file is dropped
     useEffect(() => {
         if (file) {
@@ -31,7 +32,7 @@ function FileDropArea({ file, setFile, allowedFileTypes }: FileDropAreaProps) {
             if (allowedFileTypes.includes(droppedFile.type)) {
                 setFile(droppedFile); // Set the dropped file if the type is valid
             } else {
-                alert('Invalid file type. Please upload an image file (jpeg, png, jpg, gif, svg).');
+                setErrorMessage("الملفات غير مدعومة, الرجاء رفع ملف من أحد الأنواع التالية: (jpeg, png, jpg, gif, svg).")
             }
             event.dataTransfer.clearData();
         }
@@ -42,6 +43,7 @@ function FileDropArea({ file, setFile, allowedFileTypes }: FileDropAreaProps) {
             {file && <p>{file.name}</p>}
             {imageURL && <img src={imageURL} />}
             <p>قم بوضع الصورة هنا.</p>
+            {errorMessage  && <ErrorMessage className="file-drop-error">{errorMessage}</ErrorMessage>}
         </div>
     );
 };
