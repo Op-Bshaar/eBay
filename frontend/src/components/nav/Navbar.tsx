@@ -14,26 +14,26 @@ import { useRef, useState } from "react";
 import { PAGE_URLS } from "../../constants/URL";
 
 function Navbar() {
-  const navigate = useNavigate();
-  const { user } = useAuthenticationContext();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const logout = useLogout();
-  const isAuthenticated = useIsAuthenticated();
-  const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const { user } = useAuthenticationContext();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const logout = useLogout();
+    const isAuthenticated = useIsAuthenticated();
+    const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleSearch = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    const query = inputRef.current?.value.trim();
-    if (query) {
-      navigate(`products/search?query=${encodeURIComponent(query)}`);
-    } else {
-      navigate("/");
-    }
-  };
+    const handleSearch = async (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        const query = inputRef.current?.value.trim();
+        if (query) {
+            navigate(`products/search?query=${encodeURIComponent(query)}`);
+        } else {
+            navigate("/");
+        }
+    };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
     return (
         <>
@@ -41,13 +41,13 @@ function Navbar() {
                 <Link className="plain-text" to={PAGE_URLS.home}>
                     <h1 className="namestyle">سوق</h1>
                 </Link>
-                <div className="order-cart" style={{display:"flex",gap:"70px"}}>
-                <Link className="link" to={PAGE_URLS.order}>طلباتي</Link>
-                <Link aria-label="السلة" to={PAGE_URLS.cart}>
-                    <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
-                </Link>
+                <div className="order-cart" style={{ display: "flex", gap: "70px" }}>
+                    <Link className="link" to={PAGE_URLS.all_orders}>طلباتي</Link>
+                    <Link aria-label="السلة" to={PAGE_URLS.cart}>
+                        <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
+                    </Link>
                 </div>
-                
+
                 {user && <span className="namestyle">أهلا {user.username}</span>}
 
                 <div className="menu-toggle">

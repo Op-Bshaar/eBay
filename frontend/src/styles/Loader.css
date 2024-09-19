@@ -23,10 +23,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
+.center-loader{
+    margin-left:auto;
+    margin-right:auto;
+}
 @keyframes mulShdSpin {
-  0%,
-  100% {
+    0%, 100% {
     box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em,
       0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
   }
