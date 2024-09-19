@@ -105,4 +105,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get(('/orders/get-payment-link/
 Route::middleware('auth:sanctum')->post(('/orders'),[OrderRequestController::class, 'placeOrder']);
 Route::middleware('auth:sanctum')->get(('/orders/{order_id}'),[OrderRequestController::class, 'getOrder']);
 Route::middleware('auth:sanctum')->get(('/orders'),[OrderRequestController::class, 'getOrders']);
-Route::middleware('auth:sanctum')->get(('/orders/cancel.{order_id}'),[OrderRequestController::class, 'cancel']);
+Route::middleware('auth:sanctum')->get(('/orders/cancel/{order_id}'),[OrderRequestController::class, 'cancel']);
