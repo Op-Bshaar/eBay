@@ -25,7 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'first_name',
         'last_name',
-        'is_admin'
+        'is_admin',
+        'seller_id'
     ];
 
     /**
@@ -58,5 +59,10 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function orderRequests(){
         return $this->hasMany(OrderRequest::class);
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
     }
 }

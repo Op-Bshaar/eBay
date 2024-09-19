@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\SellerController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CategoryController;
@@ -45,6 +46,11 @@ Route::get('/products/{id}', [ProductController::class, 'show']);
 
 Route::get('/products', [ProductController::class, 'index']);
 
+
+
+Route::get('/sellers/products', [SellerController::class, 'getAllSellersProducts']);
+Route::put('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
+Route::delete('/sellers/products/{id}', [SellerController::class, 'deleteProduct']);
 
 
 
