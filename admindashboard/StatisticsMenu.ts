@@ -10,7 +10,13 @@ export const StatisticsMenu = [
           icon: "ProductNameChart.svg",
         },
         {
-            id:2,
+          id: 2,
+          title: " الاكثر عرضا هذا الاسبوع",
+          url: "/admin/statistics/TopUploadsThisWeek",
+          icon: "ProductNameChart.svg",
+        },
+        {
+            id:3,
             title:"الخروج",
             url: "/admin",
             icon: "Exit.svg"
