@@ -1,13 +1,14 @@
 import { useState, useRef } from "react";
 import api from "../../helpers/api";
 import React from "react";
-import "./Sell.css";
+import'./Sell.css'
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const ProductForm: React.FC = () => {
+  const { id } = useParams<{ id: string }>(); 
   useRequireAuthentication();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,6 +49,8 @@ const ProductForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    console.log('Product being submitted:', product);
+
     const formData = new FormData();
     formData.append("title", product.title);
     formData.append("description", product.description);
@@ -63,7 +66,7 @@ const ProductForm: React.FC = () => {
         setCreatedProductId(null);
       }
       setIsLoading(true);
-      const response = await api.put("/sellers/products/${id}", product, {
+      const response = await api.put(`/sellers/products/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
