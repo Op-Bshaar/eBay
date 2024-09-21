@@ -11,6 +11,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
+use App\Models\OrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
@@ -106,3 +107,10 @@ Route::middleware('auth:sanctum')->post(('/orders'),[OrderRequestController::cla
 Route::middleware('auth:sanctum')->get(('/orders/{order_id}'),[OrderRequestController::class, 'getOrder']);
 Route::middleware('auth:sanctum')->get(('/orders'),[OrderRequestController::class, 'getOrders']);
 Route::middleware('auth:sanctum')->get(('/orders/cancel/{order_id}'),[OrderRequestController::class, 'cancel']);
+
+
+//only for testing
+Route::get('/orders/set-paid/{order_id}',function($order_id){
+    $order = OrderRequest::findOrFail($order_id);
+    $order->setAsPaid();
+});
