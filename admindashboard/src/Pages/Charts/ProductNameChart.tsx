@@ -3,10 +3,10 @@ import api from "../../api";
 import {Doughnut} from 'react-chartjs-2';
 import { ArcElement,Tooltip,Legend } from "chart.js";
 import { Chart } from "chart.js";
-import  Product from "../../../../frontend/src/utils/Product";
+
 Chart.register(ArcElement,Legend,Tooltip);
 function ProductNameChart() {
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<product[]>([]);
     const [error, setError] = useState<string | null>(null);
     useEffect(() => {
       
@@ -28,16 +28,24 @@ function ProductNameChart() {
       return <div>{error}</div>;
     }
 
-    return <NameChart products={products}/>
+    return <NameChart total={products}/>
     
 }
 interface NameChartProp
     {
-        products: Product[];
+        total: product[];
     };
-    const NameChart: React.FC<NameChartProp>=({products})=>
+interface product
+{
+  title: string;
+  appearances: number;
+}
+    const NameChart: React.FC<NameChartProp>=({total})=>
         {
-            const productmap= products.map(products.apprear)
+            const productmap= total.reduce((acc,product)=>{
+              acc[product.title]=product.appearances;
+              return acc;
+            },{} as Record <string,number> )
 
 
 
