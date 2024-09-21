@@ -29,6 +29,8 @@ class PaymentController extends Controller
     try {
         $paymentService = new PaymentService($orderRequest);
         $paymentLink = $paymentService->generateInitiateLink($request->ip());
+        $orderRequest->link_generated_at = now();
+        $orderRequest->save();
 
         // Return the generated payment link
         return response()->json(['payment_link' => $paymentLink], 200);

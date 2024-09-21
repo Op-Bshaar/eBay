@@ -29,17 +29,19 @@ function ProductView({
         </>
     );
     return (
-        <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`}>
-            {clickToGo ? (
-                <Link to={`/products/${product.id}`}
-                    aria-label={`اضغط للذهاب إلى تفاصيل ${product.title}`}
-                    className="wrapper-button">
+        clickToGo ? (
+            <Link to={`/products/${product.id}`}
+                aria-label={`اضغط للذهاب إلى تفاصيل ${product.title}`}
+                className="wrapper-button">
+                <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`} >
                     {view}
-                </Link>
-            ) : (
+                </div >
+            </Link>
+        ) : (
+            <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`}>
                 view
-            )}
-        </div>
+            </div>
+        )
     );
 }
 
