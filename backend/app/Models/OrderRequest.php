@@ -93,7 +93,15 @@ class OrderRequest extends Model
             throw $e;
         }
     }
-    // Define any relationships if needed
+    public function cancelIfOverdue(int $timeLimitInMinutes)
+    {
+        $referenceTime = $this->link_generated_at ?? $this->created_at;
+        // Check if the order status is pending and the creation time exceeds the limit
+        if ($this->status === 'pending' && $referenceTime->diffInMinutes(now()) > $timeLimitInMinutes) {
+            $this->cancelOrder();
+        }
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);
