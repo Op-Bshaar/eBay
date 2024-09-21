@@ -1,20 +1,23 @@
 .product-item {
-    box-sizing:border-box;
-    min-width:max(7.5vw, 75px);
-    max-width:max(15vw,150px);
-    padding:1%;
+    box-sizing: border-box;
+    width: clamp(5em, 15vw, 15em);
+    padding: 1%;
     border-radius: 8px;
     text-align: center;
     border: 1px solid #ddd;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
-    font-size:1em;
+    font-size: 1em;
 }
-.product-view-button{
-    padding:1vh 3vw;
-    margin:1vh auto;
+.product-item * {
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
+    .product-view-button {
+        padding: 1vh 3vw;
+        margin: 1vh auto;
+    }
 .product-item-not-available{
     border-color:#ff0000;
 }
@@ -31,9 +34,8 @@
 
 .product-image {
     max-width: 100%;
-    max-height: max(50vh,75px);
-    width: auto;
-    height: auto;
+    max-height:10vh;
+    object-fit: contain;
 }
 .product-price{
     color: rgb(4, 95, 214);
