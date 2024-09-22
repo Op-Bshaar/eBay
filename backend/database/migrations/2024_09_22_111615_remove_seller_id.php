@@ -6,14 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            //
-            $table->foreign('seller_id')->references('id')->on('sellers')->onDelete('cascade');
+            $table->dropForeign(['seller_id']);
+            // Remove the seller_id column
+            $table->dropColumn('seller_id');
         });
     }
 
@@ -22,8 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-        });
+        
     }
 };

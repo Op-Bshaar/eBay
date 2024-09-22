@@ -106,26 +106,9 @@ class OrderRequest extends Model
         if($this->status !== 'pending'){
             throw new \Exception('Order status is not pending, cannot set as paid.');
         }
-        DB::beginTransaction();
-
-        try {
-            // Set the status to 'paid'
-            $this->status = 'paid';
-            $this->paid_amount = $this->total_price;
-            // Save the updated order status
-            $this->save();
-            
-
-
-            // Commit the transaction
-            DB::commit();
-    
-            return true; // Return true if the operation was successful
-        } catch (\Exception $e) {
-            // Rollback the transaction in case of any error
-            DB::rollBack();
-            throw $e;
-        }
+        $this->status = 'paid';
+        $this->paid_amount = $this->total_price;
+        
     }
 
     public function user()

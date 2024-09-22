@@ -56,10 +56,10 @@
   margin-top: 3vh;
 }
 
-.button1:hover,
-.button2:hover {
-  background-color: #8c948c;
-}
+    .button1:hover:not(:disabled),
+    .button2:hover:not(:disabled) {
+        background-color: #8c948c;
+    }
 
 .button1:active,
 .button2:active {
@@ -76,17 +76,17 @@
   background-color: #7b8082;
 }
 
-.button1:hover {
-  background-color: #7b8082;
-}
+    .button1:hover:not(:disabled) {
+        background-color: #7b8082;
+    }
 
 .button2 {
   background-color: #7b8082;
 }
 
-.button2:hover {
-  background-color: #7b8082;
-}
+    .button2:hover:not(:disabled) {
+        background-color: #7b8082;
+    }
 
 @media (max-width: 768px) {
   .button1,
@@ -97,9 +97,9 @@
 }
 
 @media (max-width: 480px) {
-  .button1,
-  .button2 {
-    min-width: 10vw;
-    font-size: 0.8em;
-  }
+    .button1,
+    .button2 {
+        min-width: 10vw;
+        font-size: 0.8em;
+    }
 }

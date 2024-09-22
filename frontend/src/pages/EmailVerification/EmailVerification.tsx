@@ -119,9 +119,10 @@ function VerifiyEmail() {
                             ? "إعادة إرسال رابط التفعيل"
                             : "إرسال رابط التفعيل"}
                     </button>
-                    <Link to={PAGE_URLS.update_email} className="button2">
+                    <button className="button2" disabled={isRetryDisabled}
+                        onClick={() => navigate(PAGE_URLS.update_email)}>
                         تغيير البريد الإلكتروني
-                    </Link>
+                    </button>
                 </div>
             </>
         );
