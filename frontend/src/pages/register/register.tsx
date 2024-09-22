@@ -16,7 +16,7 @@ function Register() {
     const navigate = useNavigate();
     const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
     const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
-    const [phonevalue,SetValue]= useState<E164Number|undefined>();
+    const [phonevalue, SetValue] = useState<E164Number | undefined>();
     const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -29,10 +29,6 @@ function Register() {
     const lastNameRef = useRef<HTMLInputElement>(null);
     const [triggerValidate, setTriggerValidate] = useState(false);
     const { setUser } = useAuthenticationContext();
-    const handlePhoneChange= (value: E164Number|undefined)=>
-    {
-        SetValue(value);
-    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!triggerValidate) {
@@ -102,7 +98,7 @@ function Register() {
     };
 
     return (
-        <form className="login-form1 tajawal-extralight" ref={formRef} onChange={() => setErrorMessage("") }>
+        <form className="login-form1 tajawal-extralight" ref={formRef} onChange={() => setErrorMessage("")}>
             <h1>ادخل بياناتك</h1>
             <div>
                 <div className="login-form-content1">
@@ -181,31 +177,20 @@ function Register() {
                     <div className="input-group1">
                         <label htmlFor="phone">رقم الجوال:</label>
                         <Input
-                        id="phone"
-                        type="tel"
-                        placeholder="ادخل رقم جوالك"
-                        country="SA" 
-                        withCountryCallingCode
-                        value={phonevalue} 
-                        international 
-                        ref={phoneRef}
-                        required
-                        onChange={() => {
-                            if (isPhoneTaken) setIsPhoneTaken(false);
-                            handlePhoneChange;
-                        }}/>
-                        {/* <input
-                            
-                            
-                            pattern="^[\d+]\d*$"
-                            autoComplete="tel"
-                            
-                            
-                            
-                            minLength={10}
-                            maxLength={12}
-                            
-                        /> */}
+                            id="phone"
+                            type="tel"
+                            placeholder="ادخل رقم جوالك"
+                            country="SA"
+                            withCountryCallingCode
+                            value={phonevalue}
+                            international
+                            ref={phoneRef}
+                            required
+                            onChange={(e) => {
+                                if (isPhoneTaken)
+                                    setIsPhoneTaken(false);
+                                SetValue(e);
+                            }} />
                         <InputError input={phoneRef.current} name="رقم الجوال" triggerValidate={triggerValidate} />
                         {isPhoneTaken && (
                             <ErrorMessage>
@@ -215,7 +200,7 @@ function Register() {
                     </div>
 
                     <PasswordInput passwordRef={passwordRef} />
-                    <InputError name="كلمة المرور" input={passwordRef.current} detailedLengthError  triggerValidate={triggerValidate}/>
+                    <InputError name="كلمة المرور" input={passwordRef.current} detailedLengthError triggerValidate={triggerValidate} />
                     {errorMessage && (
                         <ErrorMessage>
                             {errorMessage}
@@ -224,9 +209,9 @@ function Register() {
                 </div>
             </div>
 
-            <button 
+            <button
                 type="submit"
-                onClick={handleSubmit }
+                onClick={handleSubmit}
                 className="button submit-button"
                 disabled={isLoading}
             >
