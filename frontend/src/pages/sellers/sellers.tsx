@@ -50,10 +50,10 @@ const Sellers: React.FC = () => {
       <div>
         {products.map((seller) => (
           <div key={seller.id}>
-            <h3>Seller: {seller.name}</h3>
+            <h3>Seller: {seller.title}</h3>
             {seller.products.map((product: any) => (
               <div key={product.id}>
-                <p>Product Name: {product.name}</p>
+                <p>Product Name: {product.title}</p>
                 <p>Price: {product.price}</p>
                 <button onClick={() => handleEditProduct(product.id)}>Edit</button>
                 <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>

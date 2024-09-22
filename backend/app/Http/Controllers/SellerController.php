@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Seller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
 {
@@ -14,6 +15,43 @@ class SellerController extends Controller
     {
         $sellers = Seller::with('products')->get();
         return response()->json($sellers);
+    }
+
+    public function addProducts(Request $request)
+    {
+        
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+  
+        if($request->hasFile('image')){
+        
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+      
+            $image->move(public_path('images'), $imageName);
+    
+       
+            $product = Product::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price,
+                'image' => $imageName, 
+                'seller_id' => Auth::id(),
+            ]);
+    
+
+            return response()->json($product, 201);
+        } else {
+   
+            return response()->json(['error' => 'Image upload failed'], 400);
+        }
+
+
     }
 
     public function updateProduct(Request $request, $id)

@@ -49,6 +49,7 @@ Route::get('/products', [ProductController::class, 'index']);
 
 
 Route::get('/sellers/products', [SellerController::class, 'getAllSellersProducts']);
+Route::post('/sellers/products', [SellerController::class, 'addProducts']);
 Route::put('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
 Route::delete('/sellers/products/{id}', [SellerController::class, 'deleteProduct']);
 
