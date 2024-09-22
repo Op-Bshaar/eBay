@@ -9,11 +9,14 @@ import "../../styles/Loader.css";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { readUser } from "../../utils/User";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
+import Input from 'react-phone-number-input/input'
+import { E164Number } from "libphonenumber-js"; 
 
 function Register() {
     const navigate = useNavigate();
     const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
     const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
+    const [phonevalue,SetValue]= useState<E164Number|undefined>();
     const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +29,10 @@ function Register() {
     const lastNameRef = useRef<HTMLInputElement>(null);
     const [triggerValidate, setTriggerValidate] = useState(false);
     const { setUser } = useAuthenticationContext();
-
+    const handlePhoneChange= (value: E164Number|undefined)=>
+    {
+        SetValue(value);
+    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!triggerValidate) {
@@ -174,20 +180,32 @@ function Register() {
 
                     <div className="input-group1">
                         <label htmlFor="phone">رقم الجوال:</label>
-                        <input
-                            id="phone"
-                            type="tel"
+                        <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="ادخل رقم جوالك"
+                        country="SA" 
+                        withCountryCallingCode
+                        value={phonevalue} 
+                        international 
+                        ref={phoneRef}
+                        required
+                        onChange={() => {
+                            if (isPhoneTaken) setIsPhoneTaken(false);
+                            handlePhoneChange;
+                        }}/>
+                        {/* <input
+                            
+                            
                             pattern="^[\d+]\d*$"
                             autoComplete="tel"
-                            placeholder="ادخل رقم جوالك"
-                            ref={phoneRef}
-                            onChange={() => {
-                                if (isPhoneTaken) setIsPhoneTaken(false);
-                            }}
+                            
+                            
+                            
                             minLength={10}
                             maxLength={12}
-                            required
-                        />
+                            
+                        /> */}
                         <InputError input={phoneRef.current} name="رقم الجوال" triggerValidate={triggerValidate} />
                         {isPhoneTaken && (
                             <ErrorMessage>
