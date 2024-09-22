@@ -11,7 +11,7 @@ import { readUser } from "../../utils/User";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 import Input from 'react-phone-number-input/input'
 import { E164Number } from "libphonenumber-js"; 
-
+import { isValidPhoneNumber } from 'libphonenumber-js';
 function Register() {
     const navigate = useNavigate();
     const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
