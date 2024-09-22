@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Routing\Middleware\Middleware;
@@ -36,7 +37,15 @@ class ProductController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_id' => 'nullable|exists:categories,id'
         ]);
-  
+        $user = $request->user();
+        $seller = $user->seller;
+        if(!$seller)
+        {
+            $seller = Seller::create([
+                'user_id'=> $request->user->id,
+            ]);
+            $seller->save();
+        }
         if($request->hasFile('image')){
         
             $image = $request->file('image');
@@ -52,7 +61,7 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'image' => $imageName, 
                 'category_id' => $request->category_id,
-                'seller_id' => Auth::id(),
+                'seller_id' => $seller->id,
             ]);
     
 

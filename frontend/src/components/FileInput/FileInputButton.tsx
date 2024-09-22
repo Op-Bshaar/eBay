@@ -1,10 +1,11 @@
-﻿import { useEffect, useState } from 'react';
+﻿import { ReactNode, useEffect, useState } from 'react';
 import "./FileInput.css"
 interface FileInputButtonProps {
+    children: ReactNode;
     file: File | null;
     triggerFileInput: () => void;
 }
-function FileInputButton({ file, triggerFileInput }: FileInputButtonProps) {
+function FileInputButton({ children, file, triggerFileInput }: FileInputButtonProps) {
     const [imageURL, setImageURL] = useState<string | null>(null);
 
     // Update imageURL when a new file is dropped
@@ -19,8 +20,8 @@ function FileInputButton({ file, triggerFileInput }: FileInputButtonProps) {
     }, [file]);
     return (
         <div>
-            <button className="button" onClick={triggerFileInput}>
-                اختر صورة المنتج
+            <button type="button" className="button" onClick={triggerFileInput}>
+                {children }
             </button>
             <p >
                 {file ? `${file.name}` : ""}

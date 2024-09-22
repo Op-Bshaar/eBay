@@ -26,7 +26,16 @@ class SellerController extends Controller
             'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-  
+        
+        $user = $request->user();
+        $seller =$user->seller;
+        if(!$seller)
+        {
+            $seller = Seller::create([
+                'user_id'=> $user->id,
+            ]);
+            $seller->save();
+        }
         if($request->hasFile('image')){
         
             $image = $request->file('image');
@@ -41,7 +50,7 @@ class SellerController extends Controller
                 'description' => $request->description,
                 'price' => $request->price,
                 'image' => $imageName, 
-                'seller_id' => Auth::id(),
+                'seller_id' => $seller->id,
             ]);
     
 
