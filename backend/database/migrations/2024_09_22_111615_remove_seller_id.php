@@ -20,9 +20,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            // Restore the seller_id column in case of rollback
-            $table->unsignedBigInteger('seller_id')->nullable();
-        });
+        
     }
 };
