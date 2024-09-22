@@ -24,7 +24,7 @@ class SellerController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
   
         if($request->hasFile('image')){
