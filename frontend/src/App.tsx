@@ -9,6 +9,7 @@ import AdminOrders from "../../admindashboard/src/Pages/AdminOrders";
 import DashBoard from "../../admindashboard/src/Pages/dashboard";
 import AdminChartsMenu from "../../admindashboard/src/Pages/Charts/AdminChartsMenu";
 import ProductNameChart from "../../admindashboard/src/Pages/Charts/ProductNameChart";
+import ThisWeekUploads from "../../admindashboard/src/Pages/Charts/ThisWeekUploadsChart";
 import Users from "../../admindashboard/src/Pages/Users";
 import Settings from "../../admindashboard/src/Pages/Settings";
 import SearchPage from "./pages/Search/Search";
@@ -83,6 +84,10 @@ function App() {
                         <Route
                             path="/admin/statistics/ProductNameChart"
                             element={<ProductNameChart />}
+                        />
+                        <Route
+                            path="/admin/statistics/TopUploadsThisWeek"
+                            element={<ThisWeekUploads />}
                         />
                         <Route path="/products/:id" element={<ProductsDeatils />} />
                         <Route path="/sell" element={<ProductForm />} />

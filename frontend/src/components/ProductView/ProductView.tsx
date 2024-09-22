@@ -39,7 +39,7 @@ function ProductView({
             </Link>
         ) : (
             <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`}>
-                view
+                    {view}
             </div>
         )
     );

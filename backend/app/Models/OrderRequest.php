@@ -98,10 +98,36 @@ class OrderRequest extends Model
         $referenceTime = $this->link_generated_at ?? $this->created_at;
         // Check if the order status is pending and the creation time exceeds the limit
         if ($this->status === 'pending' && $referenceTime->diffInMinutes(now()) > $timeLimitInMinutes) {
-            $this->cancelOrder();
+            $this->cancelOrder('timeout');
         }
     }
     
+    public function setAsPaid(){
+        if($this->status !== 'pending'){
+            throw new \Exception('Order status is not pending, cannot set as paid.');
+        }
+        DB::beginTransaction();
+
+        try {
+            // Set the status to 'paid'
+            $this->status = 'paid';
+            $this->paid_amount = $this->total_price;
+            // Save the updated order status
+            $this->save();
+            
+
+
+            // Commit the transaction
+            DB::commit();
+    
+            return true; // Return true if the operation was successful
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of any error
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
