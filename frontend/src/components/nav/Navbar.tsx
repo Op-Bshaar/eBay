@@ -20,7 +20,7 @@ function Navbar() {
     const logout = useLogout();
     const isAuthenticated = useIsAuthenticated();
     const [menuOpen, setMenuOpen] = useState(false);
-
+    const [loggingout, setLoggingout] = useState(false);
     const handleSearch = async (e: { preventDefault: () => void }) => {
         e.preventDefault();
         const query = inputRef.current?.value.trim();
@@ -89,7 +89,11 @@ function Navbar() {
                         البيع في سوق
                     </Link>
                     {isAuthenticated ? (
-                        <button onClick={logout} className="button">
+                        <button onClick={() => {
+                            setLoggingout(true);
+                            logout().then(() => setLoggingout(false));
+                        }
+                        } disabled={loggingout } className="button">
                             تسجيل الخروج
                         </button>
                     ) : (
