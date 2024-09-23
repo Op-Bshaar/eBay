@@ -50,7 +50,7 @@ Route::get('/products', [ProductController::class, 'index']);
 // Route for seller
 Route::middleware('auth:sanctum')->group(function (){
 Route::get('/sellers/products', [SellerController::class, 'getAllSellersProducts']);
-Route::put('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
+Route::post('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
 Route::delete('/sellers/products/{id}', [SellerController::class, 'deleteProduct']);
 Route::post('/sellers/products', [SellerController::class, 'addProducts']);
 });
