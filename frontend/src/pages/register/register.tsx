@@ -10,13 +10,11 @@ import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { readUser } from "../../utils/User";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 import Input from 'react-phone-number-input/input'
-import parsePhoneNumberFromString, { E164Number, parse, parsePhoneNumber } from "libphonenumber-js"; 
-import { isValidNumber } from 'libphonenumber-js';
+import { E164Number, isValidNumber} from "libphonenumber-js"; 
 function Register() {
     const navigate = useNavigate();
     const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
     const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
-    const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
     const [phonevalue, SetValue] = useState<E164Number | undefined>();
     const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,11 +28,23 @@ function Register() {
     const lastNameRef = useRef<HTMLInputElement>(null);
     const [triggerValidate, setTriggerValidate] = useState(false);
     const { setUser } = useAuthenticationContext();
+    const validatePhoneNumber = (phoneNumber: E164Number | undefined) => {
+        if (!phoneNumber) {
+            phoneRef.current?.setCustomValidity("الرجاء إدخال رقم الجوال.");
+        }
+        else if (!isValidNumber(phoneNumber)) {
+            phoneRef.current?.setCustomValidity("رقم الجوال غير صالح.");
+        }
+        else {
+            phoneRef.current?.setCustomValidity("");
+        }
+    }
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!triggerValidate) {
             setTriggerValidate(true);
         }
+        validatePhoneNumber(phonevalue);
         const username = usernameRef.current?.value || "";
         const email = emailRef.current?.value || "";
         const password = passwordRef.current?.value || "";
@@ -187,30 +197,16 @@ function Register() {
                             international
                             ref={phoneRef}
                             required
-                            onChange={(e) => {
+                            onChange={(number) => {
                                 if (isPhoneTaken)
                                     setIsPhoneTaken(false);
-                                else if(phonevalue)
-                                    {
-                                        const parsednum= parsePhoneNumberFromString(phonevalue)?.number;
-                                            if(parsednum&&isValidNumber(parsednum))
-                                                {
-                                                    setIsPhoneValid(true);
-                                                }
-                                            else{setIsPhoneValid(false)};
-                                    }
-                                    else{setIsPhoneValid(false)};
-                                SetValue(e);
+                                validatePhoneNumber(number);
+                                SetValue(number);
                             }} />
                         <InputError input={phoneRef.current} name="رقم الجوال" triggerValidate={triggerValidate} />
                         {isPhoneTaken && (
                             <ErrorMessage>
                                 تم استخدام هذا الجوال من قبل!
-                            </ErrorMessage>
-                        )}
-                        {isPhoneValid && (
-                            <ErrorMessage>
-                                الرقم غير صحيح!
                             </ErrorMessage>
                         )}
                     </div>
@@ -290,6 +286,10 @@ function InputError({
                         error = `${name} غير صالح.`;
                     }
                 }
+
+                else if (validity.customError) {
+                    error = input.validationMessage;
+                }
             }
 
             // Update state with error messages
@@ -319,6 +319,6 @@ function InputError({
     }, [detailedLengthError, input, name, touched]);
 
     // Render error messages if any
-    return (touched || triggerValidate) && errorMessage && <ErrorMessage className={className }>{errorMessage}</ErrorMessage>
+    return (touched || triggerValidate) && errorMessage && <ErrorMessage className={className}>{errorMessage}</ErrorMessage>
 }
 export default Register;
