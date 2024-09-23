@@ -12,7 +12,7 @@ const Sellers: React.FC = () => {
   };
 
   const handleEditProduct = (id: number) => {
-    navigate(`/seller/products/edit/${id}`);
+    navigate(`/seller/products/${id}`);
   };
 
   const handleDeleteProduct = async (id: number) => {
@@ -24,6 +24,7 @@ const Sellers: React.FC = () => {
           ...seller,
           products: seller.products.filter((product: any) => product.id !== id),
         }))
+         .filter((seller) => seller.products.length > 0)
       );
     } catch (error) {
       console.error("Error deleting product:", error);

@@ -47,37 +47,41 @@ const ProductForm: React.FC = () => {
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+      event.preventDefault();
+  
+      const formData = new FormData();
+      formData.append("title", product.title);
+      formData.append("description", product.description);
+      formData.append("price", product.price);
+      if (imageFile) {
+          formData.append("image", imageFile);
+      }
+  
+      try {
+          setIsLoading(true);
+          let response;
+          
+          if (id) {
 
-        console.log('Product being submitted:', product);
-
-        const formData = new FormData();
-        formData.append("title", product.title);
-        formData.append("description", product.description);
-        formData.append("price", product.price);
-
-        // Append image file if selected
-        if (imageFile) {
-            formData.append("image", imageFile);
-        }
-
-        try {
-            if (createdProductId) {
-                setCreatedProductId(null);
-            }
-            setIsLoading(true);
-            const response = await api.post(`/sellers/products`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-            setCreatedProductId(response.data.id);
-        } catch (error) {
-            console.error("Error submitting product:", error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+              response = await api.put(`/sellers/products/${id}`, formData, {
+                  headers: { "Content-Type": "multipart/form-data" },
+                  
+              });
+          } else {
+              response = await api.post(`/sellers/products`, formData, {
+                  headers: { "Content-Type": "multipart/form-data" },
+              });
+              setCreatedProductId(response.data.id);
+          }
+  
+          
+      } catch (error) {
+          console.error("Error submitting product:", error);
+      } finally {
+          setIsLoading(false);
+      }
+  };
+  
     if (createdProductId) {
         return (
             <div className="tajawal-extralight product-created-successfully">

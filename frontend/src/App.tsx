@@ -70,7 +70,7 @@ function App() {
                         />
                         <Route path={PAGE_URLS.sellers} element={<Sellers />} />
                         <Route path="/seller/products/add" element={<ProductForm />} />
-                        <Route path="/seller/products/edit/:id" element={<ProductForm />} />
+                        <Route path="/seller/products/:id" element={<ProductForm />} />
                         <Route path={PAGE_URLS.cart} element=<CartPage /> />
                         {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
                         <Route path={PAGE_URLS.place_order} element=<OrderPage /> />

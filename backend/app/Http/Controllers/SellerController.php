@@ -65,7 +65,7 @@ class SellerController extends Controller
 
     public function updateProduct(Request $request, $id)
     {
-  
+
         $product = Product::findOrFail($id);
     
         $validatedData = $request->validate([

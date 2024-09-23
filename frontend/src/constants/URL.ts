@@ -19,5 +19,6 @@ export const PAGE_URLS = {
     cart: '/cart',
     all_orders: '/orders/all',
     place_order:'/orders/place-order/:id',
+    // edit:`/seller/edit`
 
 }
