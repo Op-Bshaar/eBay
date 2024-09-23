@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import api from "../../helpers/api";
 import React from "react";
 import "./Sell.css";
@@ -16,7 +16,7 @@ const ProductForm: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [createdProductId, setCreatedProductId] = useState<number | null>(null);
     const [updateSuccess, setUpdateSuccess] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [fileErrorMessage, setFileErrorMessage] = useState("");
     const [product, setProduct] = useState({
         title: "",
         description: "",
@@ -47,14 +47,16 @@ const ProductForm: React.FC = () => {
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
         if (file) {
-            console.log(file);
-            const errorMessage = validateFile(file, 2048 * 1024, allowedFileTypes);
-            if (!errorMessage) {
+            const _errorMessage = validateFile(file, 2048 * 1024, allowedFileTypes);
+            if (!_errorMessage) {
                 event.currentTarget?.setCustomValidity("");
                 setImageFile(file);
             } else {
-                event.currentTarget?.setCustomValidity(errorMessage);
+                event.currentTarget?.setCustomValidity(_errorMessage);
                 setImageFile(null);
+            }
+            if (fileErrorMessage !== _errorMessage) {
+                setFileErrorMessage(_errorMessage);
             }
         }
         event.currentTarget.value = "";
@@ -73,8 +75,8 @@ const ProductForm: React.FC = () => {
         if (imageFile && !error && imageFile) {
             error = validateFile(imageFile);
         }
-        if (errorMessage != error) {
-            setErrorMessage(error);
+        if (fileErrorMessage != error) {
+            setFileErrorMessage(error);
         }
         if (error) {
             return;
@@ -194,7 +196,7 @@ const ProductForm: React.FC = () => {
                     </Link>
                 </div>
             )}
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage> }
+            {fileErrorMessage && <ErrorMessage>{fileErrorMessage}</ErrorMessage> }
             <button type="submit" className="submittionbutton" disabled={isLoading}>
                 {isLoading ? "جار تحديث المنتج" : "ارسل"}
             </button>
