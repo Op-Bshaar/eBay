@@ -66,6 +66,11 @@ class SellerController extends Controller
 
     public function updateProduct(Request $request, $id)
     {
+        if ($request->hasFile('image')) {
+            Log::info('Image file:', [$request->file('image')]);
+        } else {
+            Log::info('No image file uploaded');
+        }
         $product = Product::findOrFail($id);
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',

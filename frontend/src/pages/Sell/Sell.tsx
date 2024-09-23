@@ -72,9 +72,8 @@ const ProductForm: React.FC = () => {
         try {
             setIsLoading(true);
             let response;
-
             if (id) {
-                response = await api.put(`/sellers/products/${id}`, formData,{
+                response = await api.post(`/sellers/products/${id}`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
                 });
             } else {
