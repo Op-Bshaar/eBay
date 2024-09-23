@@ -104,6 +104,45 @@ cursor: pointer;
 }
 
 
+/* Styles for iPad Air  */
+@media (min-width: 820px) and (max-width: 1180px) {
+  .navbar {
+    flex-direction: row;
+    gap: 5px;
+    align-items: flex-start;
+    background-color: #6e767e;
+    padding: 1.5vh 2vw;
+  }
+
+  .search-icon {
+    margin-left: -170px; 
+  }
+
+  .search-bar {
+    max-width: 30%;
+    margin-left: 1vw;
+  }
+
+  .nav-item {
+    gap: 1vw;
+    padding-left: 10vh;
+  }
+
+  .nav-link {
+    color: white; 
+    padding-left: 10vh;
+    padding-right: 12vh;
+  }
+
+  .cart-icon {
+    color: gray;
+    font-size: larger;
+  }
+
+  .menu-toggle {
+    display: none; 
+  }
+}
 
 
 /* Mobile-First Approach */
