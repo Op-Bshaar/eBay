@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Log;
 
 class SellerController extends Controller
 {
@@ -19,7 +20,7 @@ class SellerController extends Controller
 
     public function addProducts(Request $request)
     {
-        
+    
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required',
@@ -65,9 +66,7 @@ class SellerController extends Controller
 
     public function updateProduct(Request $request, $id)
     {
-
         $product = Product::findOrFail($id);
-    
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',

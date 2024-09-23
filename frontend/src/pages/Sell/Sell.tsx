@@ -6,6 +6,7 @@ import { useRequireAuthentication } from "../login/LoginRedirect";
 import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
 import { Link, useParams } from "react-router-dom";
+import ValidateFile from "../../components/FileInput/ValidateFile";
 
 const ProductForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -42,46 +43,52 @@ const ProductForm: React.FC = () => {
     };
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
+        if (file) {
+            const errorMessage = ValidateFile(file, 2048 * 1024, allowedFileTypes);
+            if (!errorMessage) {
+                event.currentTarget?.setCustomValidity("");
+                setImageFile(file);
+            }
+            else {
+                event.currentTarget?.setCustomValidity(errorMessage);
+                setImageFile(null);
+            }
+        }
         event.currentTarget.value = "";
-        setImageFile(file);
     };
 
     const handleSubmit = async (event: React.FormEvent) => {
-      event.preventDefault();
-  
-      const formData = new FormData();
-      formData.append("title", product.title);
-      formData.append("description", product.description);
-      formData.append("price", product.price);
-      if (imageFile) {
-          formData.append("image", imageFile);
-      }
-  
-      try {
-          setIsLoading(true);
-          let response;
-          
-          if (id) {
+        event.preventDefault();
 
-              response = await api.put(`/sellers/products/${id}`, formData, {
-                  headers: { "Content-Type": "multipart/form-data" },
-                  
-              });
-          } else {
-              response = await api.post(`/sellers/products`, formData, {
-                  headers: { "Content-Type": "multipart/form-data" },
-              });
-              setCreatedProductId(response.data.id);
-          }
-  
-          
-      } catch (error) {
-          console.error("Error submitting product:", error);
-      } finally {
-          setIsLoading(false);
-      }
-  };
-  
+        const formData = new FormData();
+        formData.append("title", product.title);
+        formData.append("description", product.description);
+        formData.append("price", product.price);
+        if (imageFile) {
+            formData.append("image", imageFile);
+        }
+
+        try {
+            setIsLoading(true);
+            let response;
+
+            if (id) {
+                response = await api.put(`/sellers/products/${id}`, formData);
+            } else {
+                response = await api.post(`/sellers/products`, formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
+                setCreatedProductId(response.data.id);
+            }
+
+
+        } catch (error) {
+            console.error("Error submitting product:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     if (createdProductId) {
         return (
             <div className="tajawal-extralight product-created-successfully">
@@ -95,27 +102,30 @@ const ProductForm: React.FC = () => {
     return (
         <form className="sell-form tajawal-extralight" onSubmit={handleSubmit}>
             <div>
-                <label className="objective">مواصفات المنتج:</label>
+                <h2 className="objective">مواصفات المنتج:</h2>
                 <br />
-                <label className="lab">الاسم</label>
+                <label htmlFor="title" className="lab">الاسم</label>
                 <input
                     type="text"
+                    id="title"
                     name="title"
                     value={product.title}
                     onChange={handleChange}
                     className="name"
                 />
-                <label className="lab">المواصفات</label>
+                <label htmlFor="description" className="lab">المواصفات</label>
                 <input
                     type="text"
+                    id="description"
                     name="description"
                     value={product.description}
                     onChange={handleChange}
                     className="description"
                 />
-                <label className="lab">السعر</label>
+                <label htmlFor="price" className="lab">السعر</label>
                 <input
                     type="text"
+                    id="price"
                     name="price"
                     pattern="^\d+(\.\d{1,2})?$"
                     inputMode="numeric"
@@ -123,9 +133,10 @@ const ProductForm: React.FC = () => {
                     onChange={handleChange}
                     className="price"
                 />
-                <label className="lab">الصوره</label>
+                <label htmlFor="image" className="lab">الصوره</label>
                 <input
                     type="file"
+                    id="image"
                     name="image"
                     accept={allowedFileTypes.join(",")}
                     onChange={handleImageChange}
@@ -136,6 +147,7 @@ const ProductForm: React.FC = () => {
                     اختر صورة المنتج
                 </FileInputButton>
                 <FileDropArea
+                    maxSizeInBytes={2048 * 1024}
                     allowedFileTypes={allowedFileTypes}
                     file={imageFile}
                     setFile={setImageFile}
