@@ -36,8 +36,19 @@
     border-radius: 4px;
     box-sizing: border-box;
 }
+.sell-form input:valid {
+    outline-color: #00aa00;
+    border-color: #00aa00;
+}
 
-
+.sell-form input:user-invalid {
+    outline-color: #ff0000;
+    border-color: #ff0000;
+}
+.sell-form input:focus:invalid {
+    outline-color: #ffaa00;
+    border-color: #ffaa00;
+}
 .name {
     background-color: #fff;
 }

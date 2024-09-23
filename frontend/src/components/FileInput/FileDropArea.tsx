@@ -2,7 +2,7 @@
 import "./FileInput.css"
 import ErrorMessage from '../../../../admindashboard/src/components/errorMessage/Error';
 import max from 'react-phone-number-input/max';
-import ValidateFile from './ValidateFile';
+import validateFile from './ValidateFile';
 interface FileDropAreaProps {
     file: File | null;
     setFile: (imageFile: File | null) => void;
@@ -32,7 +32,7 @@ function FileDropArea({ file, setFile, allowedFileTypes, maxSizeInBytes }: FileD
 
         if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
             const droppedFile = event.dataTransfer.files[0];
-            const _errorMessage = ValidateFile(droppedFile, maxSizeInBytes, allowedFileTypes);
+            const _errorMessage = validateFile(droppedFile, maxSizeInBytes, allowedFileTypes);
             if (errorMessage !== _errorMessage) {
                 setErrorMessage(_errorMessage);
             }
