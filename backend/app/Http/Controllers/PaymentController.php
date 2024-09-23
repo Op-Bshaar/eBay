@@ -9,6 +9,7 @@ use App\Mail\PaymentNotification;
 use App\Services\PaymentService;
 use App\Models\OrderRequest;
 use Illuminate\Support\Facades\Http;
+use Validator;
 class PaymentController extends Controller
 {
     
@@ -43,18 +44,91 @@ class PaymentController extends Controller
         return response()->json(['message' => 'Unable to generate payment link. Please try again.'], 500);
     }
 }
-    public function handle3DSecureCallback(Request $request,$order_id)
-    {
-        // You can handle the response here, check for success or failure
-        // This is for testing purposes, so you can log or return the request data.
-        
-        // Log request data for debugging
-        Log::info('3D-Secure Callback Data: ', $request->all());
-        // Return a simple response for testing
-        return response()->json([
-            'message' => '3D-Secure callback received.',
-            'data' => $request->all(),
-        ]);
+public function handle3DSecureCallback(Request $request, $order_id)
+{
+    // Log incoming callback data for debugging purposes
+    Log::info('3D-Secure Callback Data: ', $request->all());
+
+    $validator = Validator::make($request->all(), [
+        'action' => 'required|string',
+        'result' => 'required|string',
+        'order_id' => 'required|string',
+        'trans_id' => 'required|string',
+        'amount' => 'required|numeric',
+        'currency' => 'required|string',
+        'hash' => 'required|string',
+    ]);
+
+    // If validation fails, handle failure instead of returning an error response
+    if ($validator->fails()) {
+        // You can log the failure or handle it as needed
+        return $this->handleFailure($order_id, $validator->errors()->toArray());
     }
+
+    // Extract validated data after passing validation
+    $validatedData = $validator->validated();
+    // Check if the callback hash is valid (for security)
+    if (!$this->isValidHash($validatedData)) {
+        return response()->json(['message' => 'Invalid hash signature'], 403);
+    }
+
+    if($validatedData['action'] === 'SALE')
+    {
+        if ($validatedData['result'] === 'SUCCESS') {
+            // Handle successful sale, update order status, etc.
+            return $this->handleSuccessfulSale($validatedData['order_id'], $validatedData);
+        } elseif ($validatedData['result'] === 'DECLINED') {
+            // Handle declined sale, log reason, notify user, etc.
+            return $this->handleDeclinedSale($validatedData['order_id'], $validatedData);
+        } elseif ($validatedData['result'] === 'REDIRECT' && $validatedData['status'] === '3DS') {
+            // Handle 3D-Secure redirection
+            if ($validatedData['redirect_method'] === 'POST') {
+                // For POST method, use a form to redirect with the parameters
+                return response()->view('redirect-form', [
+                    'redirect_url' => $validatedData['redirect_url'],
+                    'redirect_params' => $validatedData['redirect_params'] ?? [],
+                ]);
+            } elseif ($validatedData['redirect_method'] === 'GET') {
+                // For GET method, perform a simple redirect with the parameters
+                return redirect()->away($validatedData['redirect_url']);
+            }
+        }
+    }
+}
+
+// Example method to validate the hash
+protected function isValidHash(array $data)
+{
+    // Construct the hash string using the payment public ID and merchant pass
+    $hashString =  $data['trans_id'] . $data['order_id'] . $data['amount'] . $data['currency'] . config('services.edfapay.key');
+    
+    // Generate the hash using SHA1 or MD5
+    $expectedHash = strtoupper(sha1(md5($hashString)));
+
+    return $expectedHash === $data['hash'];
+}
+
+// Handle successful sale
+protected function handleSuccessfulSale($order_id, array $data)
+{
+    // Update order status, log information, notify user, etc.
+    Log::info("Sale successful for order $order_id", $data);
+    $order = OrderRequest::findOrFail($order_id);
+    $order->setAsPaid();
+}
+protected function handleFailure($order_id, array $errors)
+{
+    Log::warning("Sale failed for order $order_id", $errors);
+    $order = OrderRequest::findOrFail($order_id);
+    $order->cancelOrder('failed');
+}
+
+// Handle declined sale
+protected function handleDeclinedSale($order_id, array $data)
+{
+    Log::warning("Sale declined for order $order_id", $data);
+    $order = OrderRequest::findOrFail($order_id);
+    $order->cancelOrder('declined');
+}
 
 }
