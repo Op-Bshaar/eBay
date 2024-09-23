@@ -103,6 +103,9 @@ cursor: pointer;
   }
 }
 
+
+
+
 /* Mobile-First Approach */
 @media (max-width: 844px) {
 .navbar {
@@ -112,7 +115,6 @@ cursor: pointer;
   padding: 1em;
   background-color: #6e767e;
 }
-
 
 
 .order-cart {

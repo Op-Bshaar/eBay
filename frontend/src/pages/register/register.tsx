@@ -319,6 +319,7 @@ function InputError({
     }, [detailedLengthError, input, name, touched]);
 
     // Render error messages if any
-    return (touched || triggerValidate) && errorMessage && <ErrorMessage className={className}>{errorMessage}</ErrorMessage>
+    return (touched || triggerValidate) && errorMessage && <ErrorMessage className={className}>
+        <span style={{marginTop:"30px"}}>{errorMessage}</span></ErrorMessage>
 }
 export default Register;

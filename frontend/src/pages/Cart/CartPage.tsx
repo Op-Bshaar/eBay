@@ -46,10 +46,11 @@ function CartPage() {
   );
   const emptyCart = (
     <p className="absolute-center empty-cart">
-      <span>السلة فارغة,</span>
+      <span>السلة فارغة...</span>
       <Link className="link" to={PAGE_URLS.home}>
         {" "}
-        تصفح منتجاتنا.
+        <p>تصفح منتجاتنا</p>
+   
       </Link>
     </p>
   );
