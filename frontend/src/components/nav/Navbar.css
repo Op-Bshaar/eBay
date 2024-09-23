@@ -109,14 +109,16 @@ cursor: pointer;
 /* Mobile-First Approach */
 @media (max-width: 844px) {
 .navbar {
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: row;
+  gap: 5px;
   align-items: flex-start;
-  padding: 1em;
   background-color: #6e767e;
+
 }
 
-
+.search-icon{
+  margin-left: -200px;
+}
 .order-cart {
   display: flex;
   flex-direction: row;
@@ -161,8 +163,9 @@ cursor: pointer;
 }
 
 .search-bar input {
-  width: 100%;
+  width: 200%;
   margin: 1vh 0;
+  margin-left: -80px;
 }
 
 .nav-link {
@@ -175,6 +178,7 @@ cursor: pointer;
   font-size: 2rem;
   color: white;
   position: static;
+  margin-top: 10px;
 }
 
 .menu-icon.hidden {
