@@ -136,6 +136,7 @@ const ProductForm: React.FC = () => {
                     اختر صورة المنتج
                 </FileInputButton>
                 <FileDropArea
+                    maxSizeInBytes={2024 * 1024}
                     allowedFileTypes={allowedFileTypes}
                     file={imageFile}
                     setFile={setImageFile}

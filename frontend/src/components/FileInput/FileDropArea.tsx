@@ -2,13 +2,14 @@
 import "./FileInput.css"
 import ErrorMessage from '../../../../admindashboard/src/components/errorMessage/Error';
 import max from 'react-phone-number-input/max';
+import ValidateFile from './ValidateFile';
 interface FileDropAreaProps {
     file: File | null;
     setFile: (imageFile: File | null) => void;
     allowedFileTypes?: string[];
-    maxLengthInKB?: number;
+    maxSizeInBytes?: number;
 }
-function FileDropArea({ file, setFile, allowedFileTypes, maxLengthInKB }: FileDropAreaProps) {
+function FileDropArea({ file, setFile, allowedFileTypes, maxSizeInBytes }: FileDropAreaProps) {
     const [imageURL, setImageURL] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState("");
     // Update imageURL when a new file is dropped
@@ -31,18 +32,17 @@ function FileDropArea({ file, setFile, allowedFileTypes, maxLengthInKB }: FileDr
 
         if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
             const droppedFile = event.dataTransfer.files[0];
-            if (allowedFileTypes && !allowedFileTypes.includes(droppedFile.type)) {
-
-                setErrorMessage("الملفات غير مدعومة, الرجاء رفع ملف من أحد الأنواع التالية: (jpeg, png, jpg, gif, svg).");
+            const _errorMessage = ValidateFile(droppedFile, maxSizeInBytes, allowedFileTypes);
+            if (errorMessage !== _errorMessage) {
+                setErrorMessage(_errorMessage);
             }
-            else if (maxLengthInKB && droppedFile.size < maxLengthInKB) {
-                setErrorMessage(`حجم الملف يجب ألا يتجاوز ${maxLengthInKB}KB.`);
+            if (!_errorMessage) {
+                setFile(droppedFile);
+                event.dataTransfer.clearData();
             }
             else {
-                setErrorMessage("");
-                setFile(droppedFile);
+                setFile(null);
             }
-            event.dataTransfer.clearData();
         }
     };
 
