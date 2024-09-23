@@ -2,26 +2,36 @@ import { useState, useRef, useEffect } from "react";
 import api from "../../helpers/api";
 import React from "react";
 import "./Sell.css";
+import "../../styles/Loader.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
 import { Link, useParams } from "react-router-dom";
 import validateFile from "../../components/FileInput/ValidateFile";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
-
+import { readProduct } from "../../utils/Product";
 const ProductForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     useRequireAuthentication();
     const [imageFile, setImageFile] = useState<File | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isUploadingProduct, setIsUploadingProduct] = useState(false);
     const [createdProductId, setCreatedProductId] = useState<number | null>(null);
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const [fileErrorMessage, setFileErrorMessage] = useState("");
+    const [isLoadingProduct, setIsLoadingProduct] = useState(false);
     const [product, setProduct] = useState({
         title: "",
         description: "",
         price: "",
     });
+    useEffect(() => {
+        if (id) {
+            setIsLoadingProduct(true);
+            api.get(`/products/${id}`).then((response) => {
+                setProduct(readProduct(response.data));
+            }).finally(() => setIsLoadingProduct(false));
+        }
+    }, [id]);
     const allowedFileTypes = [
         "image/jpeg",
         "image/png",
@@ -90,7 +100,7 @@ const ProductForm: React.FC = () => {
         }
 
         try {
-            setIsLoading(true);
+            setIsUploadingProduct(true);
             let response;
             if (id) {
                 response = await api.post(`/sellers/products/${id}`, formData, {
@@ -107,82 +117,84 @@ const ProductForm: React.FC = () => {
         } catch (error) {
             console.error("Error submitting product:", error);
         } finally {
-            setIsLoading(false);
+            setIsUploadingProduct(false);
         }
     };
-
-  if (createdProductId) {
+    if (isLoadingProduct) {
+        return <div className="loader"/>
+    }
+    if (createdProductId) {
+        return (
+            <div className="tajawal-extralight product-created-successfully">
+                <p>{updateSuccess ? "تم تحديث المنتج" : "تمت إضافة المنتج بنجاح"}</p>
+                <Link to={`/products/${createdProductId}`} className="button">
+                    عرض المنتج
+                </Link>
+            </div>
+        );
+    }
     return (
-      <div className="tajawal-extralight product-created-successfully">
-        <p>{updateSuccess ? "تم تحديث المنتج" : "تمت إضافة المنتج بنجاح"}</p>
-        <Link to={`/products/${createdProductId}`} className="button">
-          عرض المنتج
-        </Link>
-      </div>
-    );
-  }
-  return (
-    <form className="sell-form tajawal-extralight" onSubmit={handleSubmit}>
-      <div>
-        <h2 className="objective">مواصفات المنتج:</h2>
-        <br />
-        <label htmlFor="title" className="lab">
-          الاسم
-        </label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          value={product.title}
-          onChange={handleChange}
-          className="name"
-        />
-        <label htmlFor="description" className="lab">
-          المواصفات
-        </label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          value={product.description}
-          onChange={handleChange}
-          className="description"
-        />
-        <label htmlFor="price" className="lab">
-          السعر
-        </label>
-        <input
-          type="text"
-          id="price"
-          name="price"
-          pattern="^\d+(\.\d{1,2})?$"
-          inputMode="numeric"
-          value={product.price}
-          onChange={handleChange}
-          className="price"
-        />
-        <label htmlFor="image" className="lab">
-          الصوره
-        </label>
-        <input
-          type="file"
-          id="image"
-          name="image"
-          accept={allowedFileTypes.join(",")}
-          onChange={handleImageChange}
-          ref={fileInputRef}
-          className="hidden"
-        />
-        <FileInputButton file={imageFile} triggerFileInput={triggerFileInput}>
-          اختر صورة المنتج
-        </FileInputButton>
-        <FileDropArea
-          maxSizeInBytes={2048 * 1024}
-          allowedFileTypes={allowedFileTypes}
-          file={imageFile}
-          setFile={setImageFile}
-        />
-      </div>
+        <form className="sell-form tajawal-extralight" onSubmit={handleSubmit}>
+            <div>
+                <h2 className="objective">مواصفات المنتج:</h2>
+                <br />
+                <label htmlFor="title" className="lab">
+                    الاسم
+                </label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value={product.title}
+                    onChange={handleChange}
+                    className="name"
+                />
+                <label htmlFor="description" className="lab">
+                    المواصفات
+                </label>
+                <input
+                    type="text"
+                    id="description"
+                    name="description"
+                    value={product.description}
+                    onChange={handleChange}
+                    className="description"
+                />
+                <label htmlFor="price" className="lab">
+                    السعر
+                </label>
+                <input
+                    type="text"
+                    id="price"
+                    name="price"
+                    pattern="^\d+(\.\d{1,2})?$"
+                    inputMode="numeric"
+                    value={product.price}
+                    onChange={handleChange}
+                    className="price"
+                />
+                <label htmlFor="image" className="lab">
+                    الصوره
+                </label>
+                <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    accept={allowedFileTypes.join(",")}
+                    onChange={handleImageChange}
+                    ref={fileInputRef}
+                    className="hidden"
+                />
+                <FileInputButton file={imageFile} triggerFileInput={triggerFileInput}>
+                    اختر صورة المنتج
+                </FileInputButton>
+                <FileDropArea
+                    maxSizeInBytes={2048 * 1024}
+                    allowedFileTypes={allowedFileTypes}
+                    file={imageFile}
+                    setFile={setImageFile}
+                />
+            </div>
 
             {updateSuccess && (
                 <div>
@@ -192,9 +204,9 @@ const ProductForm: React.FC = () => {
                     </Link>
                 </div>
             )}
-            {fileErrorMessage && <ErrorMessage>{fileErrorMessage}</ErrorMessage> }
-            <button type="submit" className="submittionbutton" disabled={isLoading}>
-                {isLoading ? "جار تحديث المنتج" : "ارسل"}
+            {fileErrorMessage && <ErrorMessage>{fileErrorMessage}</ErrorMessage>}
+            <button type="submit" className="submittionbutton" disabled={isUploadingProduct}>
+                {isUploadingProduct ? "جار تحديث المنتج" : "ارسل"}
             </button>
         </form>
     );
