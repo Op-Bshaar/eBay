@@ -10,12 +10,13 @@ import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { readUser } from "../../utils/User";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 import Input from 'react-phone-number-input/input'
-import { E164Number } from "libphonenumber-js"; 
-
+import parsePhoneNumberFromString, { E164Number, parse, parsePhoneNumber } from "libphonenumber-js"; 
+import { isValidNumber } from 'libphonenumber-js';
 function Register() {
     const navigate = useNavigate();
     const [isUsernameTaken, setIsUsernameTaken] = useState<boolean>(false);
     const [isPhoneTaken, setIsPhoneTaken] = useState<boolean>(false);
+    const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
     const [phonevalue, SetValue] = useState<E164Number | undefined>();
     const [isEmailTaken, setIsEmailTaken] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -189,12 +190,27 @@ function Register() {
                             onChange={(e) => {
                                 if (isPhoneTaken)
                                     setIsPhoneTaken(false);
+                                else if(phonevalue)
+                                    {
+                                        const parsednum= parsePhoneNumberFromString(phonevalue)?.number;
+                                            if(parsednum&&isValidNumber(parsednum))
+                                                {
+                                                    setIsPhoneValid(true);
+                                                }
+                                            else{setIsPhoneValid(false)};
+                                    }
+                                    else{setIsPhoneValid(false)};
                                 SetValue(e);
                             }} />
                         <InputError input={phoneRef.current} name="رقم الجوال" triggerValidate={triggerValidate} />
                         {isPhoneTaken && (
                             <ErrorMessage>
                                 تم استخدام هذا الجوال من قبل!
+                            </ErrorMessage>
+                        )}
+                        {isPhoneValid && (
+                            <ErrorMessage>
+                                الرقم غير صحيح!
                             </ErrorMessage>
                         )}
                     </div>
