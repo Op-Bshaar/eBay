@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import api from "../../helpers/api";
 import React from "react";
 import "./Sell.css";
@@ -19,6 +19,7 @@ const ProductForm: React.FC = () => {
     title: "",
     description: "",
     price: "",
+    image: null, 
   });
   const allowedFileTypes = [
     "image/jpeg",
@@ -27,6 +28,22 @@ const ProductForm: React.FC = () => {
     "image/gif",
     "image/svg+xml",
   ];
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        try {
+          const response = await api.get(`/sellers/products/${id}`);
+          const { title, description, price, image } = response.data;
+          setProduct({ title, description, price, image });
+        } catch (error) {
+          console.error("Error fetching product:", error);
+        }
+      }
+    };
+    fetchProduct();
+  }, [id]);
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -36,12 +53,14 @@ const ProductForm: React.FC = () => {
       [name]: value,
     });
   };
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const triggerFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
+
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
@@ -75,7 +94,6 @@ const ProductForm: React.FC = () => {
       if (id) {
         response = await api.post(`/sellers/products/${id}`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
-  
         });
         setUpdateSuccess(true);
         setCreatedProductId(Number(id));
@@ -102,6 +120,7 @@ const ProductForm: React.FC = () => {
       </div>
     );
   }
+
   return (
     <form className="sell-form tajawal-extralight" onSubmit={handleSubmit}>
       <div>
@@ -142,6 +161,15 @@ const ProductForm: React.FC = () => {
           onChange={handleChange}
           className="price"
         />
+
+        {/* Display existing image if present */}
+        {product.image && !imageFile && (
+          <div className="current-image">
+            <img src={product.image} alt="Current product" />
+            <p>الصورة الحالية</p>
+          </div>
+        )}
+
         <label htmlFor="image" className="lab">
           الصوره
         </label>
@@ -180,4 +208,5 @@ const ProductForm: React.FC = () => {
     </form>
   );
 };
+
 export default ProductForm;

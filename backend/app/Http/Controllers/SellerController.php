@@ -20,6 +20,13 @@ class SellerController extends Controller
         return response()->json($sellers);
     }
 
+    public function getproduct($id)
+    {
+        $product = Product::with('seller')->findOrFail($id);
+      
+        return response()->json( $product);
+    }
+
     public function addProducts(Request $request)
     {
     
