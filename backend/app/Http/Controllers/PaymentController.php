@@ -10,13 +10,13 @@ use App\Services\PaymentService;
 use App\Models\OrderRequest;
 use Illuminate\Support\Facades\Http;
 use Validator;
+use Redirect;
 class PaymentController extends Controller
 {
     
     public function getPaymentLink(Request $request, $order_id)
 {
     $user = $request->user();
-    
     // Fetch the OrderRequest using the URL parameter $order_id
     $orderRequest = OrderRequest::find($order_id);
     if (!$orderRequest || $orderRequest->user_id !== $user->id) {
@@ -26,7 +26,7 @@ class PaymentController extends Controller
     if ($orderRequest->status !== 'pending') {
         return response()->json(['message' => 'Order request is not pending.'], 400);
     }
-
+    
     try {
         $paymentService = new PaymentService($orderRequest);
         $paymentLink = $paymentService->generateInitiateLink($request->ip());
@@ -115,12 +115,14 @@ protected function handleSuccessfulSale($order_id, array $data)
     Log::info("Sale successful for order $order_id", $data);
     $order = OrderRequest::findOrFail($order_id);
     $order->setAsPaid();
+    return redirect()->away(env('FRONT_URL') . "/orders/{$order_id}");
 }
 protected function handleFailure($order_id, array $errors)
 {
     Log::warning("Sale failed for order $order_id", $errors);
     $order = OrderRequest::findOrFail($order_id);
     $order->cancelOrder('failed');
+    return redirect()->away(env('FRONT_URL') . "/orders/{$order_id}");
 }
 
 // Handle declined sale
@@ -129,6 +131,7 @@ protected function handleDeclinedSale($order_id, array $data)
     Log::warning("Sale declined for order $order_id", $data);
     $order = OrderRequest::findOrFail($order_id);
     $order->cancelOrder('declined');
+    return redirect()->away(env('FRONT_URL') . "/orders/{$order_id}");
 }
 
 }

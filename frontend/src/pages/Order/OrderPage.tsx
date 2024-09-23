@@ -2,46 +2,24 @@
 import { displayMoney } from "../../constants/Constants";
 import "./OrderPage.css";
 import { useRequireEmailVerification } from "../login/LoginRedirect";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import api from "../../helpers/api";
 import { useParams } from "react-router-dom";
-import Order from "../../utils/Order";
 import { addressToText } from "../AddressInput/Address";
 import ErrorMessage from "../../components/errorMessage/Error";
 import { isAxiosError } from "axios";
+import useOrder from "./useOrder";
+import OrderLoadingMessage from "./OrderLoadingMessage";
 function OrderPage() {
     useRequireEmailVerification();
-    const { id } = useParams();
-    const [isLoadingOrder, setIsLoadingOrder] = useState(false);
-    const [loadingOrderErrorMessage, setLoadingOrderErrorMessage] = useState("");
+    const { order_id } = useParams();
+    const { order, isLoadingOrder, loadingOrderErrorMessage, reloadOrder } = useOrder(order_id);
     const [paymentLink, setPaymentLink] = useState("");
     const [isLoadingPaymentLink, setIsLoadingPaymentLink] = useState(false);
     const [loadingPaymentLinkErrorMessage, setLoadingPaymentLinkErrorMessage] =
         useState("");
-    const [order, setOrder] = useState<Order | undefined>();
     const [isNavigating, setIsNavigating] = useState(false);
     const orderItems = order?.items ?? [];
-    const loadOrder = () => {
-        setIsLoadingOrder(true);
-        setLoadingOrderErrorMessage("");
-        api
-            .get(`/orders/${id}`)
-            .then((response) => {
-                setOrder(response.data);
-            })
-            .catch((error) => {
-                let message = "حدث خطأ ما.";
-                if (isAxiosError(error)) {
-                    if (error.request && !error.response) {
-                        message = "تعذر الاتصال, تحقق من الشبكة.";
-                    }
-                }
-                setLoadingOrderErrorMessage(message);
-            })
-            .finally(() => setIsLoadingOrder(false));
-    };
-    // load on first render
-    useEffect(loadOrder, [id]);
     const handleOrder = () => {
         const openLink = (link: string) => {
             setIsNavigating(true);
@@ -53,7 +31,7 @@ function OrderPage() {
             setIsLoadingPaymentLink(true);
             setLoadingPaymentLinkErrorMessage("");
             api
-                .get(`/orders/get-payment-link/${id}`)
+                .get(`/orders/get-payment-link/${order_id}`)
                 .then((response) => {
                     const link = response.data.payment_link;
                     if (link) {
@@ -89,17 +67,8 @@ function OrderPage() {
             </div>
         );
     }
-    if (isLoadingOrder) {
-        return <div className="loader absolute-center" />;
-    } else if (loadingOrderErrorMessage) {
-        return (
-            <ErrorMessage className="tajawal-extralight big-message absolute-center">
-                {loadingOrderErrorMessage}
-                <button onClick={loadOrder} className="link">
-                    أعد المحاولة.
-                </button>
-            </ErrorMessage>
-        );
+    if (isLoadingOrder || loadingOrderErrorMessage || !order) {
+        return <OrderLoadingMessage isLoadingOrder={isLoadingOrder} loadingOrderErrorMessage={loadingOrderErrorMessage} reloadOrder={reloadOrder} order={order} />
     }
     const items = (
         <div className="order-items-container">

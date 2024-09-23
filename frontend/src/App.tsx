@@ -27,6 +27,7 @@ import CartPage from "./pages/Cart/CartPage";
 import OrderPage from "./pages/Order/OrderPage";
 import GetAllOrder from "./pages/Order/GetAllOrder";
 import Sellers from "./pages/sellers/sellers";
+import OrderStatusPage from "./pages/Order/OrderStatusPage";
 function App() {
     const request_email_verification = (
         <ReloadUser redirectTo={PAGE_URLS.email_verification} />
@@ -73,7 +74,8 @@ function App() {
                         <Route path="/seller/products/:id" element={<ProductForm />} />
                         <Route path={PAGE_URLS.cart} element=<CartPage /> />
                         {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
-                        <Route path={PAGE_URLS.place_order} element=<OrderPage /> />
+                        <Route path={PAGE_URLS.place_order} element={<OrderPage />} />
+                        <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
                         <Route path="/admin/dashboard" element={<DashBoard />} />
                         <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/settings" element={<Settings />} />

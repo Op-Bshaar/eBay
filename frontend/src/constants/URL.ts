@@ -17,8 +17,9 @@ export const PAGE_URLS = {
     invalid_email_verification_link: "/invalid-email-verification-link",
     sellers:"/sellers",
     cart: '/cart',
+    view_order:'/orders/:order_id',
     all_orders: '/orders/all',
-    place_order:'/orders/place-order/:id',
+    place_order:'/orders/place-order/:order_id',
     // edit:`/seller/edit`
 
 }
