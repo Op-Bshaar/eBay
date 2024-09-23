@@ -95,7 +95,6 @@ const ProductForm: React.FC = () => {
             if (id) {
                 response = await api.post(`/sellers/products/${id}`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
-
                 });
                 setUpdateSuccess(true);
                 setCreatedProductId(Number(id));
