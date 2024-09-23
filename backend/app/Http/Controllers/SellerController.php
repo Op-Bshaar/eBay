@@ -71,7 +71,7 @@ class SellerController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+
         ]);
     
  

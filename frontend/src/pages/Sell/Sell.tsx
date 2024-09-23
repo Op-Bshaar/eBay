@@ -44,6 +44,7 @@ const ProductForm: React.FC = () => {
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
         if (file) {
+            console.log(file);
             const errorMessage = ValidateFile(file, 2048 * 1024, allowedFileTypes);
             if (!errorMessage) {
                 event.currentTarget?.setCustomValidity("");
@@ -73,7 +74,9 @@ const ProductForm: React.FC = () => {
             let response;
 
             if (id) {
-                response = await api.put(`/sellers/products/${id}`, formData);
+                response = await api.put(`/sellers/products/${id}`, formData,{
+                    headers: { "Content-Type": "multipart/form-data" },
+                });
             } else {
                 response = await api.post(`/sellers/products`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
