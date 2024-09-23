@@ -29,10 +29,9 @@ function Register() {
     const [triggerValidate, setTriggerValidate] = useState(false);
     const { setUser } = useAuthenticationContext();
     const validatePhoneNumber = (phoneNumber: E164Number | undefined) => {
-        if (!phoneNumber) {
-            phoneRef.current?.setCustomValidity("الرجاء إدخال رقم الجوال.");
-        }
-        else if (!isValidNumber(phoneNumber)) {
+
+        console.log(phoneNumber);
+        if (!phoneNumber || !isValidNumber(phoneNumber)) {
             phoneRef.current?.setCustomValidity("رقم الجوال غير صالح.");
         }
         else {
@@ -48,7 +47,7 @@ function Register() {
         const username = usernameRef.current?.value || "";
         const email = emailRef.current?.value || "";
         const password = passwordRef.current?.value || "";
-        const phone = phoneRef.current?.value || "";
+        const phone = phonevalue || "";
         const first_name = firstNameRef.current?.value || "";
         const last_name = lastNameRef.current?.value || "";
         if (!formRef.current || !formRef.current.checkValidity()) {
@@ -203,7 +202,7 @@ function Register() {
                                 validatePhoneNumber(number);
                                 SetValue(number);
                             }} />
-                        <InputError input={phoneRef.current} name="رقم الجوال" triggerValidate={triggerValidate} />
+                        <InputError input={phoneRef.current} name="رقم الجوال" value={phonevalue } triggerValidate={triggerValidate} />
                         {isPhoneTaken && (
                             <ErrorMessage>
                                 تم استخدام هذا الجوال من قبل!
@@ -241,6 +240,7 @@ function Register() {
 }
 interface InputErrorProps {
     input: HTMLInputElement | null;
+    value?: unknown;
     name?: string;
     required?: boolean;
     className?: string;
@@ -250,6 +250,7 @@ interface InputErrorProps {
 
 function InputError({
     input,
+    value,
     name = "هذا الحقل",
     className = "",
     detailedLengthError = false,
@@ -257,6 +258,7 @@ function InputError({
 }: InputErrorProps) {
     const [errorMessage, setErrorMessage] = useState("");
     const [touched, setTouched] = useState<boolean>(false);
+    value = value ?? input?.value;
     useEffect(() => {
         const handleInput = () => {
             input?.checkValidity();
@@ -316,7 +318,7 @@ function InputError({
                 }
             };
         }
-    }, [detailedLengthError, input, name, touched]);
+    }, [detailedLengthError, input, name, touched,value]);
 
     // Render error messages if any
     return (touched || triggerValidate) && errorMessage && <ErrorMessage className={className}>{errorMessage}</ErrorMessage>
