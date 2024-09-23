@@ -1,7 +1,6 @@
 ﻿import { useEffect, useState, DragEvent } from 'react';
 import "./FileInput.css"
 import ErrorMessage from '../../../../admindashboard/src/components/errorMessage/Error';
-import max from 'react-phone-number-input/max';
 import validateFile from './ValidateFile';
 interface FileDropAreaProps {
     file: File | null;
