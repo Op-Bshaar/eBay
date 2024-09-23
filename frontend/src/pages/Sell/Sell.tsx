@@ -44,7 +44,7 @@ const ProductForm: React.FC = () => {
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files ? event.target.files[0] : null;
         if (file) {
-            const errorMessage = ValidateFile(file, 2024 * 1024, allowedFileTypes);
+            const errorMessage = ValidateFile(file, 2048 * 1024, allowedFileTypes);
             if (!errorMessage) {
                 event.currentTarget?.setCustomValidity("");
                 setImageFile(file);
@@ -73,11 +73,7 @@ const ProductForm: React.FC = () => {
             let response;
 
             if (id) {
-
-                response = await api.put(`/sellers/products/${id}`, formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-
-                });
+                response = await api.put(`/sellers/products/${id}`, formData);
             } else {
                 response = await api.post(`/sellers/products`, formData, {
                     headers: { "Content-Type": "multipart/form-data" },
@@ -151,7 +147,7 @@ const ProductForm: React.FC = () => {
                     اختر صورة المنتج
                 </FileInputButton>
                 <FileDropArea
-                    maxSizeInBytes={2024 * 1024}
+                    maxSizeInBytes={2048 * 1024}
                     allowedFileTypes={allowedFileTypes}
                     file={imageFile}
                     setFile={setImageFile}
