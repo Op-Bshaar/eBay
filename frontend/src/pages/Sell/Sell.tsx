@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import api from "../../helpers/api";
 import React from "react";
 import "./Sell.css";
+import "../../styles/Loader.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
