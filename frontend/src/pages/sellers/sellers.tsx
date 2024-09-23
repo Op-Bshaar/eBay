@@ -56,7 +56,7 @@ const Sellers: React.FC = () => {
               <div key={product.id}>
                 <p>Product Name: {product.title}</p>
                 <p>Price: {product.price}</p>
-                <button onClick={() => handleEditProduct(product.id)}>Edit</button>
+                <button  onClick={() => handleEditProduct(product.id)}>Edit</button>
                 <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
               </div>
             ))}
