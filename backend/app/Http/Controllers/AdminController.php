@@ -6,7 +6,7 @@ use App\Models\OrderRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class AdminController extends Controller
 {

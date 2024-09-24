@@ -24,7 +24,6 @@ import AdminRoute from "./context/AdminRoute";
 import { lazy, Suspense } from "react";
 
 const ProductForm = lazy(() => import("./pages/Sell/Sell"));
-
 const AdminProducts = lazy(() => import("../../admindashboard/src/Pages/AdminProducts"));
 const AdminOrders = lazy(() => import("../../admindashboard/src/Pages/AdminOrders"));
 const DashBoard = lazy(() => import("../../admindashboard/src/Pages/dashboard"));
