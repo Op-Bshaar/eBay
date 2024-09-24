@@ -1,14 +1,15 @@
 /* Base Styles for All Devices */
 .navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  padding: 2vh 3vw;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  width: 100%;
-  flex-wrap: wrap;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 2vh 3vw;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .nav-item {
@@ -128,13 +129,13 @@ cursor: pointer;
 
 /* Styles for iPad Air  */
 @media (min-width: 820px) and (max-width: 1180px) {
-  .navbar {
-    flex-direction: row;
-    gap: 5px;
-    align-items: flex-start;
-    background-color: #6e767e;
-    padding: 1.5vh 2vw;
-  }
+    .navbar {
+        flex-direction: row;
+        gap: 5px;
+        background-color: #6e767e;
+        padding: 1.5vh 2vw;
+        align-items: center;
+    }
 
   .search-icon {
     margin-left: -170px; 
@@ -169,13 +170,13 @@ cursor: pointer;
 
 /* Mobile-First Approach */
 @media (max-width: 844px) {
-.navbar {
-  flex-direction: row;
-  gap: 5px;
-  align-items: flex-start;
-  background-color: #6e767e;
-
-}
+    .navbar {
+        flex-direction: row;
+        gap: 5px;
+        align-items: flex-start;
+        background-color: #6e767e;
+        align-items: center;
+    }
 
 .search-icon{
   margin-left: -200px;
