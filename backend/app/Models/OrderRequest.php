@@ -108,7 +108,10 @@ class OrderRequest extends Model
         }
         $this->status = 'paid';
         $this->paid_amount = $this->total_price;
-        
+        foreach ($this->items as $item) {
+            $item->setAsPaid();
+        }
+        $this->save();
     }
 
     public function user()

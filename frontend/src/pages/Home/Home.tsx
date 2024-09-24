@@ -43,8 +43,8 @@ function Home() {
             }
         };
 
-        fetchProducts();
         fetchCategories();
+        fetchProducts();
     }, []);
 
     const handleCategoryChange = (categoryId: number) => {
@@ -57,7 +57,7 @@ function Home() {
   ? products.filter((product) => product.category?.id === selectedCategory)
   : products;
 
-
+    
     const productsView =
         error || isLoading ? (
             <div className="fill-flex home-message big-message">

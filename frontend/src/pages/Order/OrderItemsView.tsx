@@ -1,7 +1,8 @@
 import { displayMoney } from '../../constants/Constants';
-import { CartItem } from '../../utils/Cart';
+import { OrderItem } from '../../utils/Order';
+import { order_status } from './order_status';
 
-function OrderItemsView({ orderItems }: { orderItems :CartItem[]}) {
+function OrderItemsView({ orderItems, showStatus = false }: { orderItems: OrderItem[], showStatus? :boolean}) {
     return (
         orderItems.map((item) => (
             <div className="order-item-container" key={item.product.id}>
@@ -12,6 +13,7 @@ function OrderItemsView({ orderItems }: { orderItems :CartItem[]}) {
                         </span>
                         <span>{item.product.title}</span>
                     </span>
+                    {showStatus && <span>{order_status.get(item.status)}</span>}
                     <span>{displayMoney(item.product.price)}</span>
                 </div>
             </div>

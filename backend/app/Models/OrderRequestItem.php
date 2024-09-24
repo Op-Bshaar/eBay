@@ -16,6 +16,15 @@ class OrderRequestItem extends Model
         'quantity',
         'status',
     ];
+    public function setAsPaid()
+{
+    if ($this->status !== 'pending') {
+        throw new \Exception('Order item status is not pending, cannot set as paid.');
+    }
+
+    $this->status = 'paid';
+    $this->save();
+}
     public function order(){
         return $this->belongsTo(OrderRequest::class);
     }
