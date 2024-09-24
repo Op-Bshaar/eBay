@@ -28,75 +28,75 @@ import OrderPage from "./pages/Order/OrderPage";
 import GetAllOrder from "./pages/Order/GetAllOrder";
 import Sellers from "./pages/sellers/sellers";
 function App() {
-    const request_email_verification = (
-        <ReloadUser redirectTo={PAGE_URLS.email_verification} />
-    );
-    return (
-        <AuthenticationProvider>
-            <CartProvider>
-                <BrowserRouter>
-                    <Navbar />
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<Navigate to={PAGE_URLS.home} replace />}
-                        />
-                        <Route path={PAGE_URLS.home} element={<Home />} />
-                        <Route path={PAGE_URLS.search} element={<SearchPage />} />
-                        <Route path={PAGE_URLS.login} element={<Login />} />
-                        <Route path={PAGE_URLS.register} element={<Register />} />
-                        <Route
-                            path={PAGE_URLS.password}
-                            element={<RequestPasswordReset />}
-                        />
-                        <Route path={PAGE_URLS.restpassword} element={<RestPassword />} />
-                        <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
-                        <Route
-                            path={PAGE_URLS.email_verification}
-                            element={<EmailVerification />}
-                        />
-                        <Route
-                            path={PAGE_URLS.email_verified_successfuly}
-                            element={request_email_verification}
-                        />
-                        <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
-                        <Route
-                            path={PAGE_URLS.request_email_verification}
-                            element={request_email_verification}
-                        />
-                        <Route
-                            path={PAGE_URLS.invalid_email_verification_link}
-                            element={request_email_verification}
-                        />
-                        <Route path={PAGE_URLS.sellers} element={<Sellers />} />
-                        <Route path="/seller/products/add" element={<ProductForm />} />
-                        <Route path="/seller/products/:id" element={<ProductForm />} />
-                        <Route path={PAGE_URLS.cart} element=<CartPage /> />
-                        {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
-                        <Route path={PAGE_URLS.place_order} element=<OrderPage /> />
-                        <Route path="/admin/dashboard" element={<DashBoard />} />
-                        <Route path="/admin/users" element={<Users />} />
-                        <Route path="/admin/settings" element={<Settings />} />
-                        <Route path="/admin" element={<DashBoard />} />
-                        <Route path="/admin/products" element={<AdminProducts />} />
-                        <Route path="/admin/orders" element={<AdminOrders />} />
-                        <Route path="admin/statistics" element={<AdminChartsMenu />} />
-                        <Route
-                            path="/admin/statistics/ProductNameChart"
-                            element={<ProductNameChart />}
-                        />
-                        <Route
-                            path="/admin/statistics/TopUploadsThisWeek"
-                            element={<ThisWeekUploads />}
-                        />
-                        <Route path="/products/:id" element={<ProductsDeatils />} />
-                        <Route path="/sell" element={<ProductForm />} />
-                        <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
-                    </Routes>
-                </BrowserRouter>
-            </CartProvider>
-        </AuthenticationProvider>
-    );
+  const request_email_verification = (
+    <ReloadUser redirectTo={PAGE_URLS.email_verification} />
+  );
+  return (
+    <AuthenticationProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route
+              path="/"
+              element={<Navigate to={PAGE_URLS.home} replace />}
+            />
+            <Route path={PAGE_URLS.home} element={<Home />} />
+            <Route path={PAGE_URLS.search} element={<SearchPage />} />
+            <Route path={PAGE_URLS.login} element={<Login />} />
+            <Route path={PAGE_URLS.register} element={<Register />} />
+            <Route
+              path={PAGE_URLS.password}
+              element={<RequestPasswordReset />}
+            />
+            <Route path={PAGE_URLS.restpassword} element={<RestPassword />} />
+            <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
+            <Route
+              path={PAGE_URLS.email_verification}
+              element={<EmailVerification />}
+            />
+            <Route
+              path={PAGE_URLS.email_verified_successfuly}
+              element={request_email_verification}
+            />
+            <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
+            <Route
+              path={PAGE_URLS.request_email_verification}
+              element={request_email_verification}
+            />
+            <Route
+              path={PAGE_URLS.invalid_email_verification_link}
+              element={request_email_verification}
+            />
+            <Route path={PAGE_URLS.sellers} element={<Sellers />} />
+            <Route path="/seller/products/add" element={<ProductForm />} />
+            <Route path="/seller/products/:id" element={<ProductForm />} />
+            <Route path={PAGE_URLS.cart} element=<CartPage /> />
+            {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
+            <Route path={PAGE_URLS.place_order} element=<OrderPage /> />
+            <Route path="/products/:id" element={<ProductsDeatils />} />
+            <Route path="/sell" element={<ProductForm />} />
+            <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
+
+            <Route path="/admin/dashboard" element={<DashBoard />} />
+            <Route path="/admin/orders" element={<AdminOrders />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/users" element={<Users />} />
+            <Route path="*" element={<Navigate to="/admin/dashboard" />} />
+            <Route path="admin/statistics" element={<AdminChartsMenu />} />
+            <Route
+              path="/admin/statistics/ProductNameChart"
+              element={<ProductNameChart />}
+            />
+            <Route
+              path="/admin/statistics/TopUploadsThisWeek"
+              element={<ThisWeekUploads />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </AuthenticationProvider>
+  );
 }
 
 export default App;
