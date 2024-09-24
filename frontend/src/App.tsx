@@ -4,15 +4,6 @@ import Login from "./pages/login/login";
 import Register from "./pages/register/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
-import AdminRoute from "./context/AdminRoute";
-import AdminProducts from "../../admindashboard/src/Pages/AdminProducts";
-import AdminOrders from "../../admindashboard/src/Pages/AdminOrders";
-import DashBoard from "../../admindashboard/src/Pages/dashboard";
-import AdminChartsMenu from "../../admindashboard/src/Pages/Charts/AdminChartsMenu";
-import ProductNameChart from "../../admindashboard/src/Pages/Charts/ProductNameChart";
-import ThisWeekUploads from "../../admindashboard/src/Pages/Charts/ThisWeekUploadsChart";
-import Users from "../../admindashboard/src/Pages/Users";
-import Settings from "../../admindashboard/src/Pages/Settings";
 import SearchPage from "./pages/Search/Search";
 import ProductsDeatils from "./pages/ProductsDeatils/productsDeatils";
 import EmailVerification from "./pages/EmailVerification/EmailVerification";
@@ -21,7 +12,6 @@ import RequestPasswordReset from "./pages/ForgetPassword/password";
 import UpdateEmail from "./pages/UpdateEmail/UpdateEmail";
 import ReloadUser from "./components/ReloadUser/ReloadUser";
 import RestPassword from "./pages/RestPassword/restpassword";
-import ProductForm from "./pages/Sell/Sell";
 import AuthenticationProvider from "./context/AuthenticationProvider";
 import CartProvider from "./context/cartProvider";
 import CartPage from "./pages/Cart/CartPage";
@@ -29,77 +19,129 @@ import OrderPage from "./pages/Order/OrderPage";
 import GetAllOrder from "./pages/Order/GetAllOrder";
 import Sellers from "./pages/sellers/sellers";
 import OrderStatusPage from "./pages/Order/OrderStatusPage";
+import AdminRoute from "./context/AdminRoute";
+
+import { lazy, Suspense } from "react";
+
+const ProductForm = lazy(() => import("./pages/Sell/Sell"));
+
+const AdminProducts = lazy(() => import("../../admindashboard/src/Pages/AdminProducts"));
+const AdminOrders = lazy(() => import("../../admindashboard/src/Pages/AdminOrders"));
+const DashBoard = lazy(() => import("../../admindashboard/src/Pages/dashboard"));
+const AdminChartsMenu = lazy(() => import("../../admindashboard/src/Pages/Charts/AdminChartsMenu"));
+const ProductNameChart = lazy(() => import("../../admindashboard/src/Pages/Charts/ProductNameChart"));
+const ThisWeekUploads = lazy(() => import("../../admindashboard/src/Pages/Charts/ThisWeekUploadsChart"));
+const Users = lazy(() => import("../../admindashboard/src/Pages/Users"));
+const Settings = lazy(() => import("../../admindashboard/src/Pages/Settings"));
+
 function App() {
-    const request_email_verification = (
-        <ReloadUser redirectTo={PAGE_URLS.email_verification} />
-    );
-    return (
-        <AuthenticationProvider>
-            <CartProvider>
-                <BrowserRouter>
-                    <Navbar />
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<Navigate to={PAGE_URLS.home} replace />}
-                        />
-                        <Route path={PAGE_URLS.home} element={<Home />} />
-                        <Route path={PAGE_URLS.search} element={<SearchPage />} />
-                        <Route path={PAGE_URLS.login} element={<Login />} />
-                        <Route path={PAGE_URLS.register} element={<Register />} />
-                        <Route
-                            path={PAGE_URLS.password}
-                            element={<RequestPasswordReset />}
-                        />
-                        <Route path={PAGE_URLS.restpassword} element={<RestPassword />} />
-                        <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
-                        <Route
-                            path={PAGE_URLS.email_verification}
-                            element={<EmailVerification />}
-                        />
-                        <Route
-                            path={PAGE_URLS.email_verified_successfuly}
-                            element={request_email_verification}
-                        />
-                        <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
-                        <Route
-                            path={PAGE_URLS.request_email_verification}
-                            element={request_email_verification}
-                        />
-                        <Route
-                            path={PAGE_URLS.invalid_email_verification_link}
-                            element={request_email_verification}
-                        />
-                        <Route path={PAGE_URLS.sellers} element={<Sellers />} />
-                        <Route path="/seller/products/add" element={<ProductForm />} />
-                        <Route path="/seller/products/:id" element={<ProductForm />} />
-                        <Route path={PAGE_URLS.cart} element=<CartPage /> />
-                        {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
-                        <Route path={PAGE_URLS.place_order} element={<OrderPage />} />
-                        <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
-                        <Route path="/admin/dashboard" element={<AdminRoute><DashBoard /></AdminRoute>} />
-                        <Route path="/admin/users" element={<AdminRoute><Users /></AdminRoute>} />
-                        <Route path="/admin/settings" element={<AdminRoute><Settings /></AdminRoute>} />
-                        <Route path="/admin" element={<AdminRoute><DashBoard /></AdminRoute>} />
-                        <Route path="/admin/products" element={<AdminRoute><AdminProducts /></AdminRoute>} />
-                        <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />
-                        <Route path="admin/statistics" element={<AdminRoute><AdminChartsMenu /></AdminRoute>} />
-                        <Route
-                            path="/admin/statistics/ProductNameChart"
-                            element={<AdminRoute><ProductNameChart /></AdminRoute>}
-                        />
-                        <Route
-                            path="/admin/statistics/TopUploadsThisWeek"
-                            element={<AdminRoute><ThisWeekUploads /></AdminRoute>}
-                        />
-                        <Route path="/products/:id" element={<ProductsDeatils />} />
-                        <Route path="/sell" element={<ProductForm />} />
-                        <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
-                    </Routes>
-                </BrowserRouter>
-            </CartProvider>
-        </AuthenticationProvider>
-    );
+  const request_email_verification = (
+    <ReloadUser redirectTo={PAGE_URLS.email_verification} />
+  );
+
+  return (
+    <AuthenticationProvider>
+      <CartProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Navigate to={PAGE_URLS.home} replace />} />
+            <Route path={PAGE_URLS.home} element={<Home />} />
+            <Route path={PAGE_URLS.search} element={<SearchPage />} />
+            <Route path={PAGE_URLS.login} element={<Login />} />
+            <Route path={PAGE_URLS.register} element={<Register />} />
+            <Route path={PAGE_URLS.password} element={<RequestPasswordReset />} />
+            <Route path={PAGE_URLS.restpassword} element={<RestPassword />} />
+            <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
+            <Route path={PAGE_URLS.email_verification} element={<EmailVerification />} />
+            <Route path={PAGE_URLS.email_verified_successfuly} element={request_email_verification} />
+            <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
+            <Route path={PAGE_URLS.request_email_verification} element={request_email_verification} />
+            <Route path={PAGE_URLS.invalid_email_verification_link} element={request_email_verification} />
+            <Route path={PAGE_URLS.sellers} element={<Sellers />} />
+            <Route path="/products/:id" element={<ProductsDeatils />} />
+            <Route path={PAGE_URLS.cart} element={<CartPage />} />
+            <Route path={PAGE_URLS.place_order} element={<OrderPage />} />
+            <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
+            <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
+
+            <Route path="/sell" element={
+              <Suspense fallback={<div>يتم التحميل...</div>}>
+                <ProductForm />
+              </Suspense>
+            } />
+            <Route path="/seller/products/add" element={
+              <Suspense fallback={<div>يتم التحميل...</div>}>
+                <ProductForm />
+              </Suspense>
+            } />
+            <Route path="/seller/products/:id" element={
+              <Suspense fallback={<div>يتم التحميل...</div>}>
+                <ProductForm />
+              </Suspense>
+            } />
+
+            <Route path="/admin/dashboard" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Admin Dashboard...</div>}>
+                  <DashBoard />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="/admin/users" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Admin Users...</div>}>
+                  <Users />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="/admin/settings" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Admin Settings...</div>}>
+                  <Settings />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="/admin/products" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Admin Products...</div>}>
+                  <AdminProducts />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="/admin/orders" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Admin Orders...</div>}>
+                  <AdminOrders />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="admin/statistics" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Admin Statistics...</div>}>
+                  <AdminChartsMenu />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="/admin/statistics/ProductNameChart" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Product Name Chart...</div>}>
+                  <ProductNameChart />
+                </Suspense>
+              </AdminRoute>
+            } />
+            <Route path="/admin/statistics/TopUploadsThisWeek" element={
+              <AdminRoute>
+                <Suspense fallback={<div>Loading Top Uploads...</div>}>
+                  <ThisWeekUploads />
+                </Suspense>
+              </AdminRoute>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
+    </AuthenticationProvider>
+  );
 }
 
 export default App;
