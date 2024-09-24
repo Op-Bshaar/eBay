@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Seller extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $fillable = ['rating', 'user_id'];
 
@@ -24,5 +25,9 @@ class Seller extends Model
     public function products()
     {
         return $this->hasMany(Product::class, 'seller_id');
+    }
+    public function routeNotificationForMail()
+    {
+        return $this->user->email; // Use the seller's email
     }
 }

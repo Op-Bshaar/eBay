@@ -112,7 +112,7 @@ class OrderRequest extends Model
         $this->paid_amount = $this->total_price;
 
         foreach ($this->items as $item) {
-            $item->setAsPaid();
+            $item->setAsPaid($this->getAddress());
         }
 
         $this->save();

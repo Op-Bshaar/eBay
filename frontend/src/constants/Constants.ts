@@ -1,4 +1,5 @@
-﻿export const currencySymbol = 'ر.س.';
+﻿export const APP_NAME = "سوق";
+export const currencySymbol = 'ر.س.';
 export const addressMaxLengths = {
     country: 100,
     city: 100,

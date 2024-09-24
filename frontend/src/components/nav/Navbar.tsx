@@ -12,6 +12,7 @@ import { useLogout } from "../../context/AuthenticationContext";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { useRef, useState } from "react";
 import { PAGE_URLS } from "../../constants/URL";
+import { APP_NAME } from "../../constants/Constants";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -39,7 +40,7 @@ function Navbar() {
         <>
             <nav className="navbar tajawal-extralight">
                 <Link className="plain-text" to={PAGE_URLS.home}>
-                    <h1 className="namestyle">سوق</h1>
+                    <h1 className="namestyle">{APP_NAME}</h1>
                 </Link>
                 <div className="order-cart" style={{ display: "flex", gap: "70px" }}>
                     <Link className="link" to={PAGE_URLS.all_orders}>طلباتي</Link>

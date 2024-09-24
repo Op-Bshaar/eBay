@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Notifications\OrderItemPaidNotification;
+use Notification;
 class OrderRequestItem extends Model
 {
     use HasFactory;
@@ -16,7 +17,7 @@ class OrderRequestItem extends Model
         'quantity',
         'status',
     ];
-    public function setAsPaid()
+    public function setAsPaid($address)
 {
     if ($this->status !== 'pending') {
         throw new \Exception('Order item status is not pending, cannot set as paid.');
@@ -24,6 +25,10 @@ class OrderRequestItem extends Model
 
     $this->status = 'paid';
     $this->save();
+    $seller = $this->product->seller; // Assuming your Product model has a 'seller' relationship
+    if ($seller) {
+       // Notification::send($seller, new OrderItemPaidNotification($this, $seller,$address));
+    }
 }
     public function order(){
         return $this->belongsTo(OrderRequest::class);
