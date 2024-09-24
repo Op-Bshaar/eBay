@@ -6,6 +6,8 @@ import ErrorMessage from "../../components/errorMessage/Error";
 import "./GetAllOrder.css";
 import Order from "../../utils/Order";
 import { addressToText } from "../AddressInput/Address";
+import { generatePath, Link } from "react-router-dom";
+import { PAGE_URLS } from "../../constants/URL";
 
 function GetAllOrder() {
     const [error, setError] = useState<string>("");
@@ -47,6 +49,7 @@ function GetAllOrder() {
                         ) : (
                             <p>حاله الطلب:{order.status}</p>
                         )}
+                        <Link className="button" to={generatePath(PAGE_URLS.view_order, {order_id: order.id }) }>عرض الطلب</Link>
                     </div>
                 ))}
             </div>

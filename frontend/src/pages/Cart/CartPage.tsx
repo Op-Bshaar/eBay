@@ -117,7 +117,8 @@ function CartPage() {
   );
 }
 function AddressPage() {
-    const { cartItems, reloadCart } = useCart();
+    const { cartItems } = useCart();
+    const [, , clearCart] = useCartOperations();
     const [address, setAddress] = useState(emptyAddress);
     const [isAddressValid, setIsAddressValid] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -138,10 +139,10 @@ function AddressPage() {
                 address,
             })
             .then((response) => {
-                const path = generatePath(PAGE_URLS.place_order, { id: response.data.order_id });
+                const path = generatePath(PAGE_URLS.place_order, { order_id: response.data.order_id });
                 navigate(path)
             })
-            .then(reloadCart)
+            .then(clearCart)
             .catch((error) => {
                 let message = "حدث خطأ ما.";
                 if (isAxiosError(error)) {

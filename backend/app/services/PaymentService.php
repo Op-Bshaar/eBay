@@ -175,7 +175,7 @@ class PaymentService
 
         $redirectUrl = $response->json('redirect_url');
         $gwayPaymentId = basename($redirectUrl);
-        $this->order_request->link_generated = true;
+        $this->order_request->link_generated_at = now();
         $this->order_request->save();
         \Log::info('Payment API Initiation Response', [
         'response_body' => $response->json(),

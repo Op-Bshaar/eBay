@@ -39,6 +39,6 @@ export function readUser(user_data: any): User {
         !!user_data["email_verified_at"],
         user_data["first_name"],
         user_data["last_name"],
-        user_data["isAdmin"],
+        user_data["is_admin"],
     );
 }
