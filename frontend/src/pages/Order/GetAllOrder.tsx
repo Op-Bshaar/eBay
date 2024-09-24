@@ -8,6 +8,7 @@ import Order from "../../utils/Order";
 import { addressToText } from "../AddressInput/Address";
 import { generatePath, Link } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
+import { order_status } from "./order_status";
 
 function GetAllOrder() {
     const [error, setError] = useState<string>("");
@@ -47,7 +48,7 @@ function GetAllOrder() {
                         {order.status === "executed" ? (
                             <p>تم الدفع بنجاح</p>
                         ) : (
-                            <p>حاله الطلب:{order.status}</p>
+                                <p>حاله الطلب:{order_status.get(order.status)}</p>
                         )}
                         <Link className="button" to={generatePath(PAGE_URLS.view_order, {order_id: order.id }) }>عرض الطلب</Link>
                     </div>

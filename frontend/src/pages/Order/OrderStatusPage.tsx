@@ -8,6 +8,7 @@ function OrderStatusPage() {
     if (isLoadingOrder || loadingOrderErrorMessage || !order) {
         return <OrderLoadingMessage isLoadingOrder={isLoadingOrder} loadingOrderErrorMessage={loadingOrderErrorMessage} reloadOrder={reloadOrder} order={order} />
     }
+
     return null;
 }
 

@@ -25,6 +25,9 @@ function useOrder(order_id?:string) {
                     if (error.request && !error.response) {
                         message = "تعذر الاتصال, تحقق من الشبكة.";
                     }
+                    else if (error.response && error.response.status === 404) {
+                        message ="لم يتم العثور على الطلب."
+                    }
                 }
                 setErrorMessage(message);
             })
