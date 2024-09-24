@@ -58,8 +58,8 @@ interface product
                             {
                                 label: 'عدد البائعين',
                                 data: Object.values(productmap),
-                                backgroundColor: ['#FF6832', '#36A2EB', '#FFCE56'],
-                                hoverBackgroundColor: ['#FF8C42 ', '#4A90E2', '#FFDD57'],
+                                backgroundColor: ["#7CB9E8", "#00308F", "#72A0C1"],
+                                hoverBackgroundColor: ["#F0F8FF", "#007FFF","#0066b2"],
                             },
                         ],
                     };
