@@ -115,7 +115,7 @@ class AuthController extends Controller
         try {
             SendVerificationEmail::dispatch($user);
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
+            Log::error("Failed to dispatch email verification job for user: {$user->id}", ['error' => $e->getMessage()]);
         }
         return response()->json([
             'message' => 'Registration successful',
