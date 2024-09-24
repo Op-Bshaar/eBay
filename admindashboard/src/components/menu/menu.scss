@@ -7,7 +7,8 @@
   width: 250px; // Fixed width for the menu
   background-color: $dark-bg; // Background color for menu
   padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); // Shadow for menu
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 100px; // Shadow for menu
 
   .item {
     display: flex;
@@ -29,6 +30,7 @@
     .listItem {
       display: flex;
       align-items: center;
+   
       gap: 10px;
       padding: 10px;
       border-radius: 5px;
@@ -47,7 +49,9 @@
       .listItemTitle {
         @include lg {
           display: none;
+          
         }
+
       }
     }
   }
