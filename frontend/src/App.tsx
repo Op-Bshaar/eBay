@@ -4,6 +4,7 @@ import Login from "./pages/login/login";
 import Register from "./pages/register/register";
 import Navbar from "./components/nav/Navbar";
 import Home from "./pages/Home/Home";
+import AdminRoute from "./context/AdminRoute";
 import AdminProducts from "../../admindashboard/src/Pages/AdminProducts";
 import AdminOrders from "../../admindashboard/src/Pages/AdminOrders";
 import DashBoard from "../../admindashboard/src/Pages/dashboard";
@@ -76,20 +77,20 @@ function App() {
                         {/* <Route path={PAGE_URLS.addressInput} element= {<AddressInput/>} /> */}
                         <Route path={PAGE_URLS.place_order} element={<OrderPage />} />
                         <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
-                        <Route path="/admin/dashboard" element={<DashBoard />} />
-                        <Route path="/admin/users" element={<Users />} />
-                        <Route path="/admin/settings" element={<Settings />} />
-                        <Route path="/admin" element={<DashBoard />} />
-                        <Route path="/admin/products" element={<AdminProducts />} />
-                        <Route path="/admin/orders" element={<AdminOrders />} />
-                        <Route path="admin/statistics" element={<AdminChartsMenu />} />
+                        <Route path="/admin/dashboard" element={<AdminRoute><DashBoard /></AdminRoute>} />
+                        <Route path="/admin/users" element={<AdminRoute><Users /></AdminRoute>} />
+                        <Route path="/admin/settings" element={<AdminRoute><Settings /></AdminRoute>} />
+                        <Route path="/admin" element={<AdminRoute><DashBoard /></AdminRoute>} />
+                        <Route path="/admin/products" element={<AdminRoute><AdminProducts /></AdminRoute>} />
+                        <Route path="/admin/orders" element={<AdminRoute><AdminOrders /></AdminRoute>} />
+                        <Route path="admin/statistics" element={<AdminRoute><AdminChartsMenu /></AdminRoute>} />
                         <Route
                             path="/admin/statistics/ProductNameChart"
-                            element={<ProductNameChart />}
+                            element={<AdminRoute><ProductNameChart /></AdminRoute>}
                         />
                         <Route
                             path="/admin/statistics/TopUploadsThisWeek"
-                            element={<ThisWeekUploads />}
+                            element={<AdminRoute><ThisWeekUploads /></AdminRoute>}
                         />
                         <Route path="/products/:id" element={<ProductsDeatils />} />
                         <Route path="/sell" element={<ProductForm />} />
