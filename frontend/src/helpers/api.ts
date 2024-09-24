@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { API_URL } from '../constants/URL';
 
 const api = axios.create({
+    baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
