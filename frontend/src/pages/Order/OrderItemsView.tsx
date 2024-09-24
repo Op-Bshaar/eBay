@@ -1,6 +1,6 @@
 import { displayMoney } from '../../constants/Constants';
 import { OrderItem } from '../../utils/Order';
-import { order_status } from './order_status';
+import { getOrderStatus } from './order_status';
 
 function OrderItemsView({ orderItems, showStatus = false }: { orderItems: OrderItem[], showStatus? :boolean}) {
     return (
@@ -13,7 +13,7 @@ function OrderItemsView({ orderItems, showStatus = false }: { orderItems: OrderI
                         </span>
                         <span>{item.product.title}</span>
                     </span>
-                    {showStatus && <span>{order_status.get(item.status)}</span>}
+                    {showStatus && <span>{getOrderStatus(item.status)}</span>}
                     <span>{displayMoney(item.product.price)}</span>
                 </div>
             </div>

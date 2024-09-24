@@ -8,7 +8,7 @@ import Order from "../../utils/Order";
 import { addressToText } from "../AddressInput/Address";
 import { generatePath, Link } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
-import { order_status } from "./order_status";
+import { getOrderStatus } from "./order_status";
 
 function GetAllOrder() {
     const [error, setError] = useState<string>("");
@@ -43,14 +43,12 @@ function GetAllOrder() {
                 {order.map((order) => (
                     <div key={order.id} className="order-card">
                         <div>
-                            العنوان: {addressToText(order) }
+                            العنوان: {addressToText(order)}.
                         </div>
-                        {order.status === "executed" ? (
-                            <p>تم الدفع بنجاح</p>
-                        ) : (
-                                <p>حاله الطلب:{order_status.get(order.status)}</p>
-                        )}
-                        <Link className="button" to={generatePath(PAGE_URLS.view_order, {order_id: order.id }) }>عرض الطلب</Link>
+                        {
+                            <p>حاله الطلب: {getOrderStatus(order.status)}.</p>
+                        }
+                        <Link className="button" to={generatePath(PAGE_URLS.view_order, { order_id: order.id })}>عرض الطلب</Link>
                     </div>
                 ))}
             </div>
@@ -58,7 +56,7 @@ function GetAllOrder() {
 
     return (
         <div className="tajawal-extralight orders-page">
-            <h1 className="all-orders">كل الطلبات</h1>
+            <h1 className="all-orders">طلباتي</h1>
             {OrderView}
         </div>
     );

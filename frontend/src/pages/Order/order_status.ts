@@ -6,3 +6,7 @@
     ['canceled', 'ملفي'],
     ['timeout', 'ملغي'],
 ]);
+export function getOrderStatus(status: string): string {
+    // Check if the status exists in the map
+    return order_status.get(status) ?? status;
+}

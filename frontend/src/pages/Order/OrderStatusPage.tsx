@@ -4,7 +4,7 @@ import useOrder from "./useOrder";
 import { PAGE_URLS } from "../../constants/URL";
 import OrderItemsView from "./OrderItemsView";
 import "./OrderPage.css";
-import { order_status } from "./order_status";
+import { getOrderStatus } from "./order_status";
 
 function OrderStatusPage() {
     const { order_id } = useParams();
@@ -18,7 +18,7 @@ function OrderStatusPage() {
     return (
         <div className="tajawal-extralight order-page">
             <div className="center-text">
-                {order_status.get(order.status)}
+                {getOrderStatus(order.status)}
             </div>
             <OrderItemsView orderItems={order.items} showStatus={order.status === 'paid' } />
         </div>

@@ -2,47 +2,44 @@
     font-family: 'Tajawal';
     padding: 20px;
     background-color: #f4f6f9;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
-.orders-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
-    padding: 20px;
-}
+    .orders-page h1{
+        margin: 1vh auto;
+    }
+    .orders-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1vh 1vw;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 2.5vh 2.5vw;
+        margin:1vh auto;
+    }
 
 .order-card {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
     padding: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
     animation: fadeIn 0.5s ease-in-out;
+    text-align:center;
 }
-
-@media(any-hover:hover) and (pointer:fine) {
-    .order-card:hover {
+    .order-card>*{
+        margin:0.5vh auto;
+    }
+    @media(any-hover:hover) and (pointer:fine) {
+        .order-card:hover {
         transform: scale(1.01);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 }
 
-.order-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #3498db;
-}
-
 .order-card p {
     margin: 5px 0;
-    font-size: 1rem;
     color: #555;
 }
 
@@ -58,19 +55,6 @@
         transform: translateY(0);
     }
 }
-
-.home-message {
-    color: #e74c3c;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-top: 20px;
-}
-
-.big-message {
-    font-size: 1.5rem;
-}
-
-
 .all-orders {
     font-size: 2rem;
     color: #333;

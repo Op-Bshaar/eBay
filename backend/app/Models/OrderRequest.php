@@ -101,19 +101,23 @@ class OrderRequest extends Model
             $this->cancelOrder('timeout');
         }
     }
-    
-    public function setAsPaid(){
-        if($this->status !== 'pending'){
+    public function setAsPaid()
+{
+    DB::transaction(function () {
+        if ($this->status !== 'pending') {
             throw new \Exception('Order status is not pending, cannot set as paid.');
         }
+
         $this->status = 'paid';
         $this->paid_amount = $this->total_price;
+
         foreach ($this->items as $item) {
             $item->setAsPaid();
         }
-        $this->save();
-    }
 
+        $this->save();
+    });
+}
     public function user()
     {
         return $this->belongsTo(User::class);
