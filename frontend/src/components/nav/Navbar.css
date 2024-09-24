@@ -89,7 +89,7 @@ cursor: pointer;
 }
 
 .cart-icon {
-  color: gray;
+  color: black;
 }
 
 @keyframes fadeIn {
@@ -100,6 +100,28 @@ cursor: pointer;
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .navbar {
+    flex-direction: row;
+    gap: 5px;
+    align-items: flex-start;
+    background-color: #6e767e;
+    padding: 1.5vh 2vw;
+  }
+  .search-icon {
+    margin-left: -100px; 
+  }
+  .cart-icon {
+
+    font-size: larger;
+  }
+
+  .menu-toggle {
+    display: none; 
   }
 }
 
@@ -135,7 +157,7 @@ cursor: pointer;
   }
 
   .cart-icon {
-    color: gray;
+    color: black;
     font-size: larger;
   }
 
