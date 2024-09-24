@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendVerificationEmail;
 use Illuminate\Support\Facades\Redirect;
+use Log;
 class AuthController extends Controller
 {
     //
@@ -113,7 +114,9 @@ class AuthController extends Controller
 
         try {
             SendVerificationEmail::dispatch($user);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+            Log::error("Failed to dispatch email verification job for user: {$user->id}", ['error' => $e->getMessage()]);
+        }
         return response()->json([
             'message' => 'Registration successful',
             'token_type' => 'Bearer',

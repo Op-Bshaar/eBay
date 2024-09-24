@@ -174,7 +174,6 @@ class PaymentService
         $response->throw(); // This will throw an exception on any failure
 
         $redirectUrl = $response->json('redirect_url');
-        $gwayPaymentId = basename($redirectUrl);
         $this->order_request->link_generated_at = now();
         $this->order_request->save();
         \Log::info('Payment API Initiation Response', [

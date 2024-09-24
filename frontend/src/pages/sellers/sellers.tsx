@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Sellers.css";
 import api from "../../helpers/api";
+import { useRequireEmailVerification } from "../login/LoginRedirect";
 
 const Sellers: React.FC = () => {
+    useRequireEmailVerification();
   const [products, setProducts] = useState<any[]>([]);
   const navigate = useNavigate();
 
