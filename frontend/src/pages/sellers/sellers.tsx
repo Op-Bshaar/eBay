@@ -53,7 +53,6 @@ const Sellers: React.FC = () => {
             <div>
                 {products.map((seller) => (
                     <div className="center-text" key={seller.id}>
-                        <h3>البائع {seller.title}</h3>
                         {seller.products.map((product: any) => (
                             <div key={product.id}>
                                 <p>اسم المنتج: {product.title}</p>
