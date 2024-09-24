@@ -10,24 +10,15 @@
     font-family: 'Tajawal', sans-serif;
 }
 
-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
+.sellers-page button {
     padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-bottom: 20px;
+    margin:1vh 0.25%;
 }
 
-h3 {
+.sellers-page h3 {
     font-size: 1.5rem;
     color: #333;
     margin-bottom: 10px;
-
     padding-bottom: 10px;
 }
 
@@ -51,34 +42,6 @@ h3 {
     color: #333;
 }
 
-button.edit-btn, button.delete-btn {
-    padding: 8px 16px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button.edit-btn {
-    background-color: #28a745;
-    color: white;
-}
-
-button.delete-btn {
-    background-color: #dc3545;
-    color: white;
-}
-
-button.edit-btn:hover {
-    background-color: #218838;
-}
-
-button.delete-btn:hover {
-    background-color: #c82333;
-}
-
 @media (max-width: 768px) {
     .sellers-page {
         padding: 10px;
@@ -88,14 +51,9 @@ button.delete-btn:hover {
         font-size: 1.3rem;
     }
 
-    button {
+    .sellers-page button {
         width: 100%;
         font-size: 14px;
-    }
-
-    button.edit-btn, button.delete-btn {
-        width: 100%;
-        margin: 10px 0;
     }
 
     .sellers-page > div > div {

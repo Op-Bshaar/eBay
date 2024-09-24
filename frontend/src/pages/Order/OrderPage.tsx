@@ -10,6 +10,7 @@ import ErrorMessage from "../../components/errorMessage/Error";
 import { isAxiosError } from "axios";
 import useOrder from "./useOrder";
 import OrderLoadingMessage from "./OrderLoadingMessage";
+import OrderItemsView from "./OrderItemsView";
 function OrderPage() {
     useRequireEmailVerification();
     const { order_id } = useParams();
@@ -78,19 +79,7 @@ function OrderPage() {
                     <span>{addressToText(order)}</span>
                 </div>
             )}
-            {orderItems.map((item) => (
-                <div className="order-item-container" key={item.product.id}>
-                    <div className="order-item">
-                        <span className="order-title-image-container">
-                            <span className="order-item-image-container">
-                                {item.product.image && <img src={item.product.image} />}
-                            </span>
-                            <span>{item.product.title}</span>
-                        </span>
-                        <span>{displayMoney(item.product.price)}</span>
-                    </div>
-                </div>
-            ))}
+            <OrderItemsView orderItems={orderItems} />
             {order && orderItems.length > 1 && (
                 <div className="order-item-container">
                     <div className="order-item">

@@ -1,6 +1,9 @@
-import { useParams } from "react-router-dom";
+import { generatePath, Navigate, useParams } from "react-router-dom";
 import OrderLoadingMessage from "./OrderLoadingMessage";
 import useOrder from "./useOrder";
+import { PAGE_URLS } from "../../constants/URL";
+import OrderItemsView from "./OrderItemsView";
+import "./OrderPage.css";
 
 function OrderStatusPage() {
     const { order_id } = useParams();
@@ -8,8 +11,14 @@ function OrderStatusPage() {
     if (isLoadingOrder || loadingOrderErrorMessage || !order) {
         return <OrderLoadingMessage isLoadingOrder={isLoadingOrder} loadingOrderErrorMessage={loadingOrderErrorMessage} reloadOrder={reloadOrder} order={order} />
     }
-
-    return null;
+    if (order.status === 'pending') {
+        return <Navigate to={generatePath(PAGE_URLS.place_order, { order_id }) } />
+    }
+    return (
+        <div className="tajawal-extralight order-page">
+            <OrderItemsView orderItems={order.items} />
+        </div>
+    );
 }
 
 export default OrderStatusPage;
