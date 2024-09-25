@@ -1,60 +1,33 @@
-/* Sellers.css */
 
-.sellers-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: 'Tajawal', sans-serif;
+.seller-products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1vh 1vw;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2.5vh 2.5vw;
+    margin: 1vh auto;
+    justify-items:center;
 }
-
-.sellers-page button {
-    padding: 10px 20px;
-    margin:1vh 0.25%;
-}
-
-.sellers-page > div > div {
+.seller-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background-color: #fff;
-    padding: 15px;
     border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 2.5% 5%;
+    text-align: center;
+    max-width: max(250px,30vw);
 }
-
-.sellers-page p {
-    font-size: 1rem;
-    margin: 5px 0;
-    color: #555;
-}
-
-.sellers-page .product-name {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #333;
-}
-
-@media (max-width: 768px) {
-    .sellers-page {
-        padding: 10px;
+    .seller-product .button{
+        margin:0 1vw;
     }
-
-    h3 {
-        font-size: 1.3rem;
+    .delete-product-button {
+        background-color: #cc0000;
     }
-
-    .sellers-page button {
-        width: 100%;
-        font-size: 14px;
-    }
-
-    .sellers-page > div > div {
-        padding: 10px;
-    }
-
-    .sellers-page p {
-        font-size: 0.9rem;
+@media(any-hover:hover) and (pointer:fine) {
+    .delete-product-button:hover:not(:disabled) {
+        background-color: #dd2200;
     }
 }
-

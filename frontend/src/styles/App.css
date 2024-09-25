@@ -52,7 +52,7 @@ body {
 @media(any-hover:hover) and (pointer:fine) {
     .button:hover:not(:disabled) {
         background-color: #2980b9;
-        transform: scale(1.025);
+        transform: scale(1.0125);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     }
     .link:hover {
