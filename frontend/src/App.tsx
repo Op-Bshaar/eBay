@@ -22,9 +22,9 @@ import AdminRoute from "./context/AdminRoute";
 
 import { lazy, Suspense } from "react";
 import SellerPortal from "./pages/SellerPortal/SellerPortal";
-import Sell from "./pages/Sell/Sell";
 const SellerProducts = lazy(() => import("./pages/sellers/sellers"));
 const ProductForm = lazy(() => import("./pages/Sell/Sell"));
+const SellerOrder = lazy(() => import("./pages/SellerOrder/SellerOrder"));
 const AdminProducts = lazy(
   () => import("../../admindashboard/src/Pages/AdminProducts")
 );
@@ -45,7 +45,6 @@ const ThisWeekUploads = lazy(
 );
 const Users = lazy(() => import("../../admindashboard/src/Pages/Users"));
 const Settings = lazy(() => import("../../admindashboard/src/Pages/Settings"));
-
 function App() {
     const request_email_verification = (
         <ReloadUser redirectTo={PAGE_URLS.email_verification} />
@@ -95,7 +94,8 @@ function App() {
                         <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
                         <Route path="/seller-portal" element={<SellerPortal/> }>
                             <Route index path="products" element={<Suspense><SellerProducts /></Suspense> } />
-                            <Route path="add-product" element={<Suspense><ProductForm /></Suspense> } />
+                            <Route path="add-product" element={<Suspense><ProductForm /></Suspense>} />
+                            <Route path="orders/:order_id" element={<Suspense><SellerOrder/></Suspense> } />
                             <Route path="products/:id" element={<Suspense><ProductForm /></Suspense> } />
                         </Route>
 

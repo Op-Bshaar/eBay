@@ -52,7 +52,7 @@ Route::get('/products', [ProductController::class, 'index']);
 
 // Route for seller
 Route::middleware('auth:sanctum')->group(function (): void{
-Route::get('/sellers/orders/{id}', [SellerController::class, 'getOrderItme']);
+Route::get('/sellers/orders/{id}', [SellerController::class, 'getOrderItem']);
 Route::get('/sellers/products', [SellerController::class, 'getProducts']);
 Route::get('/sellers/products/{id}', [SellerController::class, 'getproduct']);
 Route::get('/sellers/orders', [SellerController::class, 'getorder']);

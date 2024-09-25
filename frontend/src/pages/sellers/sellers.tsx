@@ -26,7 +26,7 @@ const Sellers: React.FC = () => {
     };
     useEffect(() => {
         fetchProducts();
-    },[]);
+    }, []);
     if (isLoading) {
         return (
             <div className="seller-products-loader-container">
@@ -54,20 +54,23 @@ const Sellers: React.FC = () => {
                     <div className="seller-product" key={product.id}>
                         <h2>اسم المنتج: {product.title}</h2>
                         <p>السعر: {product.price}</p>
-                        <div>
-                            <button
-                                className="button"
-                                onClick={() => handleEditProduct(product.id)}
-                            >
-                                تعديل
-                            </button>
-                            <button
-                                className="button delete-product-button"
-                                onClick={() => handleDeleteProduct(product.id)}
-                            >
-                                حذف
-                            </button>
-                        </div>
+                        {product.isAvailable ?
+                            <div>
+                                <button
+                                    className="button"
+                                    onClick={() => handleEditProduct(product.id)}
+                                >
+                                    تعديل
+                                </button>
+                                <button
+                                    className="button delete-product-button"
+                                    onClick={() => handleDeleteProduct(product.id)}
+                                >
+                                    حذف
+                                </button>
+                            </div> :
+                            <div>المنتج غير متاح للبيع حالياً.</div>
+                        }
                     </div>
                 ))
             )}

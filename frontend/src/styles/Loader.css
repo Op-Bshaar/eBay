@@ -23,9 +23,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.center-loader{
-    margin-left:auto;
-    margin-right:auto;
+.loader-container{
+
+}
+.center-loader {
+    margin-left: auto;
+    margin-right: auto;
 }
 @keyframes mulShdSpin {
     0%, 100% {
