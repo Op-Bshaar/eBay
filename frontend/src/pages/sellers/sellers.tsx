@@ -45,7 +45,7 @@ const Sellers: React.FC = () => {
 
         fetchProductSeller();
     }, []);
-
+    console.log(products);
     return (
         <div className="sellers-page">
             <button className="button" onClick={handleAddProduct}>Add New Product</button>
