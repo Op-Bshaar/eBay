@@ -126,5 +126,10 @@ class OrderRequest extends Model
     public function items(){
         return $this->hasMany(OrderRequestItem::class);
     }
-
+    protected function casts(): array
+    {
+        return [
+            'link_generated_at' => 'datetime',
+        ];
+    }
 }

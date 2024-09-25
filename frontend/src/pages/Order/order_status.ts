@@ -1,10 +1,10 @@
 ﻿export const order_status: ReadonlyMap<string, string> = new Map([
-    ['pending', 'قيد التنفيذ'],
+    ['pending', 'بانتظار الدفع'],
     ['paid', 'تم الدفع'],
     ['failed', 'فشل الدفع'],
     ['declined', 'رفض الدفع'],
     ['canceled', 'ملفي'],
-    ['timeout', 'ملغي'],
+    ['timeout', 'ملغي لعدم الدفع'],
     ['notified-seller', 'تم إبلاغ البائع'],
 ]);
 export function getOrderStatus(status: string): string {

@@ -48,7 +48,12 @@ function GetAllOrder() {
                         {
                             <p>حاله الطلب: {getOrderStatus(order.status)}.</p>
                         }
-                        <Link className="button" to={generatePath(PAGE_URLS.view_order, { order_id: order.id })}>عرض الطلب</Link>
+                        <Link className="button" to={generatePath(PAGE_URLS.view_order, { order_id: order.id })}>
+                            {order.status === 'pending' ?
+                                "ادفع" :
+                                "عرض الطلب"
+                            }
+                        </Link>
                     </div>
                 ))}
             </div>
