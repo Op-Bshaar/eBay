@@ -26,8 +26,16 @@ class OrderRequestItem extends Model
     $this->status = 'paid';
     $this->save();
     $seller = $this->product->seller; // Assuming your Product model has a 'seller' relationship
-    if ($seller) {
-       // Notification::send($seller, new OrderItemPaidNotification($this, $seller,$address));
+    try {
+        if ($seller) {
+            
+        Notification::route('mail', $seller->user->email)
+        ->notify(new OrderItemPaidNotification($this, $seller, $address));
+            $this->status = 'notified-seller';
+            $this->save();
+        }
+    } catch (\Exception $e) {
+        \Log::error("Failed to send notification to seller for order item {$this->id}: " . $e->getMessage());
     }
 }
     public function order(){
