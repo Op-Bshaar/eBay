@@ -33,6 +33,7 @@ class SendVerificationEmail implements ShouldQueue
      */
     public function handle()
     {
+        
         // Manually trigger the email verification process
         event(new Registered($this->user)); // Sends verification email
     }

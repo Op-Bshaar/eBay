@@ -29,12 +29,15 @@ Route::get('/reset-password', [PasswordResetController::class, 'showResetForm'])
 Route::post('/rest-password', [PasswordResetController::class, 'reset']);
 
 // update-email
+
+Route::middleware('auth:sanctum')->post('/request-verification-email', [AuthController::class,'requestVerificationEmail'])->name('verification.send');
+
 Route::middleware('auth:sanctum')->post('/update-email', [AuthController::class,'updateEmail']);
 
 
 //request email verification
  
-Route::middleware('auth:sanctum')->post('/request-verification-email', [AuthController::class,'requestVerificationEmail'])->name('verification.send');
+
 //logout
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
