@@ -5,6 +5,7 @@
     ['declined', 'رفض الدفع'],
     ['canceled', 'ملفي'],
     ['timeout', 'ملغي'],
+    ['notified-seller', 'تم إبلاغ البائع'],
 ]);
 export function getOrderStatus(status: string): string {
     // Check if the status exists in the map
