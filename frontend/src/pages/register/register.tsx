@@ -29,8 +29,6 @@ function Register() {
     const [triggerValidate, setTriggerValidate] = useState(false);
     const { setUser } = useAuthenticationContext();
     const validatePhoneNumber = (phoneNumber: E164Number | undefined) => {
-
-        console.log(phoneNumber);
         if (!phoneNumber || !isValidNumber(phoneNumber)) {
             phoneRef.current?.setCustomValidity("رقم الجوال غير صالح.");
         }
