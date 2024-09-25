@@ -80,10 +80,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
         Route::get('admin/users', [AdminController::class, 'index']);
         Route::get('admin/products',[AdminController::class, 'products']);
+        Route::put('admin/products/{id}/availability', [AdminController::class, 'updateAvailability']);
         Route::get('admin/statistics/ProductAmount',[AdminController::class, 'ProductAmount']);
         Route::get('admin/statistics/CategoryAmount',[AdminController::class, 'getCategoryAppearances']);
         Route::get('admin/statistics/UploadsThisWeek',[AdminController::class, 'UploadsThisWeek']);
         Route::get('admin/orders',[AdminController::class, 'orders']);
+        Route::get('admin/orders/{id}',[AdminController::class, 'show']);
         Route::get('admin/settings', [AdminController::class, 'settings']);
     });
 });

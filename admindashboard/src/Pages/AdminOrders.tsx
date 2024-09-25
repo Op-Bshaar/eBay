@@ -1,33 +1,40 @@
 import { useEffect, useState } from "react";
 import Product from "../../../frontend/src/utils/Product";
 import ProductView from "../../../frontend/src/components/ProductView/ProductView";
-import { Link } from "react-router-dom";
-import SideBar from "../../../frontend/src/components/SideBar/SideBar";
-import TopBar from "../../../frontend/src/components/TopBar/TopBar";
 import api from "../../../frontend/src/helpers/api";
-import "./css/AdminProducts.css";
+
+import OrderView from "../../../frontend/src/components/orderview/OrdersVeiw";
+
+interface Order {
+  id: number;
+  city: string;
+  country: string;
+  total_price: string;
+  status: string;
+}
+
 function AdminOrders() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchOrders = async () => {
       try {
         const response = await api.get(`/admin/orders`);
-        console.log(response);
-  
-      
-        const fetchedProducts = response.data.orderes; 
-  
-        setProducts(fetchedProducts); 
-        console.log('Fetched Products:', fetchedProducts); 
+        console.log("Full API Response:", response); 
+        const fetchedOrders = response?.data?.orderes;  
+        console.log("Fetched Orders:", fetchedOrders);  
+        setOrders(fetchedOrders);
       } catch (error) {
         console.error("Fetch error:", error);
-        setError("An error occurred while fetching products.");
+        setError("An error occurred while fetching orders.");
+      } finally {
+        setLoading(false);
       }
     };
   
-    fetchProducts();
+    fetchOrders();
   }, []);
   
 
@@ -35,38 +42,23 @@ function AdminOrders() {
     return <div>{error}</div>;
   }
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div
-      className="tajawal-extralight"
-      style={{ display: "flex", height: "100vh" }}
-    >
-      <div style={{ flex: "1" }}>{/* <SideBar /> */}</div>
-      <div style={{ padding: "20px", overflowY: "auto" }}>
-        {/* <TopBar /> */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "1px",
-            justifyContent: "center",
-            padding: "20px",
-            boxSizing: "border-box",
-          }}
-        >
-          {products.length > 0 ? (
-            products.map((product, index) => (
-              <div>
-                <button className="editbutton">Edit</button>
-                <ProductView key={index} product={product} />
-              </div>
-            ))
-          ) : (
-            <p>No orders available</p>
-          )}
-        </div>
-      </div>
+    <div className="orders-container">
+      {orders && orders.length > 0 ? (
+        orders.map((order, index) => (
+          <OrderView key={index} order={order} />
+        ))
+      ) : (
+        <p>No orders available</p>
+      )}
     </div>
   );
 }
+
+
 
 export default AdminOrders;
