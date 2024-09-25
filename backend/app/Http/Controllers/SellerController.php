@@ -15,10 +15,14 @@ use Illuminate\Support\Facades\Log;
 class SellerController extends Controller
 {
 
-    public function getAllSellersProducts()
+    public function getAllSellersProducts($seller_id)
     {
-        $sellers = Seller::with('products')->get();
-        return response()->json($sellers);
+        $sellers = Seller::with('products')->find($seller_id);
+
+        if (!$sellers) {
+            return response()->json(['message' => 'Seller not found'], 404);
+        }
+        return response()->json($sellers->products);
     }
 
     public function getproduct($id)
