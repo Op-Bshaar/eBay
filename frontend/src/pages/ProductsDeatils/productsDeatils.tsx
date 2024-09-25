@@ -9,9 +9,10 @@ import "../Cart/Cart.css";
 import api, { useIsAuthenticated } from "../../helpers/api";
 import './ProductDetails.css'
 import { isAxiosError } from "axios";
-import { cartContainsItem, useCartOperations } from "../../utils/Cart";
+import { cartContainsItem, CartItem, useCartOperations } from "../../utils/Cart";
 import { displayMoney } from "../../constants/Constants";
 import { useRedirectToLogin } from "../login/LoginRedirect";
+import AddressPage from "../AddressPage/AddressPage";
 
 function ProductsDeatils() {
     const id = useParams<{ id: string }>().id ?? "";
@@ -22,6 +23,7 @@ function ProductsDeatils() {
     const [isLoadingProduct, setIsLoadingProduct] = useState(false);
     const { cartItems } = useCart();
     const [addToCart, removeFromCart] = useCartOperations();
+    const [shouldInputAddress, setShouldInputAddress] = useState(false);
     const isProductInCart = product
         ? cartContainsItem(cartItems, product)
         : false;
@@ -56,6 +58,10 @@ function ProductsDeatils() {
     useEffect(() => {
         fetchProduct(id);
     }, [id]);
+    if (shouldInputAddress && product) {
+        const item: CartItem = {product:product,quantity:1};
+        return <AddressPage order_items={[item] } />;
+    }
     const productLoader = <div className="loader" />;
     const errorElement = (
         <ErrorMessage className="big-message">
@@ -104,6 +110,7 @@ function ProductsDeatils() {
                         {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
                     </button>
                 }
+                <button className="button" onClick={() => setShouldInputAddress(true)}>شراء</button>
             </article>
 
             {isProductInCart && (
