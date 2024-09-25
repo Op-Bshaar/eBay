@@ -16,5 +16,6 @@ it contains the Laravel code for the backend
 contains the front end code for the admin pages.
 
 ## instructions
+first run 'PHP artisan migrate' to create the local database for the application, don't forget to configure you '.env' folder.
 to launch run 'PHP artisan Serve' in a terminal in the backend folder, then run 'npm run dev' in a seperate terminal in the front end folder.
 you can then access the website from your local host link.
