@@ -20,6 +20,10 @@
 .seller-nav-sellected {
     background-color: #ccc;
 }
+.seller-rating{
+    font-size:1.25em;
+    margin: 2vh 2vw;
+}
 @media(any-hover:hover) and (pointer:fine) {
     .seller-nav > *:hover {
         background-color: #fff;

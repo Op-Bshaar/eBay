@@ -94,9 +94,9 @@ function App() {
                         <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
                         <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
                         <Route path="/seller-portal" element={<SellerPortal/> }>
-                            <Route path="products" element={<Suspense><SellerProducts /></Suspense> } />
-                            <Route path="add-product" element={<Suspense><Sell /></Suspense> } />
-                            <Route path="products/:id" element={<Suspense><Sell /></Suspense> } />
+                            <Route index path="products" element={<Suspense><SellerProducts /></Suspense> } />
+                            <Route path="add-product" element={<Suspense><ProductForm /></Suspense> } />
+                            <Route path="products/:id" element={<Suspense><ProductForm /></Suspense> } />
                         </Route>
 
                         <Route

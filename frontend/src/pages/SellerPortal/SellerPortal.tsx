@@ -20,6 +20,9 @@ function SellerPortal() {
                     إضافة منتج
                 </NavLink>
             </nav>
+            <div className="seller-rating">
+                تقييمي: لا يوجد تقييم.
+            </div>
             <Outlet />
         </>
     );

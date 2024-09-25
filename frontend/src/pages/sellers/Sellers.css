@@ -26,6 +26,13 @@
     .delete-product-button {
         background-color: #cc0000;
     }
+.seller-products-loader-container{
+    display:flex;
+    min-height:25vh;
+    width:100%;
+    justify-content:center;
+    align-items:center;
+}
 @media(any-hover:hover) and (pointer:fine) {
     .delete-product-button:hover:not(:disabled) {
         background-color: #dd2200;
