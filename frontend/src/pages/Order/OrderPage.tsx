@@ -4,13 +4,15 @@ import "./OrderPage.css";
 import { useRequireEmailVerification } from "../login/LoginRedirect";
 import { useState } from "react";
 import api from "../../helpers/api";
-import { useParams } from "react-router-dom";
+import { generatePath, Navigate, useParams } from "react-router-dom";
 import { addressToText } from "../AddressInput/Address";
 import ErrorMessage from "../../components/errorMessage/Error";
 import { isAxiosError } from "axios";
 import useOrder from "./useOrder";
 import OrderLoadingMessage from "./OrderLoadingMessage";
 import OrderItemsView from "./OrderItemsView";
+import { ignore } from "antd/es/theme/useToken";
+import { PAGE_URLS } from "../../constants/URL";
 function OrderPage() {
     useRequireEmailVerification();
     const { order_id } = useParams();
@@ -70,6 +72,9 @@ function OrderPage() {
     }
     if (isLoadingOrder || loadingOrderErrorMessage || !order) {
         return <OrderLoadingMessage isLoadingOrder={isLoadingOrder} loadingOrderErrorMessage={loadingOrderErrorMessage} reloadOrder={reloadOrder} order={order} />
+    }
+    if (order.status !== 'pending') {
+        return <Navigate to={generatePath(PAGE_URLS.view_order, { order_id: order.id })} />
     }
     const items = (
         <div className="order-items-container">

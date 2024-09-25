@@ -16,8 +16,8 @@ function OrderStatusPage() {
         return <Navigate to={generatePath(PAGE_URLS.place_order, { order_id }) } />
     }
     return (
-        <div className="tajawal-extralight order-page">
-            <div className="center-text">
+        <div className="tajawal-extralight order-page center-text">
+            <div className="center-text order-status">
                 {getOrderStatus(order.status)}
             </div>
             <OrderItemsView orderItems={order.items} showStatus={order.status === 'paid' } />

@@ -6,6 +6,9 @@
     padding: 2vh 0;
     transition: background-color 0.5s ease-in-out;
 }
+.order-status{
+    font-size:2em;
+}
 .order-items-container {
     display: flex;
     flex-direction: column;
