@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderRequestItem;
 use App\Models\Product;
 use App\Models\Seller;
 use Illuminate\Http\Request;
@@ -25,6 +26,11 @@ class SellerController extends Controller
         $product = Product::with('seller')->findOrFail($id);
 
         return response()->json($product);
+    }
+    public function getorder()
+    {
+        $order = OrderRequestItem::with('order')->get();
+        return response()->json($order);
     }
 
     public function addProducts(Request $request)
