@@ -19,6 +19,7 @@
     }
 .seller-nav-sellected {
     background-color: #ccc;
+    transform:scale(1.05);
 }
 .seller-rating{
     font-size:1.25em;

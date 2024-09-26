@@ -92,10 +92,10 @@ function App() {
                         <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
                         <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
                         <Route path="/seller-portal" element={<SellerPortal />}>
-                            <Route index path="products" element={<Suspense><SellerProducts /></Suspense>} />
-                            <Route path="add-product" element={<Suspense><ProductForm /></Suspense>} />
-                            <Route path="orders/:order_id" element={<Suspense><SellerOrder /></Suspense>} />
-                            <Route path="products/:id" element={<Suspense><ProductForm /></Suspense>} />
+                            <Route index path="products" element={<Suspense fallback={loader }><SellerProducts /></Suspense>} />
+                            <Route path="add-product" element={<Suspense fallback={loader}><ProductForm /></Suspense>} />
+                            <Route path="orders/:order_id" element={<Suspense fallback={loader}><SellerOrder /></Suspense>} />
+                            <Route path="products/:id" element={<Suspense fallback={loader}><ProductForm /></Suspense>} />
                         </Route>
 
                         <Route
