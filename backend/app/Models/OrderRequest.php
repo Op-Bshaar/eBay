@@ -75,6 +75,7 @@ class OrderRequest extends Model
 
             // Loop through each order item and update the related product's isAvailable field to true
             foreach ($orderItems as $orderItem) {
+                $orderItem->status = $status;
                 $product = $orderItem->product;
                 if ($product) {
                     $product->update(['isAvailable' => true]);

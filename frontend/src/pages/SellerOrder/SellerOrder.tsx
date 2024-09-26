@@ -5,7 +5,10 @@ import api from "../../helpers/api";
 import { OrderItem } from "../../utils/Order";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import "../../styles/Loader.css";
+import "./SellerOrder.css";
 import { isAxiosError } from "axios";
+import ProductView from "../../components/ProductView/ProductView";
+import { getOrderStatus } from "../Order/order_status";
 function SellerOrder() {
     useRequireAuthentication();
     const { order_id } = useParams();
@@ -13,8 +16,25 @@ function SellerOrder() {
     if (!order) {
         return messageElement;
     }
+    const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} />
+    const isReadyForShipment = order.status === 'paid' || order.status === 'notified-seller';
+    const shipment = isReadyForShipment &&
+        <>
+        <p>
+        <span>
+            الرجاء شحن المنتج إل العنوان التالي:
+            </span>
+        </p>
+        </>;
     return (
-        <p>{`${JSON.stringify(order)}` }</p>
+        <div className="seller-order-page">
+            <div className="seller-order-status">
+                حالة الطلب: { getOrderStatus(order.status)}
+            </div>
+            {product}
+            <button className="button">عرض المنتج</button>
+            {shipment }
+        </div>
     );
 }
 function useOrder(order_id?: string) {
@@ -28,7 +48,7 @@ function useOrder(order_id?: string) {
             api.get(`/sellers/orders/${order_id}`)
                 .then((response) => {
                     const data = response.data;
-                    setOrder(data);
+                    setOrder(data.order);
                 }).catch(error => {
                     console.log(error);
                     if (isAxiosError(error) && error.response?.status === 404) { /* empty */ }

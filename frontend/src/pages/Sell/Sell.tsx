@@ -6,18 +6,20 @@ import "../../styles/Loader.css";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ValidateFile from "../../components/FileInput/ValidateFile";
+import { PAGE_URLS } from "../../constants/URL";
 
 const ProductForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  useRequireAuthentication();
+    useRequireAuthentication();
+    const navigate = useNavigate();
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isloadding, setIsLoadding] = useState(false);
   const [createdProductId, setCreatedProductId] = useState<number | null>(null);
-  const [updateSuccess, setUpdateSuccess] = useState(false);
+    const [updateSuccess, setUpdateSuccess] = useState(false);
   const [product, setProduct] = useState({
     title: "",
     description: "",
@@ -127,7 +129,8 @@ const ProductForm: React.FC = () => {
         <p>{updateSuccess ? "تم تحديث المنتج" : "تمت إضافة المنتج بنجاح"}</p>
         <Link to={`/products/${createdProductId}`} className="button">
           عرض المنتج
-        </Link>
+            </Link>
+            <button className="button" onClick={() => navigate("/seller-portal/add-product") }>إضافة منتج آخر</button>
       </div>
     );
   }
