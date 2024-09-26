@@ -47,7 +47,7 @@ const Users = lazy(() => import("../../admindashboard/src/Pages/Users"));
 const Settings = lazy(() => import("../../admindashboard/src/Pages/Settings"));
 function App() {
     const request_email_verification = (
-        <ReloadUser redirectTo={PAGE_URLS.email_verification} />
+        <ReloadUser><EmailVerification /></ReloadUser>
     );
 
     return (
@@ -69,10 +69,9 @@ function App() {
                             element={<RequestPasswordReset />}
                         />
                         <Route path={PAGE_URLS.restpassword} element={<RestPassword />} />
-                        <Route path={PAGE_URLS.reload_user} element={<ReloadUser />} />
                         <Route
                             path={PAGE_URLS.email_verification}
-                            element={<EmailVerification />}
+                            element={request_email_verification}
                         />
                         <Route
                             path={PAGE_URLS.email_verified_successfuly}
@@ -92,11 +91,11 @@ function App() {
                         <Route path={PAGE_URLS.place_order} element={<OrderPage />} />
                         <Route path={PAGE_URLS.view_order} element={<OrderStatusPage />} />
                         <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
-                        <Route path="/seller-portal" element={<SellerPortal/> }>
-                            <Route index path="products" element={<Suspense><SellerProducts /></Suspense> } />
+                        <Route path="/seller-portal" element={<SellerPortal />}>
+                            <Route index path="products" element={<Suspense><SellerProducts /></Suspense>} />
                             <Route path="add-product" element={<Suspense><ProductForm /></Suspense>} />
-                            <Route path="orders/:order_id" element={<Suspense><SellerOrder/></Suspense> } />
-                            <Route path="products/:id" element={<Suspense><ProductForm /></Suspense> } />
+                            <Route path="orders/:order_id" element={<Suspense><SellerOrder /></Suspense>} />
+                            <Route path="products/:id" element={<Suspense><ProductForm /></Suspense>} />
                         </Route>
 
                         <Route
