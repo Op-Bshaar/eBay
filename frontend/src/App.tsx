@@ -49,7 +49,7 @@ function App() {
     const request_email_verification = (
         <ReloadUser><EmailVerification /></ReloadUser>
     );
-
+    const loader = <div style={{ marginTop: "30vh" }} className="loader center-loader" />;
     return (
         <AuthenticationProvider>
             <CartProvider>
@@ -102,7 +102,7 @@ function App() {
                             path="/admin/dashboard"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Admin Dashboard...</div>}>
+                                    <Suspense fallback={loader}>
                                         <DashBoard />
                                     </Suspense>
                                 </AdminRoute>
@@ -112,7 +112,7 @@ function App() {
                             path="/admin/users"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Admin Users...</div>}>
+                                    <Suspense fallback={loader}>
                                         <Users />
                                     </Suspense>
                                 </AdminRoute>
@@ -122,7 +122,7 @@ function App() {
                             path="/admin/settings"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Admin Settings...</div>}>
+                                    <Suspense fallback={loader}>
                                         <Settings />
                                     </Suspense>
                                 </AdminRoute>
@@ -132,7 +132,7 @@ function App() {
                             path="/admin/products"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Admin Products...</div>}>
+                                    <Suspense fallback={loader}>
                                         <AdminProducts />
                                     </Suspense>
                                 </AdminRoute>
@@ -142,7 +142,7 @@ function App() {
                             path="/admin/orders"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Admin Orders...</div>}>
+                                    <Suspense fallback={loader}>
                                         <AdminOrders />
                                     </Suspense>
                                 </AdminRoute>
@@ -152,7 +152,7 @@ function App() {
                             path="admin/statistics"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Admin Statistics...</div>}>
+                                    <Suspense fallback={loader}>
                                         <AdminChartsMenu />
                                     </Suspense>
                                 </AdminRoute>
@@ -162,7 +162,7 @@ function App() {
                             path="/admin/statistics/ProductNameChart"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Product Name Chart...</div>}>
+                                    <Suspense fallback={loader}>
                                         <ProductNameChart />
                                     </Suspense>
                                 </AdminRoute>
@@ -172,7 +172,7 @@ function App() {
                             path="/admin/statistics/TopUploadsThisWeek"
                             element={
                                 <AdminRoute>
-                                    <Suspense fallback={<div>Loading Top Uploads...</div>}>
+                                    <Suspense fallback={loader}>
                                         <ThisWeekUploads />
                                     </Suspense>
                                 </AdminRoute>
