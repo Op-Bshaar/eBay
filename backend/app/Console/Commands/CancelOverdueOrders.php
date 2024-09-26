@@ -13,7 +13,7 @@ class CancelOverdueOrders extends Command
     // The console command description.
     protected $description = 'Cancel unpaid orders that have exceeded the time limit';
 
-    // Time limit for pending orders in minutes (e.g., 30 minutes)
+    // Time limit for pending orders in minutes
     protected $timeLimitInMinutes = 30;
 
     /**
