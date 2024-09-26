@@ -7,6 +7,7 @@ use App\Models\OrderRequestItem;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -112,5 +113,22 @@ class AdminController extends Controller
         } else {
             return response()->json(['message' => 'Order not found'], 404);
         }
+    }
+
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+        ]);
+
+
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->save();
+
+        return response()->json(['message' => 'Category added successfully'], 201);
     }
 }

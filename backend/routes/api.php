@@ -92,6 +92,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('admin/orders',[AdminController::class, 'orders']);
         Route::get('admin/orders/{id}',[AdminController::class, 'show']);
         Route::get('admin/settings', [AdminController::class, 'settings']);
+
+        Route::post('admin/categories', [CategoryController::class, 'store']);
     });
 });
 
