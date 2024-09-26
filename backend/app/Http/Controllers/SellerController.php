@@ -36,23 +36,23 @@ class SellerController extends Controller
     public function getOrders(Request $request)
     {
         $seller = $request->user()->seller;
-    
-        // If the user has no associated seller, return an empty array
+
+
         if (!$seller) {
             return response()->json([]);
         }
-    
-        // Get all products belonging to the seller and extract their IDs
+
+
         $productIds = $seller->products()->pluck('id');
-    
-        // Retrieve all order items related to these product IDs in a single query
+
+
         $orders = OrderRequestItem::whereIn('product_id', $productIds)
-                    ->with('product') // Include related product data if needed
-                    ->get();
-    
+            ->with('product')
+            ->get();
+
         return response()->json($orders);
     }
-    
+
 
     public function addProducts(Request $request)
     {
@@ -152,13 +152,13 @@ class SellerController extends Controller
         return response()->json(['message' => 'Product deleted successfully']);
     }
 
-    public function getOrderItem(Request $request, $order_id){
+    public function getOrderItem(Request $request, $order_id)
+    {
         $seller = $request->user()->seller;
-        $order = OrderRequestItem::with(['product','orderRequest'])->findOrFail($order_id);
-        if (!$seller || $order->product->seller_id !== $seller->id) 
-        {
-            return response()->json(['message' => 'unauthorized'],401 );
+        $order = OrderRequestItem::with(['product', 'orderRequest'])->findOrFail($order_id);
+        if (!$seller || $order->product->seller_id !== $seller->id) {
+            return response()->json(['message' => 'unauthorized'], 401);
         }
-        return response()->json(['order' => $order],200);
+        return response()->json(['order' => $order], 200);
     }
 }
