@@ -14,13 +14,13 @@ import { displayMoney } from "../../constants/Constants";
 import { useRedirectToLogin } from "../login/LoginRedirect";
 import AddressPage from "../AddressPage/AddressPage";
 
-function ProductsDeatils() {
+function ProductsDeatils({ viewer = "buyer" }: { viewer?: "buyer" | "seller" }) {
     const id = useParams<{ id: string }>().id ?? "";
     const isAthenticated = useIsAuthenticated();
     const redirectToLogin = useRedirectToLogin();
     const [product, setProduct] = useState<Product | null>(null);
     const [errorMessage, setErrorMessage] = useState<string>("");
-    const [isLoadingProduct, setIsLoadingProduct] = useState(false);
+    const [isLoadingProduct, setIsLoadingProduct] = useState(true);
     const { cartItems } = useCart();
     const [addToCart, removeFromCart] = useCartOperations();
     const [shouldInputAddress, setShouldInputAddress] = useState(false);
@@ -29,9 +29,15 @@ function ProductsDeatils() {
         : false;
     const fetchProduct = async (id: string) => {
         try {
-            setErrorMessage("");
-            setIsLoadingProduct(true);
-            setProduct(null);
+            if (errorMessage) {
+                setErrorMessage("");
+            }
+            if (!isLoadingProduct) {
+                setIsLoadingProduct(true);
+            }
+            if (product) {
+                setProduct(null);
+            }
             const response = await api.get(`/products/${id}`);
             const data = response.data;
             setProduct(readProduct(data));
@@ -57,10 +63,11 @@ function ProductsDeatils() {
     };
     useEffect(() => {
         fetchProduct(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
     if (shouldInputAddress && product) {
-        const item: CartItem = {product:product,quantity:1};
-        return <AddressPage order_items={[item] } />;
+        const item: CartItem = { product: product, quantity: 1 };
+        return <AddressPage order_items={[item]} />;
     }
     const productLoader = <div className="loader" />;
     const errorElement = (
@@ -97,20 +104,22 @@ function ProductsDeatils() {
                 <p>{product.description}</p>
                 <p>السعر: {displayMoney(product.price)}</p>
                 {
-                    product.isAvailable &&
-                    <button
-                        className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
-                        onClick={isAthenticated ?
-                            isProductInCart
-                                ? () => removeFromCart(product)
-                                : () => addToCart(product) :
-                            redirectToLogin
-                        }
-                    >
-                        {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
-                    </button>
+                    product.isAvailable && viewer === "buyer" &&
+                    <>
+                        <button
+                            className={`button ${isProductInCart ? "remove-from-cart-button" : ""}`}
+                            onClick={isAthenticated ?
+                                isProductInCart
+                                    ? () => removeFromCart(product)
+                                    : () => addToCart(product) :
+                                redirectToLogin
+                            }
+                        >
+                            {isProductInCart ? "احذف من السلة" : "أضف إلى السلة"}
+                        </button>
+                        {!isProductInCart && <button className="button" onClick={() => setShouldInputAddress(true)}>شراء</button>}
+                    </>
                 }
-                <button className="button" onClick={() => setShouldInputAddress(true)}>شراء</button>
             </article>
 
             {isProductInCart && (

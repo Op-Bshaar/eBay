@@ -98,12 +98,17 @@ function App() {
                         <Route path={PAGE_URLS.all_orders} element={<GetAllOrder />} />
                         <Route path="/seller-portal" element={<SellerPortal />}>
                             <Route
-                                index
                                 path="products"
                                 element={
                                     <Suspense fallback={loader}>
                                         <SellerProducts />
                                     </Suspense>
+                                }
+                            />
+                            <Route
+                                path="products/:id"
+                                element={
+                                    <ProductsDeatils viewer="seller"/>
                                 }
                             />
                             <Route

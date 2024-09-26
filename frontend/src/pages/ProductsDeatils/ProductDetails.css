@@ -27,11 +27,13 @@
     box-sizing: border-box;
     text-align: center;
 }
-  
-  .product-details:hover {
-    transform: scale(1.03);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
-  }
+    .product-details .button{
+        min-width:45%;
+    }
+    .product-details:hover {
+        transform: scale(1.03);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+    }
 
     .product-details img {
         box-sizing: border-box;

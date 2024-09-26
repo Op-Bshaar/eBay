@@ -1,15 +1,18 @@
 .product-created-successfully{
     text-align:center;
 }
-.sell-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1em;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    margin: 2.5vh auto;
-}
+    .product-created-successfully .button{
+        margin:5vh 0.75vw;
+    }
+    .sell-form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 1em;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        margin: 2.5vh auto;
+    }
 
 .objective {
     font-size: 1.2em;
