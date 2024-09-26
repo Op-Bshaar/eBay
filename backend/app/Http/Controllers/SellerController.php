@@ -18,8 +18,7 @@ class SellerController extends Controller
     public function getProducts(Request $request)
     {
         $seller = $request->user()->seller;
-        if(!$seller)
-        {
+        if (!$seller) {
             return response()->json([]);
         }
         $products = $seller->products;

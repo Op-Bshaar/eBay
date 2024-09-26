@@ -7,7 +7,7 @@ function SellerPortal() {
                 <NavLink
                     className={() => location.pathname.startsWith('/seller-portal/products') ? "seller-nav-sellected" : ""}
                     to="products">
-                    مننجاتي
+                    منتجاتي
                 </NavLink>
                 <NavLink
                     className={() => location.pathname.startsWith('/seller-portal/orders') ? "seller-nav-sellected" : ""}

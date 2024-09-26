@@ -13,9 +13,9 @@ const ProductForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   useRequireAuthentication();
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const[imageerror,setImageError] = useState<string|null>(null)
+  const [imageerror, setImageError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const[isloadding,setIsLoadding] = useState(false);
+  const [isloadding, setIsLoadding] = useState(false);
   const [createdProductId, setCreatedProductId] = useState<number | null>(null);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [product, setProduct] = useState({
@@ -88,7 +88,7 @@ const ProductForm: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setUpdateSuccess(false);
-    if(imageerror){
+    if (imageerror) {
       return;
     }
     const formData = new FormData();
@@ -135,84 +135,75 @@ const ProductForm: React.FC = () => {
   return (
     <form className="sell-form tajawal-extralight" onSubmit={handleSubmit}>
       <div>
-        {isloadding ? (
-          <div>
-            يتم التحميل.....
+        <>
+          <h2 className="objective">مواصفات المنتج:</h2>
+          <br />
+          <label htmlFor="title" className="lab">
+            الاسم
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={product.title}
+            onChange={handleChange}
+            className="name"
+          />
+          <label htmlFor="description" className="lab">
+            المواصفات
+          </label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            value={product.description}
+            onChange={handleChange}
+            className="description"
+          />
+          <label htmlFor="price" className="lab">
+            السعر
+          </label>
+          <input
+            type="text"
+            id="price"
+            name="price"
+            pattern="^\d+(\.\d{1,2})?$"
+            inputMode="numeric"
+            value={product.price}
+            onChange={handleChange}
+            className="price"
+          />
+
+          {/* Display existing image if present */}
+          {product.image && !imageFile && (
+            <div className="current-image">
+              <img src={product.image} alt="Current product" />
+              <p>الصورة الحالية</p>
             </div>
-        ) : (
-          <>
-            <h2 className="objective">مواصفات المنتج:</h2>
-            <br />
-            <label htmlFor="title" className="lab">
-              الاسم
-            </label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              value={product.title}
-              onChange={handleChange}
-              className="name"
-            />
-            <label htmlFor="description" className="lab">
-              المواصفات
-            </label>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              value={product.description}
-              onChange={handleChange}
-              className="description"
-            />
-            <label htmlFor="price" className="lab">
-              السعر
-            </label>
-            <input
-              type="text"
-              id="price"
-              name="price"
-              pattern="^\d+(\.\d{1,2})?$"
-              inputMode="numeric"
-              value={product.price}
-              onChange={handleChange}
-              className="price"
-            />
+          )}
 
-            {/* Display existing image if present */}
-            {product.image && !imageFile && (
-              <div className="current-image">
-                <img src={product.image} alt="Current product" />
-                <p>الصورة الحالية</p>
-              </div>
-            )}
-
-            <label htmlFor="image" className="lab">
-              الصوره
-            </label>
-            <input
-              type="file"
-              id="image"
-              name="image"
-              accept={allowedFileTypes.join(",")}
-              onChange={handleImageChange}
-              ref={fileInputRef}
-              className="hidden"
-            />
-            <FileInputButton
-              file={imageFile}
-              triggerFileInput={triggerFileInput}
-            >
-              اختر صورة المنتج
-            </FileInputButton>
-            <FileDropArea
-              maxSizeInBytes={2048 * 1024}
-              allowedFileTypes={allowedFileTypes}
-              file={imageFile}
-              setFile={setImageFile}
-            />
-          </>
-        )}
+          <label htmlFor="image" className="lab">
+            الصوره
+          </label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept={allowedFileTypes.join(",")}
+            onChange={handleImageChange}
+            ref={fileInputRef}
+            className="hidden"
+          />
+          <FileInputButton file={imageFile} triggerFileInput={triggerFileInput}>
+            اختر صورة المنتج
+          </FileInputButton>
+          <FileDropArea
+            maxSizeInBytes={2048 * 1024}
+            allowedFileTypes={allowedFileTypes}
+            file={imageFile}
+            setFile={setImageFile}
+          />
+        </>
       </div>
 
       {updateSuccess && (
