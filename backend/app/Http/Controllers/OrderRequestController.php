@@ -106,6 +106,7 @@ class OrderRequestController extends Controller
         return response()->json($order, 200);
     }
 
+    
     // Method to retrieve all orders for the authenticated user
     public function getOrders()
     {

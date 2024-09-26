@@ -7,7 +7,7 @@ class Product {
     public description: string;
     public image: string
     public seller_id: string;
-    public category: Category | null;
+    public category_id: string | null;
     public isAvailable: boolean;
     constructor(id: string, price: string, seller_id: string, title: string, description: string, image: string, isAvailable:boolean, category: Category | null = null)
     {
@@ -18,7 +18,7 @@ class Product {
         this.description= description;
         this.image= image;
         this.isAvailable = isAvailable;
-        this.category = category;
+        this.category_id = category;
     }
 
 }

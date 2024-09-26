@@ -134,4 +134,14 @@ class SellerController extends Controller
 
         return response()->json(['message' => 'Product deleted successfully']);
     }
+
+    public function getOrderItem(Request $request, $order_id){
+        $seller = $request->user()->seller;
+        $order = OrderRequestItem::with('product')->findOrFail($order_id);
+        if (!$seller || $order->product->seller_id !== $seller->id) 
+        {
+            return response()->json(['message' => 'unauthorized'],401 );
+        }
+        return response()->json(['order' => $order],200);
+    }
 }

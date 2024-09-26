@@ -2,10 +2,13 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import React from "react";
-import { itemdata } from "../../utils/itemdata";
 import "./TopBar.css";
-
-const HeroItem: React.FC<{ onCategorySelect: (categoryId: number) => void }> = ({ onCategorySelect }) => {
+import { Category } from "../../utils/Category";
+interface HeroItemProps {
+    categories: Category[];
+    onCategorySelect: (categoryId: string) => void;
+}
+const HeroItem: React.FC<HeroItemProps> = ({ categories, onCategorySelect }) => {
   const settings = {
     infinite: true,
     speed: 500,
@@ -31,21 +34,21 @@ const HeroItem: React.FC<{ onCategorySelect: (categoryId: number) => void }> = (
     ],
   };
 
-  const handleClick = (categoryId: number) => {
+  const handleClick = (categoryId: string) => {
     onCategorySelect(categoryId);
   };
 
   return (
     <div>
       <Slider {...settings} className="hero-item-container">
-        {itemdata.map((item) => (
+              {categories.map((category) => (
           <div
-            key={item.id}
+            key={category.id}
             className="hero-item"
-            onClick={() => handleClick(item.id)}
+            onClick={() => handleClick(category.id)}
           >
-            <div className="icon-container">{item.icon}</div>
-            <span className="item-text">{item.item}</span>
+            <div className="icon-container">{category.icon}</div>
+            <span className="item-text">{category.name}</span>
           </div>
         ))}
       </Slider>

@@ -13,7 +13,7 @@ import { Category } from "../../utils/Category";
 function Home() {
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState(false);
 
@@ -47,14 +47,13 @@ function Home() {
         fetchProducts();
     }, []);
 
-    const handleCategoryChange = (categoryId: number) => {
-        console.log(categoryId);
+    const handleCategoryChange = (categoryId: string) => {
         setSelectedCategory(categoryId);
     };
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-  ? products.filter((product) => product.category?.id === selectedCategory)
+  ? products.filter((product) => product.category_id === selectedCategory)
   : products;
 
     
@@ -79,7 +78,7 @@ function Home() {
     return (
         <div className="tajawal-extralight">
             <div className="topbar-container">
-                <HeroItem onCategorySelect={handleCategoryChange} />
+                <HeroItem categories={categories} onCategorySelect={handleCategoryChange} />
                 <div className="sidebar-container">
                     <SideBar
                         categories={categories}
