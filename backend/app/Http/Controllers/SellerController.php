@@ -31,11 +31,23 @@ class SellerController extends Controller
 
         return response()->json($product);
     }
-    public function getorder()
+
+
+    public function getorder(Request $request)
     {
-        $order = OrderRequestItem::with('order')->get();
-        return response()->json($order);
+     
+        $seller = $request->user()->seller;
+        
+        if (!$seller) {
+            return response()->json([]);
+        }
+    
+
+        $orders = $seller->orderRequestItems()->with('product')->get();
+    
+        return response()->json($orders);
     }
+    
 
     public function addProducts(Request $request)
     {
