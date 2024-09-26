@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../helpers/api";
-import { Order } from "../../utils/Order";
-import Product from "../../utils/Product";
+import { Order, Product } from "../../utils/Order";
 
 function GetSellerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -15,7 +14,11 @@ function GetSellerOrders() {
         setIsLoading(true);
         const response = await api.get(`/sellers/orders`);
         const data = await response.data;
-        setOrders(data);
+        if (Array.isArray(data)) {
+          setOrders(data);
+        } else {
+          setError("Unexpected data structure from API");
+        }
       } catch (error) {
         console.error("Fetch error:", error);
         setError("An error occurred while fetching orders.");
@@ -46,13 +49,18 @@ function GetSellerOrders() {
 
             <h4>Products:</h4>
             <ul>
-              {order.order_request_items.map((item:any) => (
-                <li key={item.id}>
-                  <p>Product: {item.product.name}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <p>Price: ${item.product.price}</p>
-                </li>
-              ))}
+              {order.order_request_items &&
+              Array.isArray(order.order_request_items) ? (
+                order.order_request_items.map((item) => (
+                  <li key={item.id}>
+                    <p>Product: {item.product?.name || "N/A"}</p>
+                    <p>Quantity: {item.quantity}</p>
+                    <p>Price: ${item.product?.price || 0}</p>
+                  </li>
+                ))
+              ) : (
+                <p>No products found for this order.</p>
+              )}
             </ul>
           </div>
         ))}
