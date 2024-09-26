@@ -34,30 +34,8 @@ const Sellers: React.FC = () => {
             </div>
         );
     }
-    const handleEditProduct = (id: string) => {
-        navigate(`/seller-portal/products/${id}`);
-    };
-    const handleDeleteProduct = async (id: string) => {
-        await api.delete(`sellers/products/${id}`)
-            .then(fetchProducts)
-            .catch(error => {
-                console.error("Error deleting product:", error);
-            });
-    };
-  const fetchProducts = async () => {
-    try {
-      setIsLoading(true);
-      const response = await api.get(`sellers/products`);
-      setProducts(response.data);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+   
+ 
   if (isLoading) {
     return (
       <div className="seller-products-loader-container">
