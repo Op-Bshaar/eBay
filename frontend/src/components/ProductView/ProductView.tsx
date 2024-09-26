@@ -6,12 +6,14 @@ import { displayMoney } from "../../constants/Constants";
 interface ProductViewProps {
   product: Product;
   clickToGo?: boolean;
-  showGoButton?: boolean;
+    showGoButton?: boolean;
+    showNotAvailable?: boolean;
 }
 function ProductView({
     product,
     clickToGo = true,
     showGoButton,
+    showNotAvailable = true
 }: ProductViewProps) {
     showGoButton = showGoButton != undefined ? showGoButton : !clickToGo;
     const view = (
@@ -24,7 +26,7 @@ function ProductView({
                     التفاصيل
                 </Link>
             )}
-            {!product.isAvailable &&
+            {!product.isAvailable && showNotAvailable &&
                 <p className="error-message">المنتج غير متوفر.</p>}
         </>
     );
@@ -33,13 +35,13 @@ function ProductView({
             <Link to={`/products/${product.id}`}
                 aria-label={`اضغط للذهاب إلى تفاصيل ${product.title}`}
                 className="wrapper-button">
-                <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`} >
+                <div className={`product-item ${(!product.isAvailable && showNotAvailable) ? 'product-item-not-available' : ''}`} >
                     {view}
                 </div >
             </Link>
         ) : (
-            <div className={`product-item ${product.isAvailable ? '' : 'product-item-not-available'}`}>
-                    {view}
+            <div className={`product-item ${(!product.isAvailable && showNotAvailable) ? 'product-item-not-available' : ''}`} >
+                {view}
             </div>
         )
     );

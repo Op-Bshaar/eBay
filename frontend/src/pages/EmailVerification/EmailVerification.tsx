@@ -7,7 +7,7 @@ import {
 import "../login/login-form.css";
 import "./EmailVerification.css";
 import { PAGE_URLS } from "../../constants/URL";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import api from "../../helpers/api";
 import "../../styles/Loader.css";
 import { isAxiosError } from "axios";
@@ -134,7 +134,7 @@ function VerifiyEmail() {
     );
   }
   return (
-    <div className="login-form email-verifictation tajawal-extralight">
+    <div className="login-form email-verifictation">
       <div className="login-form-content email-verifictation-content">
         {page}
       </div>

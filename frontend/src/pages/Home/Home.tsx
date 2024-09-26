@@ -76,7 +76,7 @@ function Home() {
         );
 
     return (
-        <div className="tajawal-extralight">
+        <div>
             <div className="topbar-container">
                 <HeroItem categories={categories} onCategorySelect={handleCategoryChange} />
                 <div className="sidebar-container">

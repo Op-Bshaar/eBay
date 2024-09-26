@@ -98,7 +98,7 @@ function SearchPage() {
     );
   if (errorElement || loading) {
     return (
-      <div className="tagawal-extralight search-page">
+      <div className="search-page">
         <div className={"absolute-center center-message"}>
           {errorElement && errorElement}
           {loading && <div className="loader" />}
@@ -107,7 +107,7 @@ function SearchPage() {
     );
   }
   return (
-    <div className="tagawal-extralight search-page products-container">
+    <div className="search-page products-container">
       {productsViews}
     </div>
   );

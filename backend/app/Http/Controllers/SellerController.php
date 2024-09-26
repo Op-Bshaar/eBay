@@ -137,7 +137,7 @@ class SellerController extends Controller
 
     public function getOrderItem(Request $request, $order_id){
         $seller = $request->user()->seller;
-        $order = OrderRequestItem::with('product')->findOrFail($order_id);
+        $order = OrderRequestItem::with(['product','orderRequest'])->findOrFail($order_id);
         if (!$seller || $order->product->seller_id !== $seller->id) 
         {
             return response()->json(['message' => 'unauthorized'],401 );

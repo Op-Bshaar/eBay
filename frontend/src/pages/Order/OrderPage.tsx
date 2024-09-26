@@ -11,7 +11,6 @@ import { isAxiosError } from "axios";
 import useOrder from "./useOrder";
 import OrderLoadingMessage from "./OrderLoadingMessage";
 import OrderItemsView from "./OrderItemsView";
-import { ignore } from "antd/es/theme/useToken";
 import { PAGE_URLS } from "../../constants/URL";
 function OrderPage() {
     useRequireEmailVerification();
@@ -64,7 +63,7 @@ function OrderPage() {
     };
     if (isNavigating) {
         return (
-            <div className="tajawal-extralight big-message absolute-center">
+            <div className="big-message absolute-center">
                 <p>يتم التحويل إلى بوابة الدفع.</p>
                 <div className="loader center-loader" />
             </div>

@@ -3,7 +3,7 @@ import "./SellerPortal.css";
 function SellerPortal() {
     return (
         <>
-            <nav className="seller-nav tajawal-extralight">
+            <nav className="seller-nav">
                 <NavLink
                     className={() => location.pathname.startsWith('/seller-portal/products') ? "seller-nav-sellected" : ""}
                     to="products">

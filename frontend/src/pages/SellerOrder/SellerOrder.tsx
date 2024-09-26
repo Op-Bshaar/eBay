@@ -9,6 +9,7 @@ import "./SellerOrder.css";
 import { isAxiosError } from "axios";
 import ProductView from "../../components/ProductView/ProductView";
 import { getOrderStatus } from "../Order/order_status";
+import { addressToText } from "../AddressInput/Address";
 function SellerOrder() {
     useRequireAuthentication();
     const { order_id } = useParams();
@@ -16,15 +17,16 @@ function SellerOrder() {
     if (!order) {
         return messageElement;
     }
-    const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} />
+    const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} showNotAvailable={false} />
     const isReadyForShipment = order.status === 'paid' || order.status === 'notified-seller';
     const shipment = isReadyForShipment &&
         <>
-        <p>
-        <span>
-            الرجاء شحن المنتج إل العنوان التالي:
-            </span>
-        </p>
+            <p>
+                <span>
+                    الرجاء شحن المنتج إلى العنوان التالي: 
+                </span>
+                <span> {order.order_request && addressToText(order.order_request)}</span>
+            </p>
         </>;
     return (
         <div className="seller-order-page">
@@ -39,12 +41,16 @@ function SellerOrder() {
 }
 function useOrder(order_id?: string) {
     const [order, setOrder] = useState<OrderItem | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const fetchOrder = useCallback((order_id?: string) => {
         if (order_id) {
-            setIsLoading(true);
-            setErrorMessage("");
+            if (!isLoading) {
+                setIsLoading(true);
+            }
+            if (errorMessage) {
+                setErrorMessage("");
+            }
             api.get(`/sellers/orders/${order_id}`)
                 .then((response) => {
                     const data = response.data;
@@ -60,8 +66,9 @@ function useOrder(order_id?: string) {
                     setIsLoading(false);
                 });
         }
-    }, []);
-    useEffect(() => fetchOrder(order_id), [fetchOrder, order_id]);
+    }, [errorMessage, isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => fetchOrder(order_id), [order_id]);
     const notFound =
         <ErrorMessage className="center-text big-message">
             الطلب غير موجود.
