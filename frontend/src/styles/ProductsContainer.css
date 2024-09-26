@@ -3,7 +3,7 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 5vh normal;
     box-sizing: border-box;
-    max-width: 100%;
+    max-width: 90%;
     padding: 1vh 1vw;
     margin: 1vh auto;
     justify-items: center;
