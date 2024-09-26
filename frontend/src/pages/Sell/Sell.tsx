@@ -8,7 +8,6 @@ import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import ValidateFile from "../../components/FileInput/ValidateFile";
-import { PAGE_URLS } from "../../constants/URL";
 
 const ProductForm: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -125,7 +124,7 @@ const ProductForm: React.FC = () => {
 
   if (createdProductId) {
     return (
-      <div className="tajawal-extralight product-created-successfully">
+      <div className="product-created-successfully">
         <p>{updateSuccess ? "تم تحديث المنتج" : "تمت إضافة المنتج بنجاح"}</p>
         <Link to={`/products/${createdProductId}`} className="button">
           عرض المنتج

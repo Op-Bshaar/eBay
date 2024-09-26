@@ -76,7 +76,7 @@ function UpdateEmail() {
         }
     }
     return (
-        <div className="login-form tajawal-extralight">
+        <div className="login-form">
             <div className="login-form-content">
                 <div className="input-group">
                     <label htmlFor="old-email">البريد الإلكتروني القديم:</label>

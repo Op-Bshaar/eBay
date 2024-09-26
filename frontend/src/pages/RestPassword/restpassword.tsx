@@ -40,7 +40,7 @@ function RestPassword() {
     };
 
     return (
-        <div className="content-restpass tajawal-extralight">
+        <div className="content-restpass">
             <form onSubmit={handleSubmit}>
                 <label>كلمه مرور جديده</label>
                 <input

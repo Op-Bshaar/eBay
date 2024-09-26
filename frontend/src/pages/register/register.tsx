@@ -106,7 +106,7 @@ function Register() {
     };
 
     return (
-        <form className="login-form1 tajawal-extralight" ref={formRef} onChange={() => setErrorMessage("")}>
+        <form className="login-form1" ref={formRef} onChange={() => setErrorMessage("")}>
             <h1>ادخل بياناتك</h1>
             <div>
                 <div className="login-form-content1">

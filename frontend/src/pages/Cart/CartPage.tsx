@@ -100,7 +100,7 @@ function CartPage() {
   );
 
   return (
-    <div className="tajawal-extralight">
+    <div>
       {cartItems.length > 0
         ? cart
         : errorMessage

@@ -10,5 +10,6 @@ export interface Order extends Address {
 }
 export interface OrderItem extends CartItem {
     status: string;
+    order_request?: Order;
 }
 export default Order;

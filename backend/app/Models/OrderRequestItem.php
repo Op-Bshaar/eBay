@@ -38,7 +38,7 @@ class OrderRequestItem extends Model
         \Log::error("Failed to send notification to seller for order item {$this->id}: " . $e->getMessage());
     }
 }
-    public function order(){
+    public function orderRequest(){
         return $this->belongsTo(OrderRequest::class);
     }
     public function product()
