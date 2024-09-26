@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../helpers/api";
-import { Order, Product } from "../../utils/Order";
+import { Order } from "../../utils/Order";
+import Product from "../../utils/Product";
 
 function GetSellerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
