@@ -13,7 +13,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->where('isAvailable', true)->get();
+        $products = Product::where('isAvailable', true)->get();
         return response()->json($products);
     }
 

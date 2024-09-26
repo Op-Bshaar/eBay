@@ -71,7 +71,7 @@ import EditForm from "./AdminEdit";
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-  ? products.filter((product) => product.category?.id === selectedCategory)
+  ? products.filter((product) => product.category_id?.id === selectedCategory)
   : products;
 
 
