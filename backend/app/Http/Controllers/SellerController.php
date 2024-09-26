@@ -33,17 +33,22 @@ class SellerController extends Controller
     }
 
 
-    public function getorder(Request $request)
+    public function getOrders(Request $request)
     {
-     
         $seller = $request->user()->seller;
-        
+    
+        // If the user has no associated seller, return an empty array
         if (!$seller) {
             return response()->json([]);
         }
     
-
-        $orders = $seller->orderRequestItems()->with('product')->get();
+        // Get all products belonging to the seller and extract their IDs
+        $productIds = $seller->products()->pluck('id');
+    
+        // Retrieve all order items related to these product IDs in a single query
+        $orders = OrderRequestItem::whereIn('product_id', $productIds)
+                    ->with('product') // Include related product data if needed
+                    ->get();
     
         return response()->json($orders);
     }

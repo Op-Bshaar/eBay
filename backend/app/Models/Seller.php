@@ -31,8 +31,4 @@ class Seller extends Model
         return $this->user->email; // Use the seller's email
     }
 
-    public function orderRequestItems()
-    {
-        return $this->hasMany(OrderRequestItem::class);
-    }
 }

@@ -55,7 +55,7 @@ Route::middleware('auth:sanctum')->group(function (): void{
 Route::get('/sellers/orders/{id}', [SellerController::class, 'getOrderItem']);
 Route::get('/sellers/products', [SellerController::class, 'getProducts']);
 Route::get('/sellers/products/{id}', [SellerController::class, 'getproduct']);
-Route::get('/sellers/orders', [SellerController::class, 'getorder']);
+Route::get('/sellers/orders', [SellerController::class, 'getOrders']);
 Route::post('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
 Route::delete('/sellers/products/{id}', [SellerController::class, 'deleteProduct']);
 Route::post('/sellers/products', [SellerController::class, 'addProducts']);
