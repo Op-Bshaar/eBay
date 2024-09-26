@@ -21,7 +21,7 @@
     max-width: max(250px,30vw);
 }
     .seller-product .button{
-        margin:0.5vh 1vw;
+        margin:2vh 1px;
         min-width:45%;
     }
     .delete-product-button {

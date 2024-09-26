@@ -8,21 +8,24 @@ interface ProductViewProps {
   clickToGo?: boolean;
     showGoButton?: boolean;
     showNotAvailable?: boolean;
+    viewer?: "buyer" | "seller";
 }
 function ProductView({
     product,
     clickToGo = true,
     showGoButton,
-    showNotAvailable = true
+    showNotAvailable = true,
+    viewer = "buyer"
 }: ProductViewProps) {
     showGoButton = showGoButton != undefined ? showGoButton : !clickToGo;
+    const detailsLink = viewer === 'buyer' ? `/products/${product.id}` : `/seller-portal/products/${product.id}`;
     const view = (
         <>
             <h3 className="product-title">{product.title}</h3>
             {product.image && <img src={product.image} className="product-image" loading="lazy" />}
             <p className="product-price">{displayMoney(product.price)}</p>
             {showGoButton && (
-                <Link to={`/products/${product.id}`} className="button product-view-button">
+                <Link to={detailsLink} className="button product-view-button">
                     التفاصيل
                 </Link>
             )}
@@ -32,7 +35,7 @@ function ProductView({
     );
     return (
         clickToGo ? (
-            <Link to={`/products/${product.id}`}
+            <Link to={detailsLink}
                 aria-label={`اضغط للذهاب إلى تفاصيل ${product.title}`}
                 className="wrapper-button">
                 <div className={`product-item ${(!product.isAvailable && showNotAvailable) ? 'product-item-not-available' : ''}`} >

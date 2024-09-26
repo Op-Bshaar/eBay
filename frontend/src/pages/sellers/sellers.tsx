@@ -5,6 +5,7 @@ import "../../styles/Loader.css";
 import api from "../../helpers/api";
 import { useRequireEmailVerification } from "../login/LoginRedirect";
 import Product from "../../utils/Product";
+import ProductView from "../../components/ProductView/ProductView";
 
 const Sellers: React.FC = () => {
     useRequireEmailVerification();
@@ -46,9 +47,13 @@ const Sellers: React.FC = () => {
     const handleEditProduct = (id: string) => {
         navigate(`/seller-portal/products/${id}`);
     };
-    const handleDeleteProduct = async (id: string) => {
-        await api
-            .delete(`sellers/products/${id}`)
+    const handleDeleteProduct = (product:Product) => {
+        const confirmDelete = window.confirm(`هل تريد حذف المنتج الآتي ${product.title}؟`);
+        if (!confirmDelete) {
+            return;
+        }
+        api
+            .delete(`sellers/products/${product.id}`)
             .then(fetchProducts)
             .catch((error) => {
                 console.error("Error deleting product:", error);
@@ -61,10 +66,9 @@ const Sellers: React.FC = () => {
             ) : (
                 products.map((product) => (
                     <div className="seller-product" key={product.id}>
-                        <h2>اسم المنتج: {product.title}</h2>
-                        <p>السعر: {product.price}</p>
+                        <ProductView product={product} viewer="seller" clickToGo={false} />
                         {product.isAvailable ?
-                            <div>
+                            <div className="center-text">
                                 <button
                                     className="button"
                                     onClick={() => handleEditProduct(product.id)}
@@ -73,7 +77,7 @@ const Sellers: React.FC = () => {
                                 </button>
                                 <button
                                     className="button delete-product-button"
-                                    onClick={() => handleDeleteProduct(product.id)}
+                                    onClick={() => handleDeleteProduct(product)}
                                 >
                                     حذف
                                 </button>

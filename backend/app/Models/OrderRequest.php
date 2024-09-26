@@ -67,29 +67,16 @@ class OrderRequest extends Model
     }
     public function cancelOrder(string $status = 'cancelled')
     {
-        // Begin a transaction
         DB::beginTransaction();
-
+    
         try {
-            $orderItems = $this->items()->with('product')->get();
-
-            // Loop through each order item and update the related product's isAvailable field to true
-            foreach ($orderItems as $orderItem) {
-                $orderItem->update(['status' =>$status]);
-                $product = $orderItem->product;
-                if ($product) {
-                    $product->update(['isAvailable' => true]);
-                }
-            }
-
-            // Update the order status to "cancelled" or the given status
+            $productIds = $this->items()->pluck('product_id');
+            $this->items()->update(['status' => $status]);
+            Product::whereIn('id', $productIds)->update(['isAvailable' => true]);
             $this->update(['status' => $status]);
-
-            // Commit the transaction
             DB::commit();
             return true;
         } catch (\Exception $e) {
-            // Rollback the transaction in case of any error
             DB::rollBack();
             throw $e;
         }

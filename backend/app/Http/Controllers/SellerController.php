@@ -162,7 +162,14 @@ class SellerController extends Controller
         return response()->json(['order' => $order], 200);
     }
     public function getCurrentSeller(Request $request){
-        $seller = $request->user()->seller;
+        $user = $request->user();
+        $seller = $user->seller;
+        if (!$seller) {
+            $seller = Seller::create([
+                'user_id' => $user->id,
+            ]);
+            $seller->save();
+        }
         return response()->json(['seller'=>$seller],200);
     }
 }

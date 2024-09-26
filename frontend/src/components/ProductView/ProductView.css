@@ -1,6 +1,6 @@
 .product-item {
     box-sizing: border-box;
-    width: clamp(5em, 15vw, 15em);
+    
     padding: 1%;
     border-radius: 8px;
     text-align: center;
@@ -34,7 +34,7 @@
 
 .product-image {
     max-width: 100%;
-    max-height:10vh;
+    max-height:15vh;
     object-fit: contain;
 }
 .product-price{

@@ -20,6 +20,7 @@ function SellerOrder() {
     }
     const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} showNotAvailable={false} />
     const isReadyForShipment = order.status === 'paid' || order.status === 'notified-seller';
+    const status = isReadyForShipment ? 'paid' : order.status;
     const shipment = isReadyForShipment &&
         <>
             <p>
@@ -32,7 +33,7 @@ function SellerOrder() {
     return (
         <div className="seller-order-page">
             <div className="seller-order-status">
-                حالة الطلب: { getOrderStatus(order.status)}
+                حالة الطلب: {getOrderStatus(status)}
             </div>
             {product}
             <Link to={`/seller-portal/products/${order.product.id}`} className="button">عرض المنتج</Link>
