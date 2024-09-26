@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import { Order } from "../../utils/Order";
-import Product from "../../utils/Product";
 
 function GetSellerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -38,7 +37,7 @@ function GetSellerOrders() {
       {error && <p>{error}</p>}
 
       {!isLoading && !error && orders.length === 0 && (
-        <p>No orders found for this seller.</p>
+        <p>ليس لديك طلبات حاليا.</p>
       )}
 
       <div className="order-list">
