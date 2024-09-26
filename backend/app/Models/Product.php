@@ -10,6 +10,9 @@ class Product extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'price', 'image', 'seller_id','category_id','isAvailable'];
 
+    public function orderRequestItems(){
+        return $this->hasMany(OrderRequestItem::class);
+    }
     public function seller()
     {
         return $this->belongsTo(Seller::class, 'seller_id');
