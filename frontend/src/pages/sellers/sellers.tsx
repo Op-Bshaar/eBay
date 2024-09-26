@@ -57,7 +57,7 @@ const Sellers: React.FC = () => {
     return (
         <div className="seller-products-container">
             {products.length === 0 ? (
-                <p>No products available.</p>
+                <p>ليس لديك منتجات.</p>
             ) : (
                 products.map((product) => (
                     <div className="seller-product" key={product.id}>

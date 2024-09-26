@@ -161,4 +161,8 @@ class SellerController extends Controller
         }
         return response()->json(['order' => $order], 200);
     }
+    public function getCurrentSeller(Request $request){
+        $seller = $request->user()->seller;
+        return response()->json(['seller'=>$seller],200);
+    }
 }

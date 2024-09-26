@@ -52,6 +52,7 @@ Route::get('/products', [ProductController::class, 'index']);
 
 // Route for seller
 Route::middleware('auth:sanctum')->group(function (): void{
+Route::get('/seller',[SellerController::class, 'getCurrentSeller']);
 Route::get('/sellers/orders/{id}', [SellerController::class, 'getOrderItem']);
 Route::get('/sellers/products', [SellerController::class, 'getProducts']);
 Route::get('/sellers/products/{id}', [SellerController::class, 'getproduct']);
