@@ -8,6 +8,7 @@ import FileInputButton from "../../components/FileInput/FileInputButton";
 import FileDropArea from "../../components/FileInput/FileDropArea";
 import { Link, useParams } from "react-router-dom";
 import ValidateFile from "../../components/FileInput/ValidateFile";
+import useCategories from "../../helpers/useCategories";
 
 const allowedFileTypes = [
     "image/jpeg",
@@ -19,6 +20,7 @@ const allowedFileTypes = [
 const ProductForm: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     useRequireAuthentication();
+    const { categories, messageElement } = useCategories();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imageerror, setImageError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -144,7 +146,9 @@ const ProductForm: React.FC = () => {
             </div>
         );
     }
-
+    if (!categories) {
+        return messageElement;
+    }
     return (
         <form className="sell-form" onSubmit={handleSubmit}>
             <div>
@@ -189,12 +193,24 @@ const ProductForm: React.FC = () => {
 
                     {/* Display existing image if present */}
                     {product.image && !imageFile && (
-                        <div className="current-image">
-                            <img src={product.image} alt="Current product" />
+                        <div>
+                            <img src={product.image} className="sell-current-image" />
                             <p>الصورة الحالية</p>
                         </div>
                     )}
-
+                    <label htmlFor="category" className="lab">
+                        الفئة
+                    </label>
+                    <select id="category">
+                        {categories.map(category => (
+                            <option key={category.id} value={category.id }>
+                                {category.name }
+                            </option>
+                        ))}
+                        <option value={undefined}>
+                            غير محدد
+                        </option>
+                    </select>
                     <label htmlFor="image" className="lab">
                         الصوره
                     </label>
@@ -211,8 +227,6 @@ const ProductForm: React.FC = () => {
                         اختر صورة المنتج
                     </FileInputButton>
                     <FileDropArea
-                        maxSizeInBytes={2048 * 1024}
-                        allowedFileTypes={allowedFileTypes}
                         file={imageFile}
                         setFile={setImageFile}
                     />
@@ -234,5 +248,20 @@ const ProductForm: React.FC = () => {
         </form>
     );
 };
+const emptyProductData = {
+    title: "",
+    description: "",
+    price: "",
+    imageFile:null,
+} 
+interface ProductData {
+    title: string;
+    description: string;
+    price: string;
+    imageFile: File | null,
+}
+interface FormProps { productData: ProductData, setProductData: (productData: ProductData)=>void ,oldImage?:string}
+function Form({ productData, setProductData, oldImage }:FormProps) {
 
+}
 export default ProductForm;

@@ -138,7 +138,7 @@ function App() {
                 }
               />
               <Route
-                path="products/:id"
+                path="products/edit/:id"
                 element={
                   <Suspense fallback={loader}>
                     <ProductForm />

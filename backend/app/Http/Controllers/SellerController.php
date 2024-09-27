@@ -101,7 +101,11 @@ class SellerController extends Controller
     {
 
         $product = Product::findOrFail($id);
-
+        
+        $seller = $request->user()->seller;
+        if(!$seller || $seller->id !== $product->seller_id){
+            return response()->json(['message' => 'unauthorized',401 ]);
+        }
 
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
@@ -143,13 +147,16 @@ class SellerController extends Controller
 
 
 
-    public function deleteProduct($id)
+    public function deleteProduct(Request $request, $id)
     {
         $product = Product::findOrFail($id);
-
+        $seller = $request->user()->seller;
+        if(!$seller || $seller->id !== $product->seller_id){
+            return response()->json(['message' => 'unauthorized',401 ]);
+        }
         $product->delete();
 
-        return response()->json(['message' => 'Product deleted successfully']);
+        return response()->json(['message' => 'Product deleted successfully',200]);
     }
 
     public function getOrderItem(Request $request, $order_id)

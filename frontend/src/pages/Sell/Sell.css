@@ -13,7 +13,11 @@
         background-color: #f9f9f9;
         margin: 2.5vh auto;
     }
-
+.sell-current-image {
+    min-width:75%;
+    max-height:25%;
+    object-fit: contain;
+}
 .objective {
     font-size: 1.2em;
     font-weight: bold;

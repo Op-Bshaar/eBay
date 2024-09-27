@@ -45,7 +45,7 @@ const Sellers: React.FC = () => {
         );
     }
     const handleEditProduct = (id: string) => {
-        navigate(`/seller-portal/products/${id}`);
+        navigate(`/seller-portal/products/edit/${id}`);
     };
     const handleDeleteProduct = (product:Product) => {
         const confirmDelete = window.confirm(`هل تريد حذف المنتج الآتي ${product.title}؟`);

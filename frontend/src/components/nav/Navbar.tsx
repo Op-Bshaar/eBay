@@ -50,10 +50,8 @@ function Navbar() {
                 </div>
 
                 {user && <span className="namestyle">أهلا {user.username}</span>}
-                <span >
-                    <Link to ={PAGE_URLS.editprofile}>
+                <Link className="link" to={PAGE_URLS.editprofile}>
                     تعديل الحساب</Link>
-                  </span>
 
                 <div className="menu-toggle">
                     <FontAwesomeIcon
@@ -90,7 +88,7 @@ function Navbar() {
                         </button>
                     </form>
 
-                    <Link className="nav-link" to={"/seller-portal"}>
+                    <Link className="link" to={"/seller-portal"}>
                         البيع في سوق
                     </Link>
                     {isAuthenticated ? (
@@ -98,7 +96,7 @@ function Navbar() {
                             setLoggingout(true);
                             logout().then(() => setLoggingout(false));
                         }
-                        } disabled={loggingout } className="button">
+                        } disabled={loggingout} className="button">
                             تسجيل الخروج
                         </button>
                     ) : (
