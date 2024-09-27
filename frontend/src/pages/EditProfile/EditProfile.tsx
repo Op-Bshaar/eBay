@@ -1,36 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Input from 'react-phone-number-input/input';
-import { isValidNumber } from 'libphonenumber-js';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Input from "react-phone-number-input/input";
+import { isValidNumber } from "libphonenumber-js";
 
 const EditProfile: React.FC = () => {
-
   const [user, setUser] = useState({
-    username: '',
-    email: '',
-    phone: '',
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
   });
 
-
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(true);
+  const [isEmailLoading, setIsEmailLoading] = useState(false);
 
- 
   const [isLoading, setIsLoading] = useState(false);
 
-
   useEffect(() => {
- 
-    axios.get('/api/user/profile')
-      .then(response => {
+    axios
+      .get("/api/user/profile")
+      .then((response) => {
         setUser(response.data);
       })
-      .catch(error => {
-        console.error('Error fetching user data:', error);
-        setErrorMessage('Failed to fetch user data.');
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+        setErrorMessage("حدث خطا في تحميل البيانات.");
       });
   }, []);
-
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,60 +47,87 @@ const EditProfile: React.FC = () => {
     e.preventDefault();
 
     if (!isPhoneValid) {
-      setErrorMessage('Invalid phone number');
+      setErrorMessage("رقم الجوال غير صحيح");
       return;
     }
 
     setIsLoading(true);
-    axios.put('/api/user/profile', user)
-      .then(response => {
+    axios
+      .put("/api/user/profile", user)
+      .then((response) => {
         setUser(response.data);
-        setErrorMessage('Profile updated successfully');
+        setErrorMessage("تم تغيير الملف الشخصي بنجاح");
       })
-      .catch(error => {
-        console.error('Error updating profile:', error);
-        setErrorMessage('Failed to update profile');
+      .catch((error) => {
+        console.error("Error updating profile:", error);
+        setErrorMessage("Failed to update profile");
       })
       .finally(() => setIsLoading(false));
   };
 
+  const handleEmailChange = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setIsEmailLoading(true);
+    axios
+      .put("/api/user/update-email", { email: user.email })
+      .then((response) => {
+        setUser({ ...user, email: response.data.email });
+        setErrorMessage("تم تغيير البريد بنجاح");
+      })
+      .catch((error) => {
+        console.error("Error updating email:", error);
+        setErrorMessage("فشلت العمليه");
+      })
+      .finally(() => setIsEmailLoading(false));
+  };
+
   return (
     <div className="edit-profile">
-      <h2>Edit Profile</h2>
+      <h2>تعديل الملف الشخصي</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
           <input
             type="text"
             name="username"
-            value={user.username}
+            value={user.firstname}
             onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label>Email:</label>
+          <label>الاسم الاخير:</label>
           <input
-            type="email"
-            name="email"
-            value={user.email}
+            type="text"
+            name="lastname"
+            value={user.lastname}
             onChange={handleChange}
             required
           />
+          <button
+            type="button"
+            onClick={handleEmailChange}
+            disabled={isEmailLoading}
+          >
+            {isEmailLoading ? "تغيير البريد..." : "تغيير البريد"}
+          </button>
         </div>
         <div>
           <label>Phone:</label>
           <Input
-            country="US"
+            country="SA"
             value={user.phone}
             onChange={handlePhoneChange}
             required
           />
-          {!isPhoneValid && <span style={{ color: 'red' }}>Invalid phone number</span>}
+          {!isPhoneValid && (
+            <span style={{ color: "red" }}>الرقم غير صحيح</span>
+          )}
         </div>
-        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         <button type="submit" disabled={isLoading}>
-          {isLoading ? 'حفظ...' : 'حفظ المتغيرات'}
+          {isLoading ? "حفظ..." : "حفظ المتغيرات"}
         </button>
       </form>
     </div>
