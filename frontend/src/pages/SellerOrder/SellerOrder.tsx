@@ -8,7 +8,7 @@ import "../../styles/Loader.css";
 import "./SellerOrder.css";
 import { isAxiosError } from "axios";
 import ProductView from "../../components/ProductView/ProductView";
-import { getOrderStatus } from "../Order/order_status";
+import { getOrderStatus, getSellerStatus } from "../Order/order_status";
 import { addressToText } from "../AddressInput/Address";
 
 function SellerOrder() {
@@ -19,8 +19,8 @@ function SellerOrder() {
         return messageElement;
     }
     const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} showNotAvailable={false} />
-    const isReadyForShipment = order.status === 'paid' || order.status === 'notified-seller';
-    const status = isReadyForShipment ? 'paid' : order.status;
+    const status = getSellerStatus(order.status);
+    const isReadyForShipment = status === 'paid' || order.status === 'notified-seller';
     const shipment = isReadyForShipment &&
         <>
             <p>

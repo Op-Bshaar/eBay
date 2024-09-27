@@ -23,6 +23,9 @@ class OrderRequest extends Model
         'district',
         'street',
         'postal_code',
+        'phone',
+        'first_name',
+        'last_name',
     ];
 
     // The attributes that should be cast to native types.
@@ -89,14 +92,18 @@ class OrderRequest extends Model
             $this->cancelOrder('timeout');
         }
     }
-    public function setAsPaid()
+    public function setAsPaid($gateway_payment_id)
 {
-    DB::transaction(function () {
+    if (empty($gateway_payment_id)) {
+        throw new \InvalidArgumentException('Payment ID cannot be empty.');
+    }
+    DB::transaction(function () use ($gateway_payment_id) {
         if ($this->status !== 'pending') {
             throw new \Exception('Order status is not pending, cannot set as paid.');
         }
 
         $this->status = 'paid';
+        $this->gateway_payment_id = $gateway_payment_id;
         $this->paid_amount = $this->total_price;
 
         foreach ($this->items as $item) {

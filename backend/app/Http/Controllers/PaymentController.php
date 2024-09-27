@@ -114,7 +114,7 @@ protected function handleSuccessfulSale($order_id, array $data)
     // Update order status, log information, notify user, etc.
     Log::info("Sale successful for order $order_id", $data);
     $order = OrderRequest::findOrFail($order_id);
-    $order->setAsPaid();
+    $order->setAsPaid($data['trans_id']);
     return redirect()->away(env('FRONT_URL') . "/orders/{$order_id}");
 }
 protected function handleFailure($order_id, array $errors)

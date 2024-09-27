@@ -36,7 +36,7 @@ class OrderItemPaidNotification extends Notification implements ShouldQueue
                     ->line('المنتج: ' . $this->orderItem->product->title)
                     ->line('الرجاء شحن المنتج على العنوان التالي:')
                     ->line($this->address . ' .')  
-                    ->action('عرض الطلب', url(env('FRONT_URL') .'/seller/orders/' . $this->orderItem->order_request_id))
+                    ->action('عرض الطلب', url(env('FRONT_URL') .'/seller-portal/orders/' . $this->orderItem->order_request_id))
                     ->line('عند إكمال عملية الشحن, يرجى رفع معلومات الشحن في المنصة.')
                     ->line('شكراً لتعاملك معنا.');
     }

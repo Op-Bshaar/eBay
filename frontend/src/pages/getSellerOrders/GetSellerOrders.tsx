@@ -2,6 +2,7 @@
 import api from "../../helpers/api";
 import { Order } from "../../utils/Order";
 import { useNavigate } from "react-router-dom";
+import { getOrderStatus, getSellerStatus } from "../Order/order_status";
 
 function GetSellerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -71,7 +72,7 @@ function GetSellerOrders() {
         {orders.map((order) => (
           <div key={order.id} className="order-item">
             <h3>الطلب #{order.id}</h3>
-            <p>الحاله: {order.status}</p>
+                <p>الحاله: {getOrderStatus(getSellerStatus(order.status))}</p>
             <p>
               تاريخ الطلب: {new Date(order.created_at).toLocaleDateString()}
             </p>

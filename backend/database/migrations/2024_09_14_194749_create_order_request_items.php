@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_request_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('request_id')->constrained('order_requests')->onDelete('cascade');
+            $table->foreignId('order_request_id')->constrained('order_requests')->onDelete('cascade');
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('quantity');
             $table->string('status',30)->default('pending');

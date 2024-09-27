@@ -125,6 +125,6 @@ Route::middleware('auth:sanctum')->get(('/orders/cancel/{order_id}'),[OrderReque
 //only for testing
 Route::get('/orders/set-paid/{order_id}',function($order_id){
     $order = OrderRequest::findOrFail($order_id);
-    $order->setAsPaid();
+    $order->setAsPaid('test');
     return $order->status;
 });

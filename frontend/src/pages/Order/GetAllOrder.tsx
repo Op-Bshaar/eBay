@@ -9,8 +9,10 @@ import { addressToText } from "../AddressInput/Address";
 import { generatePath, Link } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
 import { getOrderStatus } from "./order_status";
+import { useRequireAuthentication } from "../login/LoginRedirect";
 
 function GetAllOrder() {
+    useRequireAuthentication();
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState(false);
     const [order, setOrder] = useState<Order[]>([]);

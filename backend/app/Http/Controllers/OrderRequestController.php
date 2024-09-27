@@ -41,18 +41,21 @@ class OrderRequestController extends Controller
         }
         // Start a transaction to ensure atomicity
         DB::beginTransaction();
-
+        $user = $request->user();
         try {
             // Create new OrderRequest
             $orderRequest = OrderRequest::create([
                 'total_price' => $totalPrice,
-                'user_id' => auth()->id(),
+                'user_id' => $user->id,
                 'status' => 'pending',
                 'country' => $validated['address']['country'],
                 'city' => $validated['address']['city'],
                 'district' => $validated['address']['district'],
                 'street' => $validated['address']['street'],
                 'postal_code' => $validated['address']['postal_code'],
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'phone' => $user->phone,
             ]);
 
             // Create OrderRequestItem for each item

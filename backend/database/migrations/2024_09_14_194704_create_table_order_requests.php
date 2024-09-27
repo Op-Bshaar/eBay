@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('order_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('address',255)->nullable();
+            $table->string('first_name'); // Add first_name column
+            $table->string('last_name');  // Add last_name column
+            $table->string('phone')->nullable();
+            $table->string('country', 100);
+            $table->string('city', 100);
+            $table->string('district', 100);
+            $table->string('street', 255);
+            $table->string('postal_code', 20);
             $table->decimal('total_price',8,2);
             $table->decimal('paid_amount',8,2)->default(0);
             $table->string('status',30)->default('pending');
-            $table->string('gateway_payment_id');
+            $table->string('gateway_payment_id')->nullable(); 
+            $table->dateTime('link_generated_at')->nullable();
             $table->timestamps();
         });
     }
