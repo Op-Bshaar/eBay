@@ -60,6 +60,8 @@ Route::get('/sellers/orders', [SellerController::class, 'getOrders']);
 Route::post('/sellers/products/{id}', [SellerController::class, 'updateProduct']);
 Route::delete('/sellers/products/{id}', [SellerController::class, 'deleteProduct']);
 Route::post('/sellers/products', [SellerController::class, 'addProducts']);
+Route::post('/sellers/orders/{orderId}/ship', [SellerController::class, 'shipOrder']);
+
 
 });
 

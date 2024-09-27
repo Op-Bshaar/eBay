@@ -7,7 +7,7 @@ function GetSellerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -16,10 +16,8 @@ function GetSellerOrders() {
         setIsLoading(true);
         const response = await api.get(`/sellers/orders`);
         const data = await response.data;
-        console.log(data);
         if (Array.isArray(data)) {
           setOrders(data);
-          console.log(data);
         } else {
           setError("Unexpected data structure from API");
         }
@@ -36,6 +34,28 @@ function GetSellerOrders() {
 
   const handleShowproduct = (productId: number) => {
     navigate(`/seller-portal/orders/${productId}`);
+  };
+
+  const handleShipOrder = async (orderId: number) => {
+    try {
+      const response = await api.post(`/sellers/orders/${orderId}/ship`);
+      console.log(orderId);
+      if (response.status === 200) {
+        const updatedOrders = orders.map((order) =>
+          Number(order.id) === orderId ? { ...order, status: "shipped" } : order
+        );
+        console.log(response);
+        setOrders(updatedOrders);
+      } else {
+        console.error(`فشل الشحن ${response.statusText}`);
+        setError(
+          `الطلب قاتل: ${response.data.message || "Unknown error"}`
+        );
+      }
+    } catch (error) {
+      console.error("Shipping error:", error);
+      setError("الطلب قاتل.");
+    }
   };
 
   return (
@@ -55,28 +75,31 @@ function GetSellerOrders() {
             <p>
               تاريخ الطلب: {new Date(order.created_at).toLocaleDateString()}
             </p>
+            {order.status === "pending" && (
+              <button
+                onClick={() => handleShipOrder(Number(order.id))}
+                className="ship-button"
+              >
+                شحن
+              </button>
+            )}
             <h4>المنتجات:</h4>
             <ul>
               {order.order_request_items &&
-              Array.isArray(order.order_request_items) ? (
-                order.order_request_items.length > 0 ? (
-                  order.order_request_items.map((item) => (
-                    <li key={item.id}>
-                      <p>المنتج: {item.product?.title || "N/A"}</p>
-                      <p>الكميه: {item.quantity}</p>
-                      <p>السعر: ${item.product?.price || 0}</p>
-                      <button
-                        onClick={() => handleShowproduct(item.product?.id)}
-                      >
-                        عرض المنتج
-                      </button>
-                    </li>
-                  ))
-                ) : (
-                  <p>لا توجد منتجات حاليا.</p>
-                )
+              Array.isArray(order.order_request_items) &&
+              order.order_request_items.length > 0 ? (
+                order.order_request_items.map((item) => (
+                  <li key={item.id}>
+                    <p>المنتج: {item.product?.title || "N/A"}</p>
+                    <p>الكميه: {item.quantity}</p>
+                    <p>السعر: ${item.product?.price || 0}</p>
+                    <button onClick={() => handleShowproduct(item.product?.id)}>
+                      عرض المنتج
+                    </button>
+                  </li>
+                ))
               ) : (
-                <p>لا توجد منتجات حاليا.</p>
+                <></>
               )}
             </ul>
           </div>

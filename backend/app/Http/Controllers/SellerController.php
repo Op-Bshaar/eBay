@@ -161,7 +161,8 @@ class SellerController extends Controller
         }
         return response()->json(['order' => $order], 200);
     }
-    public function getCurrentSeller(Request $request){
+    public function getCurrentSeller(Request $request)
+    {
         $user = $request->user();
         $seller = $user->seller;
         if (!$seller) {
@@ -170,6 +171,26 @@ class SellerController extends Controller
             ]);
             $seller->save();
         }
-        return response()->json(['seller'=>$seller],200);
+        return response()->json(['seller' => $seller], 200);
+    }
+
+
+    public function shipOrder(Request $request, $orderId)
+    {
+        $seller = $request->user()->seller;
+
+
+        $order = OrderRequestItem::with('product')->findOrFail($orderId);
+
+        // Check if the seller is authorized to ship this order
+        if (!$seller || $order->product->seller_id !== $seller->id) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+
+        $order->status = 'shipped';
+        $order->save();
+
+        return response()->json(['message' => 'Order shipped successfully', 'order' => $order], 200);
     }
 }
