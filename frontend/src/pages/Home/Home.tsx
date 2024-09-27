@@ -78,10 +78,10 @@ function Home() {
     return (
         <div>
             <div className="topbar-container">
-                <HeroItem categories={categories} onCategorySelect={handleCategoryChange} />
+                <HeroItem onCategorySelect={handleCategoryChange} />
                 <div className="sidebar-container">
                     <SideBar
-                        categories={categories}
+
                         onCategorySelect={handleCategoryChange}
                     />
                     {productsView}

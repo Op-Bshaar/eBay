@@ -1,57 +1,61 @@
-import React, { useState } from "react";
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    PieChartOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Button, Menu } from "antd";
-import "./SideBar.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./SideBar.css"; 
 import { Category } from "../../utils/Category";
 
-type MenuItem = Required<MenuProps>["items"][number];
-
 interface SideBarProps {
-    categories: Category[];
-    onCategorySelect: (categoryId: string) => void;
+  onCategorySelect: (categoryId: string) => void;
 }
 
-const SideBar: React.FC<SideBarProps> = ({ categories, onCategorySelect }) => {
-    const [collapsed, setCollapsed] = useState(true);
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
+const SideBar: React.FC<SideBarProps> = ({ onCategorySelect }) => {
+  const [categories, setCategories] = useState<Category[]>([]);
 
-    const handleMenuClick = (e: { key: string }) => {
-        const categoryId = e.key;
-        onCategorySelect(categoryId);
-    };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/categories")
+      .then((response) => {
+        if (Array.isArray(response.data)) {
+          console.log(response);
+          setCategories(response.data);
+        } else {
+          console.error(
+            "Error: Categories data is not an array",
+            response.data
+          );
+          setCategories([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching categories:", error);
+      });
+  }, []);
 
-    const items: MenuItem[] =
-        categories.map(category => ({
-            key: category.id,
-            icon: <PieChartOutlined />, // Change icon based on category if needed
-            label: category.name
-        }));
+  const handleClick = (categoryId: number) => {
+    onCategorySelect(categoryId.toString());
+  };
 
-    return (
-        <div className="side-bar">
-            <Button
-                type="primary"
-                onClick={toggleCollapsed}
-                style={{ marginBottom: 16 }}
-            >
-                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </Button>
-            <Menu
-                mode="inline"
-                theme="light"
-                inlineCollapsed={collapsed}
-                items={items}
-                onClick={handleMenuClick}
-            />
-        </div>
-    );
+  return (
+    <div className="side-bar">
+      <div className="sidebar-container">
+        {categories.map((category) => (
+          <div
+            key={category.id}
+            className="sidebar-item"
+            onClick={() => handleClick(Number(category.id))}
+          >
+            <div className="icon-container">
+              <img
+                src={category.icon}
+                alt={category.name}
+                style={{ width: 50, height: 50 }}
+              />
+            </div>
+            <span className="item-text">{category.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default SideBar;
