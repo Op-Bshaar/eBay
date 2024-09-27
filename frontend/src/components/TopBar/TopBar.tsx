@@ -61,7 +61,6 @@ const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
             onClick={() => handleClick(category.id)}
           >
             <div className="icon-container">
-              {/* Assuming icon is a URL */}
               <img
                 src={category.icon}
                 alt={category.name}
