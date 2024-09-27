@@ -21,13 +21,24 @@ function SellerOrder() {
     const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} showNotAvailable={false} />
     const status = getSellerStatus(order.status);
     const isReadyForShipment = status === 'paid' || order.status === 'notified-seller';
-    const shipment = isReadyForShipment &&
+    const shipment = isReadyForShipment && order.order_request &&
         <>
             <p>
-                <span>
-                    الرجاء شحن المنتج إلى العنوان التالي: 
-                </span>
-                <span> {order.order_request && addressToText(order.order_request)}</span>
+                <h2>
+                     معلومات الشحن
+            </h2>
+            <div>
+                <span>العنوان:</span>
+                <span> {addressToText(order.order_request)}</span>
+            </div>
+            <div>
+                <span>الاسم:</span>
+                <span> {order.order_request.first_name} {order.order_request.last_name}</span>
+            </div>
+            <div>
+                <span>رقم الجوال:</span>
+                <span dir="ltr"> {order.order_request.phone}</span>
+            </div>
             </p>
         </>;
     return (
