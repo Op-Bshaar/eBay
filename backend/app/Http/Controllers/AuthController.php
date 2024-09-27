@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -210,49 +211,67 @@ class AuthController extends Controller
 
     public function updateProfile(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
             'password' => 'nullable|string|min:8|confirmed',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+    
 
+        $user = User::find(Auth::id());
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
    
-        $user = Auth::user();
-        $user->name = $request->name;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
         $user->email = $request->email;
-
-        if ($request->password) {
+    
+   
+        if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
+    
 
-        $user->save();
-
+        if (!$user->save()) {
+            return response()->json(['message' => 'Failed to update profile'], 500);
+        }
+    
         return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
     }
-
+    
     public function updateEmaill(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
         ]);
-
-   
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+    
 
-  
-        $user = Auth::user();
+        $user = User::find(Auth::id());
+    
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+   
         $user->email = $request->email;
-        $user->save();
+    
+      
+        if (!$user->save()) {
+            return response()->json(['message' => 'Failed to update email'], 500);
+        }
+    
+        return response()->json(['message' => 'Email updated successfully', 'email' => $user->email], 200);}
 
-        return response()->json(['message' => 'Email updated successfully', 'email' => $user->email], 200);
-    }
 }

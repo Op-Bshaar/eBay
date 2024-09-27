@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../helpers/api";
 import Input from "react-phone-number-input/input";
 import { isValidNumber } from "libphonenumber-js";
 
 const EditProfile: React.FC = () => {
   const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     phone: "",
     email: "",
   });
@@ -14,16 +14,16 @@ const EditProfile: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
-
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios
-      .get("/api/user/profile")
-      .then((response) => {
+
+    api
+      .get("/user/profile")
+      .then((response:any) => {
         setUser(response.data);
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.error("Error fetching user data:", error);
         setErrorMessage("حدث خطا في تحميل البيانات.");
       });
@@ -52,15 +52,15 @@ const EditProfile: React.FC = () => {
     }
 
     setIsLoading(true);
-    axios
-      .put("/api/user/profile", user)
-      .then((response) => {
+    api
+      .put("/user/profile", user)
+      .then((response:any) => {
         setUser(response.data);
         setErrorMessage("تم تغيير الملف الشخصي بنجاح");
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.error("Error updating profile:", error);
-        setErrorMessage("Failed to update profile");
+        setErrorMessage("فشلت العمليه");
       })
       .finally(() => setIsLoading(false));
   };
@@ -69,13 +69,13 @@ const EditProfile: React.FC = () => {
     e.preventDefault();
 
     setIsEmailLoading(true);
-    axios
-      .put("/api/user/update-email", { email: user.email })
-      .then((response) => {
+    api
+      .put("/user/update-email", { email: user.email })
+      .then((response:any) => {
         setUser({ ...user, email: response.data.email });
         setErrorMessage("تم تغيير البريد بنجاح");
       })
-      .catch((error) => {
+      .catch((error:any) => {
         console.error("Error updating email:", error);
         setErrorMessage("فشلت العمليه");
       })
@@ -87,11 +87,11 @@ const EditProfile: React.FC = () => {
       <h2>تعديل الملف الشخصي</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username:</label>
+          <label>الاسم الاول:</label>
           <input
             type="text"
-            name="username"
-            value={user.firstname}
+            name="first_name"
+            value={user.first_name}
             onChange={handleChange}
             required
           />
@@ -100,8 +100,16 @@ const EditProfile: React.FC = () => {
           <label>الاسم الاخير:</label>
           <input
             type="text"
-            name="lastname"
-            value={user.lastname}
+            name="last_name"
+            value={user.last_name}
+            onChange={handleChange}
+            required
+          />
+          <label>الاسم الاخير:</label>
+          <input
+            type="text"
+            name="email"
+            value={user.email}
             onChange={handleChange}
             required
           />
@@ -114,7 +122,7 @@ const EditProfile: React.FC = () => {
           </button>
         </div>
         <div>
-          <label>Phone:</label>
+          <label>الهاتف:</label>
           <Input
             country="SA"
             value={user.phone}
