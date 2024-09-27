@@ -5,30 +5,11 @@ import { Category } from "../../utils/Category";
 
 interface SideBarProps {
   onCategorySelect: (categoryId: string) => void;
+  categories: Category[];
 }
 
-const SideBar: React.FC<SideBarProps> = ({ onCategorySelect }) => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/categories")
-      .then((response) => {
-        if (Array.isArray(response.data)) {
-          console.log(response);
-          setCategories(response.data);
-        } else {
-          console.error(
-            "Error: Categories data is not an array",
-            response.data
-          );
-          setCategories([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
+const SideBar: React.FC<SideBarProps> = ({ onCategorySelect,categories }) => {
+ 
 
   const handleClick = (categoryId: number) => {
     onCategorySelect(categoryId.toString());

@@ -13,30 +13,14 @@ interface Category {
 }
 
 interface HeroItemProps {
+  categories: Category[];
   onCategorySelect: (categoryId: string) => void;
 }
 
-const HeroItem: React.FC<HeroItemProps> = ({ onCategorySelect }) => {
-  const [categories, setCategories] = useState<Category[]>([]);
+const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/categories")
-      .then((response) => {
-        if (Array.isArray(response.data)) {
-          setCategories(response.data);
-        } else {
-          console.error(
-            "Error: Categories data is not an array",
-            response.data
-          );
-          setCategories([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
+
+
 
   const settings = {
     infinite: true,
