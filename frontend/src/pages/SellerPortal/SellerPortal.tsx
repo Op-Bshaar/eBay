@@ -1,4 +1,4 @@
-﻿import {  NavLink, Outlet } from "react-router-dom";
+﻿import {  NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./SellerPortal.css";
 import { useEffect, useState } from "react";
 import Seller from "../../utils/Seller";
@@ -6,8 +6,17 @@ import api from "../../helpers/api";
 import ErrorMessage from "../../components/errorMessage/Error";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 function SellerPortal() {
+    const navigate = useNavigate();
     useRequireAuthentication();
     const { seller, messageElement } = useSeller();
+    const [orderId, setOrderId] = useState("");
+    const handleNavigateToOrderDetails = () => {
+        if (orderId) {
+            navigate(`/seller-portal/orders/${orderId}`); 
+        } else {
+            alert("معذره");
+        }
+    };
     if (messageElement) {
         return messageElement
     }
@@ -32,6 +41,18 @@ function SellerPortal() {
             </nav>
             <div className="seller-rating">
                 تقييمي: {seller?.rating ? `${seller.rating} / 5` : "لا توجد تقييمات بعد" }.
+            </div>
+
+            <div className="order-id-input">
+                <input 
+                    type="text" 
+                    placeholder="أدخل رقم الطلب" 
+                    value={orderId} 
+                    onChange={(e) => setOrderId(e.target.value)} 
+                />
+                <button onClick={handleNavigateToOrderDetails} className="navigate-button">
+                    عرض تفاصيل الطلب
+                </button>
             </div>
             <Outlet />
         </>
