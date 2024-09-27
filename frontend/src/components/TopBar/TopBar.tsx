@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./TopBar.css";
-import api from "../../helpers/api";
-import axios from "axios";
+import { Category } from "../../utils/Category";
 
-interface Category {
-  id: number;
-  name: string;
-  icon: string;
-}
 
 interface HeroItemProps {
   categories: Category[];
@@ -47,8 +41,8 @@ const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
     ],
   };
 
-  const handleClick = (categoryId: number) => {
-    onCategorySelect(categoryId.toString());
+  const handleClick = (categoryId: string) => {
+    onCategorySelect(categoryId);
   };
 
   return (

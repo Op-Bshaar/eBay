@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SideBar from "../../components/SideBar/SideBar";
 import HeroItem from "../../components/TopBar/TopBar";
 import api from "../../helpers/api";
@@ -79,6 +79,7 @@ function Home() {
         <div>
             <div className="topbar-container">
 
+                <HeroItem categories={categories } onCategorySelect={handleCategoryChange} />
                 <HeroItem categories={categories}  onCategorySelect={handleCategoryChange} />
                 <div className="sidebar-container">
                     <SideBar
