@@ -50,7 +50,10 @@ function Navbar() {
                 </div>
 
                 {user && <span className="namestyle">أهلا {user.username}</span>}
-                <span>تعديل الحساب</span>
+                <span >
+                    <Link to ={PAGE_URLS.editprofile}>
+                    تعديل الحساب</Link>
+                  </span>
 
                 <div className="menu-toggle">
                     <FontAwesomeIcon

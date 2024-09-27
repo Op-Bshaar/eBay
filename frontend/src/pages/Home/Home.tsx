@@ -73,7 +73,7 @@ function Home() {
     error || isLoading ? (
       <div className="fill-flex home-message big-message">
         {isLoading && <div className="loader" />}
-        {error && <ErrorMessage>معذرة حدثت مشكلة</ErrorMessage>}
+        {error && <ErrorMessage>  تعذر الاتصال..حاول مجددا </ErrorMessage>}
       </div>
     ) : (
       <div className="products-container fill-flex">

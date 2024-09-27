@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -12,6 +11,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendVerificationEmail;
 use Illuminate\Support\Facades\Redirect;
 use Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -200,7 +202,7 @@ class AuthController extends Controller
 
     public function getProfile()
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
 
         return response()->json(['user' => $user], 200);
@@ -208,9 +210,10 @@ class AuthController extends Controller
 
     public function updateProfile(Request $request)
     {
-   
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . auth()->id(),
             'password' => 'nullable|string|min:8|confirmed',
         ]);
@@ -219,8 +222,8 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Update user profile
-        $user = auth()->user();
+   
+        $user = Auth::user();
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -231,5 +234,25 @@ class AuthController extends Controller
         $user->save();
 
         return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
+    }
+
+    public function updateEmaill(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
+        ]);
+
+   
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+  
+        $user = Auth::user();
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json(['message' => 'Email updated successfully', 'email' => $user->email], 200);
     }
 }

@@ -109,9 +109,12 @@ Route::get('/user', function (Request $request) {
 
 // user profile
 
-Route::middleware('auth:sanctum')->get('/user/profile', [AuthController::class, 'getProfile']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user/profile', [AuthController::class, 'getProfile']);
+    Route::put('/user/profile', [AuthController::class, 'updateProfile']);
+    Route::put('/user/update-email', [AuthController::class, 'updateEmaill']); 
+});
 
-Route::middleware('auth:sanctum')->put('/user/profile', [AuthController::class, 'updateProfile']);
 
 
 // order request routes
