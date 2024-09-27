@@ -50,6 +50,7 @@ function Navbar() {
                 </div>
 
                 {user && <span className="namestyle">أهلا {user.username}</span>}
+                <span>تعديل الحساب</span>
 
                 <div className="menu-toggle">
                     <FontAwesomeIcon

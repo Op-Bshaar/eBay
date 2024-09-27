@@ -106,6 +106,14 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+
+// user profile
+
+Route::middleware('auth:sanctum')->get('/user/profile', [AuthController::class, 'getProfile']);
+
+Route::middleware('auth:sanctum')->put('/user/profile', [AuthController::class, 'updateProfile']);
+
+
 // order request routes
 Route::middleware(['auth:sanctum', 'verified'])->get(('/orders/get-payment-link/{order_id}'),[PaymentController::class, 'getPaymentLink']);
 Route::middleware('auth:sanctum')->post(('/orders'),[OrderRequestController::class, 'placeOrder']);

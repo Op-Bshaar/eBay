@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Jobs\SendVerificationEmail;
 use Illuminate\Support\Facades\Redirect;
 use Log;
+
 class AuthController extends Controller
 {
     //
@@ -37,7 +38,7 @@ class AuthController extends Controller
         return response()->json([
             'user' => $user,
             'access_token' => $token,
-            'is_admin'=>$user->is_admin
+            'is_admin' => $user->is_admin
         ]);
     }
     public function loginEmail(Request $request): JsonResponse
@@ -107,7 +108,7 @@ class AuthController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'is_admin'=>false,
+            'is_admin' => false,
         ]);
 
         $token = $user->createToken($user->name . 'Auth-Token')->plainTextToken;
@@ -148,9 +149,9 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out'], 200);
     }
     public function updateEmail(Request $request)
-    {       
+    {
         // Validate the email input
-        $request->validate( [
+        $request->validate([
             'email' => 'required|email|unique:users,email',
         ]);
         // Get the currently authenticated user
@@ -163,13 +164,14 @@ class AuthController extends Controller
             'user' => $user,
         ], 200);
     }
-    
-    public function requestVerificationEmail (Request $request) {
-        if($request->user()->email_verified_at)
-        {
+
+    public function requestVerificationEmail(Request $request)
+    {
+        if ($request->user()->email_verified_at) {
             return response()->json([
                 'is_verified' => true,
-                'message' => 'Email already verified.',],200);
+                'message' => 'Email already verified.',
+            ], 200);
         }
         // Define a unique throttle key, based on the user
         $throttleKey = 'send-verification-email-' . $request->user()->id;
@@ -177,10 +179,10 @@ class AuthController extends Controller
         if (!$request->user()->email) {
             return response()->json(['error' => 'No email address found for the user.'], 400); // 400 Bad Request
         }
-            // Check if the request is throttled
-            if (RateLimiter::tooManyAttempts($throttleKey, 1)) {
-                return response()->json(['error' => 'Too many requests. Please try again later.'], 429); // 429 Too Many Requests
-            }
+        // Check if the request is throttled
+        if (RateLimiter::tooManyAttempts($throttleKey, 1)) {
+            return response()->json(['error' => 'Too many requests. Please try again later.'], 429); // 429 Too Many Requests
+        }
         // Send the email
         try {
             $request->user()->sendEmailVerificationNotification();
@@ -189,10 +191,45 @@ class AuthController extends Controller
             return response()->json([
                 'is_verified' => false,
                 'message' => 'Verification link sent!'
-        
-        ], 200);
+
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to send verification link. Please try again later.','e'=>$e->getMessage()], 500);
+            return response()->json(['error' => 'Failed to send verification link. Please try again later.', 'e' => $e->getMessage()], 500);
         }
+    }
+
+    public function getProfile()
+    {
+        $user = auth()->user();
+
+
+        return response()->json(['user' => $user], 200);
+    }
+
+    public function updateProfile(Request $request)
+    {
+   
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . auth()->id(),
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Update user profile
+        $user = auth()->user();
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
     }
 }
