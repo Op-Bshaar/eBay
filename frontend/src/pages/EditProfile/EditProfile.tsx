@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import Input from "react-phone-number-input/input";
 import { isValidNumber } from "libphonenumber-js";
-
+import './EditProfile.css'
 const EditProfile: React.FC = () => {
   const [user, setUser] = useState({
     first_name: "",
@@ -85,8 +85,8 @@ const EditProfile: React.FC = () => {
   return (
     <div className="edit-profile">
       <h2>تعديل الملف الشخصي</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className="edit-form">
+        <div className="label-edit">
           <label>الاسم الاول:</label>
           <input
             type="text"
@@ -94,9 +94,10 @@ const EditProfile: React.FC = () => {
             value={user.first_name}
             onChange={handleChange}
             required
+            className="input-edit"
           />
         </div>
-        <div>
+        <div  className="label-edit">
           <label>الاسم الاخير:</label>
           <input
             type="text"
@@ -104,37 +105,44 @@ const EditProfile: React.FC = () => {
             value={user.last_name}
             onChange={handleChange}
             required
+            className="input-edit"
           />
-          <label>الاسم الاخير:</label>
+         
+        </div>
+        <div  className="label-edit">
+        <label> البريد الاكتروني:</label>
           <input
             type="text"
             name="email"
             value={user.email}
             onChange={handleChange}
             required
+            className="input-edit"
           />
           <button
             type="button"
             onClick={handleEmailChange}
             disabled={isEmailLoading}
+            className="edit-email"
           >
             {isEmailLoading ? "تغيير البريد..." : "تغيير البريد"}
           </button>
         </div>
-        <div>
+        <div  className="label-edit">
           <label>الهاتف:</label>
           <Input
             country="SA"
             value={user.phone}
             onChange={handlePhoneChange}
             required
+            className="input-edit"
           />
           {!isPhoneValid && (
             <span style={{ color: "red" }}>الرقم غير صحيح</span>
           )}
         </div>
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" className="saving" disabled={isLoading}>
           {isLoading ? "حفظ..." : "حفظ المتغيرات"}
         </button>
       </form>
