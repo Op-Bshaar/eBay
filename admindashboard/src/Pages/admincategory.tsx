@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../constants/URL';
 
+const axiosInstance = axios.create({
+  baseURL: BASE_URL
+});
 const AddCategory = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e: any) => {
+    console.log(name, description);
     e.preventDefault();
-    axios
-      .post('/api/admin/categories', { name, description })
+      axiosInstance
+      .post('/admin/AddCategory', { name, description })
       .then((response) => {
         setMessage(response.data.message);
         setName('');

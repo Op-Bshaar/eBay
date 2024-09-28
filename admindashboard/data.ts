@@ -45,6 +45,12 @@ export const menu = [
         url: "/admin/statistics",
         icon: "statistics.svg",
       },
+      {
+        id: 5,
+        title: "اضافة صنف",
+        url: "/admin/AddCategory",
+        icon: "Category.svg",
+      },
     ],
   },
   {

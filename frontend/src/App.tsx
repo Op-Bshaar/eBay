@@ -47,6 +47,9 @@ const ProductNameChart = lazy(
 const ThisWeekUploads = lazy(
   () => import("../../admindashboard/src/Pages/Charts/ThisWeekUploadsChart")
 );
+const AddCategory = lazy(
+  () => import ("../../admindashboard/src/Pages/admincategory")
+);
 const Users = lazy(() => import("../../admindashboard/src/Pages/Users"));
 const Settings = lazy(() => import("../../admindashboard/src/Pages/Settings"));
 function App() {
@@ -203,6 +206,16 @@ function App() {
                 <AdminRoute>
                   <Suspense fallback={loader}>
                     <AdminChartsMenu />
+                  </Suspense>
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="admin/AddCategory"
+              element={
+                <AdminRoute>
+                  <Suspense fallback={loader}>
+                    <AddCategory />
                   </Suspense>
                 </AdminRoute>
               }
