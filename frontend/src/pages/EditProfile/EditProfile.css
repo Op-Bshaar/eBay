@@ -1,88 +1,87 @@
 .edit-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(107, 165, 161);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-    margin-top: 5vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(107, 165, 161);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 5vh;
 }
 
 .edit-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .label-edit {
-    align-items: flex-start;
-    margin-bottom: 15px;
-    width: 100%;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .label-edit label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 1rem;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .input-edit {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1rem;
-
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
 .edit-email {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: rgb(90, 90, 102);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgb(90, 90, 102);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .edit-email:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .saving {
-    padding: 10px;
-    background-color: rgb(90, 90, 102);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 20px;
-    width: 100%;
+  padding: 10px;
+  background-color: rgb(90, 90, 102);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
 }
 
 .saving:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
-label + input, 
+label + input,
 label + .react-phone-input {
-    margin-top: 5px;
+  margin-top: 5px;
 }
 
 .react-phone-input {
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 1rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1rem;
 }
 
 .error-message {
-    color: red;
-    margin-top: 10px;
+  color: red;
+  margin-top: 10px;
 }

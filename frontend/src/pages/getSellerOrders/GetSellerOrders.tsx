@@ -17,6 +17,7 @@ function GetSellerOrders() {
         setIsLoading(true);
         const response = await api.get(`/sellers/orders`);
         const data = await response.data;
+        console.log("API Response:", data);
         if (Array.isArray(data)) {
           setOrders(data);
         } else {
@@ -32,6 +33,14 @@ function GetSellerOrders() {
 
     fetchOrders();
   }, []);
+
+  // UseEffect to check the contents of orders and order_request_items
+  useEffect(() => {
+    console.log("Orders:", orders);
+    orders.forEach((order) => {
+      console.log("Order Items:", order.order_request_items);
+    });
+  }, [orders]);
 
   const handleShowproduct = (productId: number) => {
     navigate(`/seller-portal/orders/${productId}`);
@@ -49,9 +58,7 @@ function GetSellerOrders() {
         setOrders(updatedOrders);
       } else {
         console.error(`فشل الشحن ${response.statusText}`);
-        setError(
-          `الطلب قاتل: ${response.data.message || "Unknown error"}`
-        );
+        setError(`الطلب قاتل: ${response.data.message || "Unknown error"}`);
       }
     } catch (error) {
       console.error("Shipping error:", error);
@@ -72,7 +79,7 @@ function GetSellerOrders() {
         {orders.map((order) => (
           <div key={order.id} className="order-item">
             <h3>الطلب #{order.id}</h3>
-                <p>الحاله: {getOrderStatus(getSellerStatus(order.status))}</p>
+            <p>الحاله: {getOrderStatus(getSellerStatus(order.status))}</p>
             <p>
               تاريخ الطلب: {new Date(order.created_at).toLocaleDateString()}
             </p>
@@ -86,21 +93,23 @@ function GetSellerOrders() {
             )}
             <h4>المنتجات:</h4>
             <ul>
-              {order.order_request_items &&
-              Array.isArray(order.order_request_items) &&
+              {Array.isArray(order.order_request_items) &&
               order.order_request_items.length > 0 ? (
                 order.order_request_items.map((item) => (
                   <li key={item.id}>
-                    <p>المنتج: {item.product?.title || "N/A"}</p>
+                    <p>المنتج: {item.product?.title || "No title available"}</p>
                     <p>الكميه: {item.quantity}</p>
-                    <p>السعر: ${item.product?.price || 0}</p>
-                    <button onClick={() => handleShowproduct(item.product?.id)}>
+                    <button
+                      onClick={() =>
+                        handleShowproduct(Number(item.product?.id))
+                      }
+                    >
                       عرض المنتج
                     </button>
                   </li>
                 ))
               ) : (
-                <></>
+                <h1>فشلت</h1>
               )}
             </ul>
           </div>
