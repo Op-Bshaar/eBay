@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import Input from "react-phone-number-input/input";
 import { isValidNumber } from "libphonenumber-js";
-import './EditProfile.css'
+import './EditProfile.css';
+import { Link } from "react-router-dom";
+import { PAGE_URLS } from "../../constants/URL";
+
 const EditProfile: React.FC = () => {
   const [user, setUser] = useState({
     first_name: "",
@@ -15,24 +18,33 @@ const EditProfile: React.FC = () => {
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isDataLoaded, setIsDataLoaded] = useState(false); 
+
 
   useEffect(() => {
-
     api
       .get("/user/profile")
-      .then((response:any) => {
-        setUser(response.data);
+      .then((response: any) => {
+        setUser({
+          first_name: response.data.first_name || "",
+          last_name: response.data.last_name || "",
+          phone: response.data.phone || "",
+          email: response.data.email || "",
+        });
+        setIsDataLoaded(true); 
       })
-      .catch((error:any) => {
+      .catch((error: any) => {
         console.error("Error fetching user data:", error);
-        setErrorMessage("حدث خطا في تحميل البيانات.");
+        setErrorMessage("حدث خطأ في تحميل البيانات.");
       });
   }, []);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
+
 
   const handlePhoneChange = (value: string | undefined) => {
     if (value && isValidNumber(value)) {
@@ -42,6 +54,7 @@ const EditProfile: React.FC = () => {
       setIsPhoneValid(false);
     }
   };
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,38 +67,44 @@ const EditProfile: React.FC = () => {
     setIsLoading(true);
     api
       .put("/user/profile", user)
-      .then((response:any) => {
+      .then((response: any) => {
         setUser(response.data);
         setErrorMessage("تم تغيير الملف الشخصي بنجاح");
       })
-      .catch((error:any) => {
+      .catch((error: any) => {
         console.error("Error updating profile:", error);
-        setErrorMessage("فشلت العمليه");
+        setErrorMessage("فشلت العملية");
       })
       .finally(() => setIsLoading(false));
   };
 
-  const handleEmailChange = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  // Handle email change request
+  // const handleEmailChange = (e: React.FormEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   setIsEmailLoading(true);
+  //   api
+  //     .put("/user/update-email", { email: user.email })
+  //     .then((response: any) => {
+  //       setUser({ ...user, email: response.data.email });
+  //       setErrorMessage("تم تغيير البريد بنجاح");
+  //     })
+  //     .catch((error: any) => {
+  //       console.error("Error updating email:", error);
+  //       setErrorMessage("فشلت العملية");
+  //     })
+  //     .finally(() => setIsEmailLoading(false));
+  // };
 
-    setIsEmailLoading(true);
-    api
-      .put("/user/update-email", { email: user.email })
-      .then((response:any) => {
-        setUser({ ...user, email: response.data.email });
-        setErrorMessage("تم تغيير البريد بنجاح");
-      })
-      .catch((error:any) => {
-        console.error("Error updating email:", error);
-        setErrorMessage("فشلت العمليه");
-      })
-      .finally(() => setIsEmailLoading(false));
-  };
+  // Show a loading indicator until data is fetched
+  if (!isDataLoaded) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="edit-profile">
       <h2>تعديل الملف الشخصي</h2>
       <form onSubmit={handleSubmit} className="edit-form">
+        {/* First Name */}
         <div className="label-edit">
           <label>الاسم الاول:</label>
           <input
@@ -97,42 +116,50 @@ const EditProfile: React.FC = () => {
             className="input-edit"
           />
         </div>
-        <div  className="label-edit">
+
+        {/* Last Name */}
+        <div className="label-edit">
           <label>الاسم الاخير:</label>
           <input
             type="text"
             name="last_name"
-            value={user.last_name}
+            value={user.last_name} 
             onChange={handleChange}
             required
             className="input-edit"
           />
-         
         </div>
-        <div  className="label-edit">
-        <label> البريد الاكتروني:</label>
+
+        {/* Email */}
+        <div className="label-edit">
+          <label>البريد الاكتروني:</label>
           <input
             type="text"
             name="email"
-            value={user.email}
+            value={user.email} 
             onChange={handleChange}
             required
             className="input-edit"
           />
+          <Link to={PAGE_URLS.update_email}>
           <button
             type="button"
-            onClick={handleEmailChange}
+            // onClick={handleEmailChange}
             disabled={isEmailLoading}
             className="edit-email"
           >
             {isEmailLoading ? "تغيير البريد..." : "تغيير البريد"}
           </button>
+          </Link>
+         
         </div>
-        <div  className="label-edit">
+
+        {/* Phone Number */}
+        <div className="label-edit">
           <label>الهاتف:</label>
           <Input
             country="SA"
-            value={user.phone}
+            value={user.phone} // Pre-fill the data from the fetched response
             onChange={handlePhoneChange}
             required
             className="input-edit"
@@ -141,7 +168,11 @@ const EditProfile: React.FC = () => {
             <span style={{ color: "red" }}>الرقم غير صحيح</span>
           )}
         </div>
+
+        {/* Error message */}
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
+        {/* Submit button */}
         <button type="submit" className="saving" disabled={isLoading}>
           {isLoading ? "حفظ..." : "حفظ المتغيرات"}
         </button>

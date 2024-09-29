@@ -214,7 +214,7 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'phone' => 'required|string|unique:users,phone',
             'password' => 'nullable|string|min:8|confirmed',
         ]);
     
@@ -231,7 +231,9 @@ class AuthController extends Controller
     
    
         $user->first_name = $request->first_name;
+        
         $user->last_name = $request->last_name;
+        $user->phone = $request->phone;
         $user->email = $request->email;
     
    
@@ -247,31 +249,31 @@ class AuthController extends Controller
         return response()->json(['message' => 'Profile updated successfully', 'user' => $user], 200);
     }
     
-    public function updateEmaill(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email|unique:users,email,' . Auth::id(),
-        ]);
+    // public function updateEmaill(Request $request)
+    // // {
+    // //     $validator = Validator::make($request->all(), [
+    // //         'email' => 'required|email|unique:users,email,' . Auth::id(),
+    // //     ]);
     
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
+    // //     if ($validator->fails()) {
+    // //         return response()->json(['errors' => $validator->errors()], 422);
+    // //     }
     
 
-        $user = User::find(Auth::id());
+    // //     $user = User::find(Auth::id());
     
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
+    // //     if (!$user) {
+    // //         return response()->json(['message' => 'User not found'], 404);
+    // //     }
     
    
-        $user->email = $request->email;
+    // //     $user->email = $request->email;
     
       
-        if (!$user->save()) {
-            return response()->json(['message' => 'Failed to update email'], 500);
-        }
+    // //     if (!$user->save()) {
+    // //         return response()->json(['message' => 'Failed to update email'], 500);
+    // //     }
     
-        return response()->json(['message' => 'Email updated successfully', 'email' => $user->email], 200);}
+    // //     return response()->json(['message' => 'Email updated successfully', 'email' => $user->email], 200);}
 
 }
