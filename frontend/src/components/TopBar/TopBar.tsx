@@ -17,7 +17,7 @@ const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
 
 
   const settings = {
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
