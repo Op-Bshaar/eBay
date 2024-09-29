@@ -15,43 +15,27 @@ import { PAGE_URLS } from "../../constants/URL";
 import { APP_NAME } from "../../constants/Constants";
 
 function Navbar() {
-    const navigate = useNavigate();
-    const { user } = useAuthenticationContext();
-    const inputRef = useRef<HTMLInputElement>(null);
-    const logout = useLogout();
-    const isAuthenticated = useIsAuthenticated();
     const [menuOpen, setMenuOpen] = useState(false);
-    const [loggingout, setLoggingout] = useState(false);
-    const handleSearch = async (e: { preventDefault: () => void }) => {
-        e.preventDefault();
-        const query = inputRef.current?.value.trim();
-        if (query) {
-            navigate(`products/search?query=${encodeURIComponent(query)}`);
-        } else {
-            navigate("/");
-        }
-    };
-
+    const { user } = useAuthenticationContext();
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
+    return <DesktopNavBar/>
     return (
         <>
-            <nav className="navbar tajawal-extralight">
+            <nav className="navbar">
                 <Link className="plain-text" to={PAGE_URLS.home}>
-                    <h1 className="namestyle">{APP_NAME}</h1>
+                    {APP_NAME}
                 </Link>
-                <div className="order-cart" style={{ display: "flex", gap: "70px" }}>
                     <Link className="link" to={PAGE_URLS.all_orders}>طلباتي</Link>
                     <Link aria-label="السلة" to={PAGE_URLS.cart}>
                         <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
                     </Link>
-                </div>
 
                 {user && <span className="namestyle">أهلا {user.username}</span>}
                 <Link className="link" to={PAGE_URLS.editprofile}>
-                    تعديل الحساب</Link>
+                    تعديل الحساب
+                    </Link>
 
                 <div className="menu-toggle">
                     <FontAwesomeIcon
@@ -67,7 +51,49 @@ function Navbar() {
                 </div>
 
                 <div className={`nav-item ${menuOpen ? "open" : ""}`}>
-                    <form role="search" onSubmit={handleSearch} className="search-bar">
+                    
+
+                    <Link className="link" to={"/seller-portal"}>
+                        البيع في سوق
+                    </Link>
+                    
+                </div>
+            </nav>
+        </>
+    );
+}
+function LoginButton(){
+    const isAuthenticated = useIsAuthenticated();
+    const [loggingout, setLoggingout] = useState(false);
+    const logout = useLogout();
+    return isAuthenticated ? (
+        <button onClick={() => {
+            setLoggingout(true);
+            logout().then(() => setLoggingout(false));
+        }
+        } disabled={loggingout} className="button btn" >
+            تسجيل الخروج
+        </button>
+    ) : (
+        <Link className="button" to="login">
+            تسجيل الدخول
+        </Link>
+    );
+}
+function Search(){
+    const navigate = useNavigate();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const handleSearch = async (e: { preventDefault: () => void }) => {
+        e.preventDefault();
+        const query = inputRef.current?.value.trim();
+        if (query) {
+            navigate(`products/search?query=${encodeURIComponent(query)}`);
+        } else {
+            navigate("/");
+        }
+    };
+    return (
+    <form role="search" onSubmit={handleSearch} className="search-bar">
                         <input
                             id="search-by-name"
                             type="search"
@@ -87,27 +113,15 @@ function Navbar() {
                             />
                         </button>
                     </form>
-
-                    <Link className="link" to={"/seller-portal"}>
-                        البيع في سوق
-                    </Link>
-                    {isAuthenticated ? (
-                        <button onClick={() => {
-                            setLoggingout(true);
-                            logout().then(() => setLoggingout(false));
-                        }
-                        } disabled={loggingout} className="button btn" >
-                            تسجيل الخروج
-                        </button>
-                    ) : (
-                        <Link className="button" to="login">
-                            تسجيل الدخول
-                        </Link>
-                    )}
-                </div>
-            </nav>
-        </>
     );
 }
-
+function DesktopNavBar(){
+    return(
+        <nav className="navbar">
+            <span>{APP_NAME}</span>
+            <Search/>
+            <LoginButton/>
+        </nav>
+    );
+}
 export default Navbar;
