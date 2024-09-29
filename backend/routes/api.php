@@ -112,7 +112,6 @@ Route::get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/profile', [AuthController::class, 'getProfile']);
     Route::put('/user/profile', [AuthController::class, 'updateProfile']);
-    Route::put('/user/update-email', [AuthController::class, 'updateEmaill']); 
 });
 
 

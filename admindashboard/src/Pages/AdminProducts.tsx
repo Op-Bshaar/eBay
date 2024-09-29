@@ -17,7 +17,7 @@ import EditForm from "./AdminEdit";
   function AdminProducts() {
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
-    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [error, setError] = useState<string>("");
     const [isLoading, setIsLoading] = useState(false);
     const [EditIsVisible, Showpopup] = useState(false);
@@ -64,14 +64,13 @@ import EditForm from "./AdminEdit";
           setSelectedProduct(null);
           Showpopup(false);
         };
-    const handleCategoryChange = (categoryId: number) => {
-        console.log(categoryId);
-        setSelectedCategory(categoryId);
-    };
+        const handleCategoryChange = (categoryId: string) => {
+            setSelectedCategory(categoryId);
+          };
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-  ? products.filter((product) => product.category_id?.id === selectedCategory)
+  ? products.filter((product) => product.category_id === selectedCategory)
   : products;
 
 
@@ -100,7 +99,8 @@ import EditForm from "./AdminEdit";
     return (
         <div className="tajawal-extralight">
             <div className="topbar-container">
-                <HeroItem onCategorySelect={handleCategoryChange} />
+                <HeroItem categories={categories} 
+                onCategorySelect={handleCategoryChange} />
                 <div className="sidebar-container">
                     <SideBar
                         categories={categories}

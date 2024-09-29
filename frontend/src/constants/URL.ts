@@ -18,7 +18,8 @@ export const PAGE_URLS = {
     view_order:'/orders/:order_id',
     all_orders: '/orders/all',
     place_order:'/orders/place-order/:order_id',
-    editprofile:'/editprofile'
+    editprofile:'/editprofile',
     // edit:`/seller/edit`
+    edit_password:'/edit-password'
 
 }

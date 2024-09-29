@@ -23,6 +23,7 @@ import AdminRoute from "./context/AdminRoute";
 import { lazy, Suspense } from "react";
 import SellerPortal from "./pages/SellerPortal/SellerPortal";
 import EditProfile from "./pages/EditProfile/EditProfile";
+import EditPassword from "./pages/EditPassword/EditPassword";
 const SellerProducts = lazy(() => import("./pages/sellers/sellers"));
 const ProductForm = lazy(() => import("./pages/Sell/Sell"));
 const SellerOrder = lazy(() => import("./pages/SellerOrder/SellerOrder"));
@@ -80,6 +81,7 @@ function App() {
               element={<RequestPasswordReset />}
             />
             <Route path={PAGE_URLS.restpassword} element={<RestPassword />} />
+            <Route path={PAGE_URLS.edit_password} element={<EditPassword />} />
             <Route
               path={PAGE_URLS.email_verification}
               element={request_email_verification}
