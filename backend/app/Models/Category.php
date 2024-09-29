@@ -15,4 +15,12 @@ class Category extends Model
        
         return $this->hasMany(Product::class);
     }
+    public function getIconAttribute($value)
+    {
+        if (empty($value)) {
+             return ''; // Return empty string if value is empty
+        }
+
+         return url('icons/' . $value);
+    }
 }

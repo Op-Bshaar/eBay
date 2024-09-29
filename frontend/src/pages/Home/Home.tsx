@@ -36,7 +36,6 @@ function Home() {
     const fetchCategories = async () => {
       try {
         const response = await api.get(`/categories`);
-        console.log(response.data);
         setCategories(response.data);
       } catch (error) {
         handleError(error);
