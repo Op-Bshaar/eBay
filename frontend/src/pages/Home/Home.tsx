@@ -14,7 +14,7 @@ import axios from "axios";
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -59,13 +59,13 @@ function Home() {
     }
   };
 
-  const handleCategoryChange = (categoryId: string) => {
-    setSelectedCategory(categoryId);
+  const handleCategoryChange = (category: Category) => {
+      setSelectedCategory(category);
   };
 
   // Filter products based on the selected category
   const filteredProducts = selectedCategory
-    ? products.filter((product) => product.category_id === selectedCategory)
+    ? products.filter((product) => product.category_id === selectedCategory.id)
     : products;
 
   const productsView =
@@ -81,7 +81,7 @@ function Home() {
             <ProductView key={product.id} product={product} />
           ))
         ) : (
-          <p>لا توجد منتجات حالياً.</p>
+                          selectedCategory ? <p>لا توجد {selectedCategory.name } حالياً.</p> : <p>لا توجد منتجات حالياً.</p>
         )}
       </div>
     );

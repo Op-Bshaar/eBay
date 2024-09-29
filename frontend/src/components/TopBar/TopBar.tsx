@@ -8,7 +8,7 @@ import { Category } from "../../utils/Category";
 
 interface HeroItemProps {
   categories: Category[];
-  onCategorySelect: (categoryId: string) => void;
+  onCategorySelect: (category: Category) => void;
 }
 
 const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
@@ -41,8 +41,8 @@ const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
     ],
   };
 
-  const handleClick = (categoryId: string) => {
-    onCategorySelect(categoryId);
+  const handleClick = (category: Category) => {
+      onCategorySelect(category);
   };
 
   return (
@@ -52,7 +52,7 @@ const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
           <span
             key={category.id}
             className="hero-item"
-            onClick={() => handleClick(category.id)}
+            onClick={() => handleClick(category)}
           >
             <span className="icon-container">
               <img

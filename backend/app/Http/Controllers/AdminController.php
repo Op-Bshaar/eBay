@@ -119,7 +119,7 @@ class AdminController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:categories,name',
             'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:256',
         ]);
 

@@ -3,15 +3,15 @@ import "./SideBar.css";
 import { Category } from "../../utils/Category";
 
 interface SideBarProps {
-  onCategorySelect: (categoryId: string) => void;
+  onCategorySelect: (category: Category) => void;
   categories: Category[];
 }
 
 const SideBar: React.FC<SideBarProps> = ({ onCategorySelect,categories }) => {
  
 
-  const handleClick = (categoryId: number) => {
-    onCategorySelect(categoryId.toString());
+    const handleClick = (category: Category) => {
+    onCategorySelect(category);
   };
 
   return (
@@ -21,7 +21,7 @@ const SideBar: React.FC<SideBarProps> = ({ onCategorySelect,categories }) => {
           <div
             key={category.id}
             className="sidebar-item"
-            onClick={() => handleClick(Number(category.id))}
+            onClick={() => handleClick(category)}
           >
             <div className="icon-container">
               <img
