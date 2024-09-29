@@ -168,6 +168,11 @@ const EditProfile: React.FC = () => {
             <span style={{ color: "red" }}>الرقم غير صحيح</span>
           )}
         </div>
+        <Link to={PAGE_URLS.edit_password}>
+        اعد كلمه المرور
+        </Link>
+        
+
 
         {/* Error message */}
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
