@@ -104,8 +104,9 @@ function GetSellerOrders() {
                   {/* <img>الصوره:{order.im}</img> */}
                   <button
                     onClick={() => handleShowproduct(Number(order.product.id))}
+                    className="button"
                   >
-                    عرض المنتج
+                    التفاصيل
                   </button>
                 </li>
               ) : (

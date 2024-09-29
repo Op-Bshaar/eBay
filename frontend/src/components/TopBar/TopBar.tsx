@@ -49,20 +49,19 @@ const HeroItem: React.FC<HeroItemProps> = ({ categories,onCategorySelect }) => {
     <div>
       <Slider {...settings} className="hero-item-container">
         {categories.map((category) => (
-          <div
+          <span
             key={category.id}
             className="hero-item"
             onClick={() => handleClick(category.id)}
           >
-            <div className="icon-container">
+            <span className="icon-container">
               <img
                 src={category.icon}
-                alt={category.name}
                 style={{ width: 50, height: 50 }}
               />
-            </div>
+            </span>
             <span className="item-text">{category.name}</span>
-          </div>
+          </span>
         ))}
       </Slider>
     </div>

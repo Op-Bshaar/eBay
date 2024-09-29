@@ -120,15 +120,28 @@ class AdminController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:1000',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:256',
         ]);
 
+        if($request->hasFile('icon')){
+        
+            $image = $request->file('icon');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            
+      
+            $image->move(public_path('icons'), $imageName);
+    
+       
+            $category = Category::create([
+                'name' => $request->name,
+                'icon' => $imageName, 
+            ]);
+    
 
-        $category = new Category();
-        $category->name = $request->input('name');
-        $category->description = $request->input('description');
-        $category->save();
-
-        return response()->json(['message' => 'Category added successfully'], 201);
+            return response()->json($category, 201);
+        } else {
+   
+            return response()->json(['error' => 'Image upload failed'], 400);
+        }
     }
 }
