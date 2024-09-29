@@ -1,7 +1,11 @@
+import { ReactNode } from "react";
 import Address from "../pages/AddressInput/Address";
 import { CartItem } from "./Cart";
 
 export interface Order extends Address {
+    image: ReactNode;
+    quantity: ReactNode;
+    product: any;
     order_request_items?: OrderItem[];
     created_at: string | number | Date;
     id: string;

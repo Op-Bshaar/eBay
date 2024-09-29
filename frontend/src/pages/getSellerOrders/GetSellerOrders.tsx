@@ -3,6 +3,7 @@ import api from "../../helpers/api";
 import { Order } from "../../utils/Order";
 import { useNavigate } from "react-router-dom";
 import { getOrderStatus, getSellerStatus } from "../Order/order_status";
+import './GetSellerOrder.css'
 
 function GetSellerOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -38,6 +39,7 @@ function GetSellerOrders() {
   useEffect(() => {
     console.log("Orders:", orders);
     orders.forEach((order) => {
+      console.log("Order Object:", order);
       console.log("Order Items:", order.order_request_items);
     });
   }, [orders]);
@@ -45,6 +47,8 @@ function GetSellerOrders() {
   const handleShowproduct = (productId: number) => {
     navigate(`/seller-portal/orders/${productId}`);
   };
+
+
 
   const handleShipOrder = async (orderId: number) => {
     try {
@@ -70,11 +74,11 @@ function GetSellerOrders() {
     <div className="seller-orders">
       {isLoading && <p>جاري تحميل الطلبات...</p>}
       {error && <p>{error}</p>}
-
+  
       {!isLoading && !error && orders.length === 0 && (
         <p>ليس لديك طلبات حاليا.</p>
       )}
-
+  
       <div className="order-list">
         {orders.map((order) => (
           <div key={order.id} className="order-item">
@@ -93,23 +97,19 @@ function GetSellerOrders() {
             )}
             <h4>المنتجات:</h4>
             <ul>
-              {Array.isArray(order.order_request_items) &&
-              order.order_request_items.length > 0 ? (
-                order.order_request_items.map((item) => (
-                  <li key={item.id}>
-                    <p>المنتج: {item.product?.title || "No title available"}</p>
-                    <p>الكميه: {item.quantity}</p>
-                    <button
-                      onClick={() =>
-                        handleShowproduct(Number(item.product?.id))
-                      }
-                    >
-                      عرض المنتج
-                    </button>
-                  </li>
-                ))
+              {order.product ? (
+                <li key={order.product.id}>
+                  <p>المنتج: {order.product.title || "No title available"}</p>
+                  <p>الكميه: {order.quantity}</p>
+                  {/* <img>الصوره:{order.im}</img> */}
+                  <button
+                    onClick={() => handleShowproduct(Number(order.product.id))}
+                  >
+                    عرض المنتج
+                  </button>
+                </li>
               ) : (
-                <h1>فشلت</h1>
+                <p>لم يتم العثور على منتجات.</p>
               )}
             </ul>
           </div>
@@ -117,6 +117,7 @@ function GetSellerOrders() {
       </div>
     </div>
   );
+  
 }
 
 export default GetSellerOrders;

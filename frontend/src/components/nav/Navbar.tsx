@@ -96,7 +96,7 @@ function Navbar() {
                             setLoggingout(true);
                             logout().then(() => setLoggingout(false));
                         }
-                        } disabled={loggingout} className="button">
+                        } disabled={loggingout} className="button btn" >
                             تسجيل الخروج
                         </button>
                     ) : (
