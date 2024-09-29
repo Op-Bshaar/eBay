@@ -71,16 +71,20 @@
     background-color: #fff;
     width: clamp(250px,25vw,500px);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    text-align: center;
     display: flex;
     flex-direction: column;
     padding: 10% 20%;
     border: 1px solid #000000a0;
     font-size: 1.25em;
+    align-items:center;
 }
-
-.close-button {
+.cart-icon-container {
+    text-align: start;
+    width: 100%;
+}
+.close-button-container {
     text-align: end;
+    width:100%;
 }
 
 @media (any-hover: hover) and (pointer: fine) {

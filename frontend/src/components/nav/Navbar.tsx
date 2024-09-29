@@ -80,20 +80,22 @@ function UserProfile() {
         if (expanded) {
             setExpanded(false);
         }
-        return <LoginButton/>
+        return <LoginButton />
     }
     return (
         <span className="user-profile-container">
             <button onClick={() => setExpanded(prev => !prev)} className="link user-profile">
                 {user.username}
             </button>
-            <div ref={ menuRef } className={expanded ? "user-profile-menue plain-text" : "hidden"}>
-                <span style={{textAlign:"start"} }>
+            <div ref={menuRef} className={expanded ? "user-profile-menue plain-text" : "hidden"}>
+                <span className="cart-icon-container ">
                     <CartButton />
                 </span>
-                <Link to={PAGE_URLS.editprofile } className="link">تعديل الحساب</Link>
-                <LogoutButton/>
-                <button className="link close-button" onClick={() => setExpanded(prev => !prev)}>غلق</button>
+                <Link to={PAGE_URLS.editprofile} className="link">تعديل الحساب</Link>
+                <LogoutButton />
+                <span className="close-button-container">
+                    <button className="link" onClick={() => setExpanded(prev => !prev)}>غلق</button>
+                </span>
             </div>
 
         </span>
