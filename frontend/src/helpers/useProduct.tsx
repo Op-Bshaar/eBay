@@ -1,12 +1,12 @@
 ﻿import { ReactNode, useEffect, useState } from "react";
-import { Category } from "../utils/Category";
 import api from "./api";
 import { isAxiosError } from "axios";
 import "../styles/Loader.css";
+import Product from "../utils/Product";
 import ErrorMessage from "../components/errorMessage/Error";
 
-function useCategories() {
-    const [categories, setCategoris] = useState<Category[] | null>(null);
+function useProduct(productId:string) {
+    const [product, setProduct] = useState<Product | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const fetch = () => {
@@ -16,12 +16,12 @@ function useCategories() {
         if (errorMessage) {
             setErrorMessage("");
         }
-        if (categories) {
-            setCategoris(null);
+        if (product) {
+            setProduct(null);
         }
-        api.get('/categories').then(response => {
+        api.get(`/products/${productId}`).then(response => {
             const data = response.data;
-            setCategoris(data);
+            setProduct(data);
         }).catch(error => {
             let message = 'حدث خطأ ما.'
             if (isAxiosError(error) && error.request && !error.response) {
@@ -33,16 +33,16 @@ function useCategories() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(fetch, []);
-    let messageElement:ReactNode = null;
+    let messageElement: ReactNode = null;
     if (isLoading) {
         messageElement = <div className="loader center-loader" />
     }
     else if (errorMessage) {
         messageElement = <ErrorMessage>
             {errorMessage}
-            <button className="link" onClick={fetch }>إعادة الاتصال.</button>
+            <button className="link" onClick={fetch}>إعادة الاتصال.</button>
         </ErrorMessage>;
     }
-    return { categories, messageElement };
+    return { product, messageElement };
 }
-export default useCategories;
+export default useProduct;

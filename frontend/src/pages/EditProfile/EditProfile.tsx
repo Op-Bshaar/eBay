@@ -5,6 +5,7 @@ import { isValidNumber } from "libphonenumber-js";
 import './EditProfile.css';
 import { Link } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
+import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 
 const EditProfile: React.FC = () => {
   const [user, setUser] = useState({
@@ -165,7 +166,7 @@ const EditProfile: React.FC = () => {
             className="input-edit"
           />
           {!isPhoneValid && (
-            <span style={{ color: "red" }}>الرقم غير صحيح</span>
+                      <ErrorMessage>الرقم غير صحيح</ErrorMessage>
           )}
         </div>
         <Link to={PAGE_URLS.edit_password}>
@@ -175,7 +176,7 @@ const EditProfile: React.FC = () => {
 
 
         {/* Error message */}
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
         {/* Submit button */}
         <button type="submit" className="saving" disabled={isLoading}>

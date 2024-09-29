@@ -20,6 +20,7 @@ export const PAGE_URLS = {
     place_order:'/orders/place-order/:order_id',
     editprofile:'/editprofile',
     // edit:`/seller/edit`
-    edit_password:'/edit-password'
+    edit_password: '/edit-password',
+    sellerPortal: "/seller-portal",
 
 }

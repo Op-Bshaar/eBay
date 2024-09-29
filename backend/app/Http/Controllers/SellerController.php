@@ -58,10 +58,11 @@ class SellerController extends Controller
     {
 
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required',
+            'title' => 'required|string|max:30',
+            'description' => 'required|string|max:255',
             'price' => 'required|numeric',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'catogery_id'=>'nullable|exists:catogeries,id'
         ]);
 
         $user = $request->user();
@@ -80,13 +81,17 @@ class SellerController extends Controller
 
             $image->move(public_path('images'), $imageName);
 
-
+            $category_id  = $request->category_id ;
+            if(!$category_id   || empty($category_id )){
+                $category_id  = null;
+            }
             $product = Product::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'price' => $request->price,
                 'image' => $imageName,
                 'seller_id' => $seller->id,
+                'category_id' =>$category_id,
             ]);
 
 

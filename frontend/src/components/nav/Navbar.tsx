@@ -34,7 +34,8 @@ function MobileNavBar() {
     return (
         <nav>
             <div className="navbar">
-                <Link to={PAGE_URLS.home } className="navbar-app-name">{APP_NAME}</Link>
+                <Link to={PAGE_URLS.home} className="navbar-app-name">{APP_NAME}</Link>
+                <SellerPortal />
                 <UserProfile />
             </div>
             <div className="navbar">
@@ -49,9 +50,17 @@ function DesktopNavBar() {
         <nav className="navbar">
             <Link to={PAGE_URLS.home} className="navbar-app-name">{APP_NAME}</Link>
             <Search />
+            <SellerPortal />
             <CartButton />
             <UserProfile />
         </nav>
+    );
+}
+function SellerPortal() {
+    return (
+        <Link className="link" to={PAGE_URLS.sellerPortal}>
+            البيع في {APP_NAME }
+        </Link>
     );
 }
 function UserProfile() {
