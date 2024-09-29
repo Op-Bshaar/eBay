@@ -1,83 +1,129 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faMagnifyingGlass,
-  faShoppingCart,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useIsAuthenticated } from "../../helpers/api";
 import { useLogout } from "../../context/AuthenticationContext";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PAGE_URLS } from "../../constants/URL";
 import { APP_NAME } from "../../constants/Constants";
 
 function Navbar() {
-    const [menuOpen, setMenuOpen] = useState(false);
-    const { user } = useAuthenticationContext();
-    const toggleMenu = () => {
-        setMenuOpen(!menuOpen);
-    };
-    return <DesktopNavBar/>
+    const isTabletOrLarger = useMediaQuery('(min-width: 768px)');
+    return isTabletOrLarger ? <DesktopNavBar /> : <MobileNavBar />;
+
+}
+function useMediaQuery(query: string) {
+    const [matches, setMatches] = useState(window.matchMedia(query).matches);
+
+    useEffect(() => {
+        const mediaQueryList = window.matchMedia(query);
+
+        // Event listener callback function to update state when the query matches or doesn't match
+        const updateMatches = (event: MediaQueryListEvent) => setMatches(event.matches);
+
+        mediaQueryList.addEventListener('change', updateMatches);
+
+        // Cleanup event listener on unmount
+        return () => mediaQueryList.removeEventListener('change', updateMatches);
+    }, [query]);
+
+    return matches;
+}
+function MobileNavBar() {
     return (
-        <>
-            <nav className="navbar">
-                <Link className="plain-text" to={PAGE_URLS.home}>
-                    {APP_NAME}
-                </Link>
-                    <Link className="link" to={PAGE_URLS.all_orders}>طلباتي</Link>
-                    <Link aria-label="السلة" to={PAGE_URLS.cart}>
-                        <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
-                    </Link>
-
-                {user && <span className="namestyle">أهلا {user.username}</span>}
-                <Link className="link" to={PAGE_URLS.editprofile}>
-                    تعديل الحساب
-                    </Link>
-
-                <div className="menu-toggle">
-                    <FontAwesomeIcon
-                        icon={faBars}
-                        className={`menu-icon ${menuOpen ? "hidden" : ""}`}
-                        onClick={toggleMenu}
-                    />
-                    <FontAwesomeIcon
-                        icon={faXmark}
-                        className={`close-icon ${menuOpen ? "visible" : "hidden"}`}
-                        onClick={toggleMenu}
-                    />
-                </div>
-
-                <div className={`nav-item ${menuOpen ? "open" : ""}`}>
-                    
-
-                    <Link className="link" to={"/seller-portal"}>
-                        البيع في سوق
-                    </Link>
-                    
-                </div>
-            </nav>
-        </>
+        <nav>
+            <div className="navbar">
+                <Link to={PAGE_URLS.home } className="navbar-app-name">{APP_NAME}</Link>
+                <UserProfile />
+            </div>
+            <div className="navbar">
+                <Search />
+                <CartButton />
+            </div>
+        </nav>
     );
 }
-function LoginButton(){
-    const isAuthenticated = useIsAuthenticated();
+function DesktopNavBar() {
+    return (
+        <nav className="navbar">
+            <Link to={PAGE_URLS.home} className="navbar-app-name">{APP_NAME}</Link>
+            <Search />
+            <CartButton />
+            <UserProfile />
+        </nav>
+    );
+}
+function UserProfile() {
+    const { user } = useAuthenticationContext();
+    const [expanded, setExpanded] = useState(false)
+    const menuRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setExpanded(false);
+            }
+        }
+        if (expanded) {
+            // Attach the event listener to the document
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            // Remove the event listener if the menu is not expanded
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        // Cleanup function to remove the event listener on unmount or when `expanded` changes
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [expanded]);
+    if (!user) {
+        if (expanded) {
+            setExpanded(false);
+        }
+        return <LoginButton/>
+    }
+    return (
+        <span className="user-profile-container">
+            <button onClick={() => setExpanded(prev => !prev)} className="link user-profile">
+                {user.username}
+            </button>
+            <div ref={ menuRef } className={expanded ? "user-profile-menue plain-text" : "hidden"}>
+                <span style={{textAlign:"start"} }>
+                    <CartButton />
+                </span>
+                <Link to={PAGE_URLS.editprofile } className="link">تعديل الحساب</Link>
+                <LogoutButton/>
+                <button className="link close-button" onClick={() => setExpanded(prev => !prev)}>غلق</button>
+            </div>
+
+        </span>
+    );
+}
+function CartButton() {
+    return (
+        <Link aria-label="السلة" to={PAGE_URLS.cart}>
+            <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
+        </Link>
+    );
+}
+function LoginButton() {
+    return (
+        <Link style={{margin:"0" }} className="button" to="login">
+            تسجيل الدخول
+        </Link>
+    );
+}
+function LogoutButton() {
     const [loggingout, setLoggingout] = useState(false);
     const logout = useLogout();
-    return isAuthenticated ? (
+    return (
         <button onClick={() => {
             setLoggingout(true);
             logout().then(() => setLoggingout(false));
         }
-        } disabled={loggingout} className="button btn" >
+        } disabled={loggingout} className="link" >
             تسجيل الخروج
         </button>
-    ) : (
-        <Link className="button" to="login">
-            تسجيل الدخول
-        </Link>
     );
 }
 function Search(){
@@ -113,15 +159,6 @@ function Search(){
                             />
                         </button>
                     </form>
-    );
-}
-function DesktopNavBar(){
-    return(
-        <nav className="navbar">
-            <span>{APP_NAME}</span>
-            <Search/>
-            <LoginButton/>
-        </nav>
     );
 }
 export default Navbar;
