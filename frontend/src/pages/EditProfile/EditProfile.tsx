@@ -110,7 +110,7 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="first_name"
-            value={user.first_name}
+            value={user?.first_name}
             onChange={handleChange}
             required
             className="input-edit"
@@ -123,7 +123,7 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="last_name"
-            value={user.last_name} 
+            value={user?.last_name} 
             onChange={handleChange}
             required
             className="input-edit"
@@ -136,7 +136,7 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="email"
-            value={user.email} 
+            value={user?.email} 
             onChange={handleChange}
             required
             className="input-edit"
@@ -159,7 +159,7 @@ const EditProfile: React.FC = () => {
           <label>الهاتف:</label>
           <Input
             country="SA"
-            value={user.phone} // Pre-fill the data from the fetched response
+            value={user?.phone} // Pre-fill the data from the fetched response
             onChange={handlePhoneChange}
             required
             className="input-edit"
