@@ -14,7 +14,9 @@ import axios from "axios";
 function Home() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,7 +62,7 @@ function Home() {
   };
 
   const handleCategoryChange = (category: Category) => {
-      setSelectedCategory(category);
+    setSelectedCategory(category);
   };
 
   // Filter products based on the selected category
@@ -72,7 +74,7 @@ function Home() {
     error || isLoading ? (
       <div className="fill-flex home-message big-message">
         {isLoading && <div className="loader" />}
-        {error && <ErrorMessage>  تعذر الاتصال..حاول مجددا </ErrorMessage>}
+        {error && <ErrorMessage> تعذر الاتصال..حاول مجددا </ErrorMessage>}
       </div>
     ) : (
       <div className="products-container fill-flex">
@@ -80,26 +82,30 @@ function Home() {
           filteredProducts.map((product) => (
             <ProductView key={product.id} product={product} />
           ))
+        ) : selectedCategory ? (
+          <p>لا توجد {selectedCategory.name} حالياً.</p>
         ) : (
-                          selectedCategory ? <p>لا توجد {selectedCategory.name } حالياً.</p> : <p>لا توجد منتجات حالياً.</p>
+          <p>لا توجد منتجات حالياً.</p>
         )}
       </div>
     );
 
   return (
-    <div>
+    <div className="main-container">
       <div className="topbar-container">
         <HeroItem
           categories={categories}
           onCategorySelect={handleCategoryChange}
         />
-        <div className="sidebar-container">
+      </div>
+      <div className="sidebar-container">
+        <div className="sidebar">
           <SideBar
             categories={categories}
             onCategorySelect={handleCategoryChange}
           />
-          {productsView}
         </div>
+        <div className="products-container">{productsView}</div>
       </div>
     </div>
   );

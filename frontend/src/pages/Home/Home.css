@@ -1,31 +1,40 @@
 .sidebar-container {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  flex: 1;
+  flex-direction: row; 
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height:100%;
+}
+.topbar-container {
 
+  background-color: #f8f8f8;
 }
-.topbar-container{
-    box-sizing:border-box;
-    width:100%;
-    text-align:center;
+.sidebar {
+
+  background-color: #f0f0f0;
+  padding: 10px;
 }
-.fill-flex {
-    flex: 1;
+
+.products-container {
+  flex: 1;
+  padding: 10px;
 }
+
 
 .home-message {
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .home-message .error-message {
-    color: #d9534f; 
-    font-size: 1.2em;
-    font-weight: bold;
+  color: #d9534f;
+  font-size: 1.2em;
+  font-weight: bold;
 }
-    .home-message .loader {
-        margin-top:5vh;
-    }
+.home-message .loader {
+  margin-top: 5vh;
+}

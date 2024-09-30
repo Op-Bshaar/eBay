@@ -23,14 +23,14 @@ const SideBar: React.FC<SideBarProps> = ({ onCategorySelect,categories }) => {
             className="sidebar-item"
             onClick={() => handleClick(category)}
           >
-            <div className="icon-container">
+            <div className="icon-container1">
               <img
                 src={category.icon}
                 alt={category.name}
                 style={{ width: 50, height: 50 }}
               />
             </div>
-            <span className="item-text">{category.name}</span>
+            <div className="item-text">{category.name}</div>
           </div>
         ))}
       </div>
