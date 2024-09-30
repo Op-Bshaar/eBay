@@ -3,44 +3,25 @@ import api from "../../helpers/api";
 import Input from "react-phone-number-input/input";
 import { isValidNumber } from "libphonenumber-js";
 import "./EditProfile.css";
+import "../../styles/Loader.css"
 import { Link } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { useRequireAuthentication } from "../login/LoginRedirect";
-
 const EditProfile: React.FC = () => {
   useRequireAuthentication();
   const { user, setUser } = useAuthenticationContext();
-
+  const [firstName,setFirstName] = useState(user?.firstName ?? "");
+  const [lastName,setLastName] = useState(user?.lastName ?? "");
+  const [phone,setPhone] = useState(user?.phone ?? "");
   const [errorMessage, setErrorMessage] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(true);
-  const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
-
-  useEffect(() => {
-    api
-      .get("/user/profile")
-      .then((response: any) => {
-        setUser(response.data);
-        setIsDataLoaded(true);
-      })
-      .catch((error: any) => {
-        console.error("Error fetching user data:", error);
-        setErrorMessage("حدث خطأ في تحميل البيانات.");
-      });
-  }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value || "" });
-  };
 
   const handlePhoneChange = (value: string | undefined) => {
     if (value && isValidNumber(value)) {
       setIsPhoneValid(true);
-      setUser({ ...user, phone: value|| ""  });
     } else {
       setIsPhoneValid(false);
     }
@@ -68,10 +49,6 @@ const EditProfile: React.FC = () => {
       .finally(() => setIsLoading(false));
   };
 
-  if (!isDataLoaded) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="edit-profile">
       <h2>تعديل الملف الشخصي</h2>
@@ -82,8 +59,8 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="first_name"
-            value={user?.firstName}
-            onChange={handleChange}
+            value={firstName}
+            onChange={(e) => setFirstName(e.currentTarget.value)}
             required
             className="input-edit"
           />
@@ -95,56 +72,34 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="last_name"
-            value={user?.lastName}
-            onChange={handleChange}
+            value={lastName}
+            onChange={(e) => setLastName(e.currentTarget.value)}
             required
             className="input-edit"
           />
         </div>
-
-        {/* Email */}
-        <div className="label-edit">
-          <label>البريد الاكتروني:</label>
-          <input
-            type="text"
-            name="email"
-            value={user?.email}
-            onChange={handleChange}
-            required
-            className="input-edit"
-          />
-          <Link to={PAGE_URLS.update_email}>
-            <button
-              type="button"
-              disabled={isEmailLoading}
-              className="edit-email"
-            >
-              {isEmailLoading ? "تغيير البريد..." : "تغيير البريد"}
-            </button>
-          </Link>
-        </div>
-
-        {/* Phone Number */}
+       
         <div className="label-edit">
           <label>الهاتف:</label>
           <Input
             country="SA"
-            value={user?.phone} // Pre-fill the data from the fetched response
+            value={phone} 
             onChange={handlePhoneChange}
             required
             className="input-edit"
           />
           {!isPhoneValid && <ErrorMessage>الرقم غير صحيح</ErrorMessage>}
         </div>
-        <Link to={PAGE_URLS.edit_password}>اعد كلمه المرور</Link>
+        <Link className="link" to={PAGE_URLS.edit_password}>اعد كلمه المرور</Link>
 
-        {/* Error message */}
+       
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        {/* Submit button */}
+
         <button type="submit" className="saving" disabled={isLoading}>
-          {isLoading ? "حفظ..." : "حفظ المتغيرات"}
+          {isLoading ? "يتم الحفظ" : "حفظ التغييرات"}
         </button>
+        {isLoading && <span className="small-loader center-loader"/>}
       </form>
     </div>
   );

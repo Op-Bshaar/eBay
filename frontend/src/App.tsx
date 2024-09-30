@@ -91,7 +91,10 @@ function App() {
                             element={request_email_verification}
                         />
                         <Route path={PAGE_URLS.update_email} element={<UpdateEmail />} />
-                        <Route path={PAGE_URLS.editprofile} element={<EditProfile />} />
+                        <Route path={PAGE_URLS.editprofile} element={
+                            <ReloadUser>
+                            <EditProfile />
+                            </ReloadUser>} />
                         <Route
                             path={PAGE_URLS.request_email_verification}
                             element={request_email_verification}
