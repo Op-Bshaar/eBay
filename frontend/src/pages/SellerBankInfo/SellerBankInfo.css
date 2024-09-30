@@ -1,0 +1,17 @@
+.seller-bank-info-form{
+
+}
+    .seller-bank-info-form input:user-invalid {
+        outline: auto;
+        outline-color: #aa0000;
+    }
+
+    .seller-bank-info-form input:invalid:focus {
+        outline: auto;
+        outline-color: #ffaa00;
+    }
+
+    .seller-bank-info-form input:valid {
+        outline: auto;
+        outline-color: #006600;
+    }

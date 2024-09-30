@@ -22,11 +22,11 @@ function SellerOrder() {
     const status = getSellerStatus(order.status);
     const isReadyForShipment = status === 'paid' || order.status === 'notified-seller';
     const shipment = isReadyForShipment && order.order_request &&
-        <>
-            <p>
-                <h2>
-                     معلومات الشحن
+        <article>
+            <h2>
+                معلومات الشحن
             </h2>
+            <strong>الرجاء شحن الطلب ,ثم رفع معلومات الشحن وإيصال الشحن.</strong>
             <div>
                 <span>العنوان:</span>
                 <span> {addressToText(order.order_request)}</span>
@@ -39,16 +39,18 @@ function SellerOrder() {
                 <span>رقم الجوال:</span>
                 <span dir="ltr"> {order.order_request.phone}</span>
             </div>
-            </p>
-        </>;
+            <button className="button">رفع معلومات الشحن</button>
+        </article>;
     return (
         <div className="seller-order-page">
-            <div className="seller-order-status">
-                حالة الطلب: {getOrderStatus(status)}
+            <div className="seller-order-container">
+                <div className="seller-order-status">
+                    حالة الطلب: {getOrderStatus(status)}
+                </div>
+                {product}
+                <Link to={`/seller-portal/products/${order.product.id}`} className="button">عرض المنتج</Link>
             </div>
-            {product}
-            <Link to={`/seller-portal/products/${order.product.id}`} className="button">عرض المنتج</Link>
-            {shipment }
+            {shipment}
         </div>
     );
 }

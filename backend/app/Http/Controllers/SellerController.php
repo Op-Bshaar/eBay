@@ -181,7 +181,7 @@ class SellerController extends Controller
             $seller = Seller::create([
                 'user_id' => $user->id,
             ]);
-            $seller->save();
+            return response()->json(['seller' => $seller], 201);
         }
         return response()->json(['seller' => $seller], 200);
     }

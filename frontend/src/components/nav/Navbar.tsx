@@ -101,6 +101,7 @@ function UserProfile() {
                     <CartButton />
                 </span>
                 <Link to={PAGE_URLS.editprofile} className="link">تعديل الحساب</Link>
+                <Link to={PAGE_URLS.all_orders} className="link">طلباتي</Link>
                 <LogoutButton />
                 <span className="close-button-container">
                     <button className="link" onClick={() => setExpanded(prev => !prev)}>غلق</button>

@@ -5,77 +5,99 @@ import Seller from "../../utils/Seller";
 import api from "../../helpers/api";
 import ErrorMessage from "../../components/errorMessage/Error";
 import { useRequireAuthentication } from "../login/LoginRedirect";
+import SellerProvider from "../../context/SellerContext/SellerProvider";
+import { useSellerContext } from "../../context/SellerContext/SellerContext";
 function SellerPortal() {
-  const navigate = useNavigate();
-  useRequireAuthentication();
-  const { seller, messageElement } = useSeller();
-  const [orderId, setOrderId] = useState("");
-  const handleNavigateToOrderDetails = () => {
-    if (orderId) {
-      navigate(`/seller-portal/orders/${orderId}`);
-    } else {
-      alert("معذره");
+    return (
+        <SellerProvider>
+            <SellerPortalPage />
+        </SellerProvider>
+    );
+}
+function SellerPortalPage() {
+    const navigate = useNavigate();
+    useRequireAuthentication();
+    const { seller, messageElement } = useSeller();
+    const {setSeller } = useSellerContext();
+    const [orderId, setOrderId] = useState("");
+    useEffect(() => setSeller(seller),[seller, setSeller]);
+    const handleNavigateToOrderDetails = () => {
+        if (orderId) {
+            navigate(`/seller-portal/orders/${orderId}`);
+        } else {
+            alert("معذره");
+        }
+    };
+    if (messageElement) {
+        return messageElement;
     }
-  };
-  if (messageElement) {
-    return messageElement;
-  }
-  return (
-    <>
-      <nav className="seller-nav">
-        <NavLink
-          className={() =>
-            location.pathname.startsWith("/seller-portal/products")
-              ? "seller-nav-sellected"
-              : ""
-          }
-          to="products"
-        >
-          منتجاتي
-        </NavLink>
-        <NavLink
-          className={() =>
-            location.pathname.startsWith("/seller-portal/orders")
-              ? "seller-nav-sellected"
-              : ""
-          }
-          to="orders"
-        >
-          طلباتي
-        </NavLink>
-        <NavLink
-          className={() =>
-            location.pathname.startsWith("/seller-portal/add-product")
-              ? "seller-nav-sellected"
-              : ""
-          }
-          to="add-product"
-        >
-          إضافة منتج
-        </NavLink>
-      </nav>
-      <div className="seller-rating">
-        تقييمي:{" "}
-        {seller?.rating ? `${seller.rating} / 5` : "لا توجد تقييمات بعد"}.
-      </div>
 
-      <div className="order-id-input">
-        <input
-          type="text"
-          placeholder="أدخل رقم الطلب"
-          value={orderId}
-          onChange={(e) => setOrderId(e.target.value)}
-        />
-        <button
-          onClick={handleNavigateToOrderDetails}
-          className="navigate-button"
-        >
-          عرض تفاصيل الطلب
-        </button>
-      </div>
-      <Outlet />
-    </>
-  );
+    return (
+        <>
+            <nav className="seller-nav">
+                <NavLink
+                    className={() =>
+                        location.pathname.startsWith("/seller-portal/products")
+                            ? "seller-nav-sellected"
+                            : ""
+                    }
+                    to="products"
+                >
+                    منتجاتي
+                </NavLink>
+                <NavLink
+                    className={() =>
+                        location.pathname.startsWith("/seller-portal/orders")
+                            ? "seller-nav-sellected"
+                            : ""
+                    }
+                    to="orders"
+                >
+                    طلباتي
+                </NavLink>
+                <NavLink
+                    className={() =>
+                        location.pathname.startsWith("/seller-portal/add-product")
+                            ? "seller-nav-sellected"
+                            : ""
+                    }
+                    to="add-product"
+                >
+                    إضافة منتج
+                </NavLink>
+                <NavLink
+                    className={() =>
+                        location.pathname.startsWith("/seller-portal/bank-info")
+                            ? "seller-nav-sellected"
+                            : ""
+                    }
+                    to="bank-info"
+                >
+                    المعلومات البنكية
+                </NavLink>
+            </nav>
+            <div className="seller-rating">
+                تقييمي:{" "}
+                {seller?.rating ? `${seller.rating} / 5` : "لا توجد تقييمات بعد"}.
+            </div>
+
+            <div className="order-id-input">
+                <input
+                    type="text"
+                    placeholder="أدخل رقم الطلب"
+                    value={orderId}
+                    onChange={(e) => setOrderId(e.target.value)}
+                />
+                <button
+                    onClick={handleNavigateToOrderDetails}
+                    className="navigate-button"
+                >
+                    عرض تفاصيل الطلب
+                </button>
+            </div>
+            <Outlet />
+        </>
+    );
 }
 function useSeller() {
   const [seller, setSeller] = useState<Seller | null>(null);

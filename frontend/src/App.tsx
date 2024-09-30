@@ -27,6 +27,7 @@ import EditPassword from "./pages/EditPassword/EditPassword";
 const SellerProducts = lazy(() => import("./pages/sellers/sellers"));
 const ProductForm = lazy(() => import("./pages/Sell/Sell"));
 const SellerOrder = lazy(() => import("./pages/SellerOrder/SellerOrder"));
+const SellerBankInfo = lazy(() => import("./pages/SellerBankInfo/SellerBankInfo"));
 const SellerOrders = lazy(
   () => import("./pages/getSellerOrders/GetSellerOrders")
 );
@@ -150,6 +151,14 @@ function App() {
                                 element={
                                     <Suspense fallback={loader}>
                                         <ProductForm />
+                                    </Suspense>
+                                }
+                            />
+                            <Route
+                                path="bank-info"
+                                element={
+                                    <Suspense fallback={loader}>
+                                        <SellerBankInfo />
                                     </Suspense>
                                 }
                             />

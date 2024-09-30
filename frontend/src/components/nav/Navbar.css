@@ -77,11 +77,15 @@
     border: 1px solid #000000a0;
     font-size: 1.25em;
     align-items:center;
+    justify-content:space-between;
 }
-.cart-icon-container {
-    text-align: start;
-    width: 100%;
-}
+    .user-profile-menue>*{
+        margin:0;
+    }
+    .cart-icon-container {
+        text-align: start;
+        width: 100%;
+    }
 .close-button-container {
     text-align: end;
     width:100%;

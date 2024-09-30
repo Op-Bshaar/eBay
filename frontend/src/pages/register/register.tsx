@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../register/register.css";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import api,{setToken} from "../../helpers/api";
 import PasswordInput from "../login/PasswordInput";

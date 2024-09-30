@@ -8,14 +8,12 @@ use App\Models\OrderRequest;
 class CancelOverdueOrders extends Command
 {
     // The name and signature of the console command.
-    protected $signature = 'orders:cancel-overdue';
+    protected $signature = 'orders:cancel-overdue {timeLimitInMinutes? : Time limit for pending orders in minutes (default: 30)}';
 
     // The console command description.
     protected $description = 'Cancel unpaid orders that have exceeded the time limit';
-
-    // Time limit for pending orders in minutes
-    protected $timeLimitInMinutes = 30;
-
+    // Default time limit for pending orders in minutes
+    protected $defaultTimeLimitInMinutes = 30;
     /**
      * Execute the console command.
      *
@@ -25,10 +23,10 @@ class CancelOverdueOrders extends Command
     {
         // Fetch all pending orders
         $orders = OrderRequest::where('status', 'pending')->get();
-
+        $timeLimitInMinutes = $this->argument('timeLimitInMinutes') ?? $this->defaultTimeLimitInMinutes;
         foreach ($orders as $order) {
             // Cancel order if it exceeds the time limit
-            $order->cancelIfOverdue($this->timeLimitInMinutes);
+            $order->cancelIfOverdue($timeLimitInMinutes);
         }
 
         $this->info('Overdue orders have been processed.');
