@@ -9,7 +9,9 @@ import { isAxiosError } from "axios";
 import ErrorMessage from "../../components/errorMessage/Error";
 import AddressInput from "../AddressInput/AddressInput";
 import "./AddressPage.css";
-function AddressPage({ order_items }: { order_items?:CartItem[]}) {
+import { useRequireEmailVerification } from "../login/LoginRedirect";
+function AddressPage({ order_items }: { order_items?: CartItem[] }) {
+    useRequireEmailVerification();
     const { cartItems } = useCart();
     const [, , clearCart] = useCartOperations();
     const [address, setAddress] = useState(emptyAddress);

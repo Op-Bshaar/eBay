@@ -31,3 +31,8 @@
         color: #000;
     }
 }
+@media(max-width: 599px ) {
+    .seller-nav > * {
+        font-size:1em;
+    }
+}
