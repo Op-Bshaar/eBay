@@ -58,7 +58,8 @@ function EditProductForm({ product, categories }: { product: Product, categories
                 headers: { "Content-Type": "multipart/form-data" },
             })
             .then((response) => {
-                navigate(`/seller-portal/products/${product.id}`)
+                const id = response.data.product.id;
+                navigate(`/seller-portal/products/${id}`)
 
             })
             .catch((error) => {

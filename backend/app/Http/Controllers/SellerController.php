@@ -186,7 +186,29 @@ class SellerController extends Controller
         return response()->json(['seller' => $seller], 200);
     }
 
-
+    public function setBankInfo(Request $request){
+        $validatedData = $request->validate([
+            'bank_name' => 'required|string|max:100',
+            'bank_recepient_name' => 'required|string|max:100',
+            'bank_account_number' => 'required|string|max:50',
+            'iban' => 'required|string|max:34|regex:/^[A-Z]{2}[0-9]{2}[A-Z0-9]+$/', // Ensure IBAN starts with 2 letters followed by digits and alphanumeric characters
+        ]);
+        $seller = $request->user()->seller;
+            // Check if the seller exists; if not, return a 404 response
+        if (!$seller) {
+            return response()->json(['message' => 'Seller not found.'], 404);
+        }
+        $seller->bank_name = $validatedData['bank_name'];
+        $seller->bank_recepient_name = $validatedData['bank_recepient_name'];
+        $seller->bank_account_number = $validatedData['bank_account_number'];
+        $seller->iban = $validatedData['iban'];
+    
+        // Save the changes
+        $seller->save();
+    
+        // Return a success response
+        return response()->json(['message' => 'Bank information updated successfully.'], 200);
+    }
     public function shipOrder(Request $request, $orderId)
     {
         $seller = $request->user()->seller;
