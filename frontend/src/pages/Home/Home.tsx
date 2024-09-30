@@ -92,7 +92,16 @@ function Home() {
 
   return (
     <div className="main-container">
+      
       <div className="topbar-container">
+      <button className="deselect-button" onClick=
+        {()=>{
+          setSelectedCategory(null)
+          handleCategoryChange
+        }
+        }>
+          x
+        </button>
         <HeroItem
           categories={categories}
           onCategorySelect={handleCategoryChange}

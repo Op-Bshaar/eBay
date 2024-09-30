@@ -3,6 +3,7 @@ import api from "../../../frontend/src/helpers/api";
 import ValidateFile from "../../../frontend/src/components/FileInput/ValidateFile";
 import FileInputButton from "../../../frontend/src/components/FileInput/FileInputButton";
 import FileDropArea from "../../../frontend/src/components/FileInput/FileDropArea";
+import { Link } from 'react-router-dom';
 
 const allowedFileTypes = [
   "image/jpeg",
@@ -17,7 +18,7 @@ const AddCategory = () => {
   const [message, setMessage] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string | null>(null);
-
+  const [successful, setSucces] = useState(Boolean);
 
 
 
@@ -27,7 +28,12 @@ const AddCategory = () => {
       fileInputRef.current.click();
     }
   };
-
+  const handlereset = ()=>
+    {
+      setName('');
+      setImageFile(null);
+      setSucces(false);
+    }
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
@@ -60,12 +66,23 @@ const AddCategory = () => {
   }).then((response) => {
         setMessage(response.data.message);
         setName('');
+        setSucces(true);
       })
       .catch((error) => {
         console.error('Error adding category:', error);
       });
   };
-
+if(successful)
+  {
+    return (
+      <div className="product-created-successfully">
+        <p>تمت إضافة الصنف بنجاح</p>
+        <button className="button" onClick={handlereset}>
+          إضافة منتج آخر
+        </button>
+      </div>
+    );
+  }
   return (
     <div>
       <h2>Add New Category</h2>
