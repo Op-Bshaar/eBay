@@ -8,10 +8,11 @@ export class User {
     firstName: string;
     lastName: string;
     isAdmin: boolean;
+    currentPassword?: string;
 
     constructor(id: string, username: string, phone: string, email: string,
         isPhoneVerified: boolean = false, isEmailVerified: boolean = false,
-        firstName: string, lastName: string, isAdmin = false) {
+        firstName: string, lastName: string, isAdmin = false,currentPassword?: string) {
         this.id = id;
         this.username = username;
         this.phone = phone;
@@ -21,6 +22,7 @@ export class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isAdmin = isAdmin;
+        this.currentPassword = currentPassword;
 
     }
 }
@@ -42,6 +44,6 @@ export function readUser(user_data: any): User {
         user_data["first_name"],
         user_data["last_name"],
         user_data["is_admin"],
-
+        user_data["current_password"] 
     );
 }

@@ -216,6 +216,7 @@ class AuthController extends Controller
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|unique:users,phone',
             'password' => 'nullable|string|min:8|confirmed',
+            'current_password' => 'required_with:password|string',
         ]);
     
         if ($validator->fails()) {
@@ -234,7 +235,7 @@ class AuthController extends Controller
         
         $user->last_name = $request->last_name;
         $user->phone = $request->phone;
-        $user->email = $request->email;
+
     
    
         if ($request->filled('password')) {
