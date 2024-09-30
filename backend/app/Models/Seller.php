@@ -10,7 +10,7 @@ class Seller extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['rating', 'user_id'];
+    protected $fillable = ['rating', 'user_id','bank_name','bank_recepient_name','bank_account_number','iban'];
 
     public function setRatingAttribute($value)
     {

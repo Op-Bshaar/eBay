@@ -144,6 +144,7 @@ function Register() {
                             minLength={2}
                             maxLength={30}
                             required
+                            pattern="^[أ-يa-zA-Z]+$"
                         />
                         <InputError input={firstNameRef.current} name="الاسم" triggerValidate={triggerValidate} />
                     </div>
@@ -158,6 +159,7 @@ function Register() {
                             minLength={2}
                             maxLength={30}
                             required
+                            pattern="^[أ-يa-zA-Z]+$"
                         />
                         <InputError input={lastNameRef.current} name="الاسم" triggerValidate={triggerValidate} />
                     </div>
