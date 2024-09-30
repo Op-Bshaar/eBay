@@ -1,4 +1,4 @@
-import { useState, useRef, FormEvent } from "react";
+import { useState, useRef } from "react";
 import api from "../../helpers/api";
 import React from "react";
 import "./Sell.css";
@@ -41,42 +41,43 @@ function EditProduct({id,categories}:{id:string,categories:Category[] | null}){
     }
     return <EditProductForm categories={categories} product={product}/>
 }
-function EditProductForm({product,categories}:{product:Product,categories:Category[] | null}){
+function EditProductForm({ product, categories }: { product: Product, categories: Category[] | null }) {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
     const [productData, setProductData] = useState<ProductData>({
-        title:product.title,
-        description:product.description,
-        price:product.price,
-        category_id:product.category_id??"",
-        image:null,
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        category_id: product.category_id ?? "",
+        image: null,
     });
     const handleSubmit = () => {
         setIsLoading(true);
         api
-          .post(`/sellers/products/${product.id}`, productData, {
-            headers: { "Content-Type": "multipart/form-data" },
-          })
-          .then((response) => {
-            navigate(`/sellers/products/${product.id}`)
+            .post(`/sellers/products/${product.id}`, productData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then((response) => {
+                navigate(`/seller-portal/products/${product.id}`)
 
-          })
-          .catch((error) => {
-            console.error("Error submitting product:", error);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          });
-      };
-      return (
+            })
+            .catch((error) => {
+                console.error("Error submitting product:", error);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    };
+    return (
         <Form
-          productData={productData}
-          setProductData={setProductData}
-          categories={categories}
-          isLoading={isLoading}
-          handleSubmit={handleSubmit}
+            productData={productData}
+            setProductData={setProductData}
+            categories={categories}
+            isLoading={isLoading}
+            handleSubmit={handleSubmit}
+            oldImage={product.image}
         />
-      );
+    );
 }
 function NewProduct({ categoris }: { categoris?: Category[] | null }) {
   const [productData, setProductData] = useState(emptyProductData);
@@ -199,7 +200,6 @@ function Form({
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
     if (!triggerValidate) {
-      console.log(triggerValidate);
       setTriggerValidate(true);
     }
     const form = formRef.current;
@@ -222,7 +222,7 @@ function Form({
       formData.append("image", productData.image);
     }
     handleSubmit();
-  };
+    };
   return (
     <form className="sell-form" action="" ref={formRef}>
       <h2 className="objective">مواصفات المنتج:</h2>
@@ -321,7 +321,7 @@ function Form({
         </div>
       )}
       <label htmlFor="image" className="lab">
-        الصوره
+        الصورة
       </label>
       <input
         type="file"

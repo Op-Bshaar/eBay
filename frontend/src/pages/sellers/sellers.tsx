@@ -17,7 +17,11 @@ const Sellers: React.FC = () => {
         try {
             setIsLoading(true)
             const response = await api.get(`sellers/products`);
-            setProducts(response.data);
+            const _products = response.data as Product[];
+            setProducts(_products.sort((a, b) => {
+                if (a.isAvailable === b.isAvailable) return 0;
+                return a.isAvailable ? -1 : 1;
+            }));
         } catch (error) {
             console.error("Error fetching products:", error);
         }
