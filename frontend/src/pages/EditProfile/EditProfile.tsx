@@ -2,37 +2,29 @@ import React, { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import Input from "react-phone-number-input/input";
 import { isValidNumber } from "libphonenumber-js";
-import './EditProfile.css';
+import "./EditProfile.css";
 import { Link } from "react-router-dom";
 import { PAGE_URLS } from "../../constants/URL";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
+import { useAuthenticationContext } from "../../context/AuthenticationContext";
+import { useRequireAuthentication } from "../login/LoginRedirect";
 
 const EditProfile: React.FC = () => {
-  const [user, setUser] = useState({
-    first_name: "",
-    last_name: "",
-    phone: "",
-    email: "",
-  });
+  useRequireAuthentication();
+  const { user, setUser } = useAuthenticationContext();
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isEmailLoading, setIsEmailLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false); 
-
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   useEffect(() => {
     api
       .get("/user/profile")
       .then((response: any) => {
-        setUser({
-          first_name: response.data.first_name || "",
-          last_name: response.data.last_name || "",
-          phone: response.data.phone || "",
-          email: response.data.email || "",
-        });
-        setIsDataLoaded(true); 
+        setUser(response.data);
+        setIsDataLoaded(true);
       })
       .catch((error: any) => {
         console.error("Error fetching user data:", error);
@@ -40,22 +32,19 @@ const EditProfile: React.FC = () => {
       });
   }, []);
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    setUser({ ...user, [name]: value || "" });
   };
-
 
   const handlePhoneChange = (value: string | undefined) => {
     if (value && isValidNumber(value)) {
       setIsPhoneValid(true);
-      setUser({ ...user, phone: value });
+      setUser({ ...user, phone: value|| ""  });
     } else {
       setIsPhoneValid(false);
     }
   };
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -79,24 +68,6 @@ const EditProfile: React.FC = () => {
       .finally(() => setIsLoading(false));
   };
 
-  // Handle email change request
-  // const handleEmailChange = (e: React.FormEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   setIsEmailLoading(true);
-  //   api
-  //     .put("/user/update-email", { email: user.email })
-  //     .then((response: any) => {
-  //       setUser({ ...user, email: response.data.email });
-  //       setErrorMessage("تم تغيير البريد بنجاح");
-  //     })
-  //     .catch((error: any) => {
-  //       console.error("Error updating email:", error);
-  //       setErrorMessage("فشلت العملية");
-  //     })
-  //     .finally(() => setIsEmailLoading(false));
-  // };
-
-  // Show a loading indicator until data is fetched
   if (!isDataLoaded) {
     return <div>Loading...</div>;
   }
@@ -111,7 +82,7 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="first_name"
-            value={user?.first_name}
+            value={user?.firstName}
             onChange={handleChange}
             required
             className="input-edit"
@@ -124,7 +95,7 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="last_name"
-            value={user?.last_name} 
+            value={user?.lastName}
             onChange={handleChange}
             required
             className="input-edit"
@@ -137,22 +108,20 @@ const EditProfile: React.FC = () => {
           <input
             type="text"
             name="email"
-            value={user?.email} 
+            value={user?.email}
             onChange={handleChange}
             required
             className="input-edit"
           />
           <Link to={PAGE_URLS.update_email}>
-          <button
-            type="button"
-            // onClick={handleEmailChange}
-            disabled={isEmailLoading}
-            className="edit-email"
-          >
-            {isEmailLoading ? "تغيير البريد..." : "تغيير البريد"}
-          </button>
+            <button
+              type="button"
+              disabled={isEmailLoading}
+              className="edit-email"
+            >
+              {isEmailLoading ? "تغيير البريد..." : "تغيير البريد"}
+            </button>
           </Link>
-         
         </div>
 
         {/* Phone Number */}
@@ -165,18 +134,12 @@ const EditProfile: React.FC = () => {
             required
             className="input-edit"
           />
-          {!isPhoneValid && (
-                      <ErrorMessage>الرقم غير صحيح</ErrorMessage>
-          )}
+          {!isPhoneValid && <ErrorMessage>الرقم غير صحيح</ErrorMessage>}
         </div>
-        <Link to={PAGE_URLS.edit_password}>
-        اعد كلمه المرور
-        </Link>
-        
-
+        <Link to={PAGE_URLS.edit_password}>اعد كلمه المرور</Link>
 
         {/* Error message */}
-              {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
         {/* Submit button */}
         <button type="submit" className="saving" disabled={isLoading}>
