@@ -38,3 +38,11 @@
 .home-message .loader {
   margin-top: 5vh;
 }
+.deselect-button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
