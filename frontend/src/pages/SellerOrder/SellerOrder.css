@@ -19,3 +19,35 @@
 .seller-order-status{
     font-size:1.5em;
 }
+.shipment-button-container{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:start;
+    gap:1%;
+}
+.shipping-input-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin:1vh auto;
+    align-items: start;
+}
+    .shipping-input-group input {
+        height: 2em;
+        width: 30em;
+    }
+    .shipping-input-group input:user-invalid {
+        outline: auto;
+        outline-color: #aa0000;
+    }
+
+    .shipping-input-group input:invalid:focus {
+        outline: auto;
+        outline-color: #ffaa00;
+    }
+
+    .shipping-input-group input:valid:not(.hide-valid) {
+        outline: auto;
+        outline-color: #006600;
+    }

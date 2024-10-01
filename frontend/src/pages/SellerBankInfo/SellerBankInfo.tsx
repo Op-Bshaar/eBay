@@ -156,7 +156,7 @@ function SellerBankInfo() {
                         <button type="button" onClick={() => setIsEditing(true)} className="button">تعديل</button>)
                 }
             </div>
-            <p>الرجاء ملء بيانات الحساب الذي ترغب باستلام أرباحك عليه.</p>
+            {(!bankInfoSet || isEditing) && < p > الرجاء ملء بيانات الحساب الذي ترغب باستلام أرباحك عليه.</p>}
         </form>
     );
 }

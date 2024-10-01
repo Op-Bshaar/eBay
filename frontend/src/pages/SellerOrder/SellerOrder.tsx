@@ -21,8 +21,6 @@ function SellerOrder() {
     const product = <ProductView product={order.product} clickToGo={false} showGoButton={false} showNotAvailable={false} />
     const status = getSellerStatus(order.status);
     const isReadyForShipment = status === 'paid' || order.status === 'notified-seller';
-    const shipment = isReadyForShipment && order.order_request &&
-
     return (
         <div className="seller-order-page">
             <div className="seller-order-container">
@@ -32,11 +30,14 @@ function SellerOrder() {
                 {product}
                 <Link to={`/seller-portal/products/${order.product.id}`} className="button">عرض المنتج</Link>
             </div>
-            {shipment}
+            {isReadyForShipment && order.order_request && <Shipment orderRequest={order.order_request } />}
         </div>
     );
 }
-function Shipment({ orderRequest }: { orderRequest :Order}) {
+function Shipment({ orderRequest }: { orderRequest: Order }) {
+    const [isInputting, setIsInputting] = useState(false);
+    const [shippingCompany, setShippingCompany] = useState('');
+    const [shipmentNumber, setShipmentNumber] = useState("");
     return (
         <article>
             <h2>
@@ -55,7 +56,34 @@ function Shipment({ orderRequest }: { orderRequest :Order}) {
                 <span>رقم الجوال:</span>
                 <span dir="ltr"> {orderRequest.phone}</span>
             </div>
-            <button className="button">رفع معلومات الشحن</button>
+            {isInputting ?
+                <form action="">
+                    <p>الرجاء إدخال معلومات الشحن.</p>
+                    <div className="shipping-input-group">
+                        <label htmlFor="shipping_company" >شركة الشحن</label>
+                        <input id="shipping_company" name="shipping_company" minLength={3} maxLength={100}
+                            onChange={e => setShippingCompany(e.currentTarget.value) }
+                            value={shippingCompany} required />
+                    </div>
+                    <div className="shipping-input-group">
+                        <label htmlFor="shipment_number" >رقم الشحنة</label>
+                        <input id="shipment_number" name="shipment_number" minLength={3} maxLength={100}
+                            onChange={e => setShipmentNumber(e.currentTarget.value)}
+                            value={shipmentNumber} required />
+                    </div>
+                    <div className="shipment-button-container">
+                        <button type="button" onClick={() => {
+                            setIsInputting(false);
+                            setShippingCompany("");
+                            setShipmentNumber("");
+                        }}
+                            className="button">الغاء</button>
+                        <button type="submit" className="button">تأكيد</button>
+                    </div>
+                </form> :
+                <button onClick={() => setIsInputting(true)} className="button">رفع معلومات الشحن</button>
+            }
+
         </article>
     );
 }
