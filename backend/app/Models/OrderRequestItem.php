@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Notifications\OrderItemPaidNotification;
 use Notification;
+
 class OrderRequestItem extends Model
 {
     use HasFactory;
@@ -18,32 +19,42 @@ class OrderRequestItem extends Model
         'status',
     ];
     public function setAsPaid($address)
-{
-    if ($this->status !== 'pending') {
-        throw new \Exception('Order item status is not pending, cannot set as paid.');
-    }
-
-    $this->status = 'paid';
-    $this->save();
-    $seller = $this->product->seller; // Assuming your Product model has a 'seller' relationship
-    try {
-        if ($seller) {
-            
-        Notification::route('mail', $seller->user->email)
-        ->notify(new OrderItemPaidNotification($this, $seller, $address));
-            $this->status = 'notified-seller';
-            $this->save();
+    {
+        if ($this->status !== 'pending') {
+            throw new \Exception('Order item status is not pending, cannot set as paid.');
         }
-    } catch (\Exception $e) {
-        \Log::error("Failed to send notification to seller for order item {$this->id}: " . $e->getMessage());
+
+        $this->status = 'paid';
+        $this->save();
+        $seller = $this->product->seller; // Assuming your Product model has a 'seller' relationship
+        try {
+            if ($seller) {
+
+                Notification::route('mail', $seller->user->email)
+                    ->notify(new OrderItemPaidNotification($this, $seller, $address));
+                $this->status = 'notified-seller';
+                $this->save();
+            }
+        } catch (\Exception $e) {
+            \Log::error("Failed to send notification to seller for order item {$this->id}: " . $e->getMessage());
+        }
     }
-}
-    public function orderRequest(){
+    public function orderRequest()
+    {
         return $this->belongsTo(OrderRequest::class);
     }
     public function product()
     {
         return $this->belongsTo(Product::class);
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class);
+    }
 }

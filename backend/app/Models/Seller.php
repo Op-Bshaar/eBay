@@ -10,7 +10,7 @@ class Seller extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['rating', 'user_id','bank_name','bank_recepient_name','bank_account_number','iban'];
+    protected $fillable = ['rating', 'user_id', 'bank_name', 'bank_recepient_name', 'bank_account_number', 'iban'];
 
     public function setRatingAttribute($value)
     {
@@ -28,7 +28,16 @@ class Seller extends Model
     }
     public function routeNotificationForMail()
     {
-        return $this->user->email; // Use the seller's email
+        return $this->user->email; 
     }
 
+    public function orderRequestItems()
+    {
+        return $this->hasMany(OrderRequestItem::class);
+    }
+
+    public function averageRating()
+    {
+        return $this->orderRequestItems()->whereNotNull('review')->avg('review');
+    }
 }
