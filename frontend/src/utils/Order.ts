@@ -17,6 +17,8 @@ export interface Order extends Address {
     first_name: string;
     last_name: string;
     phone: string;
+    shipping_company: string;
+    shipment_id: string;
 }
 export interface OrderItem extends CartItem {
     id:string;

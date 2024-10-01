@@ -1,6 +1,6 @@
 ﻿import { Link, useParams } from "react-router-dom";
 import ErrorMessage from "../../components/errorMessage/Error";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import api from "../../helpers/api";
 import Order, { OrderItem } from "../../utils/Order";
 import { useRequireAuthentication } from "../login/LoginRedirect";
@@ -30,20 +30,34 @@ function SellerOrder() {
                 {product}
                 <Link to={`/seller-portal/products/${order.product.id}`} className="button">عرض المنتج</Link>
             </div>
-            {isReadyForShipment && order.order_request && <Shipment orderRequest={order.order_request } />}
+            {isReadyForShipment && order.order_request && <Shipment orderRequest={order.order_request} orderId={order.id} />}
         </div>
     );
 }
-function Shipment({ orderRequest }: { orderRequest: Order }) {
+function Shipment({ orderRequest, orderId }: { orderRequest: Order, orderId:string }) {
     const [isInputting, setIsInputting] = useState(false);
     const [shippingCompany, setShippingCompany] = useState('');
     const [shipmentNumber, setShipmentNumber] = useState("");
+    const formRef = useRef<HTMLFormElement>(null);
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        if (!formRef.current?.checkValidity()) {
+            return;
+        }
+        console.log("shipping");
+        api.post(`sellers/orders/ship/${orderId}`, {
+            ["shipment_number"]:shipmentNumber,
+            ["shipping_company"]: shippingCompany,
+        }).then(() => {
+            window.location.reload();
+        });
+    }
     return (
         <article>
             <h2>
                 معلومات الشحن
             </h2>
-            <strong>الرجاء شحن الطلب ,ثم رفع معلومات الشحن وإيصال الشحن.</strong>
+            <strong>الرجاء شحن الطلب ,ثم رفع معلومات الشحن.</strong>
             <div>
                 <span>العنوان:</span>
                 <span> {addressToText(orderRequest)}</span>
@@ -57,8 +71,8 @@ function Shipment({ orderRequest }: { orderRequest: Order }) {
                 <span dir="ltr"> {orderRequest.phone}</span>
             </div>
             {isInputting ?
-                <form action="">
-                    <p>الرجاء إدخال معلومات الشحن.</p>
+                <form ref={formRef }>
+                    <div>الرجاء إدخال معلومات الشحن.</div>
                     <div className="shipping-input-group">
                         <label htmlFor="shipping_company" >شركة الشحن</label>
                         <input id="shipping_company" name="shipping_company" minLength={3} maxLength={100}
@@ -78,7 +92,7 @@ function Shipment({ orderRequest }: { orderRequest: Order }) {
                             setShipmentNumber("");
                         }}
                             className="button">الغاء</button>
-                        <button type="submit" className="button">تأكيد</button>
+                        <button onClick={handleSubmit } type="submit" className="button">تأكيد</button>
                     </div>
                 </form> :
                 <button onClick={() => setIsInputting(true)} className="button">رفع معلومات الشحن</button>

@@ -6,13 +6,11 @@
     ['canceled', 'ملفي'],
     ['timeout', 'ملغي لعدم الدفع'],
     ['notified-seller', 'تم إبلاغ البائع'],
+    ['shipped', 'يتم الشحن'],
 ]);
 export function getSellerStatus(status: string) {
     if (status === 'notified-seller') {
         status = 'paid';
-    }
-    else if (status === 'timeout' || status === 'declined' || status === 'failed') {
-        status = 'canceled';
     }
     return status;
 }

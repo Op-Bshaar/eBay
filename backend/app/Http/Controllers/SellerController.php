@@ -210,15 +210,23 @@ class SellerController extends Controller
         // Return a success response
         return response()->json(['message' => 'Bank information updated successfully.'], 200);
     }
-    public function shipOrder(Request $request, $orderId)
+    public function shipOrder(Request $request,$orderId)
     {
+        $request->validate([
+            'shipping_company'=>'required|string|max:100',
+            'shipment_number'=>'required|string|max:100',
+        ]);
         $seller = $request->user()->seller;
         $order = OrderRequestItem::with('product')->findOrFail($orderId);
-
         // Check if the seller is authorized to ship this order
         if (!$seller || $order->product->seller_id !== $seller->id) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
+        if (!in_array($order->status, ['paid', 'notified-seller'])) {
+            return response()->json(['message' => 'Order cannot be shipped in its current status'], 400);
+        }
+        $order->shipping_company = $request->shipping_company;
+        $order->shipment_number = $request->shipment_number;
         $order->status = 'shipped';
         $order->save();
 
