@@ -91,7 +91,7 @@ function OrderStatusPage() {
 
       <form onSubmit={handleReviewSubmit} className="review-form">
         <label>
-          Rating:
+          التقييم:
           <input
             type="number"
             value={rating}
