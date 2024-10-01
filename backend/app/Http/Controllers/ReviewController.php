@@ -26,7 +26,7 @@ class ReviewController extends Controller
         return response()->json(['message' => 'Review added successfully', 'orderRequestItem' => $orderRequestItem], 200);
 
         return response()->json([
-            'rating' => $request->input('rating'),
+            'review' => $request->input('review'),
         ], 201);
     }
 

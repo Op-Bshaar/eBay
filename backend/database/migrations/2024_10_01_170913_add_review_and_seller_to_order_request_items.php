@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('order_request_items', function (Blueprint $table) {
 
-            $table->text('review')->nullable()->default(null);
+            $table->integer('review')->nullable()->default(null);
             
             $table->foreignId('seller_id')->nullable()->constrained('sellers')->onDelete('cascade');
         });
