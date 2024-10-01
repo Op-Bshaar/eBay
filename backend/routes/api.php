@@ -8,7 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\RatingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
 use App\Models\OrderRequest;
@@ -79,12 +79,12 @@ Route::middleware('auth:sanctum')->group(function() {
 
 
 //reviews Route
-Route::post('/products/{productId}/review', [ReviewController::class, 'store'])
+Route::post('/products/{productId}/review', [RatingController::class, 'store'])
     ->middleware('auth:sanctum');
 
 
-Route::post('/order-request-items/{id}/review', [ReviewController::class, 'store'])->middleware('auth:sanctum');;
-Route::get('/sellers/average-rating/{seller_id}', [ReviewController::class, 'getSellerAverageRating']);
+Route::post('/order-request-items/{id}/review', [RatingController::class, 'store'])->middleware('auth:sanctum');;
+Route::get('/sellers/average-rating/{seller_id}', [RatingController::class, 'getSellerAverageRating']);
 //admin route
 
 Route::middleware(['auth:sanctum'])->group(function () {
