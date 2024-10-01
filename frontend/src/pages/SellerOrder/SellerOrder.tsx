@@ -38,19 +38,21 @@ function Shipment({ orderRequest, orderId }: { orderRequest: Order, orderId:stri
     const [isInputting, setIsInputting] = useState(false);
     const [shippingCompany, setShippingCompany] = useState('');
     const [shipmentNumber, setShipmentNumber] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const formRef = useRef<HTMLFormElement>(null);
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         if (!formRef.current?.checkValidity()) {
+            formRef.current?.reportValidity();
             return;
         }
-        console.log("shipping");
+        setIsSubmitting(true);
         api.post(`sellers/orders/ship/${orderId}`, {
             ["shipment_number"]:shipmentNumber,
             ["shipping_company"]: shippingCompany,
         }).then(() => {
             window.location.reload();
-        });
+        }).finally(() => setIsSubmitting(false));
     }
     return (
         <article>
@@ -91,8 +93,14 @@ function Shipment({ orderRequest, orderId }: { orderRequest: Order, orderId:stri
                             setShippingCompany("");
                             setShipmentNumber("");
                         }}
-                            className="button">الغاء</button>
-                        <button onClick={handleSubmit } type="submit" className="button">تأكيد</button>
+                            disabled={isSubmitting }
+                            className="button">
+                            الغاء
+                        </button>
+                        <button onClick={handleSubmit} type="submit" className="button"
+                            disabled={isSubmitting}>
+                            تأكيد
+                        </button>
                     </div>
                 </form> :
                 <button onClick={() => setIsInputting(true)} className="button">رفع معلومات الشحن</button>

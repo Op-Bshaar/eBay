@@ -7,6 +7,7 @@ import ErrorMessage from "../../components/errorMessage/Error";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import SellerProvider from "../../context/SellerContext/SellerProvider";
 import { useSellerContext } from "../../context/SellerContext/SellerContext";
+import SellerRating from "../../components/SellerRating";
 function SellerPortal() {
     return (
         <SellerProvider>
@@ -17,8 +18,8 @@ function SellerPortal() {
 function SellerPortalPage() {
     useRequireAuthentication();
     const { seller, messageElement } = useSeller();
-    const {setSeller } = useSellerContext();
-    useEffect(() => setSeller(seller),[seller, setSeller]);
+    const { setSeller } = useSellerContext();
+    useEffect(() => setSeller(seller), [seller, setSeller]);
     if (messageElement) {
         return messageElement;
     }
@@ -67,10 +68,10 @@ function SellerPortalPage() {
                     المعلومات البنكية
                 </NavLink>
             </nav>
-            <div className="seller-rating">
+            {seller && <div className="seller-rating">
                 تقييمي:{" "}
-                {seller?.rating ? `${seller.rating} / 5` : "لا توجد تقييمات بعد"}.
-            </div>
+                <SellerRating seller_id={seller.id} />
+            </div>}
             <Outlet />
         </>
     );

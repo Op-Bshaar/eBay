@@ -1,6 +1,6 @@
 .loader {
   color: #4b788a;
-  font-size: 10px;
+  font-size: 1em;
   width: 1em;
   height: 1em;
   border-radius: 50%;
@@ -11,9 +11,9 @@
 
 .small-loader {
   color: #4b788a;
-  font-size: 10px;
-  width: 0.8em;
-  height: 0.8em;
+  font-size: 0.5em;
+  width: 0.5em;
+  height: 0.5em;
   border-radius: 50%;
   position: relative;
   animation: mulShdSpin 1.3s infinite linear;
@@ -22,9 +22,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-.loader-container{
-
 }
 .center-loader {
     margin-left: auto;

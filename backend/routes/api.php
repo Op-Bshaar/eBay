@@ -84,7 +84,7 @@ Route::post('/products/{productId}/review', [ReviewController::class, 'store'])
 
 
 Route::post('/order-request-items/{id}/review', [ReviewController::class, 'store'])->middleware('auth:sanctum');;
-Route::get('/sellers/{id}/average-rating', [ReviewController::class, 'getSellerAverageRating'])->middleware('auth:sanctum');;
+Route::get('/sellers/average-rating/{seller_id}', [ReviewController::class, 'getSellerAverageRating']);
 //admin route
 
 Route::middleware(['auth:sanctum'])->group(function () {

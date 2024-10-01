@@ -35,17 +35,8 @@ function GetSellerOrders() {
         fetchOrders();
     }, []);
 
-    // UseEffect to check the contents of orders and order_request_items
-    useEffect(() => {
-        console.log("Orders:", orders);
-        orders.forEach((order) => {
-            console.log("Order Object:", order);
-            console.log("Order Items:", order.order_request_items);
-        });
-    }, [orders]);
-
-    const handleShowproduct = (productId: string) => {
-        navigate(`/seller-portal/orders/${productId}`);
+    const goToOrder = (orderId: string) => {
+        navigate(`/seller-portal/orders/${orderId}`);
     };
 
     return (
@@ -66,7 +57,7 @@ function GetSellerOrders() {
                         </p>
                         <p>المنتج: {order.product.title}</p>
                         <button
-                            onClick={() => handleShowproduct(order.product.id)}
+                            onClick={() => goToOrder(order.id)}
                             className="button"
                         >
                             التفاصيل

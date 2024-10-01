@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\Seller;
 use App\Models\OrderRequestItem;
 
 class ReviewController extends Controller
@@ -32,12 +32,10 @@ class ReviewController extends Controller
         return response()->json($responseData, 200);
     }
     
-
-    public function getSellerAverageRating($user_id)
+    public function getSellerAverageRating($seller_id)
     {
-        $user = User::findOrFail($user_id);
 
-        $seller = $user->seller;
+        $seller = Seller::findOrFail($seller_id);
         
 
         if (!$seller) {
@@ -45,9 +43,13 @@ class ReviewController extends Controller
         }
 
         $averageRating = $seller->averageRating();
-
+        if(!$averageRating){
+            return response()->json([
+                'rating' => null,
+            ], 200);
+        }
         return response()->json([
-            'average_rating' => number_format($averageRating, 2),
+            'rating' => number_format($averageRating, 2),
         ], 200);
     }
 }

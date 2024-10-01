@@ -17,6 +17,7 @@ import {
 import { displayMoney } from "../../constants/Constants";
 import { useRedirectToLogin } from "../login/LoginRedirect";
 import AddressPage from "../AddressPage/AddressPage";
+import SellerRating from "../../components/SellerRating";
 
 function ProductsDeatils({
   viewer = "buyer",
@@ -147,7 +148,13 @@ function ProductsDeatils({
       )}
       {!product.isAvailable && (
         <p className="error-message">المنتج غير متوفر.</p>
-      )}
+          )}
+          <div>
+              <span>
+              تقييم البائع: 
+              </span>
+              <SellerRating seller_id={product.seller_id} />
+          </div>
     </div>
   );
 }
