@@ -47,6 +47,7 @@ class SellerController extends Controller
 
 
         $orders = OrderRequestItem::whereIn('product_id', $productIds)
+        ->whereNotIn('status', ['canceled', 'failed', 'timeout'])
             ->with('product')
             ->get();
 
