@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import api from "../../helpers/api";
-import Input from "react-phone-number-input/input";
-import { isValidNumber } from "libphonenumber-js";
 import "./EditProfile.css";
 import "../../styles/Loader.css";
 import { Link } from "react-router-dom";
@@ -9,26 +7,43 @@ import { PAGE_URLS } from "../../constants/URL";
 import ErrorMessage from "../../../../admindashboard/src/components/errorMessage/Error";
 import { useAuthenticationContext } from "../../context/AuthenticationContext";
 import { useRequireAuthentication } from "../login/LoginRedirect";
+import Input from "react-phone-number-input/input";
+import { E164Number, isValidNumber } from "libphonenumber-js";
 
 const EditProfile: React.FC = () => {
   useRequireAuthentication();
   const { user, setUser } = useAuthenticationContext();
   const [firstName, setFirstName] = useState(user?.firstName ?? "");
   const [lastName, setLastName] = useState(user?.lastName ?? "");
+  const phoneRef = useRef<HTMLInputElement>(null);
   const [phone, setPhone] = useState(user?.phone ?? "");
-  const [currentPassword, setCurrentPassword] = useState(user?.currentPassword??"");
+
+  const [currentPassword, setCurrentPassword] = useState(
+    user?.currentPassword ?? ""
+  );
   const [newPassword, setNewPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [isPhoneValid, setIsPhoneValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  const validatePhoneNumber = (phoneNumber: E164Number | undefined) => {
+    if (!phoneNumber || !isValidNumber(phoneNumber)) {
+      phoneRef.current?.setCustomValidity("رقم الجوال غير صالح.");
+    } else {
+      phoneRef.current?.setCustomValidity("");
+    }
+  };
 
   const handlePhoneChange = (value: string | undefined) => {
+
     if (value && isValidNumber(value)) {
       setIsPhoneValid(true);
+      setPhone(value);
     } else {
       setIsPhoneValid(false);
+      setPhone(value || "");
     }
-    setPhone(value || "");
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,23 +55,28 @@ const EditProfile: React.FC = () => {
     }
 
     setIsLoading(true);
-    
+
     const updatedData = {
-      firstName,
-      lastName,
-      phone,
-      currentPassword,
-      newPassword,
+      first_name: firstName,
+      last_name: lastName,
+      phone: phone,
+      ...(newPassword
+        ? {
+            password: newPassword,
+            password_confirmation: passwordConfirmation,
+            current_password: currentPassword,
+          }
+        : {}),
     };
 
     api
-      .put("/user/profile", updatedData) 
+      .put("/user/profile", updatedData)
       .then((response: any) => {
         setUser(response.data);
         setErrorMessage("تم تغيير الملف الشخصي بنجاح");
       })
       .catch((error: any) => {
-        console.error("Error updating profile:", error);
+        console.error("Error updating profile:", error.response?.data || error);
         setErrorMessage("فشلت العملية");
       })
       .finally(() => setIsLoading(false));
@@ -97,6 +117,9 @@ const EditProfile: React.FC = () => {
           <label>الهاتف:</label>
           <Input
             country="SA"
+            type="tel"
+            withCountryCallingCode
+            international
             value={phone}
             onChange={handlePhoneChange}
             required
@@ -128,6 +151,15 @@ const EditProfile: React.FC = () => {
           />
         </div>
 
+        <div className="label-edit">
+          <label>تأكيد كلمة المرور:</label>
+          <input
+            type="password"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.currentTarget.value)}
+            className="input-edit"
+          />
+        </div>
 
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
