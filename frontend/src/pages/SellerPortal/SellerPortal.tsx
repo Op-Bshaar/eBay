@@ -86,11 +86,13 @@ function SellerPortalPage() {
                     type="text"
                     placeholder="أدخل رقم الطلب"
                     value={orderId}
+                     className="button"
                     onChange={(e) => setOrderId(e.target.value)}
                 />
                 <button
                     onClick={handleNavigateToOrderDetails}
-                    className="navigate-button"
+                    className="button"
+                    style={{marginRight:"10px"}}
                 >
                     عرض تفاصيل الطلب
                 </button>
