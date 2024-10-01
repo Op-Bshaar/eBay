@@ -78,7 +78,6 @@ function OrderStatusPage() {
 
       <OrderItemsView
         orderItems={order.items}
-        showStatus={order.status === "paid"}
       />
 
       <div className="average-rating">

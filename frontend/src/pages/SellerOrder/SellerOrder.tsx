@@ -2,7 +2,7 @@
 import ErrorMessage from "../../components/errorMessage/Error";
 import { useEffect, useState } from "react";
 import api from "../../helpers/api";
-import { OrderItem } from "../../utils/Order";
+import Order, { OrderItem } from "../../utils/Order";
 import { useRequireAuthentication } from "../login/LoginRedirect";
 import "../../styles/Loader.css";
 import "./SellerOrder.css";
@@ -22,25 +22,7 @@ function SellerOrder() {
     const status = getSellerStatus(order.status);
     const isReadyForShipment = status === 'paid' || order.status === 'notified-seller';
     const shipment = isReadyForShipment && order.order_request &&
-        <article>
-            <h2>
-                معلومات الشحن
-            </h2>
-            <strong>الرجاء شحن الطلب ,ثم رفع معلومات الشحن وإيصال الشحن.</strong>
-            <div>
-                <span>العنوان:</span>
-                <span> {addressToText(order.order_request)}</span>
-            </div>
-            <div>
-                <span>الاسم:</span>
-                <span> {order.order_request.first_name} {order.order_request.last_name}</span>
-            </div>
-            <div>
-                <span>رقم الجوال:</span>
-                <span dir="ltr"> {order.order_request.phone}</span>
-            </div>
-            <button className="button">رفع معلومات الشحن</button>
-        </article>;
+
     return (
         <div className="seller-order-page">
             <div className="seller-order-container">
@@ -52,6 +34,29 @@ function SellerOrder() {
             </div>
             {shipment}
         </div>
+    );
+}
+function Shipment({ orderRequest }: { orderRequest :Order}) {
+    return (
+        <article>
+            <h2>
+                معلومات الشحن
+            </h2>
+            <strong>الرجاء شحن الطلب ,ثم رفع معلومات الشحن وإيصال الشحن.</strong>
+            <div>
+                <span>العنوان:</span>
+                <span> {addressToText(orderRequest)}</span>
+            </div>
+            <div>
+                <span>الاسم:</span>
+                <span> {orderRequest.first_name} {orderRequest.last_name}</span>
+            </div>
+            <div>
+                <span>رقم الجوال:</span>
+                <span dir="ltr"> {orderRequest.phone}</span>
+            </div>
+            <button className="button">رفع معلومات الشحن</button>
+        </article>
     );
 }
 function useOrder(order_id?: string) {
