@@ -213,16 +213,12 @@ class SellerController extends Controller
     public function shipOrder(Request $request, $orderId)
     {
         $seller = $request->user()->seller;
-
-
         $order = OrderRequestItem::with('product')->findOrFail($orderId);
 
         // Check if the seller is authorized to ship this order
         if (!$seller || $order->product->seller_id !== $seller->id) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
-
         $order->status = 'shipped';
         $order->save();
 
