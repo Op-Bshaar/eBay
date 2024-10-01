@@ -167,7 +167,8 @@ const EditProfile: React.FC = () => {
           {isLoading ? "يتم الحفظ" : "حفظ التغييرات"}
         </button>
         {isLoading && <span className="small-loader center-loader" />}
-      </form>
+          </form>
+          <Link className="link" to={PAGE_URLS.update_email }>تغيير البريد الإلكتروني</Link>
     </div>
   );
 };
