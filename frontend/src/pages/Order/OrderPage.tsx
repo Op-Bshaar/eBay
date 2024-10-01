@@ -77,11 +77,20 @@ function OrderPage() {
     }
     const items = (
         <div className="order-items-container">
-            {order && (
+            {order && (<p>
                 <div>
                     <span>العنوان:</span>
                     <span>{addressToText(order)}</span>
                 </div>
+                <div>
+                    <span>الاسم:</span>
+                    <span> {order.first_name} {order.last_name}</span>
+                </div>
+                <div>
+                    <span>رقم الجوال:</span>
+                    <span dir="ltr"> {order.phone}</span>
+                </div>
+            </p>
             )}
             <OrderItemsView orderItems={orderItems} />
             {order && orderItems.length > 1 && (
