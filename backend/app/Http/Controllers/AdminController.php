@@ -6,6 +6,7 @@ use App\Models\OrderRequest;
 use App\Models\OrderRequestItem;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Seller;
 use App\Models\Product;
 use App\Models\Category;
 
@@ -107,7 +108,7 @@ class AdminController extends Controller
 
     public function show($id)
     {
-        $order = OrderRequestItem::find($id); 
+        $order = OrderRequestItem::find($id);
         if ($order) {
             return response()->json(['order' => $order]);
         } else {
@@ -123,25 +124,49 @@ class AdminController extends Controller
             'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:256',
         ]);
 
-        if($request->hasFile('icon')){
-        
+        if ($request->hasFile('icon')) {
+
             $image = $request->file('icon');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            
-      
+
+
             $image->move(public_path('icons'), $imageName);
-    
-       
+
+
             $category = Category::create([
                 'name' => $request->name,
-                'icon' => $imageName, 
+                'icon' => $imageName,
             ]);
-    
+
 
             return response()->json($category, 201);
         } else {
-   
+
             return response()->json(['error' => 'Image upload failed'], 400);
         }
+    }
+
+
+    public function getUserById($id)
+    {
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        return response()->json($user);
+    }
+
+    public function getSellerById($id)
+    {
+    
+        $seller = Seller::where('user_id', $id)->first();
+
+        if (!$seller) {
+            return response()->json(['message' => 'Seller not found'], 404);
+        }
+        return response()->json($seller);
     }
 }
