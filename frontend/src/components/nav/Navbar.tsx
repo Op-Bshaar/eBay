@@ -108,7 +108,8 @@ function UserProfile() {
       </button>
       <div
         ref={menuRef}
-        className={expanded ? "user-profile-menue plain-text" : "hidden"}
+              className={expanded ? "user-profile-menue plain-text" : "hidden"}
+              role="dialog" aria-modal="true"
       >
         <span className="cart-icon-container ">
           <CartButton />
@@ -121,7 +122,8 @@ function UserProfile() {
         </Link>
         <LogoutButton />
         <span className="close-button-container">
-          <button className="link" onClick={() => setExpanded((prev) => !prev)}>
+                  <button className="link" onClick={() => setExpanded((prev) => !prev)}
+                      aria-label="Close">
             غلق
           </button>
         </span>

@@ -52,6 +52,7 @@ const ThisWeekUploads = lazy(
 const AddCategory = lazy(
   () => import ("../../admindashboard/src/Pages/admincategory")
 );
+const AdminOrder = lazy(() => import("../../admindashboard/src/Pages/AdminOrder"));
 const Users = lazy(() => import("../../admindashboard/src/Pages/Users"));
 const Settings = lazy(() => import("../../admindashboard/src/Pages/Settings"));
 function App() {
@@ -163,7 +164,14 @@ function App() {
                                 }
                             />
                         </Route>
-
+                        <Route
+                            path="/admin"
+                            element={
+                                <AdminRoute>
+                                    <Navigate to="/admin/dashboard"/>
+                                </AdminRoute>
+                            }
+                        />
                         <Route
                             path="/admin/dashboard"
                             element={
@@ -210,6 +218,16 @@ function App() {
                                 <AdminRoute>
                                     <Suspense fallback={loader}>
                                         <AdminOrders />
+                                    </Suspense>
+                                </AdminRoute>
+                            }
+                        />
+                        <Route
+                            path="/admin/orders/:orderId"
+                            element={
+                                <AdminRoute>
+                                    <Suspense fallback={loader}>
+                                        <AdminOrder />
                                     </Suspense>
                                 </AdminRoute>
                             }
