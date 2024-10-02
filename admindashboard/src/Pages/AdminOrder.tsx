@@ -15,22 +15,11 @@ function AdminOrder() {
     return (
         <div className="admin-order-page">
             <div className="admin-order-info">
-                <article>
-                    <h2>
-                        معلومات البائع
-                    </h2>
-                    <div>
-                        {order.product.seller_id}
-                    </div>
-                </article>
-                <article>
-                    <h2>
-                        معلومات المشتري
-                    </h2>
-                    <div>
-                        {order.order_request?.user_id}
-                    </div>
-                </article>
+                {order.order_request ?
+                    <BuyerInfo userId={order.order_request?.user_id} /> :
+                    <p>معلومات المشتري غير متوفرة.</p>
+                    }
+                <SellerInfo sellerId={order.product.seller_id } />
                 <article>
                     <h2>
                         معلومات الشحن
@@ -87,6 +76,30 @@ function AdminOrder() {
             {paid && !shipped && <p>بانتظار البائع لشحن النتج.</p> }
             {shipped && <p>تأكد من إيصال المنتج إلى العميل, ثم قم بتحويل المبلغ إلى البائع.</p>}
         </div>
+    );
+}
+function BuyerInfo({ userId }: {userId:string}) {
+    return (
+        <article>
+            <h2>
+                معلومات المشتري
+            </h2>
+            <div>
+                {userId}
+            </div>
+        </article>
+    );
+}
+function SellerInfo({ sellerId }: { sellerId: string }) {
+    return (
+        <article>
+            <h2>
+                معلومات البائع
+            </h2>
+            <div>
+                {sellerId }
+            </div>
+        </article>
     );
 }
 export default AdminOrder;
