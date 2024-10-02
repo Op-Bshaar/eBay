@@ -4,15 +4,16 @@
     .admin-order-page>p{
         margin-top:5vh;
     }
-    .admin-order-info {
-        display: flex;
-        flex-direction: row;
-        width: 99%;
-        box-sizing: border-box;
-        margin: 2vh 0;
-        justify-content: space-evenly;
-        gap: normal;
-    }
+.admin-order-info {
+    display: flex;
+    flex-direction: row;
+    width: 99%;
+    box-sizing: border-box;
+    margin: 2vh 0;
+    justify-content: space-evenly;
+    gap: normal;
+    text-align: start;
+}
     .admin-order-info > * {
         max-width: 30%;
     }
