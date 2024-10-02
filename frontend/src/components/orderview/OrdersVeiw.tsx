@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import './orderview.css'
 
  interface Order {
   id: number;
