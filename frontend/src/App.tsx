@@ -223,7 +223,7 @@ function App() {
                             }
                         />
                         <Route
-                            path="/admin/orders/:orderId"
+                            path="/admin/orders/items/:orderId"
                             element={
                                 <AdminRoute>
                                     <Suspense fallback={loader}>
