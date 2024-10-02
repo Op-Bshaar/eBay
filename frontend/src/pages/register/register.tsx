@@ -249,7 +249,7 @@ function Register() {
         تسجيل
       </button>
 
-      <p style={{ width: "100%" }}>
+      <p style={{ width: "100%"}}>
         لديك حساب؟
         <Link className="link" to={PAGE_URLS.login}>
           تسجيل دخول
