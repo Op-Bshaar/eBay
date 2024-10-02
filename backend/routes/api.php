@@ -101,6 +101,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('admin/orders/{id}',[AdminController::class, 'show']);
         Route::get('admin/settings', [AdminController::class, 'settings']);
 
+        Route::get('admin/user/{id}', [AdminController::class, 'getUserById']);
+        Route::get('admin/seller/{id}', [AdminController::class, 'getSellerById']);
+        
+
         Route::post('admin/AddCategory', [AdminController::class, 'store']);
     });
 });
