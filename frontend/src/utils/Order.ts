@@ -24,6 +24,6 @@ export interface OrderItem extends CartItem {
     order_request?: Order;
     review: number | null;
     shipping_company: string;
-    shipment_id: string;
+    shipment_number: string;
 }
 export default Order;

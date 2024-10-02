@@ -13,6 +13,24 @@ function AdminOrder() {
         <div className="admin-order">
             <article>
                 <h2>
+                    معلومات البائع
+                </h2>
+            </article>
+            <article>
+                <h2>
+                    معلومات المشتري
+                </h2>
+                <div>
+                    <span>
+
+                    </span>
+                    <span>
+
+                    </span>
+                </div>
+            </article>
+            <article>
+                <h2>
                     معلومات الشحن
                 </h2>
                 <div>
@@ -25,10 +43,10 @@ function AdminOrder() {
                 </div>
                 <div>
                     <span>
-                        العنوان
+                        رقم الشحنة
                     </span>
                     <span>
-                        {order.order_request && addressToText(order.order_request)}
+                        {order.shipment_number}
                     </span>
                 </div>
                 <div>
@@ -39,16 +57,6 @@ function AdminOrder() {
                         {order.order_request && addressToText(order.order_request)}
                     </span>
                 </div>
-            </article>
-            <article>
-                <h2>
-                    معلومات البائع
-                </h2>
-            </article>
-            <article>
-                <h2>
-                    معلومات المشتري
-                </h2>
             </article>
         </div>
     );
