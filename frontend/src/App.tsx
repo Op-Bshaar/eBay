@@ -163,7 +163,14 @@ function App() {
                                 }
                             />
                         </Route>
-
+                        <Route
+                            path="/admin"
+                            element={
+                                <AdminRoute>
+                                    <Navigate to="/admin/dashboard"/>
+                                </AdminRoute>
+                            }
+                        />
                         <Route
                             path="/admin/dashboard"
                             element={

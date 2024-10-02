@@ -31,7 +31,7 @@ const RateOrder = React.forwardRef(
 
     const product = order.product;
     return (
-        <div className="rate-order-popup" ref={ratePopupRef}>
+        <div className="rate-order-popup" ref={ratePopupRef} role="dialog" aria-modal="true">
             <span>{product.title}</span>
             <span>{product.price}</span>
 
