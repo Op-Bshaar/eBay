@@ -3,7 +3,9 @@ import api from "../../../frontend/src/helpers/api";
 import ValidateFile from "../../../frontend/src/components/FileInput/ValidateFile";
 import FileInputButton from "../../../frontend/src/components/FileInput/FileInputButton";
 import FileDropArea from "../../../frontend/src/components/FileInput/FileDropArea";
+import './admincatg.css'
 import { Link } from 'react-router-dom';
+
 
 const allowedFileTypes = [
   "image/jpeg",
@@ -84,17 +86,18 @@ if(successful)
     );
   }
   return (
-    <div>
-      <h2>Add New Category</h2>
+    <div className="add-category-container">
+      <h2>إضافة صنف جديد</h2>
       {message && <p>{message}</p>}
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Category Name:</label>
+        <div  className="form-group">
+          <label>اسم الصنف:</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+              placeholder="أدخل اسم الصنف"
           />
         </div>
         <input
@@ -113,7 +116,7 @@ if(successful)
           file={imageFile}
           setFile={setImageFile}
         />
-        <button type="submit">Add Category</button>
+        <button type="submit" className='button'>Add Category</button>
       </form>
     </div>
   );

@@ -28,7 +28,14 @@ MySQL or compatible database.\
 ### Backend Setup
 
 first run 'PHP artisan migrate' to create the local database for the application, don't forget to configure your '.env' folder.\
+
 run php artisan user:set-admin {username} to set a user as admin.\
+
+Configure Mailtrap for Email Testing,sign up for a Mailtrap account (if you don’t have one).\
+Once logged in, create a new inbox or use an existing one.\
+
+In the Mailtrap dashboard, go to SMTP Settings for your inbox, and you’ll see the credentials (username, password, etc.) that you need to add to your .env file.
+
 
 ### frontend Setup:
 in /frontend/constants/URL.ts:\
