@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Product from "../../../frontend/src/utils/Product";
 import ProductView from "../../../frontend/src/components/ProductView/ProductView";
 import api from "../../../frontend/src/helpers/api";
-
+import './adminorder.css';
 import OrderView from "../../../frontend/src/components/orderview/OrdersVeiw";
 
 interface Order {

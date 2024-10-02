@@ -1,0 +1,68 @@
+
+.orders-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 1200px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .orders-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .loading-message,
+  .error-message {
+    font-size: 18px;
+    color: #ff4d4d;
+    text-align: center;
+    padding: 10px;
+    background-color: #ffe6e6;
+    border-radius: 8px;
+  }
+  
+  .loading-message {
+    color: #666;
+    background-color: #f0f0f0;
+  }
+  
+  .order-view {
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    margin-bottom: 15px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .order-view:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .order-view h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .order-view p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .no-orders {
+    font-size: 18px;
+    color: #999;
+    margin-top: 20px;
+  }
+  
