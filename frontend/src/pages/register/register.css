@@ -86,3 +86,37 @@
 .submit-button {
   margin-top: 20px;
 }
+
+@media (max-width: 768px) {
+  .login-form1 {
+    padding: 5vh;
+    max-width: 100%; 
+  }
+
+  .input-group1 {
+    margin-bottom: 5vh;
+  }
+
+  .button {
+    padding: 3vh;
+    font-size: 16px;
+  }
+
+  .login-form-content1 {
+    flex-direction: column;
+  }
+
+  .input-group1 label {
+    font-size: 10px;
+  }
+
+  .input-group1 input, 
+  .input-group1 .PhoneInputInput {
+    padding: 4vh;
+    font-size: 14px;
+  }
+
+  .link {
+    font-size: 14px;
+  }
+}
