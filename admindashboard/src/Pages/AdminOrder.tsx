@@ -15,18 +15,16 @@ function AdminOrder() {
                 <h2>
                     معلومات البائع
                 </h2>
+                <div>
+                    {order.product.seller_id }
+                </div>
             </article>
             <article>
                 <h2>
                     معلومات المشتري
                 </h2>
                 <div>
-                    <span>
-
-                    </span>
-                    <span>
-
-                    </span>
+                    {order.order_request?.user_id }
                 </div>
             </article>
             <article>
@@ -35,7 +33,7 @@ function AdminOrder() {
                 </h2>
                 <div>
                     <span>
-                        شركة الشحن
+                        شركة الشحن: 
                     </span>
                     <span>
                         {order.shipping_company}
@@ -43,7 +41,7 @@ function AdminOrder() {
                 </div>
                 <div>
                     <span>
-                        رقم الشحنة
+                        رقم الشحنة: 
                     </span>
                     <span>
                         {order.shipment_number}
@@ -51,10 +49,26 @@ function AdminOrder() {
                 </div>
                 <div>
                     <span>
-                        العنوان
+                        العنوان: 
                     </span>
                     <span>
                         {order.order_request && addressToText(order.order_request)}
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        اسم المستلم: 
+                    </span>
+                    <span>
+                        {order.order_request?.first_name} {order.order_request?.last_name}
+                    </span>
+                </div>
+                <div>
+                    <span>
+                        جوال المستلم: 
+                    </span>
+                    <span dir="ltr">
+                        {order.order_request?.phone}
                     </span>
                 </div>
             </article>

@@ -1,14 +1,14 @@
 ﻿.admin-order{
     display:flex;
     flex-direction:row;
-    width:100%;
+    width:99%;
     box-sizing:border-box;
     margin:2vh 0;
     justify-content:space-evenly;
     gap:normal;
 }
     .admin-order>*{
-        max-width:27.5%;
+        max-width:30%;
     }
     .admin-order-message {
         position: fixed;
@@ -16,3 +16,17 @@
         left: 50vw;
         transform: translate(-50%,50%);
     }
+.admin-order span{
+    margin-right:0.25vw;
+    margin-left:0.25vw;
+}
+@media(max-width:500px){
+    .admin-order {
+        flex-direction: column;
+        align-items: start;
+    }
+        .admin-order > * {
+            max-width:90%;
+            margin:1vh 2vw;
+        }
+}
