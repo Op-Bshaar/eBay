@@ -10,19 +10,15 @@ use App\Models\OrderRequestItem;
 
 class RatingController extends Controller
 {
-    public function store(Request $request, $id)
+    public function store(Request $request, $orderId)
     {
-
+        $order= OrderRequestItem::findOrFail($orderId);
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
         ]);
-    
- 
-        $orderRequestItem = OrderRequestItem::with('product')->findOrFail($id);
-        $orderRequestItem->review = $validated['rating'];
-        $orderRequestItem->save();
-    
-  
+        $order= OrderRequestItem::findOrFail($orderId);
+        $order->review = $validated['rating'];
+        $order->save();
         $responseData = [
             'message' => 'Review added successfully',
         ];

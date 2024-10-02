@@ -5,7 +5,7 @@
 </head>
 <body>
     <p>
-        قام البائع {{ $seller->user->first_name }} {{  $seller->user->last_name }} بشحن المنتج التالي:<br>
+        قام البائع {{ $seller->user->first_name }}  {{  $seller->user->last_name }} بشحن المنتج التالي:<br>
         <table>
             <tr>
                 <td>الاسم</td>
@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <td>اسم العميل</td>
-                <td>{{ $buyer_first_name . $buyer_last_name  }}</td>
+                <td>{{ $buyer_first_name}}  {{  $buyer_last_name  }}</td>
             </tr>
         </table>
         <a href="{{ env('FRONT_URL') . '/admin/orders/' . $order->id }}" target="_blank">تفاصيل الطلب</a>

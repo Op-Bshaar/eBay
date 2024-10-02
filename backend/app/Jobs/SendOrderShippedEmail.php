@@ -34,16 +34,9 @@ class SendOrderShippedEmail implements ShouldQueue
      */
     public function handle()
     {
-        \Log::info('Order shipped email job started for order ID: ' . $this->order->id);
-        
-        try {
-            $adminEmail = env('ADMIN_EMAIL');
-            if ($adminEmail) {
-                Mail::to($adminEmail)->send(new OrderShipped($this->order));
-            }
-            \Log::info('Order shipped email job completed successfully for order ID: ' . $this->order->id);
-        } catch (\Exception $e) {
-            \Log::error('Failed to send order shipped email for order ID: ' . $this->order->id . ' Error: ' . $e->getMessage());
+        $adminEmail = env('ADMIN_EMAIL');
+        if ($adminEmail) {
+            Mail::to($adminEmail)->send(new OrderShipped($this->order));
         }
     }
     

@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::table('order_request_items', function (Blueprint $table) {
 
             $table->integer('review')->nullable()->default(null);
-            
-            $table->foreignId('seller_id')->nullable()->constrained('sellers')->onDelete('cascade');
         });
     }
 
@@ -25,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('order_request_items', function (Blueprint $table) {
-            //
+
+            $table->dropColumn('review')->nullable()->default(null);
         });
     }
 };

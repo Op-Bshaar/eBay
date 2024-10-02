@@ -122,8 +122,7 @@ img {
     }
 
     .order-item-container:hover {
-        transform: scale(1.0025);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
     }
 }
 
@@ -144,5 +143,7 @@ img {
         width: 100%;
     }
 }
-
-
+.rate-button{
+    margin-top:0;
+    margin-bottom:0;
+}

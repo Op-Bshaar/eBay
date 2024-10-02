@@ -12,6 +12,7 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
 use App\Models\OrderRequest;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Carbon\Carbon;
@@ -79,7 +80,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
 
 //reviews Route
-Route::post('/products/{productId}/review', [RatingController::class, 'store'])
+Route::post('/orders/rate/{orderId}', [RatingController::class, 'store'])
     ->middleware('auth:sanctum');
 
 

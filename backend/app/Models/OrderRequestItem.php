@@ -47,14 +47,4 @@ class OrderRequestItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
-
-
-    public function seller()
-    {
-        return $this->belongsTo(Seller::class);
-    }
 }

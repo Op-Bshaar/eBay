@@ -31,13 +31,9 @@ class Seller extends Model
         return $this->user->email; 
     }
 
-    public function orderRequestItems()
-    {
-        return $this->hasMany(OrderRequestItem::class);
-    }
-
     public function averageRating()
     {
-        return $this->orderRequestItems()->whereNotNull('review')->avg('review');
+        $productIds = $this->products()->pluck('id');
+        return OrderRequestItem::whereIn('id',$productIds)->whereNotNull('review')->avg('review');
     }
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('quantity');
             $table->string('status',30)->default('pending');
+            $table->index('product_id');
             $table->timestamps();
         });
     }

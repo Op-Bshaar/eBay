@@ -1,0 +1,20 @@
+.rate-order-popup {
+    position: fixed;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    z-index: 100000;
+    border: 1px solid #aaaaaa;
+    border-radius: 10px;
+    box-sizing:border-box;
+    padding:2.5%;
+    width: min(90vw, 500px);
+    min-height:35vh;
+    display: flex;
+    flex-direction: column;
+    justify-content:start;
+    font-size: 1em;
+    color: black;
+    background-color:white;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.6);
+}
