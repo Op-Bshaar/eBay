@@ -1,19 +1,20 @@
 ﻿import { useCallback, useEffect, useState } from "react";
-import Order from "../../utils/Order";
-import api from "../../helpers/api";
 import { isAxiosError } from "axios";
+import api from "./api";
+import Order from "../utils/Order";
 
 function useOrder(order_id?:string) {
     const [isLoadingOrder, setIsLoading] = useState(true);
     const [loadingOrderErrorMessage, setErrorMessage] = useState("");
     const [order, setOrder] = useState<Order | null>(null);
     const reloadOrder = useCallback(() => {
-        setIsLoading(true);
-        setErrorMessage("");
         if (!order_id) {
             setOrder(null);
+            setErrorMessage("لم يتم العثور على الطلب.");
             return;
         }
+        setIsLoading(true);
+        setErrorMessage("");
         api
             .get(`/orders/${order_id}`)
             .then((response) => {
