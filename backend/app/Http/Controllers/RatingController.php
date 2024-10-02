@@ -12,7 +12,6 @@ class RatingController extends Controller
 {
     public function store(Request $request, $orderId)
     {
-        $order= OrderRequestItem::findOrFail($orderId);
         $validated = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
         ]);

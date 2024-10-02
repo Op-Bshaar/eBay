@@ -1,8 +1,7 @@
-﻿import Order from "../../utils/Order";
-import "../../styles/Loader.css";
-import "./OrderPage.css";
+﻿import "../../styles/Loader.css";
+import Order from "../../utils/Order";
+import ErrorMessage from "../errorMessage/Error";
 import "./OrderLoadingMessage.css";
-import ErrorMessage from "../../components/errorMessage/Error";
 interface OrderLoadingMessageProps { isLoadingOrder?:boolean, loadingOrderErrorMessage?:string, reloadOrder?:() => void, order:Order|null };
 function OrderLoadingMessage({ isLoadingOrder, loadingOrderErrorMessage, reloadOrder, order }: OrderLoadingMessageProps) {
     if (isLoadingOrder) {
@@ -14,7 +13,7 @@ function OrderLoadingMessage({ isLoadingOrder, loadingOrderErrorMessage, reloadO
     }
     if (loadingOrderErrorMessage) {
         return (
-            <ErrorMessage className="tajawal-extralight big-message absolute-center">
+            <ErrorMessage className="big-message absolute-center">
                 {loadingOrderErrorMessage}
                 {reloadOrder &&
                     <button onClick={reloadOrder} className="link">

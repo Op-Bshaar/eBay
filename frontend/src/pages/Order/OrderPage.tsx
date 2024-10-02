@@ -8,10 +8,10 @@ import { generatePath, Navigate, useParams } from "react-router-dom";
 import { addressToText } from "../AddressInput/Address";
 import ErrorMessage from "../../components/errorMessage/Error";
 import { isAxiosError } from "axios";
-import useOrder from "./useOrder";
-import OrderLoadingMessage from "./OrderLoadingMessage";
 import OrderItemsView from "./OrderItemsView";
 import { PAGE_URLS } from "../../constants/URL";
+import useOrder from "../../helpers/useOrder";
+import OrderLoadingMessage from "../../components/OrderLoadingMessage/OrderLoadingMessage";
 function OrderPage() {
     useRequireEmailVerification();
     const { order_id } = useParams();

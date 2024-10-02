@@ -37,7 +37,7 @@
                 <td>{{ $buyer_first_name}}  {{  $buyer_last_name  }}</td>
             </tr>
         </table>
-        <a href="{{ env('FRONT_URL') . '/admin/orders/' . $order->id }}" target="_blank">تفاصيل الطلب</a>
+        <a href="{{ env('FRONT_URL') . '/admin/orders/items/' . $order->id }}" target="_blank">تفاصيل الطلب</a>
     </p>
 </body>
 </html>

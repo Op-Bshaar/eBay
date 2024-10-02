@@ -1,0 +1,14 @@
+﻿.admin-order{
+    display:flex;
+    flex-direction:row;
+    width:100%;
+    box-sizing:border-box;
+    margin:2vh 0;
+    justify-content:space-evenly;
+}
+.admin-order-message{
+    position:fixed;
+    top:30vh;
+    left:50vw;
+    transform:translate(-50%,50%);
+}

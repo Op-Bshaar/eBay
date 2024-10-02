@@ -1,10 +1,10 @@
 import { generatePath, Navigate, useParams } from "react-router-dom";
-import OrderLoadingMessage from "./OrderLoadingMessage";
-import useOrder from "./useOrder";
 import { PAGE_URLS } from "../../constants/URL";
 import OrderItemsView from "./OrderItemsView";
 import { getOrderStatus } from "./order_status";
 import "./OrderPage.css";
+import OrderLoadingMessage from "../../components/OrderLoadingMessage/OrderLoadingMessage";
+import useOrder from "../../helpers/useOrder";
 
 function OrderStatusPage() {
   const { order_id } = useParams();
