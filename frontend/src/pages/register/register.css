@@ -89,9 +89,8 @@
 
 @media (max-width: 768px) {
   .login-form1 {
-    padding: 20px;  
+
     width: 100%;  
-    max-width: none;  
   }
 
   .login-form-content1 {
