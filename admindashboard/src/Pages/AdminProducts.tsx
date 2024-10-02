@@ -102,10 +102,7 @@ import EditForm from "./AdminEdit";
                 <HeroItem categories={categories} 
                 onCategorySelect={handleCategoryChange} />
                 <div className="sidebar-container">
-                    <SideBar
-                        categories={categories}
-                        onCategorySelect={handleCategoryChange}
-                    />
+                  
                     {productsView}
                 </div>
             </div>
