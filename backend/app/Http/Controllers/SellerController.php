@@ -9,8 +9,9 @@ use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-
-
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
+use App\Jobs\SendOrderShippedEmail;
 
 class SellerController extends Controller
 {
@@ -61,7 +62,7 @@ class SellerController extends Controller
         $request->validate([
             'title' => 'required|string|max:30',
             'description' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'price' => 'required|numeric|min:0|max:999999.99',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'catogery_id'=>'nullable|exists:catogeries,id'
         ]);
@@ -116,7 +117,7 @@ class SellerController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
+            'price' => 'required|numeric|min:0|max:999999.99',
         ]);
 
 
@@ -229,7 +230,7 @@ class SellerController extends Controller
         $order->shipment_number = $request->shipment_number;
         $order->status = 'shipped';
         $order->save();
-
+        SendOrderShippedEmail::dispatch($order);
         return response()->json(['message' => 'Order shipped successfully', 'order' => $order], 200);
     }
 }

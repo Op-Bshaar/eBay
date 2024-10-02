@@ -1,6 +1,6 @@
 .loader {
   color: #4b788a;
-  font-size: 1em;
+  font-size: 0.25em;
   width: 1em;
   height: 1em;
   border-radius: 50%;
@@ -11,7 +11,7 @@
 
 .small-loader {
   color: #4b788a;
-  font-size: 0.5em;
+  font-size: 0.175em;
   width: 0.5em;
   height: 0.5em;
   border-radius: 50%;

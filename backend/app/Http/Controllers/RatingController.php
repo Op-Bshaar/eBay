@@ -8,25 +8,23 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Seller;
 use App\Models\OrderRequestItem;
 
-class ReviewController extends Controller
+class RatingController extends Controller
 {
     public function store(Request $request, $id)
     {
 
         $validated = $request->validate([
-            'review' => 'required|integer|min:1|max:5',
+            'rating' => 'required|integer|min:1|max:5',
         ]);
     
  
         $orderRequestItem = OrderRequestItem::with('product')->findOrFail($id);
-        $orderRequestItem->review = $validated['review'];
+        $orderRequestItem->review = $validated['rating'];
         $orderRequestItem->save();
     
   
         $responseData = [
             'message' => 'Review added successfully',
-            'orderRequestItem' => $orderRequestItem,
-            'product' => $orderRequestItem->product, 
         ];
     
         return response()->json($responseData, 200);
