@@ -99,42 +99,46 @@
     align-items: stretch;  
   }
 
-  .input-group1 {
-    margin-bottom: 20px;  
-    width: 100%;  
-  }
-
-  .input-group1 label {
-    font-size: 14px;  
-  }
+    .input-group1 {
+        margin-top: 0;
+        margin-bottom: 0;
+        box-sizing:border-box;
+        width: 100%;
+    }
+    .input-group1>*{
+        margin-top:0;
+        margin-bottom:0;
+    }
+    .input-group1 label {
+        font-size: 0.8em;
+    }
 
   .input-group1 input,
   .input-group1 .PhoneInputInput {
     padding: 10px;  
-    font-size: 16px; 
+    font-size: 1em; 
     width: 90%;  
     box-sizing: border-box; 
   }
 
-  .button {
-    padding: 10px;  
-    font-size: 16px;  
-    width: 80%;  
-    margin-left: 50px;
-  }
+    .login-form1 .button {
+        padding: 10px;
+        font-size: 16px;
+        width: 80%;
+        margin-left: 50px;
+    }
 
-  .link {
-    font-size: 14px; 
-    text-align: center;  
-    display: block;
-    margin-top: 20px; 
-    margin-left: 50px; 
-  }
+    .login-form1 .link {
+        font-size: 14px;
+        text-align: center;
+        display: block;
+        margin-top: 20px;
+        margin-left: 50px;
+    }
 
-  h1 {
-    font-size: 20px;
-    text-align: center; 
-    margin-bottom: 20px; 
- 
-  }
+    .login-form1 h1 {
+        font-size: 1.2em;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 }
