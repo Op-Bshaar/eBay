@@ -10,7 +10,8 @@ function AdminOrder() {
         return <div className="admin-order-message">{messageElement}</div>;
     }
     return (
-        <div className="admin-order">
+        <div className="center-text">
+            <div className="admin-order-info">
             <article>
                 <h2>
                     معلومات البائع
@@ -71,7 +72,9 @@ function AdminOrder() {
                         {order.order_request?.phone}
                     </span>
                 </div>
-            </article>
+                </article>
+            </div>
+            <p>تأكد من إيصال المنتج إلى العميل, ثم قم بتحويل المبلغ إلى البائع.</p>
         </div>
     );
 }
