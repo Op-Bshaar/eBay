@@ -92,14 +92,14 @@ function Home() {
 
   return (
     <div className="main-container">
-      
       <div className="topbar-container">
-      <button className="deselect-button" onClick=
-        {()=>{
-          setSelectedCategory(null)
-          handleCategoryChange
-        }
-        }>
+        <button
+          className="deselect-button"
+          onClick={() => {
+            setSelectedCategory(null);
+            handleCategoryChange;
+          }}
+        >
           x
         </button>
         <HeroItem
@@ -108,12 +108,6 @@ function Home() {
         />
       </div>
       <div className="sidebar-container">
-        <div className="sidebar">
-          <SideBar
-            categories={categories}
-            onCategorySelect={handleCategoryChange}
-          />
-        </div>
         <div className="products-container">{productsView}</div>
       </div>
     </div>

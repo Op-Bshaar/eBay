@@ -21,7 +21,7 @@ PHP 7.4 or higher.\
 Composer.\
 Node.js.\
 npm.\
-MySQL or compatible database.\
+MySQL or compatible database.
 
 ## Installation instructions
 
@@ -44,12 +44,12 @@ run npm install to install nodejs dependencies.\
 start the frontend development server by running npm run dev.\
 
 in /frontend/constants/Constants.ts:\
-update APP_name to your chosen name.\
+update APP_name to your chosen name.
 
 
 ### Usage
 
-Frontend: users can buy and sell at the same time.\
+Frontend: users can buy and sell at the same time.
 
 ### Contribution 
 
